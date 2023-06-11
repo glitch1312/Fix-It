@@ -16,8 +16,10 @@ Pour jouer en ligne : https://glitch-1312.itch.io/fix-it (Attention certain bugs
 <!---les éventuels modules, librairies ou scripts intégrés ou nécessaires au bon fonctionnement de votre rendu --->
 
 <!---les éventuels copyrights, informations de licence, et autres références de vos sources et ressources y compris en matière de code récupéré --->
+# License
 Les assets visuels, sonores et les police d'écritures sont libres de droits pour une utilisation non-commerciale. Les détails pour chaque élément sont disponibles directemetn dans le code. 
 <!---le contexte de développement (exemple : Ce projet a été développé dans le cadre du cours <nom de l’enseignement> dispensé par Isaac Pante (SLI, Lettres, UNIL)). --->
+# Comments
 Ce projet a été développé dans le cadre du cours *Dévelopement de Jeux Video 2D* dispensé par Isaac Pante (SLI, Lettres, UNIL)).
 <!---à sa racine, votre dossier doit contenir un fichier index.html et être le plus structuré possible (par exemple : fichiers css dans un dossier styles, images dans un dossier 
 img, un dossier "assets" pour les éventuelles ressources complémentaires (modèles GLTF, Spritesheet, etc.)) --->
