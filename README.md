@@ -33,8 +33,9 @@ Les améliorations et les problèmes sont descrits dans la partie "Issues" du r�
 <!---Attention : aucun matériel soumis à droit d’auteur (images, sons, etc.) ne doit être déposé sur une archive publique. Si du matériel soumis à droit d’auteur est au coeur de votre travail, merci de créer un Github privé (choix "private" au moment de la création).
 Attention : la récupération partielle de code est autorisée pour peu que la source soit mentionnée à même le code, au travers de commentaires inline ; dans le cas contraire, vous vous exposez à une dénonciation pour plagiat ou fraude. --->
 
-
-
+# Crédits
+Le grand seum : illustration 
+glitch1312 : programmation et mécaniques de jeu
 <!-- # Fix-It
 Tiny pixel game about repairing bikes and fighting patriarchy! A queer character opens a bike repair shop.     A simple 2D pixel game written in Kaboom.js about ordinary sexism in workshops. Source code and development context available here :
  -->
