@@ -1,0 +1,8 @@
+{
+  "scene_texte_repairfix_coinHD":
+    {"x":0,"y":0,"width":16,"height":16},
+    "scene_texte_repairfix_coinGHt":
+      {"x":0,"y":17,"width":16,"height":16},
+      "scene_texte_repairfix_coinGB":
+      {"x":17,"y":0,"width":16,"height":16},"scene_texte_repairfix_coinDB":{"x":17,"y":17,"width":16,"height":16},"scene_texte_repairfix_bordhaut":{"x":0,"y":34,"width":16,"height":16},"scene_texte_repairfix_bordgauchet":{"x":17,"y":34,"width":16,"height":16},"scene_texte_repairfix_borddroite":{"x":34,"y":0,"width":16,"height":16},"scene_texte_repairfix_bordbas":{"x":34,"y":17,"width":16,"height":16}
+    }

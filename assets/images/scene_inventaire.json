@@ -1,0 +1,12 @@
+{
+  "tile_tirroir4":{"x":0,"y":0,"width":16,"height":16},
+  "tile_tirroir3":{"x":0,"y":17,"width":16,"height":16},
+  "tile_tirroir2":{"x":17,"y":0,"width":16,"height":16},
+  "tile_tirroir1":{"x":17,"y":17,"width":16,"height":16},
+  "tile_inventaire_etabli_plein":{"x":0,"y":34,"width":16,"height":16},
+  "tile_inventaire_etabli_jonctioninventaire":{"x":17,"y":34,"width":16,"height":16},
+  "tile_inventaire_etabli":{"x":34,"y":0,"width":16,"height":16},
+  "tile_inventaire_etabli2":{"x":34,"y":17,"width":16,"height":16},
+  "tile_inventaire_mur3":{"x":34,"y":34,"width":16,"height":16},
+  "tile_inventaire_mur2":{"x":0,"y":51,"width":16,"height":16},
+  "tile_inventaire_mur":{"x":17,"y":51,"width":16,"height":16}}

@@ -1,0 +1,14 @@
+{
+  "sprite_demontechaine":{"x":34,"y":33,"width":16,"height":16},
+"Sprite_demontepneu":{"x":51,"y":0,"width":16,"height":16},
+"sprite_tournevis":{"x":51,"y":17,"width":16,"height":16},
+"sprite_clefmonte":{"x":51,"y":34,"width":16,"height":16},
+"Sprite_fouet":{"x":0,"y":0,"width":16,"height":32},
+"Sprite_clepedale":{"x":17,"y":0,"width":16,"height":32},
+"Sprite_clef":{"x":34,"y":0,"width":16,"height":32},
+"sprite_pince":{"x":0,"y":66,"width":16,"height":16},
+"Sprite-tool-wrench":{"x":17,"y":66,"width":16,"height":16},
+"Sprite_cliket":{"x":0,"y":33,"width":16,"height":32},
+"sprite_clee6pans":{"x":34,"y":66,"width":16,"height":16},
+"Sprite_marteau":{"x":17,"y":33,"width":16,"height":32}
+}
