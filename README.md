@@ -11,13 +11,14 @@ Fix it Tiny pixel est un petit jeu en pixel 2D écrit en Kaboom.js sur le sexism
 <!---la procédure d’installation / de lancement --->
 # Lancement
 Pour lancer le jeu en mode local : télécharger l'entier du répertoire. Lancer un serveur web local (exemple avec python3 :  python3 -m http.server) permettant de télécharger des fichiers locaux. Ouvrir son navigateur sur le port 8080 (http://127.0.0.1:8080/).
+Les librairies python avec le module http est nécessaire pour run le serveur local.
 
 Pour jouer en ligne : https://glitch-1312.itch.io/fix-it (Attention certain bugs sont présents sur la version en ligne)
 <!---les éventuels modules, librairies ou scripts intégrés ou nécessaires au bon fonctionnement de votre rendu --->
 
 <!---les éventuels copyrights, informations de licence, et autres références de vos sources et ressources y compris en matière de code récupéré --->
 # License
-Les assets visuels, sonores et les police d'écritures sont libres de droits pour une utilisation non-commerciale. Les détails pour chaque élément sont disponibles directemetn dans le code. 
+Les assets visuels, sonores et les police d'écritures sont libres de droits pour une utilisation non-commerciale. Les détails pour chaque élément sont disponibles directement dans le code. 
 <!---le contexte de développement (exemple : Ce projet a été développé dans le cadre du cours <nom de l’enseignement> dispensé par Isaac Pante (SLI, Lettres, UNIL)). --->
 # Comments
 Ce projet a été développé dans le cadre du cours *Dévelopement de Jeux Video 2D* dispensé par Isaac Pante (SLI, Lettres, UNIL)).
