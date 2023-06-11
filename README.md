@@ -1,32 +1,27 @@
 <!--- Le README de votre Github doit documenter le contexte de votre développement en mentionnant, dans l’ordre suivant
 une brève description (en français ou en anglais) de votre rendu et de ses fonctionnalités --->
 # Fix It! 
-Fix it! Tiny pixel is a tiny 2D pixel game written in Kaboom.js about ordinary sexism in workshops. It's a game about repairing bikes and fighting patriarchy! You play a queer character who opens a bike repair shop. Clients come to the shop for repair on their bikes. Sometimes they do sexist remarks, sometimes they don't... You have to decide what to do each time. You can either REPAIR client bikes, earn *money* and buy tools or you can kick their ass and win some *force*. The stronger you become the more tools you find outside. However, in the middle of that you need to make the good choices, you risk closing theshop if you loose to many *clients*... 
-
-# Fix It Scenes 
-Fix It! main scene is the workshop from where the fame  are the workshop is divided as three main parts: the clients interaction, the inventory and the outside.
-The client interaction is at the
+Fix it Tiny pixel est un petit jeu en pixel 2D écrit en Kaboom.js sur le sexisme ordinaire dans les ateliers. Il s'agit d'un jeu sur la réparation de vélos et la lutte contre le patriarcat ! Vous incarnez un personnage queer qui ouvre un atelier de réparation de vélos. Les clients viennent à l'atelier pour réparer leurs vélos. Parfois, ils font des remarques sexistes, parfois non... Vous devez décider quoi faire à chaque fois. Vous pouvez soit RÉPARER les vélos des clients, gagner de l'*argent* et acheter des outils, soit les frapper et gagner de la *force*. Plus vous devenez fort.e.x, plus vous trouvez d'outils à l'extérieur. Cependant, au milieu de tout cela, vous devez faire les bons choix, au risque de faire faillite et de fermez l'atelier si vous perdez trop de *clients*... 
 
 
 <!---#au moins une capture illustrant votre travail ; attention, pour la VR, un GIF est requis --->
 <img width="769" alt="image" src="https://github.com/glitch1312/Fix-It/assets/96738339/0e8c0f8e-4185-4067-9944-f2bb65f8cec2">
 
 <!---la procédure d’installation / de lancement --->
+Pour lancer le jeu en mode local : télécharger l'entier du répertoire. Lancer un serveur web local (exemple avec python3 :  python3 -m http.server) permettant de télécharger des fichiers locaux. Ouvrir son navigateur sur le port 8080 (http://127.0.0.1:8080/).
 
+Pour jouer en ligne : 
 <!---les éventuels modules, librairies ou scripts intégrés ou nécessaires au bon fonctionnement de votre rendu --->
 
 <!---les éventuels copyrights, informations de licence, et autres références de vos sources et ressources y compris en matière de code récupéré --->
-
+Les assets visuels, sonores et les police d'écritures sont libres de droits pour une utilisation non-commerciale. Les détails pour chaque élément sont disponibles directemetn dans le code. 
 <!---le contexte de développement (exemple : Ce projet a été développé dans le cadre du cours <nom de l’enseignement> dispensé par Isaac Pante (SLI, Lettres, UNIL)). --->
 Ce projet a été développé dans le cadre du cours *Dévelopement de Jeux Video 2D* dispensé par Isaac Pante (SLI, Lettres, UNIL)).
 <!---à sa racine, votre dossier doit contenir un fichier index.html et être le plus structuré possible (par exemple : fichiers css dans un dossier styles, images dans un dossier 
 img, un dossier "assets" pour les éventuelles ressources complémentaires (modèles GLTF, Spritesheet, etc.)) --->
 
 <!---Les limites de votre travail ainsi que les possibilités d’amélioration doivent apparaître comme « issues », assorties des étiquettes adéquates (bug, enhancement, etc.) et non dans le Readme. Gardez à l’esprit que cette description est destinée à d’autres personnes intéressées par votre code. --->
-Issues
----
-bug
-enhancement 
+Les améliorations et les problèmes sont descrits dans la partie "Issues" du répertoire. 
 
 <!---Votre répertoire Github doit porter un nom qui facilite l'identification unique de votre travail ; ce nom peut être pensé comme une "marque" (par exemple : pas de "projet-visualisation" mais plutôt "statistique-vente-armes" ou "weaponview")
  --->
