@@ -24,7 +24,7 @@ loadAseprite("contenair","images/Sprite_out_contenair.png","images/Sprite_out_co
 loadAseprite("velo_sur_pied","images/Sprite_velosurpied.png","images/Sprite_velosurpied.json")
 loadAseprite("etabli_fini","images/Sprite_etabli.png","images/Sprite_etabli.json")
 loadAseprite("mecanix","images/sprite_maincharacter_petit.png","images/sprite_maincharacter_petit.json")
-loadAseprite("mecanix_velo","images/sprite_maincharacter_velo.png","images/sprite_maincharacter_velo.json")
+loadAseprite("mecanix_velo","images/Sprite_maincharacter_velo.png","images/Sprite_maincharacter_velo.json")
 
 // SPRITE ATLAS
 //Leshy SpriteSheet Tool https://www.leshylabs.com/apps/sstool/ to create the sprite atlas
@@ -45,12 +45,14 @@ loadSprite("clef","images/Sprite_clef.png")
 loadSprite("clepedale","images/Sprite_clepedale.png")
 loadSprite("rider_en_pied","images/Sprite-characterenpied.png")
 loadSprite("inventaire_note","images/sprite_inventaire_note.png")
-loadSprite("mecanix_en_pied","images/sprite_maincharacter_enpied.png")
+loadSprite("mecanix_en_pied","images/Sprite_maincharacter_enpied.png")
 loadSprite("punk_en_pied", "images/Sprite-characterenpied2.png")
 loadSprite("old_en_pied","images/Sprite_client_5_dialogue.png")
 loadSprite("blondex_en_pied","images/Sprite_client_4_dialogue.png")
 loadSprite("brunex_en_pied","images/Sprite_client_6_dialogue.png")
 loadSprite("velo_rouge","images/Sprite-velorouge.png")
+loadSprite("arbre","images/Sprite_arbre.png")
+loadSprite("dechett","images/Sprite_dechett.png")
 
 // AUDIOS
 loadRoot("assets/")
@@ -113,12 +115,12 @@ const clientsList = {
 				[ "mecanix_en_pied", "Hello!.. "],
 				[ "mecanix_en_pied", "Qu'est-ce qui se passe avec ton vélo?" ],
 				[ "punk_en_pied", "Mmmh... je pourrais plutôt parler à un homme.." ],
-				[ "mecanix_en_pied", "ooula...t'aurais pas du.." ],
+				[ "mecanix_en_pied", "..." ],
 			],
 			//repair scene
-			outilsSprite:	["wrench","clepedale",],
+			outilsSprite:	["Sprite-tool-wrench","Sprite_clepedale"],
 			outilsGoals:	[1,1],
-			bombsSprite:	["clef","demontepneu",],
+			bombsSprite:	["Sprite_cliket","sprite_clee6pans","Sprite_marteau","sprite_tournevis","Sprite_demontepneu","sprite_demontechaine","sprite_clefmonte","Sprite_fouet","Sprite_clef","sprite_pince",],
 
 			//health values
 			isSexist: true,
@@ -131,16 +133,16 @@ const clientsList = {
 			spriteName:"client1",
 			bigSpriteName:"brunex_en_pied",
 			dialogs:[
-				[ "mecanix_en_pied", "Salut!..." ],
-				[ "mecanix_en_pied", "je vois que ta roue est voilée"],
+				[ "brunex_en_pied", "Salut!" ],
+				[ "mecanix_en_pied", "Hello!\n Je vois que ta roue est voilée"],
 				[ "brunex_en_pied", "Nan je pense pas que c'est ça, je peux t'expliquer ce que c'est..." ],
-				[ "mecanix_en_pied", "C'est sur que ta roue est voilée. Elle touche le frein de façon irregulière" ],
-				[ "brunex_en_pied", "Nan mais je t'explique je pense pas que tu saches ce que c'est, c'est plutôt ..blablabla"]
+				[ "mecanix_en_pied", "C'est sur que ta roue est voilée. Elle touche le frein de façon irregulière." ],
+				[ "brunex_en_pied", "Nan mais je t'explique je pense pas que tu saches ce que c'est, c'est plutôt ..."]
 			],
 			//repair scene
-			outilsSprite:["wrench","clef","demontepneu"],
+			outilsSprite:["Sprite-tool-wrench","sprite_clefmonte","Sprite_demontepneu"],
 			outilsGoals:	[1,1,1],
-			bombsSprite:	["clepedale"],
+			bombsSprite:	["Sprite_cliket","sprite_clee6pans","Sprite_marteau","sprite_tournevis","sprite_demontechaine","Sprite_fouet","Sprite_clef","sprite_pince",],
 			isSexist: true,
 			clienteleValue: 25,
 			forceValue:30,
@@ -152,14 +154,14 @@ const clientsList = {
 			dialogs:[
 				[ "mecanix_en_pied", "Bonjour, dites-moi tout!" ],
 				[ "old_en_pied", "J'ai un problème avec mon vélo"],
-				[ "mecanix_en_pied", "Je peux vous répondre " ],
+				[ "mecanix_en_pied", "Je peux vous répondre" ],
 				[ "old_en_pied", "Je veux changer les plaquettes" ],
 				[ "mecanix_en_pied", "D'accord!"]
 			],
 			//repair scene
-			outilsSprite:["clef","demontepneu"],
+			outilsSprite:["sprite_tournevis","sprite_pince"],
 			outilsGoals:	[1,1],
-			bombsSprite:	["clepedale","wrench"],
+			bombsSprite:	["Sprite_cliket","sprite_clee6pans","Sprite_marteau","Sprite_demontepneu","sprite_demontechaine","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
 			isSexist: false,
 			clienteleValue: 40,
 			forceValue:30,
@@ -169,16 +171,17 @@ const clientsList = {
 			spriteName:"sprite_blondex",
 			bigSpriteName:"blondex_en_pied",
 			dialogs:[
-				[ "mecanix_en_pied", "Bonjour, dites-moi tout!" ],
+				[ "mecanix_en_pied", "Salut, qu'est-ce qui se passe?" ],
 				[ "blondex_en_pied", "Je cherche le patron, j'ai un problème avec mon vélo"],
 				[ "mecanix_en_pied", "Je peux vous répondre,dites-moi tout! " ],
 				[ "blondex_en_pied", "Ah, vous êtes mécanicien.ne.x?" ],
-				[ "mecanix_en_pied", "oui..en effet"]
+				[ "mecanix_en_pied", "oui"],
+				[ "blondex_en_pied", "C'est surprenant! Bravo!" ],
 			],
 			//repair scene
-			outilsSprite:["clef"],
+			outilsSprite:["Sprite_marteau"],
 			outilsGoals:	[3],
-			bombsSprite:	["demontepneu","wrench"],
+			bombsSprite:	["Sprite_cliket","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_demontechaine","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
 			isSexist: true,
 			clienteleValue: 25,
 			forceValue:10,
@@ -187,17 +190,16 @@ const clientsList = {
 			spriteName:"client1",
 			bigSpriteName:"brunex_en_pied",
 			dialogs:[
-				[ "mecanix_en_pied", "Bonjour, dites-moi tout!" ],
-				[ "brunex_en_pied", "Je cherche le patron, j'ai un problème avec mon vélo"],
-				[ "mecanix_en_pied", "Je peux vous répondre,dites-moi tout! " ],
-				[ "brunex_en_pied", "Ah, vous êtes mécanicien.ne.x?" ],
-				[ "mecanix_en_pied", "oui..en effet"]
+				[ "mecanix_en_pied", "Bonjour" ],
+				[ "brunex_en_pied", "J'aurais besoin d'un petit service, vous pourriez faire ca?"],
+				[ "mecanix_en_pied", "Oui, bien sûr" ],
+				[ "brunex_en_pied", "Parfait" ],
 			],
 			//repair scene
-			outilsSprite:["clef"],
-			outilsGoals:	[3],
-			bombsSprite:	["demontepneu","wrench"],
-			isSexist: true,
+			outilsSprite:["sprite_demontechaine","sprite_tournevis"],
+			outilsGoals:	[2,2],
+			bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
+			isSexist: false,
 			clienteleValue: 25,
 			forceValue:10,
 	},
@@ -270,24 +272,24 @@ let inventory = {
 	"Clé à cliquet":	{
 		spriteName : "Sprite_cliket",
 		state: "available",
-		cost: "30",
+		cost: "20",
 
 	},
 	"Pince":	{
 		spriteName : "sprite_pince",
-		state: "available",
+		state: "unavailable",
 		cost: "10",
 
 	},
 	"Sprite_marteau":	{
 		spriteName : "Sprite_marteau",
-		state: "available",
+		state: "unavailable",
 		cost: "25",
 
 	},
 	"Fouet à chaine":	{
 		spriteName : "Sprite_fouet",
-		state: "available",
+		state: "unavailable",
 		cost: "60",
 
 	},
@@ -302,7 +304,7 @@ let inventory = {
 const MAP_WIDTH = 256
 const MAP_HEIGHT = 256
 // list of initial speed for the repair game
-const speedMin_List = [30,40,60]
+const speedMin_List = [35,40,60,75]
 // Bomb and tools depends on reparation type
 const toolsGoalList = [
 		[1,1],//level 1
@@ -414,7 +416,7 @@ function addStatusBar(levelIdx, percent,totalCoins,force){
 		])
 
 
-		const clientBarWidth = percent*60/100
+		const clientBarWidth = (percent%100)*60/100
 		const clength = 62
 		const clientBar = add([
   	rect(clientBarWidth, 5),
@@ -842,7 +844,7 @@ console.log("level is "+levelIdx+" clientele is "+percent+" Force is :"+force)
 			"KbbbbbbbbbbbbbbN",
 			"GMMMMMMMMMMMMMML",
 			"GmmmmmmmmmmmmmmL",
-			"GooooooooooooooL",
+			"GZoooooooooooooL",
 			"G--oot---------L",
 			"G--tt-OOOOOO---L",
 			"G---T----t-----L",
@@ -867,21 +869,26 @@ console.log("level is "+levelIdx+" clientele is "+percent+" Force is :"+force)
 					sprite("scene_atelier_tile_sortiegaucheH1"),
 					area(),
 					body({ isStatic: true }),
+					"clientEntrance"
 				],
 				"w": () => [
 					sprite("scene_atelier_tile_sortiegaucheH2"),
 					area(),
 					body({ isStatic: true }),
+						"clientEntrance"
 				],
 				"S": () => [
 					sprite("sortieBasGauche"),
 					area(),
 					body({ isStatic: true }),
+					"clientEntrance"
+
 				],
 				"X": () => [
 					sprite("sortieHautGauche"),
 					area(),
 					body({ isStatic: true }),
+					"clientEntrance"
 				],
 
 				"=": () => [
@@ -935,6 +942,12 @@ console.log("level is "+levelIdx+" clientele is "+percent+" Force is :"+force)
 					sprite("murFond"),
 					area(),
 					body({isStatic:true}),
+				],
+				"Z": () => [
+					sprite("tuileOmbre"),
+					area(),
+					body({isStatic:true}),
+					"affiche"
 				],
 				"m": () => [
 					sprite("basMurFond"),
@@ -1053,7 +1066,7 @@ console.log("level is "+levelIdx+" clientele is "+percent+" Force is :"+force)
 				sprite("velo_sur_pied",{anim:"idle"}),
 				scale(1),
 				anchor("center"),
-				pos(center().x+4*16,5*16),
+				pos(center().x-(6*16),8*16),
 				area(),
 						body({isStatic:true})
 			])
@@ -1120,19 +1133,40 @@ console.log("level is "+levelIdx+" clientele is "+percent+" Force is :"+force)
 			// CREATE THE CLIENT LINE from a JSON
 			// we use only the three first clients
 			// ADD ERROR
+			let lLength = 0
 			for (let i = 0; i < 3; i++) {
 				if (clientsList.hasOwnProperty(Object.keys(clientsList)[i])){
+					// add a counter to know how many clients you have in line
+					lLength = lLength +1
 					// add a client sprite in Line
 					addClientInLine(clientsList[Object.keys(clientsList)[i]],i,Object.keys(clientsList)[i]/*tag*/)
 
-						// add a collision
-						player.onCollide(Object.keys(clientsList)[i]/*client key*/, () => {
+					// add a collision per client
+					player.onCollide(Object.keys(clientsList)[i]/*client key*/, () => {
 						//play("portal")
 						// If there's a next level, origin() to the same scene but load the next level
 						music.paused = true
 						go("clientDialog",Object.keys(clientsList)[i], levelIdx, percent,totalCoins,force)
 					})
 
+				}
+				// if there is no client anymore then the game is "finished"
+				if (lLength==0){
+					player.onCollide("clientEntrance", () => {
+						let textBox = add([
+						sprite("dialogbox"),//, width: width() - 230
+						anchor("center"),
+						pos(center().x,BOTTOM),
+						"clientMessage"
+					])
+					let txt = add([
+						text("Les prochains clients\n viendront dans la prochaine démo! \ To be continued...", { size:  TXTSIZE }),//, width: width() - 230
+						anchor("center"),
+						pos(center().x,BOTTOM),
+						color(MYPURPLE),
+						"clientMessage"
+					])
+				})
 				}
 			}
 
@@ -1154,10 +1188,26 @@ console.log("level is "+levelIdx+" clientele is "+percent+" Force is :"+force)
 
 			player.onCollide("etabli", () => {
 				let saved_position = player.pos
+				music.paused = true
 				// This collision shows the state of the inventory.
 				go("inventaire", levelIdx, percent,totalCoins, force,saved_position)
 			})
-
+			player.onCollide("affiche", () => {
+				let textBox = add([
+				sprite("dialogbox"),//, width: width() - 230
+				anchor("center"),
+				pos(center().x,BOTTOM),
+				"afficheMessage"
+			])
+			let txt = add([
+				text("Complète ton inventaire pour\n un TURFU RADIEUX!", { size:  TXTSIZE }),//, width: width() - 230
+				anchor("center"),
+				pos(center().x,BOTTOM),
+				color(MYPURPLE),
+				"afficheMessage"
+			])
+		})
+onKeyPress(()=>{destroyAll("afficheMessage")})
 
 		})
 
@@ -1183,7 +1233,6 @@ console.log("level is "+levelIdx+" clientele is "+percent+" Force is :"+force)
 				 "GFQFFFwqqqpFVVfd",
 				 "GfffFFFVfVQvFvFd",
 				 "GfffFFFVfVwqqpFd",
-				 "GfffFFFVfVfvFQFd",
 				 "NfffFFFVfVfvFQFd",
 				 "DqqqqqqqqqqqqWFd",
 				 "SfffFFFVfVfvFvFd",
@@ -1333,15 +1382,63 @@ console.log("level is "+levelIdx+" clientele is "+percent+" Force is :"+force)
 
 		const colBox =5
 		//ITEMSconst player =
+
+		const dechetterie = add([
+			sprite("dechett"),
+			// center() returns the center point vec2(width() / 2, height() / 2)
+			anchor("center"),
+			pos(center().x+5*16,65),// the modified position from before
+			area(),
+			body({isStatic:true}),
+
+		])
 		const contenairSprite = add([
 			sprite("contenair",{anim:"idle_close"}),
 			// center() returns the center point vec2(width() / 2, height() / 2)
 			anchor("center"),
-			pos(center().x+5*16,60),// the modified position from before
+			pos(center().x+4*16-8,56),// the modified position from before
 			area(),
 			body({isStatic:true}),
 			"contenair",
 		])
+
+		add([
+			sprite("arbre"),
+			// center() returns the center point vec2(width() / 2, height() / 2)
+			anchor("center"),
+			pos(34,64),// the modified position from before
+			area(),
+			body({isStatic:true}),
+
+		])
+		 add([
+			sprite("arbre"),
+			// center() returns the center point vec2(width() / 2, height() / 2)
+			anchor("center"),
+			pos(34,192),// the modified position from before
+			area(),
+			body({isStatic:true}),
+
+		])
+		add([
+		 sprite("arbre"),
+		 // center() returns the center point vec2(width() / 2, height() / 2)
+		 anchor("center"),
+		 pos(50,192),// the modified position from before
+		 area(),
+		 body({isStatic:true}),
+
+	 ])
+		add([
+			sprite("arbre"),
+			// center() returns the center point vec2(width() / 2, height() / 2)
+			anchor("center"),
+			pos(224,144),// the modified position from before
+			area(),
+			body({isStatic:true}),
+
+		])
+
 
 		const player = add([
 			sprite("mecanix_velo"),
@@ -1589,17 +1686,17 @@ console.log("level is "+levelIdx+" clientele is "+percent+" Force is :"+force)
 			})
 		// ADD ITEMS TO MAP
 		// add NOTE sur le fond
-		const inventaire_note = add([
-			sprite("inventaire_note"),
-			scale(1),
-			anchor("center"),
-			pos(center().x+90,BOTTOM-48), // the % takes into account how many tools per line we want
-		])
+		// const inventaire_note = add([
+		// 	sprite("inventaire_note"),
+		// 	scale(1),
+		// 	anchor("center"),
+		// 	pos(center().x+90,BOTTOM-48), // the % takes into account how many tools per line we want
+		// ])
 		// add INSTRUCTIONS sur le fond
 		const return_instruction = add([
-			text("( appuie sur escape pour retourner à l'atelier) ", {font: "prstart", size:TXTSIZE}),
+			text("( appuie sur esc pour retour à l'atelier) ", {font: "prstart", size:TXTSIZE}),
 			anchor("center"),
-			pos(center().x, BOTTOM-48),
+			pos(center().x, BOTTOM-(2*16)),
 		])
 
 		// add STATUS bar
@@ -1678,12 +1775,12 @@ console.log("level is "+levelIdx+" clientele is "+percent+" Force is :"+force)
 			anchor("center"),
 			color(1,1,1),
 			opacity(0.05),
-			pos(148.5,55)
+			pos(center().x-5.5*16,55)
 		])
 		// create the achat texte
 		const achatTexte = add([
 			text("Démonte-pneu:\nTu as déjà cet outil!",{size:TXTSIZE}),
-			pos(center().x-(MAP_WIDTH/8),BOTTOM-(MAP_WIDTH/16))
+			pos(center().x-(MAP_WIDTH/8),BOTTOM-(MAP_WIDTH/15))
 		])
 		//move the selector and modify the achat texte
 		let selectorIndex = 1
@@ -1725,7 +1822,8 @@ console.log("level is "+levelIdx+" clientele is "+percent+" Force is :"+force)
 		let mod_saved_position = saved_position.add(vec2(shiftX,+8)) // backward half a tile to avoid coliding again
 
 		// LEAVE SCENE
-		onKeyPress("escape", () => {go("atelier", levelIdx,percent,totalCoins,force,mod_saved_position)})
+		onKeyPress("escape", () => {
+			go("atelier", levelIdx,percent,totalCoins,force,mod_saved_position)})
 
 
 	})
@@ -1855,16 +1953,16 @@ console.log("level is "+levelIdx+" clientele is "+percent+" Force is :"+force)
 		//start with "hovering" Repair button
 		let onHover = true
 
-		const tinyShift = 4
+		const tinyShift = 14
 		const arrow = add([
-			text(">",{size:TXTSIZE}),
+			text(">",{size:LARGETXTSIZE}),
 			pos(center().x-64,center().y-0.2*(MAP_HEIGHT/2)-tinyShift)
 
 		])
 		//option Réparez
 		onKeyPress("up", () => {
 					//move arrow
-					arrow.pos.y = center().y+0.3*(MAP_HEIGHT/2)-tinyShift
+					arrow.pos.y = center().y-0.2*(MAP_HEIGHT/2)-tinyShift
 					// putting the other button color back to default_position
 					FightBtn.onUpdate(() => {
 						FightBtn.color = (0,0,0)
@@ -1880,7 +1978,7 @@ console.log("level is "+levelIdx+" clientele is "+percent+" Force is :"+force)
 		//option Frappez
 		onKeyPress("down", () => {
 				// moving the arrow
-				arrow.pos.y = center().y-0.1*(MAP_HEIGHT/2)-tinyShift
+				arrow.pos.y = center().y+0.3*(MAP_HEIGHT/2)-tinyShift
 				// puttint the other button color back to default_position
 				RepairBtn.onUpdate(() => {RepairBtn.color = (0,0,0)	})
 				// Coloring button
@@ -1911,10 +2009,9 @@ console.log("level is "+levelIdx+" clientele is "+percent+" Force is :"+force)
 		// client face
 		const avatar = add([
 			sprite(clientsList[clientKey].bigSpriteName),// retrieve the big sprite corresponding to the client
-
 			scale(1),
 			anchor("center"),
-			pos(center().x, BOTTOM/2)
+			pos(center().x, BOTTOM/2+3)
 		])
 
 		// Text
@@ -1959,7 +2056,7 @@ console.log("level is "+levelIdx+" clientele is "+percent+" Force is :"+force)
 			if (already_hit>=0){
 				// animation
 				add([
-					sprite("scene_dialogue_punch",{ anim: "hit" }),
+					sprite("scene_dialogue_punch"),
 					//loop(false),
 					//addExplosion(),
 					scale(1),
@@ -1998,7 +2095,7 @@ console.log("level is "+levelIdx+" clientele is "+percent+" Force is :"+force)
 		// STATUS COMMUNICATION
 		console.log("Entering badass win")
 		console.log("level is "+levelIdx+" clientele is "+percent+" Force is :"+force)
-			console.log("force percent increase is "+forcePercentIncrease+" clientele percent increase is "+clientelePercentIncrease)
+		console.log("force percent increase is "+forcePercentIncrease+" clientele percent increase is "+clientelePercentIncrease)
 		// if you lost too much clientele is game OVER
 		if (percent+clientelePercentIncrease<=0){
 			go("gameover")
@@ -2025,7 +2122,7 @@ console.log("level is "+levelIdx+" clientele is "+percent+" Force is :"+force)
 		text("Tu n'as pas changé de niveau...dommage ", { size: TXTSIZE }),
 		scale(1),
 		anchor("center"),
-		pos(center().x,BOTTOM),
+		pos(center().x,MAP_HEIGHT/4),
 	])
 	}
 
@@ -2108,7 +2205,7 @@ console.log("level is "+levelIdx+" clientele is "+percent+" Force is :"+force)
 			console.log("force percent increase is :"+forcePercentIncrease)
 			console.log("clientele percent increase is :"+clientelePercentIncrease)
 			force = force + forcePercentIncrease
-			percent = percent + clientelePercentIncrease
+			percent = (percent + clientelePercentIncrease)%100
 			console.log("fight suceeded")
 			console.log("level is "+levelIdx+" clientele is "+percent+" Force is :"+force)
 			// CLIENTELE update
@@ -2315,7 +2412,7 @@ console.log("level is "+levelIdx+" clientele is "+percent+" Force is :"+force)
 		}
 
 		// Update mini-game score
-		score += 10
+		score += 5
 		//update scoreBox
 		scoreTexte.text = score
 		// win coins
@@ -2492,7 +2589,7 @@ scene("tripleLose",(clientKey,levelIdx,percent,totalCoins,force,life)=>{
 			])
 		onKeyPress("enter", () => {
 			// go back to clients with the new percentage of clientele
-			percent += percentIncrease
+			percent = (percent + percentIncrease)%100
 
 			go("atelier", levelIdx,percent,totalCoins,force,{x:center().x,y:center().y})
 		})
