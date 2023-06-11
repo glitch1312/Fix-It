@@ -1,9 +1,12 @@
 <!--- Le README de votre Github doit documenter le contexte de votre développement en mentionnant, dans l’ordre suivant
 une brève description (en français ou en anglais) de votre rendu et de ses fonctionnalités --->
 # Fix It! 
-Fix it Tiny pixel is a tiny 2D pixel game written in Kaboom.js about ordinary sexism in workshops. It's a game about repairing bikes and fighting patriarchy! You play a queer character who opens a bike repair shop. Clients come to the shop for repair on their bikes. Sometimes they do sexist remarks, sometimes they don't... You have to decide what to do each time. You can either REPAIR client bikes, earn *money* and buy tools or you can kick their ass and win some *force*. The stronger you become the more tools you find outside. However, in the middle of that you need to make the good choices, you risk closing theshop if you loose to many *clients*... 
+Fix it! Tiny pixel is a tiny 2D pixel game written in Kaboom.js about ordinary sexism in workshops. It's a game about repairing bikes and fighting patriarchy! You play a queer character who opens a bike repair shop. Clients come to the shop for repair on their bikes. Sometimes they do sexist remarks, sometimes they don't... You have to decide what to do each time. You can either REPAIR client bikes, earn *money* and buy tools or you can kick their ass and win some *force*. The stronger you become the more tools you find outside. However, in the middle of that you need to make the good choices, you risk closing theshop if you loose to many *clients*... 
 
-Check the inventory, buy tools, go outside, talk to clients, repair and fight!
+# Fix It Scenes 
+Fix It! main scene is the workshop from where the fame  are the workshop is divided as three main parts: the clients interaction, the inventory and the outside.
+The client interaction is at the
+
 
 <!---#au moins une capture illustrant votre travail ; attention, pour la VR, un GIF est requis --->
 <img width="769" alt="image" src="https://github.com/glitch1312/Fix-It/assets/96738339/0e8c0f8e-4185-4067-9944-f2bb65f8cec2">
