@@ -80,6 +80,13 @@ loadSprite("client_12_grand","images/client_12_grand.png")
 // AUDIOS
 loadRoot("assets/")
 // downloaded from https://mixkit.co/free-sound-effects/game/ under the Mixkit Sound Effects Free License
+loadSound("audio_burnout", "audio/burnout.mp3");
+loadSound("audio_fete", "audio/fete.mp3");
+loadSound("audio_piece", "audio/piece.mp3");
+loadSound("audio_reussite", "audio/porte.mp3");
+loadSound("action_juste", "audio/reparer_frapper_juste.wav");
+loadSound("audio_reparer", "audio/reparer.wav");
+loadSound("page_debut", "audio/start.mp3");
 loadSound("hitSound", "audio/bomb_explosion.wav");
 loadSound("extraBonus", "audio/extra_bonus.wav");
 loadSound("hitInRepair", "audio/retro_click.wav");
@@ -113,8 +120,7 @@ loadFont("joystix","assets/fonts/joystix.otf")
 // --CONSTANTS-- //
 let totalCoins = 0
 let totalStars = 0
-let percent = 50 // level of clientele
-let force = 10
+let interactionDechetFlag = false // no interaction with dechetterie perso
 let jourIdx = 1 // game starts at day 1
 let clientCounter = 1 // no client interaction at start
 let fightCounter = 0
@@ -157,9 +163,7 @@ const clientsList = {
 
 			//health values
 			isSexist: true,
-			clienteleValue: 15,
-			forceValue:20,
-			// coinsValue = sum(outilsGoals)
+
 
 	},
 	"client2":{
@@ -177,8 +181,6 @@ const clientsList = {
 			outilsGoals:	[1,1,1],
 			bombsSprite:	["Sprite_cliket","sprite_clee6pans","Sprite_marteau","sprite_tournevis","sprite_demontechaine","Sprite_fouet","Sprite_clef","sprite_pince",],
 			isSexist: true,
-			clienteleValue: 25,
-			forceValue:30,
 
 	},
 	"client3":{
@@ -196,8 +198,6 @@ const clientsList = {
 			outilsGoals:	[1,1],
 			bombsSprite:	["Sprite_cliket","sprite_clee6pans","Sprite_marteau","Sprite_demontepneu","sprite_demontechaine","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
 			isSexist: false,
-			clienteleValue: 40,
-			forceValue:30,
 
 	},
 	"client4":{
@@ -216,8 +216,7 @@ const clientsList = {
 			outilsGoals:	[3],
 			bombsSprite:	["Sprite_cliket","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_demontechaine","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
 			isSexist: true,
-			clienteleValue: 25,
-			forceValue:10,
+
 	},
 	"client5":{
 			spriteName:"client_5_petit",
@@ -235,8 +234,7 @@ const clientsList = {
 			outilsGoals:	[3],
 			bombsSprite:	["Sprite_cliket","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_demontechaine","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
 			isSexist: true,
-			clienteleValue: 25,
-			forceValue:10,
+
 	},
 	"client6":{
 			spriteName:"client_6_petit",
@@ -254,8 +252,7 @@ const clientsList = {
 			outilsGoals:	[3],
 			bombsSprite:	["Sprite_cliket","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_demontechaine","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
 			isSexist: true,
-			clienteleValue: 25,
-			forceValue:10,
+
 	},
 	"client7":{
 			spriteName:"client_7_petit",
@@ -271,8 +268,7 @@ const clientsList = {
 			outilsGoals:	[2,2],
 			bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
 			isSexist: false,
-			clienteleValue: 25,
-			forceValue:10,
+
 	},
 	"client8":{
 			spriteName:"client_8_petit",
@@ -288,8 +284,7 @@ const clientsList = {
 			outilsGoals:	[2,2],
 			bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
 			isSexist: false,
-			clienteleValue: 25,
-			forceValue:10,
+
 	},
 	"client9":{
 			spriteName:"client_9_petit",
@@ -305,8 +300,7 @@ const clientsList = {
 			outilsGoals:	[2,2],
 			bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
 			isSexist: false,
-			clienteleValue: 25,
-			forceValue:10,
+
 	},
 	"client10":{
 			spriteName:"client_5_petit",
@@ -324,8 +318,7 @@ const clientsList = {
 			outilsGoals:	[3],
 			bombsSprite:	["Sprite_cliket","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_demontechaine","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
 			isSexist: true,
-			clienteleValue: 25,
-			forceValue:10,
+
 	},
 	"client11":{
 			spriteName:"client_11_petit",
@@ -341,8 +334,7 @@ const clientsList = {
 			outilsGoals:	[2,2],
 			bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
 			isSexist: false,
-			clienteleValue: 25,
-			forceValue:10,
+
 	},
 	"client12":{
 			spriteName:"client_12_petit",
@@ -358,8 +350,7 @@ const clientsList = {
 			outilsGoals:	[2,2],
 			bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
 			isSexist: false,
-			clienteleValue: 25,
-			forceValue:10,
+
 	},
 }
 
@@ -445,7 +436,7 @@ let inventory = {
 const speedMin_List = [35,40,60,75]
 
 // --FUNCTIONS-- //
-// to do at the end of the day
+// Reset variables to restard day cycle
 function resetDayVariables(totalCoins,totalStars){
 			coinsAnimValueList.push(totalCoins);
 			starsAnimValueList.push(totalStars);
@@ -460,24 +451,9 @@ function resetDayVariables(totalCoins,totalStars){
 			console.log("in the reset function the dayis " +jourIdx)
 			return jourIdx;
 		}
-function percentColoring(percent,clientBar,clientBarWidth){
 
-	if (percent>0 && percent<=30){
-		//below 50% critical situation
-		//clientBar.rect = (percent,5)
-		clientBar.width = percent*clientBarWidth/100
-		clientBar.color = MYPURPLE
-
-	}else if (percent>31 && percent<=75){
-		clientBar.width = percent*clientBarWidth/100
-		clientBar.color = MYPINK
-	} else  { (percent>75 )
-		clientBar.width = percent*clientBarWidth/100
-		clientBar.color = MYYELLOW
-	}
-}
 // Status bar
-function addStatusBar(jourIdx, percent,totalCoins,force){
+function addStatusBar(jourIdx,totalCoins,totalStars){
 
 		const sBoxHeight  = 18
 		const sBoxWidth   = 200
@@ -499,54 +475,6 @@ function addStatusBar(jourIdx, percent,totalCoins,force){
 			text("JOUR "+jourIdx+"/5", {font: "prstart", size:TXTSIZE}),
 			pos(center().x-(MAP_WIDTH/2)+sBoxmargins, 17),
 		])
-
-		// CLIENTELE BAR
-		// const clientTxt = add([
-		// 	text("CLIENTS ", {size:TXTSIZE}),
-		// 	pos(center().x+15, 17),
-		// ])
-
-		// const clientHolder = add([
-  	// rect(62, 7),
-  	// pos(center().x+48, 25.5),
-		// outline(1,MYPURPLE),
-		// color(1,1,1,0)
-		// ])
-
-
-		// const clientBarWidth = (percent%100)*60/100
-		// const clength = 62
-		// const clientBar = add([
-  	// rect(clientBarWidth, 5),
-  	// pos(center().x+49, 35),
-		// color(MYYELLOW)
-		// ])
-
-		// BADASS BAR
-		// const badassTxt = add([
-		// 	text("FORCE ", {size:TXTSIZE}),
-		// 	pos(center().x+15, 28),
-		// ])
-
-		// const badassHolder = add([
-  	// rect(62, 7),
-  	// pos(center().x+48, 32),
-		// outline(1,MYPURPLE),
-		// color(1,1,1,0)
-		// ])
-		// const badassBarWidth =  force*60/100
-		//
-		// const badassBar = add([
-  	// rect(badassBarWidth, 5),
-  	// pos(center().x+49, 27),
-		// color(MYYELLOW)
-		// ])
-
-
-
-		// update the success bar
-		//clientBar.onUpdate(()=> percentColoring(percent,clientBar,clength))
-		//badassBar.onUpdate(()=> percentColoring(force,badassBar,clength))
 
 	}
 
@@ -573,100 +501,50 @@ function player_movement(player,speed){
 			player.move(0, speed)
 		})
 	}
+	function launchDialog(interactionDialog){
 
-function add_minigame_map(spriteCouleurFond){
-	const MAP_WIDTH = 256;
-	const MAP_HEIGHT = 256;
-	addLevel([
-		"G--------------L",
-		"G--------------L",
-		"G--------------L",
-		"G--------------L",
-		"G--------------L",
-		"G--------------L",
-		"G--------------L",
-		"G--------------L",
-		"G--------------L",
-		"G--------------L",
-		"G--------------L",
-		"G--------------L",
-		"GhVhHhhHhhhhhVhL",
-		"GJJJJJJJJJJJJJJL",
-		"GJJJJJJJJJJJJJJL",
-		"QvvvvvvvvvvvvvvP",
-	],{
-		// define the size of each block
-		tileWidth:16,
-		tileHeight:16,
-		//scale :2,
-		pos:vec2(center().x - (MAP_WIDTH/2), 0),
-		// assign to each symbol a sprite
-		tiles: {
-			"K": () => [
-				sprite("scene_jeu_coinHG"),
-				area(),
-				body({isStatic:true}),
-			],
-			"b": () => [
-				sprite("scene_jeu_bordhaut"),
-				area(),
-				body({isStatic:true}),
-			],
-			"N": () => [
-				sprite("scene_jeu_coinHD"),
-				area(),
-				body({isStatic:true}),
-			],
-			"G": () => [
-				sprite("scene_jeu_bordgauche"),
-				area(),
-				body({isStatic:true}),
-			],
-			"L": () => [
-				sprite("scene_jeu_borddroite"),
-				area(),
-				body({isStatic:true}),
-			],
-			"-": () => [
-				sprite(spriteCouleurFond),
-				outline(40, 40),
-			],
-			"Q": () => [
-				sprite("scene_jeu_coinBG"),
-				area(),
-				body({isStatic:true}),
-			],
-			"v": () => [
-				sprite("scene_jeu_bordbas"),
-				area(),
-				body({isStatic:true}),
+			// add dialog box
+			let textBox = add([
+			sprite("dialogbox"),//, width: width() - 230
+			anchor("center"),
+			pos(center().x,BOTTOM),
+			"textBox"
+			])
+			// container for text in dialog box
+			const txtWidth = 150; // Ideal Width
+			const txtMargins = 15;
+			let txt = add([
+			text("", { size:  TXTSIZE,  width: txtWidth }),//, width: width() - 230
+			anchor("center"),
+			pos(center().x,BOTTOM),
+			color(MYPURPLE),
+			])
+			//initialization
+			let initDialog = interactionDialog.length
+			let levelDialog = interactionDialog
+			let curDialog = 0
+			function updateDialog() {
+			const [ char, dialog ] = interactionDialog[curDialog]
+			txt.text = dialog
+			}
+			//initialization with first sentence text
+			updateDialog()
 
-			],
-			"P": () => [
-				sprite("scene_jeu_coinBD"),
-				area(),
-				body({isStatic:true}),
-
-			],
-			"J": () => [
-				sprite("scene_jeu_fond_bas"),
-			],
-			"H": () => [
-				sprite("scene_jeu_fond_horizon"),
-			],
-			"h": () => [
-				sprite("scene_jeu_fond_horizon_smile"),
-
-			],
-			"V": () => [
-				sprite("scene_jeu_fond_horizon_velo"),
-				area(),
-				body({isStatic:true}),
-				"veloStop"
-			]
+			let dialogAction = onKeyPress("enter", () => {
+		// Cycle through the dialogs
+		curDialog = (curDialog + 1) % interactionDialog.length
+		if (curDialog==0){
+			// dialog finished, options to choose
+			dialogAction.paused = true
+			destroy(textBox)
+			destroy(txt)
+					// flog of the dialog is modified is open now
+					return true;
+			}else{
+		updateDialog()
 		}
 	})
-}
+	}
 function add_bordure_map(){
 	// MAP POUR FAIRE LA BORDURE
 	const MAP_WIDTH = 256;
@@ -746,10 +624,253 @@ function add_bordure_map(){
 			}
 		})
 	}
+function add_atelier_map(){
+		// MAP
+		const MAP_WIDTH = 256;
+		const MAP_HEIGHT = 256;
+		const atelierMAP =
+		addLevel([
+			"KbbbbbbbbbbbbbbN",
+			"GMMMMMMMMMMMMMML",
+			"GmmmmmmmmmmmmmmL",
+			"GZoooooooooooooL",
+			"G--oot---------L",
+			"G--tt-OOOOOO---L",
+			"G---T----t-----L",
+			"Gt-------------L",
+			"G------tt------L",
+			"G--------------L",
+			"X-T-------t----L",
+			"W--tt---t------L",
+			"w-----------t--e",
+			"S---T----------D",
+			"Gt--TT----t----c",
+			"QvvvvvvvvvvvvvvP",
+		],{
+			// define the size of each block
+			tileWidth:16,
+			tileHeight:16,
+			//scale :2,
+			pos:vec2(center().x - (MAP_WIDTH/2), 0),
+			// assign to each symbol a sprite
+			tiles: {
+				"W": () => [
+					sprite("scene_atelier_tile_sortiegaucheH1"),
+					area(),
+					body({ isStatic: true }),
+					"clientEntrance"
+				],
+				"w": () => [
+					sprite("scene_atelier_tile_sortiegaucheH2"),
+					area(),
+					body({ isStatic: true }),
+						"clientEntrance"
+				],
+				"S": () => [
+					sprite("sortieBasGauche"),
+					area(),
+					body({ isStatic: true }),
+					"clientEntrance"
 
-	// ------ Boucle de Gameplay ------- //
-	// ------ Start --------------------------------------------------- //
-	scene("start", (jourIdx,percent,totalCoins,force) => {
+				],
+				"X": () => [
+					sprite("sortieHautGauche"),
+					area(),
+					body({ isStatic: true }),
+					"clientEntrance"
+				],
+
+				"=": () => [
+					sprite("etabli"),
+					area(),
+					body({ isStatic: true }),
+					"etabli"
+				],
+				"K": () => [
+					sprite("coinHauteGauche"),
+					area(),
+					body({isStatic:true}),
+				],
+				"b": () => [
+					sprite("bordHaute"),
+					area(),
+					body({isStatic:true}),
+				],
+				"N": () => [
+					sprite("coinHauteDroite"),
+					area(),
+					body({isStatic:true}),
+				],
+				"P": () => [
+					sprite("coinBasDroite"),
+					area(),
+					body({isStatic:true}),
+				],
+				"Q": () => [
+					sprite("coinBasGauche"),
+					area(),
+					body({isStatic:true}),
+				],
+				"o": () => [
+					sprite("tuileOmbre"),
+					area(),
+					body({isStatic:true}),
+				],
+				"O": () => [//ombre avec colliion
+					sprite("tuileOmbre"),
+					area(),
+					body({isStatic:true}),
+					"etabli"
+				],
+				"G": () => [
+					sprite("bordDroite"),
+					area(),
+					body({isStatic:true}),
+				],
+				"M": () => [
+					sprite("murFond"),
+					area(),
+					body({isStatic:true}),
+				],
+				"Z": () => [
+					sprite("tuileOmbre"),
+					area(),
+					body({isStatic:true}),
+					"affiche"
+				],
+				"m": () => [
+					sprite("basMurFond"),
+					area(),
+					body({isStatic:true}),
+
+				],
+				"L": () => [
+					sprite("bordGauche"),
+					area(),
+					body({isStatic:true}),
+				],
+				"D": () => [
+					sprite("sortieDroite"),
+					area(),
+					body({ isStatic: true} ),
+					"outsideDoorDroite",
+				],
+				"c": () => [
+					sprite("sortieBasDroite"),
+					area(),
+					body({ isStatic: true} ),
+
+				],
+				"e": () => [
+					sprite("sortieHautDroite"),
+					area(),
+					body({ isStatic: true} ),
+
+				],
+				"C": () => [
+					sprite("tuile1"),
+					area(),
+					body({isStatic:true}),
+				],
+				"H": () => [
+					sprite("tuileHaut"),
+					area(),
+					body({isStatic:true}),
+
+				],
+				"v": () => [
+					sprite("bordBas"),
+					area(),
+					body({isStatic:true}),
+
+				],
+				"-": () => [
+					sprite("tuile1"),
+					outline(40, 40),
+				],
+				"t": () => [
+					sprite("tuile2"),
+					outline(40, 40),
+				],
+				"T": () => [
+					sprite("tuile3"),
+					outline(40, 40),
+				],
+
+			}
+			})
+
+			// ADD ATELIER ITEMS
+			// table du milieu
+			const table = add([
+				sprite("etabli_fini",{anim:"idle"}),
+				scale(1),
+				anchor("center"),
+				pos(center().x,center().y-10),
+				area(),
+				body({isStatic:true})
+			])
+			//mur du murFond
+			const murFond = add([
+				sprite("atelier_mur_fond"),
+				anchor("center"),
+				pos(center().x,56)
+			])
+			//velos
+			const velo= add([
+				sprite("velo_rouge"),
+				scale(1),
+				anchor("center"),
+				pos(center().x,5*16),
+				area(),
+				body({isStatic:true})
+			])
+		add([
+				sprite("velo_rouge"),
+				scale(1),
+				anchor("center"),
+				pos(center().x+6*16,7.75*16),
+				area(),
+			body({isStatic:true})
+			])
+			add([
+					sprite("velo_rouge"),
+					scale(1),
+					anchor("center"),
+					pos(center().x+6*16,8.5*16),
+					area(),
+				body({isStatic:true})
+				])
+			add([
+					sprite("velo_rouge"),
+					scale(1),
+					anchor("center"),
+					pos(center().x+6*16,9.25*16),
+					area(),
+					body({isStatic:true})
+				])
+			const velo_sur_pied = add([
+				sprite("velo_sur_pied",{anim:"idle"}),
+				scale(1),
+				anchor("center"),
+				pos(center().x-(6*16),8*16),
+				area(),
+						body({isStatic:true})
+			])
+			add([
+				sprite("velo_sur_pied",{anim:"idle"}),
+				scale(1),
+				anchor("center"),
+				pos(center().x+4*16,MAP_HEIGHT-2*16),
+				area(),
+				body({isStatic:true})
+			])
+
+	}
+// ------ Boucle de Gameplay ------- //
+// ------ Start --------------------------------------------------- //
+scene("start", (jourIdx,totalCoins,totalStars) => {
+		let musicDebut = play("page_debut")
 		add_bordure_map()
 		// Titre
 		const title = add([
@@ -776,13 +897,147 @@ function add_bordure_map(){
 		])
 
 		onKeyPress("enter", () => {
-			go("atelier", jourIdx,percent,totalCoins,force,INITIALPOSITION,clientCounter)
+			musicDebut.paused = true
+			go("atelier", jourIdx,totalCoins,totalStars,INITIALPOSITION,clientCounter)
 		})
 	})
+	// ------ Boucle de Gameplay ----  //
+	// ------ Scene d'ouverture ----------------------------------------------- //
+scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=> {
+	let music = play("fond")
+		add_atelier_map()
+				//status
+				addStatusBar(jourIdx,totalCoins,totalStars)
+				// add the mecanix// Add player game object
+				let default_position = saved_position
+				// collision Box size
+				const colBox = 5
+				const player = add([
+					sprite("mecanix"),
+					// center() returns the center point vec2(width() / 2, height() / 2)
+					anchor("center"),
+					//console.log(saved_position),
+					pos(saved_position.x,saved_position.y),//the default position is in front of the workshop
+					area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
+					//area(),
+					body(),
+					// scalePerso
+					scale(PERSOSCALE)
+				])
 
-	// ------ Boucle de Gameplay ------- //
-	// ------ Dialogue avec le client --------------------------------------------------- //
-	scene("clientDialog", (clientKey,jourIdx,percent,totalCoins,force) => {
+				// animate the player
+				//player.play("walk_right")
+				//player.flipX = true
+				const SPEED = 100;
+				player_movement(player,SPEED)
+
+
+				// CLIENTS LINE IN ATELIER
+				let SHIFT_CLIENTLINE = {x:-20,y:Math.random([-5,5])}
+				let FIRST_CLIENTLINE = {x:center().x-20, y:center().y+30}
+
+				// FUNCTION TO LOOP ON CLIENT SPRITES
+				function addClientInLine(clientkey,index,tag){
+
+					const clientLine = add([
+						sprite(clientkey.spriteName,{anim:"walk_right"}),
+						// center() returns the center point vec2(width() / 2, height() / 2)
+						anchor("center"),
+						//console.log(saved_position),
+						pos(FIRST_CLIENTLINE.x+index*SHIFT_CLIENTLINE.x,FIRST_CLIENTLINE.y+index*SHIFT_CLIENTLINE.y),//the default position is in front of the workshop
+						area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
+						body(),
+						// pas de isStatic
+						scale(PERSOSCALE),
+						"client", //necessary tag for collision
+						tag,
+					])
+
+				}
+
+				// CREATE THE CLIENT LINE from a JSON
+				// show 6 clients at a time
+				// ADD ERROR
+				let lLength = 0
+				console.log("just before the loop, the clientCounter is:"+clientCounter);
+				for (let i = 0; i <= (6-clientCounter); i++) {
+					if (clientsList.hasOwnProperty(Object.keys(clientsList)[i])){
+						// add a counter to know how many clients you have in line
+						lLength = lLength +1
+						// add a client sprite in Line
+						addClientInLine(clientsList[Object.keys(clientsList)[i]],i,Object.keys(clientsList)[i]/*tag*/)
+
+						// add a collision per client
+						player.onCollide(Object.keys(clientsList)[i]/*client key*/, () => {
+							//play("portal")
+							// If there's a next level, origin() to the same scene but load the next level
+							music.paused = true
+							go("clientDialog",Object.keys(clientsList)[i], jourIdx, totalCoins,totalStars)
+						})
+
+					}
+					// if there is no client anymore then the game is "finished"
+					if (lLength==0){
+						player.onCollide("clientEntrance", () => {
+							let textBox = add([
+							sprite("dialogbox"),//, width: width() - 230
+							anchor("center"),
+							pos(center().x,BOTTOM),
+							"clientMessage"
+						])
+						let txt = add([
+							text("Les prochains clients\n viendront dans la prochaine démo! \ To be continued...", { size:  TXTSIZE }),//, width: width() - 230
+							anchor("center"),
+							pos(center().x,BOTTOM),
+							color(MYPURPLE),
+							"clientMessage"
+						])
+					})
+					}
+				}
+
+
+				// PORTAL from atelier to other scenes
+				if (outdoorKey == true){
+				player.onCollide("outsideDoorDroite", () => {
+					play("porte")
+					let BORDERNOCOLLISION = 96; // this is the distance from the center to the border without colliding to left door
+					let modified_pos = ({x:center().x-BORDERNOCOLLISION,y:player.pos.y})//keep the height and modify the x, leaving on the right means arriving on left side
+					//play("portal")
+					// If there's a next level, origin() to the same scene but load the next level
+					music.paused = true
+					go("outside", jourIdx, totalCoins,totalStars, modified_pos )
+				})
+				}
+
+				player.onCollide("etabli", () => {
+					let saved_position = player.pos
+					music.paused = true
+					// This collision shows the state of the inventory.
+					go("inventaire", jourIdx, totalCoins, totalStars,saved_position)
+				})
+				player.onCollide("affiche", () => {
+					let textBox = add([
+					sprite("dialogbox"),//, width: width() - 230
+					anchor("center"),
+					pos(center().x,BOTTOM),
+					"afficheMessage"
+				])
+				let txt = add([
+					text("Complète ton inventaire pour\n un TURFU RADIEUX!", { size:  TXTSIZE }),//, width: width() - 230
+					anchor("center"),
+					pos(center().x,BOTTOM),
+					color(MYPURPLE),
+					"afficheMessage"
+				])
+			})
+	onKeyPress(()=>{destroyAll("afficheMessage")})
+
+			})
+
+// ------ Boucle de Gameplay ------- //
+// ------ Dialogue avec le client --------------------------------------------------- //
+scene("clientDialog", (clientKey,jourIdx,totalCoins,totalStars) => {
 
 		// MAP POUR FAIRE LA BORDURE
 		const MAP_WIDTH = 256;
@@ -863,7 +1118,7 @@ function add_bordure_map(){
 			})
 		// Status Bar
 
-		addStatusBar(jourIdx,percent,totalCoins,force)
+		addStatusBar(jourIdx,totalCoins,totalStars)
 
 		// Update the on screen sprite & text
 		function updateDialog() {
@@ -912,7 +1167,7 @@ function add_bordure_map(){
 			curDialog = (curDialog + 1) % levelDialog.length
 			if (curDialog==0){
 				// dialog finished, options to choose
-				go("choix",clientKey, jourIdx,percent,totalCoins,force)
+				go("choix",clientKey, jourIdx,totalCoins,totalStars)
 			}
 			updateDialog()
 		})
@@ -922,388 +1177,12 @@ function add_bordure_map(){
 	 updateDialog()
 
 })
-function add_atelier_map(){
-	// MAP
-	const MAP_WIDTH = 256;
-	const MAP_HEIGHT = 256;
-	const atelierMAP =
-	addLevel([
-		"KbbbbbbbbbbbbbbN",
-		"GMMMMMMMMMMMMMML",
-		"GmmmmmmmmmmmmmmL",
-		"GZoooooooooooooL",
-		"G--oot---------L",
-		"G--tt-OOOOOO---L",
-		"G---T----t-----L",
-		"Gt-------------L",
-		"G------tt------L",
-		"G--------------L",
-		"X-T-------t----L",
-		"W--tt---t------L",
-		"w-----------t--e",
-		"S---T----------D",
-		"Gt--TT----t----c",
-		"QvvvvvvvvvvvvvvP",
-	],{
-		// define the size of each block
-		tileWidth:16,
-		tileHeight:16,
-		//scale :2,
-		pos:vec2(center().x - (MAP_WIDTH/2), 0),
-		// assign to each symbol a sprite
-		tiles: {
-			"W": () => [
-				sprite("scene_atelier_tile_sortiegaucheH1"),
-				area(),
-				body({ isStatic: true }),
-				"clientEntrance"
-			],
-			"w": () => [
-				sprite("scene_atelier_tile_sortiegaucheH2"),
-				area(),
-				body({ isStatic: true }),
-					"clientEntrance"
-			],
-			"S": () => [
-				sprite("sortieBasGauche"),
-				area(),
-				body({ isStatic: true }),
-				"clientEntrance"
 
-			],
-			"X": () => [
-				sprite("sortieHautGauche"),
-				area(),
-				body({ isStatic: true }),
-				"clientEntrance"
-			],
-
-			"=": () => [
-				sprite("etabli"),
-				area(),
-				body({ isStatic: true }),
-				"etabli"
-			],
-			"K": () => [
-				sprite("coinHauteGauche"),
-				area(),
-				body({isStatic:true}),
-			],
-			"b": () => [
-				sprite("bordHaute"),
-				area(),
-				body({isStatic:true}),
-			],
-			"N": () => [
-				sprite("coinHauteDroite"),
-				area(),
-				body({isStatic:true}),
-			],
-			"P": () => [
-				sprite("coinBasDroite"),
-				area(),
-				body({isStatic:true}),
-			],
-			"Q": () => [
-				sprite("coinBasGauche"),
-				area(),
-				body({isStatic:true}),
-			],
-			"o": () => [
-				sprite("tuileOmbre"),
-				area(),
-				body({isStatic:true}),
-			],
-			"O": () => [//ombre avec colliion
-				sprite("tuileOmbre"),
-				area(),
-				body({isStatic:true}),
-				"etabli"
-			],
-			"G": () => [
-				sprite("bordDroite"),
-				area(),
-				body({isStatic:true}),
-			],
-			"M": () => [
-				sprite("murFond"),
-				area(),
-				body({isStatic:true}),
-			],
-			"Z": () => [
-				sprite("tuileOmbre"),
-				area(),
-				body({isStatic:true}),
-				"affiche"
-			],
-			"m": () => [
-				sprite("basMurFond"),
-				area(),
-				body({isStatic:true}),
-
-			],
-			"L": () => [
-				sprite("bordGauche"),
-				area(),
-				body({isStatic:true}),
-			],
-			"D": () => [
-				sprite("sortieDroite"),
-				area(),
-				body({ isStatic: true} ),
-				"outsideDoorDroite",
-			],
-			"c": () => [
-				sprite("sortieBasDroite"),
-				area(),
-				body({ isStatic: true} ),
-
-			],
-			"e": () => [
-				sprite("sortieHautDroite"),
-				area(),
-				body({ isStatic: true} ),
-
-			],
-			"C": () => [
-				sprite("tuile1"),
-				area(),
-				body({isStatic:true}),
-			],
-			"H": () => [
-				sprite("tuileHaut"),
-				area(),
-				body({isStatic:true}),
-
-			],
-			"v": () => [
-				sprite("bordBas"),
-				area(),
-				body({isStatic:true}),
-
-			],
-			"-": () => [
-				sprite("tuile1"),
-				outline(40, 40),
-			],
-			"t": () => [
-				sprite("tuile2"),
-				outline(40, 40),
-			],
-			"T": () => [
-				sprite("tuile3"),
-				outline(40, 40),
-			],
-
-		}
-		})
-
-		// ADD ATELIER ITEMS
-		// table du milieu
-		const table = add([
-			sprite("etabli_fini",{anim:"idle"}),
-			scale(1),
-			anchor("center"),
-			pos(center().x,center().y-10),
-			area(),
-			body({isStatic:true})
-		])
-		//mur du murFond
-		const murFond = add([
-			sprite("atelier_mur_fond"),
-			anchor("center"),
-			pos(center().x,56)
-		])
-		//velos
-		const velo= add([
-			sprite("velo_rouge"),
-			scale(1),
-			anchor("center"),
-			pos(center().x,5*16),
-			area(),
-			body({isStatic:true})
-		])
-	add([
-			sprite("velo_rouge"),
-			scale(1),
-			anchor("center"),
-			pos(center().x+6*16,7.75*16),
-			area(),
-		body({isStatic:true})
-		])
-		add([
-				sprite("velo_rouge"),
-				scale(1),
-				anchor("center"),
-				pos(center().x+6*16,8.5*16),
-				area(),
-			body({isStatic:true})
-			])
-		add([
-				sprite("velo_rouge"),
-				scale(1),
-				anchor("center"),
-				pos(center().x+6*16,9.25*16),
-				area(),
-				body({isStatic:true})
-			])
-		const velo_sur_pied = add([
-			sprite("velo_sur_pied",{anim:"idle"}),
-			scale(1),
-			anchor("center"),
-			pos(center().x-(6*16),8*16),
-			area(),
-					body({isStatic:true})
-		])
-		add([
-			sprite("velo_sur_pied",{anim:"idle"}),
-			scale(1),
-			anchor("center"),
-			pos(center().x+4*16,MAP_HEIGHT-2*16),
-			area(),
-			body({isStatic:true})
-		])
-
-}
-	// ------ Boucle de Gameplay ----  //
-	// ------ Scene d'ouverture ----------------------------------------------- //
-scene("atelier", (jourIdx,percent,totalCoins,force, saved_position,clientCounter)=> {
-let music = play("fond")
-	add_atelier_map()
-			//status
-			addStatusBar(jourIdx,percent,totalCoins,force)
-			// add the mecanix// Add player game object
-			let default_position = saved_position
-			// collision Box size
-			const colBox = 5
-			const player = add([
-				sprite("mecanix"),
-				// center() returns the center point vec2(width() / 2, height() / 2)
-				anchor("center"),
-				//console.log(saved_position),
-				pos(saved_position.x,saved_position.y),//the default position is in front of the workshop
-				area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
-				//area(),
-				body(),
-				// scalePerso
-				scale(PERSOSCALE)
-			])
-
-			// animate the player
-			//player.play("walk_right")
-			//player.flipX = true
-			const SPEED = 100;
-			player_movement(player,SPEED)
-
-
-			// CLIENTS LINE IN ATELIER
-			let SHIFT_CLIENTLINE = {x:-20,y:Math.random([-5,5])}
-			let FIRST_CLIENTLINE = {x:center().x-20, y:center().y+30}
-
-			// FUNCTION TO LOOP ON CLIENT SPRITES
-			function addClientInLine(clientkey,index,tag){
-
-				const clientLine = add([
-					sprite(clientkey.spriteName,{anim:"walk_right"}),
-					// center() returns the center point vec2(width() / 2, height() / 2)
-					anchor("center"),
-					//console.log(saved_position),
-					pos(FIRST_CLIENTLINE.x+index*SHIFT_CLIENTLINE.x,FIRST_CLIENTLINE.y+index*SHIFT_CLIENTLINE.y),//the default position is in front of the workshop
-					area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
-					body(),
-					// pas de isStatic
-					scale(PERSOSCALE),
-					"client", //necessary tag for collision
-					tag,
-				])
-
-			}
-
-			// CREATE THE CLIENT LINE from a JSON
-			// show 6 clients at a time
-			// ADD ERROR
-			let lLength = 0
-			console.log("just before the loop, the clientCounter is:"+clientCounter);
-			for (let i = 0; i <= (6-clientCounter); i++) {
-				if (clientsList.hasOwnProperty(Object.keys(clientsList)[i])){
-					// add a counter to know how many clients you have in line
-					lLength = lLength +1
-					// add a client sprite in Line
-					addClientInLine(clientsList[Object.keys(clientsList)[i]],i,Object.keys(clientsList)[i]/*tag*/)
-
-					// add a collision per client
-					player.onCollide(Object.keys(clientsList)[i]/*client key*/, () => {
-						//play("portal")
-						// If there's a next level, origin() to the same scene but load the next level
-						music.paused = true
-						go("clientDialog",Object.keys(clientsList)[i], jourIdx, percent,totalCoins,force)
-					})
-
-				}
-				// if there is no client anymore then the game is "finished"
-				if (lLength==0){
-					player.onCollide("clientEntrance", () => {
-						let textBox = add([
-						sprite("dialogbox"),//, width: width() - 230
-						anchor("center"),
-						pos(center().x,BOTTOM),
-						"clientMessage"
-					])
-					let txt = add([
-						text("Les prochains clients\n viendront dans la prochaine démo! \ To be continued...", { size:  TXTSIZE }),//, width: width() - 230
-						anchor("center"),
-						pos(center().x,BOTTOM),
-						color(MYPURPLE),
-						"clientMessage"
-					])
-				})
-				}
-			}
-
-
-			// PORTAL from atelier to other scenes
-			if (outdoorKey == true){
-			player.onCollide("outsideDoorDroite", () => {
-				play("porte")
-				let BORDERNOCOLLISION = 96; // this is the distance from the center to the border without colliding to left door
-				let modified_pos = ({x:center().x-BORDERNOCOLLISION,y:player.pos.y})//keep the height and modify the x, leaving on the right means arriving on left side
-				//play("portal")
-				// If there's a next level, origin() to the same scene but load the next level
-				music.paused = true
-				go("outside", jourIdx, percent,totalCoins,force, modified_pos )
-			})
-			}
-
-			player.onCollide("etabli", () => {
-				let saved_position = player.pos
-				music.paused = true
-				// This collision shows the state of the inventory.
-				go("inventaire", jourIdx, percent,totalCoins, force,saved_position)
-			})
-			player.onCollide("affiche", () => {
-				let textBox = add([
-				sprite("dialogbox"),//, width: width() - 230
-				anchor("center"),
-				pos(center().x,BOTTOM),
-				"afficheMessage"
-			])
-			let txt = add([
-				text("Complète ton inventaire pour\n un TURFU RADIEUX!", { size:  TXTSIZE }),//, width: width() - 230
-				anchor("center"),
-				pos(center().x,BOTTOM),
-				color(MYPURPLE),
-				"afficheMessage"
-			])
-		})
-onKeyPress(()=>{destroyAll("afficheMessage")})
-
-		})
-
-		// ---- Monde exterieur -----//
-	scene("outside", (jourIdx, percent,totalCoins,force,position)=>{
+// ---- Monde exterieur -----//
+scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			let music = play("exte")
 			// at start of the outside scene the contenair is closed
-			let ouvertTag=false
+			//let ouvertTag=false
 
 			// MAP POUR FAIRE LA BORDURE
 			const MAP_WIDTH = 256;
@@ -1464,11 +1343,10 @@ onKeyPress(()=>{destroyAll("afficheMessage")})
 					],
 					}
 				})
-
-
+			// add status bar
+			addStatusBar(jourIdx,totalCoins,totalStars)
 		// add the mecanix// Add player game object
-
-		const colBox =5
+			const colBox =5
 		//ITEMSconst player =
 
 		const dechetterie = add([
@@ -1480,53 +1358,31 @@ onKeyPress(()=>{destroyAll("afficheMessage")})
 			body({isStatic:true}),
 
 		])
-		const contenairSprite = add([
-			sprite("contenair",{anim:"idle_close"}),
-			// center() returns the center point vec2(width() / 2, height() / 2)
-			anchor("center"),
-			pos(center().x+4*16-8,56),// the modified position from before
-			area(),
-			body({isStatic:true}),
-			"contenair",
-		])
-
-		add([
+		// const contenairSprite = add([
+		// 	sprite("contenair",{anim:"idle_close"}),
+		// 	// center() returns the center point vec2(width() / 2, height() / 2)
+		// 	anchor("center"),
+		// 	pos(center().x+4*16-8,56),// the modified position from before
+		// 	area(),
+		// 	body({isStatic:true}),
+		// 	"contenair",
+		// ])
+		let arbre1 = add([
 			sprite("arbre"),
 			// center() returns the center point vec2(width() / 2, height() / 2)
 			anchor("center"),
 			pos(34,64),// the modified position from before
 			area(),
 			body({isStatic:true}),
-
 		])
-		 add([
+		let arbre2 = add([
 			sprite("arbre"),
 			// center() returns the center point vec2(width() / 2, height() / 2)
 			anchor("center"),
 			pos(34,192),// the modified position from before
 			area(),
 			body({isStatic:true}),
-
 		])
-		add([
-		 sprite("arbre"),
-		 // center() returns the center point vec2(width() / 2, height() / 2)
-		 anchor("center"),
-		 pos(50,192),// the modified position from before
-		 area(),
-		 body({isStatic:true}),
-
-	 ])
-		add([
-			sprite("arbre"),
-			// center() returns the center point vec2(width() / 2, height() / 2)
-			anchor("center"),
-			pos(224,144),// the modified position from before
-			area(),
-			body({isStatic:true}),
-
-		])
-
 
 		const player = add([
 			sprite("mecanix_velo"),
@@ -1538,11 +1394,67 @@ onKeyPress(()=>{destroyAll("afficheMessage")})
 			// pas de isStatic
 			scale(PERSOSCALE)
 		])
-
 		// animate the player
 		//player.play("roule")
 		const SPEED = 100;
 		player_movement(player,SPEED)
+		// Perso dechetterie
+		const persoDechett = add([
+			sprite("perso_dechett_1"),
+			// center() returns the center point vec2(width() / 2, height() / 2)
+			anchor("center"),
+			pos(center().x+3*16,center().y-7*16),// the modified position from before
+			area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
+			body({isStatic:true}),
+			scale(PERSOSCALE),
+			"perso_dechett_1"
+		])
+
+
+		// DECHETERRIE DIALOG
+		let dechettDialog1 = [
+["PNJ","Hé toi ! qu'est ce que tu fais là ?"],
+["M"," Hé salut! C'est quoi cet endroit ?"],
+["PNJ"," C'est la dechetterie, tu connais pas ? t'es pas d'ici ?"],
+["M"," non, je viens de commencer de taffer à l'atelier de vélo pas loin d'ici"],
+["PNJ", "Ha ouais et ça va ? je connaissais la personne d'avant, iel était sympa mais je crois que c'était pas toujours évident avec les clients."],
+["M", "ha ouais je vois... je me fais pas mal expliquer mon taf par des types c'est un peu chiant."],
+["PNJ","je comprends, ça m'arrive ici aussi des fois. Ha aujourd'hui quelqu'un a amené des pieds de vélo même pas pété, tu veux les prendre ?"],
+["M", "Grave! merci. bon j'y retourne... à bientôt !"]
+]
+
+
+		// Interaction with the personnage dechetterie
+		player.onCollide("perso_dechett_1",()=>{
+			// First Interaction On Day 1
+			if(interactionDechetFlag == false){
+
+			//interaction happened
+			interactionDechetFlag = launchDialog(dechettDialog1)
+			}else{
+			// Other days
+			// add dialog box
+			let textBox = add([
+			sprite("dialogbox"),//, width: width() - 230
+			anchor("center"),
+			pos(center().x,BOTTOM),
+			"textBox"
+			])
+			// container for text in dialog box
+			const txtWidth = 150; // Ideal Width
+			const txtMargins = 15;
+			let txt = add([
+			text("Hé resalut! si t'as besoin de quelque chose, tu sais où me trouver haha je bouge jamais d'ici !", { size:  TXTSIZE,  width: txtWidth }),//, width: width() - 230
+			anchor("center"),
+			pos(center().x,BOTTOM),
+			color(MYPURPLE),
+			])
+			onKeyPress(()=>{
+				destroy(txt),
+				destroy(textBox)
+			})
+		}
+		})
 
 		//Collision
 		player.onCollide("atelierDoorGauche", () => {
@@ -1551,100 +1463,98 @@ onKeyPress(()=>{destroyAll("afficheMessage")})
 			let modified_pos = ({x:center().x+BORDERNOCOLLISION,y:player.pos.y})//keep the height and modify the x, leaving on the right means arriving on left side
 			// If there's a next level, origin() to the same scene but load the next level
 			music.paused=true
-			go("atelier", jourIdx, percent, totalCoins,force,modified_pos)
+			go("atelier", jourIdx, percent, totalCoins,totalStars,modified_pos)
 		})
-		// add status bar
-		addStatusBar(jourIdx,percent,totalCoins,force)
 
-	// if any key is pressed then the message are destroyed
-	const destroyMess = onKeyPress( () => {destroyAll("message")})
+
+	// // if any key is pressed then the message are destroyed
+	// const destroyMess = onKeyPress( () => {destroyAll("message")})
 	//Collision
 
-	player.onCollide("contenair", () => {
-		destroyMess.paused = true
-			const txtWidth = 150;
-		console.log("In the conteanir collision")
-	 if(force > 35){
-		 let textBox = add([
-			 sprite("dialogbox"),//, width: width() - 230
-			 anchor("center"),
-			 pos(center().x,BOTTOM),
-			 "message"
-		 ])
-
-
-		 if (ouvertTag==false){
-		let txt =  add([
-			 text("Oh tu as trouvé un nouvel outil!...", { size:  TXTSIZE,  width: txtWidth }),//, width: width() - 230
-			 anchor("center"),
-			 pos(center().x,BOTTOM),
-			 color(MYPURPLE),
-			  "message"
-		 ])
-		 // change the sprite
-		 contenairSprite.play("opening")
-		// fint the next UNAVAILABLE TOOLS
-		onKeyPress("enter",()=>{
-		for (const key of Object.keys(inventory)) {
-				// AVAILABLE TOOLS
-				if (inventory[key].state == "unavailable"){
-					let textBox = add([
-					sprite("dialogbox"),//, width: width() - 230
-					anchor("center"),
-					pos(center().x,BOTTOM),
-					"message"
-				])
-				let txt = add([
-					text("Tu as maintenant dans ton inventaire:\n"+key, { size:  TXTSIZE,  width: txtWidth }),//, width: width() - 230
-					anchor("center"),
-					pos(center().x,BOTTOM),
-					color(MYPURPLE),
-					"message"
-				])
-				inventory[key].state ="owned"
-				break
-				}
-			}
-			contenairSprite.play("idles_open")
-		 destroyMess.paused = false
-		 ouvertTag = true
-	 })
-	 }else{
-		 add([
- 			 text("Il n'y a plus rien dans ce contenair", { size:  TXTSIZE,  width: txtWidth }),//, width: width() - 230
- 			 anchor("center"),
- 			 pos(center().x,BOTTOM),
- 			 color(MYPURPLE),
- 			  "message"
- 		 ])
-		 destroyMess.paused = false
-	 }
-
-
- }else{
-	 destroyMess.paused = false
-	 let textBox = add([
-		 sprite("dialogbox"),//, width: width() - 230
-		 anchor("center"),
-		 pos(center().x,BOTTOM),
-		 "message"
-	 ])
-	 add([
-		 text("Tu n'as pas assez de force pour\n t'aventurer dans cette déchetterie", { size:  TXTSIZE,  width: txtWidth }),//, width: width() - 230
-		 anchor("center"),
-		 pos(center().x,BOTTOM),
-		 color(MYPURPLE),
-			"message"
-	 ])
- }
-	 })
+	// player.onCollide("contenair", () => {
+	// 	destroyMess.paused = true
+	// 		const txtWidth = 150;
+	// 	console.log("In the conteanir collision")
+	//  if(totalStars > 35){
+	// 	 let textBox = add([
+	// 		 sprite("dialogbox"),//, width: width() - 230
+	// 		 anchor("center"),
+	// 		 pos(center().x,BOTTOM),
+	// 		 "message"
+	// 	 ])
+ //
+ //
+	// 	 if (ouvertTag==false){
+	// 	let txt =  add([
+	// 		 text("Oh tu as trouvé un nouvel outil!...", { size:  TXTSIZE,  width: txtWidth }),//, width: width() - 230
+	// 		 anchor("center"),
+	// 		 pos(center().x,BOTTOM),
+	// 		 color(MYPURPLE),
+	// 		  "message"
+	// 	 ])
+	// 	 // change the sprite
+	// 	 contenairSprite.play("opening")
+	// 	// fint the next UNAVAILABLE TOOLS
+	// 	onKeyPress("enter",()=>{
+	// 	for (const key of Object.keys(inventory)) {
+	// 			// AVAILABLE TOOLS
+	// 			if (inventory[key].state == "unavailable"){
+	// 				let textBox = add([
+	// 				sprite("dialogbox"),//, width: width() - 230
+	// 				anchor("center"),
+	// 				pos(center().x,BOTTOM),
+	// 				"message"
+	// 			])
+	// 			let txt = add([
+	// 				text("Tu as maintenant dans ton inventaire:\n"+key, { size:  TXTSIZE,  width: txtWidth }),//, width: width() - 230
+	// 				anchor("center"),
+	// 				pos(center().x,BOTTOM),
+	// 				color(MYPURPLE),
+	// 				"message"
+	// 			])
+	// 			inventory[key].state ="owned"
+	// 			break
+	// 			}
+	// 		}
+	// 		contenairSprite.play("idles_open")
+	// 	 destroyMess.paused = false
+	// 	 ouvertTag = true
+	//  })
+	//  }else{
+	// 	 add([
+ // 			 text("Il n'y a plus rien dans ce contenair", { size:  TXTSIZE,  width: txtWidth }),//, width: width() - 230
+ // 			 anchor("center"),
+ // 			 pos(center().x,BOTTOM),
+ // 			 color(MYPURPLE),
+ // 			  "message"
+ // 		 ])
+	// 	 destroyMess.paused = false
+	//  }
+ //
+ //
+ // }else{
+	//  destroyMess.paused = false
+	//  let textBox = add([
+	// 	 sprite("dialogbox"),//, width: width() - 230
+	// 	 anchor("center"),
+	// 	 pos(center().x,BOTTOM),
+	// 	 "message"
+	//  ])
+	//  add([
+	// 	 text("Tu n'as pas assez de force pour\n t'aventurer dans cette déchetterie", { size:  TXTSIZE,  width: txtWidth }),//, width: width() - 230
+	// 	 anchor("center"),
+	// 	 pos(center().x,BOTTOM),
+	// 	 color(MYPURPLE),
+	// 		"message"
+	//  ])
+ // }
+	//  })
 
  })
 
-
-	// ------ Boucle de Gameplay ----  //
-	// ------ Scene d'inventaire' ----------------------------------------------- //
-	scene("inventaire", (jourIdx,percent,totalCoins,force,saved_position)=> {
+// ------ Boucle de Gameplay ----  //
+// ------ Scene d'inventaire' ----------------------------------------------- //
+scene("inventaire", (jourIdx,totalCoins,totalStars,saved_position)=> {
 
 		// MAP POUR FAIRE L'INVENTAIRE
 		const MAP_WIDTH = 256;
@@ -1781,7 +1691,7 @@ onKeyPress(()=>{destroyAll("afficheMessage")})
 		])
 
 		// add STATUS bar
-		addStatusBar(jourIdx,percent,totalCoins,force)
+		addStatusBar(jourIdx,totalCoins,totalStars)
 
 		//GAME
 		let i=0
@@ -1895,7 +1805,7 @@ onKeyPress(()=>{destroyAll("afficheMessage")})
 		//	})
 		onKeyPress("enter", () => {
 			console.log(inventory)
-			go("inventaire", jourIdx, percent,totalCoins, force,saved_position)
+			go("inventaire", jourIdx, totalCoins, totalStars,saved_position)
 		})
 
 		// leave the inventory for the workshop
@@ -1910,13 +1820,13 @@ onKeyPress(()=>{destroyAll("afficheMessage")})
 
 		// LEAVE SCENE
 		onKeyPress("escape", () => {
-			go("atelier", jourIdx,percent,totalCoins,force,mod_saved_position)})
+			go("atelier", jourIdx,totalCoins,totalStars,mod_saved_position)})
 
 	})
 
-	// ------ Boucle de Gameplay ----  //
-	// ------ Option ----------------------------------------------- //
-	scene("choix", (clientKey,jourIdx,percent,totalCoins,force) => {
+// ------ Boucle de Gameplay ----  //
+// ------ Option ----------------------------------------------- //
+scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 
 		// MAP POUR FAIRE LA BORDURE
 		const MAP_WIDTH = 256;
@@ -1997,7 +1907,7 @@ onKeyPress(()=>{destroyAll("afficheMessage")})
 			})
 
 		// status bar
-		addStatusBar(jourIdx,percent,totalCoins,force)
+		addStatusBar(jourIdx,totalCoins,totalStars)
 	// function Coloring
 	function coloring(object){
 		// time constant with multiplcation for faster effect
@@ -2178,112 +2088,19 @@ onKeyPress(()=>{destroyAll("afficheMessage")})
 
 		 if (clientCounter == 6){
 
-			 go("Carton_Journalier",clientKey,jourIdx,percent,totalCoins,force, 10,10,1)
+			 go("Carton_Journalier",clientKey,jourIdx,totalCoins,totalStars, 10,10,1)
 
 		 }else{
 			 // increase client counter
 			 clientCounter ++
 
-			 go("atelier", jourIdx,percent,totalCoins,force,INITIALPOSITION,clientCounter)
+			 go("atelier", jourIdx,totalCoins,totalStars,INITIALPOSITION,clientCounter)
 		 }
 	 }
 			 })
+}) // click replace by keyboard
 
-		 }) // click replace by keyboard
-
-	// ------ Boucle de Gameplay ----  //
-	// ------ Fight and Baddass_win----------------------------- //
-// 	scene("Fight", (clientKey,jourIdx, percent,totalCoins,force) => {
-// 		// MAP POUR LE MINI-GAME
-// 		add_bordure_map()
-//
-// 		addStatusBar(jourIdx,percent,totalCoins,force)
-// 		let isIncreaseTrue = false
-// 		let already_hit = 2
-// 		// client face
-// 		const avatar = add([
-// 			sprite(clientsList[clientKey].bigSpriteName),// retrieve the big sprite corresponding to the client
-// 			scale(1),
-// 			anchor("center"),
-// 			pos(center().x, BOTTOM/2+3)
-// 		])
-//
-// 		// Text
-// 		const txt = add([
-// 			text("(appuie sur espace pour frapper)", { size: TXTSIZE, width: MAP_WIDTH/2 }),
-// 			scale(1),
-// 			anchor("center"),
-// 			pos(center().x,BOTTOM)
-// 		])
-//
-//
-// 		// hit
-// 		const enterSpace = onKeyPress("enter", () => {
-// 			// UPDATE
-// 			// the fight is done
-// 			// force increase fetching BEFORE LEVEL INCREASE
-// 			//forcePercentIncrease = forceValues[levelIdx-1]
-// 			forcePercentIncrease = clientsList[clientKey].forceValue
-// 			//clientelePercentIncrease = -clienteleValues[levelIdx-1]
-// 			clientelePercentIncrease = -clientsList[clientKey].clienteleValue
-// 			// LEVEL update
-// 			if(clientsList[clientKey].isSexist==true)
-// 			{
-// 				jourIdx = jourIdx + 1 //the level is incremented only if the client was indeed sexist
-// 				isIncreaseTrue = true
-// 			}
-//
-//
-// 			// you need to wait for the end of the animation
-// 			wait(0, () => {
-// 				// BEFORE GOING TO THE CARTON DESTROY THE CLIENT IN LINE
-// 				delete clientsList[clientKey]
-//
-// 				go("Carton_Journalier",jourIdx,percent,totalCoins,force, forcePercentIncrease,clientelePercentIncrease,isIncreaseTrue)
-//
-// 			})
-// 		})
-// 		enterSpace.paused = true
-//
-// 		const hitSpace = onKeyPress("space", () => {
-//
-// 			if (already_hit>=0){
-// 				// animation
-// 				add([
-// 					sprite("scene_dialogue_punch","hit"),
-// 					//loop(false),
-// 					//addExplosion(),
-// 					scale(1),
-// 					anchor("center"),
-// 					pos(center().x, MAP_HEIGHT/2)
-// 				])
-// 				// sound
-// 				play("hitSound")
-// 				wait(0.2, () => {play("ouinouin")})
-//
-// 					if (already_hit==0){
-// 						// Text
-// 						const byebyeText = add([
-// 							text("Bye bye!", { size: LARGETXTSIZE}),
-// 							scale(1),
-// 							anchor("center"),
-// 							pos(center().x,BOTTOM-30),
-// 							color(MYBLUE)
-// 						])
-// 						txt.text = "(appuie sur enter pour continuer)"
-// 						hitSpace.paused = true
-// 						enterSpace.paused = false
-// 					}
-// 				already_hit = already_hit-1
-// 				console.log(already_hit)
-//
-// 			}else{
-//
-//
-// 	}}
-// )
-// 	})
-	scene("Carton_Journalier", (clientKey,jourIdx,percent,totalCoins,force, forcePercentIncrease,clientelePercentIncrease,isIncreaseTrue) => {
+scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercentIncrease,clientelePercentIncrease,isIncreaseTrue) => {
 		add_bordure_map()
 		play("carton")
 
@@ -2349,7 +2166,7 @@ onKeyPress(()=>{destroyAll("afficheMessage")})
 				 add([
 						text("(appuie sur enter pour retourner à l'atelier)", { size: TXTSIZE }),
 						scale(1),anchor("center"),pos(center().x,BOTTOM+5),])
-						onKeyPress("enter", () => { go("interactionJour1", jourIdx, percent,totalCoins,force,INITIALPOSITION)})
+						onKeyPress("enter", () => { go("interactionJour1", jourIdx, totalCoins,totalStars,INITIALPOSITION)})
 
 			break;
 			// BASIC
@@ -2360,7 +2177,7 @@ onKeyPress(()=>{destroyAll("afficheMessage")})
 				add([
 							text("(appuie sur enter pour retourner à l'atelier)", { size: TXTSIZE }),
 							scale(1),anchor("center"),pos(center().x,BOTTOM+5),])
-							onKeyPress("enter", () => { go("interactionJour1", jourIdx, percent,totalCoins,force,INITIALPOSITION)})
+							onKeyPress("enter", () => { go("interactionJour1", jourIdx, totalCoins,totalStars,INITIALPOSITION)})
 
 				break;
 			case 2 :
@@ -2372,7 +2189,7 @@ onKeyPress(()=>{destroyAll("afficheMessage")})
 							text("(appuie sur enter pour retourner à l'atelier)", { size: TXTSIZE }),
 							scale(1),anchor("center"),pos(center().x,BOTTOM+5),])
 							// next
-							onKeyPress("enter", () => { go("interactionJour1", jourIdx, percent,totalCoins,force,INITIALPOSITION)})
+							onKeyPress("enter", () => { go("interactionJour1", jourIdx, totalCoins,totalStars,INITIALPOSITION)})
 break;
 			case 3 :
 			// BASIC with Bankfrupt WARNING:
@@ -2383,7 +2200,7 @@ break;
 								text("(appuie sur enter pour retourner à l'atelier)", { size: TXTSIZE }),
 								scale(1),anchor("center"),pos(center().x,BOTTOM+5),])
 				// next
-				onKeyPress("enter", () => { go("interactionJour1", jourIdx, percent,totalCoins,force,INITIALPOSITION)})
+				onKeyPress("enter", () => { go("interactionJour1", jourIdx, totalCoins,totalStars,INITIALPOSITION)})
 break;
 			case 4 :
 			// GAMEOVER BURNOUT
@@ -2442,7 +2259,7 @@ break;
 //			onDestroy("statusUpdate", () => console.log("Now there is no more update and I print smth ");)
 	})
 
-	scene("interactionJour1", (jourIdx,percent,totalCoins,force,position) => {
+scene("interactionJour1", (jourIdx,totalCoins,totalStars,position) => {
 		//	// MAP
 			const MAP_WIDTH = 256;
 			const MAP_HEIGHT = 256;
@@ -2686,7 +2503,7 @@ break;
 				])
 
 		//status
-		addStatusBar(jourIdx,percent,totalCoins,force)
+		addStatusBar(jourIdx,totalCoins,totalStars)
 		// add the mecanix// Add player game object
 
 		const colBox = 3
@@ -2805,7 +2622,7 @@ break;
 					// door is open now
 					outdoorKey = true
 					console.log("apres le reset\n le jour"+newjourIdx+"\n le justifiedFightCounter "+justifiedFightCounter+"\n la thune c'est "+totalCoins+"\n les stars "+totalStars)
-				wait(1,()=>go("atelier",newjourIdx,percent,totalCoins,totalStars,INITIALPOSITION))
+				wait(1,()=>go("atelier",newjourIdx,totalCoins,totalStars,INITIALPOSITION))
 			})
 			}
 		)
@@ -2818,389 +2635,8 @@ break;
 
 	})
 
-	function addScoreBar(){
-
-		const scoreBoxHeight = 40
-		const scoreBoxWidth = 100
-		const scoreBoxmargins = 10
-
-		const scoreBox = add([
-			anchor("topleft"),
-			pos(20, 5),
-			rect(scoreBoxWidth,scoreBoxHeight),
-			outline(3),
-			area(),
-			color(0, 0, 255),
-		])
-		const scoreCount = add([
-			text("Coins: "+score,{size:TXTSIZE}),
-			anchor("topleft"),
-			pos(20+scoreBoxmargins, 5+scoreBoxmargins),
-			color(255,255,255),
-			{ update() { this.text = "level: "+jourIdx+"\n"+"Coins: "+ score }},
-		])
-
-	}
-	// ------ Boucle de Gameplay ----  //
-	// ------ Repair ----------------------------- //
-	// scene("Repair",(clientKey,levelIdx,percent,totalCoins,force,life) =>{
-	// 	let music = play("minijeu")
-	// 	// MAP POUR LE MINI-GAME
-	// 	add_minigame_map("scene_jeu_fondjaune")
-	// 	// INITIALIZATION mini-game
-	// 	// score is the coins in the mini-game
-	// 	let score = 0
-	//
-	// 	let isIncreaseTrue = false
-	// 	// get the list corresponding to the level
-	// 	//let outils = list_outils[levelIdx-1]
-	// 	const outils = clientsList[clientKey].outilsSprite
-	// 	// Get the tools goal corresponding to reparation type, i.e. level
-	// 	//const toolsGoal = toolsGoalList[levelIdx-1]
-	// 	const toolsGoal = clientsList[clientKey].outilsGoals
-	// 	// Tools to get
-	// 	let shiftinitial = 25
-	// 	let shift = shiftinitial
-	// 	let nTools = outils.length
-	//
-	//
-	// 	// GAME STATUS (COINS AND LIFE)
-	//
-	//
-	// 			const sBoxmargins = 25
-	// 			const statusBarHeight = MAP_HEIGHT-35
-	//
-	//
-	// 			// COINS
-	// 			const coinsLabel = add([
-	// 				text("$ ", {font: "prstart", size:TXTSIZE+4}),
-	// 				pos(center().x-(MAP_WIDTH/2)+sBoxmargins,statusBarHeight),
-	// 			])
-	// 			const scoreTexte = add([
-	// 				text(score, {font: "prstart", size:TXTSIZE+4}),
-	// 				pos(center().x-(MAP_WIDTH/2)+sBoxmargins+6,statusBarHeight),
-	// 			])
-	//
-	//
-	// 			// LIFE
-	// 			const lifeTxt = add([
-	// 				text("life ", {font: "prstart", size:TXTSIZE+4}),
-	// 				pos(center().x+45,statusBarHeight),
-	// 			])
-	// 			for (let i = 1; i <= life; i++) {
-	// 			 	add([
-	// 				sprite("badass_symbol"),
-	// 				scale(1),
-	// 				pos(center().x+45+15*i,statusBarHeight),
-	// 			])
-	// 		}
-	//
-	//
-	//
-	//
-	// 	// TOOLS GOAL BOX
-	// 	const tBoxHeight = 25
-	// 	const tBoxWidth = 28
-	// 	const tBoxmargins = 5
-	// 	const tBoxPos = center().x-(MAP_WIDTH/2)+22
-	//
-	// 	const toolsBox = add([
-	// 		pos(tBoxPos, 100),
-	// 		rect(tBoxWidth, tBoxHeight*(nTools+1),{radius:2}),
-	// 		outline(1,MYPURPLE),
-	// 		area(),
-	// 	])
-	// 	function addGoalOnLeft(item){
-	// 		add([
-	// 			text(" X"+item,{size:TXTSIZE}),
-	// 			anchor("center"),
-	// 			rotate(0),
-	// 			pos(tBoxPos+20, 100+shift),
-	// 			scale(1),
-	// 			area(),
-	// 			color(MYBLUE)
-	// 		])
-	// 		shift = shift + 25
-	// 	}
-	// 	shift = shiftinitial
-	//
-	// 	toolsGoal.forEach(addGoalOnLeft)
-	//
-	// 	// add each tools that is in the list of the right tools
-	// 	function addSpriteOnLeft(item){
-	// 		add([
-	// 			sprite(item),
-	// 			anchor("center"),
-	// 			rotate(0),
-	// 			pos(tBoxPos+10, 100+shift),
-	// 			scale(1),
-	// 			area(),
-	// 		])
-	// 		shift = shift + 25
-	// 	}
-	// 	shift = shiftinitial
-	// 	outils.forEach(addSpriteOnLeft)
-	//
-	// 	// MINI-GAME
-	// 	const dirs = {
-	// 		"left": LEFT,
-	// 		"right": RIGHT,
-	// 		"up": UP,
-	// 		"down": DOWN,
-	// 	}
-	// 	const SPEED_MIN = speedMin_List[levelIdx-1]
-	// 	const SPEED_MAX = SPEED_MIN+40
-	// 	// source : from kaboom.js
-	// 	// add the player game object
-	// 	const player = add([
-	// 		sprite("mecanix",{anim:"walk_right"}),
-	// 		anchor("center"),
-	// 		pos(center().x,BOTTOM-5),
-	// 		scale(1),
-	// 		area({ scale: 0.5 }),
-	// 		body(),
-	// 	])
-	//
-	// 	// MOVE PLAYER
-	// 	onKeyDown("right", () => {
-	// 		player.move(SPEED_MAX, 0)
-	// 	})
-	// 	onKeyDown("left", () => {
-	// 		player.move(-SPEED_MAX, 0)
-	// 	})
-	//
-	// 	// MOVE TOOLS the outils_all every frame, destroy it if far outside of screen
-	// 	onUpdate("outils_all", (outils_all) => {
-	// 		// list_outils
-	// 		outils_all.move(0, outils_all.speed)
-	// 		if (outils_all.pos.y > BOTTOM) {
-	// 			destroy(outils_all)
-	// 		}
-	// 	})
-	//
-	// 	// game over if player collide with wrong tools
-	// 	player.onCollide("bomb", (bomb) => {
-	// 		score = 0 // if you lose you take no coins with you back in the main game
-	// 		life -= 1
-	// 		console.log("life is "+life)
-	// 		if (life>0){
-	// 		go("lose",clientKey,levelIdx,percent,totalCoins,force,life)
-	// 	}else{
-	// 		go("tripleLose",clientKey,levelIdx,percent,totalCoins,force,life)
-	// 	}
-	// 	})
-	//
-	// 	// repair coins score counter
-	// 	// addScoreBar()
-	//
-	// 	// hit counter
-	// 	const toolsHit = Array(nTools).fill(0)
-	// 	// increment score if player gets a right tool and keep counter
-	// 	player.onCollide("outil", (outil) => {
-	// 		//addKaboom(player.pos)
-	// 		//Coins flying animation
-	// 		function winCoins(score) {
-	// 			for (let i = 1; i <= score; i++) {	add([
-	// 				sprite("coins_symbol",{anim:"blink"}),
-	// 				scale(1),
-	// 				area(),
-	// 				pos(player.pos),
-	// 				anchor("center"),
-	// 				outline(4),
-	// 				move(UP, 200),
-	// 				//	cleanup(),
-	// 				// strings here means a tag
-	// 				"badassPoint",
-	// 			])
-	// 		}
-	// 	}
-	//
-	// 	// Update mini-game score
-	// 	score += 5
-	// 	//update scoreBox
-	// 	scoreTexte.text = score
-	// 	// win coins
-	// 	winCoins(score)
-	// 	destroy(outil)
-	// 	// add sound burp()
-	// 	//shake(12)
-	//
-	// 	// increment toolHit counter accordingly to the tool hit
-	// 	let index = outils.indexOf(outil.name)
-	// 	toolsHit[index] += 1
-	//
-	// 	//Compare situation and goal
-	// 	if (toolsHit.length === toolsGoal.length && toolsHit.every((value, index) => value === toolsGoal[index])){
-	// 		// you win the mini game
-	// 		totalCoins += score, //you add the gain of the mini-game to your totalCoins
-	// 		winCoins(score)
-	// 		destroyAll("outils_all")
-	// 		wait(0.4, () => {
-	// 			percentIncrease = +clienteleValues[levelIdx-1]
-	// 			if(isSexist[levelIdx-1]==false)
-	// 			{
-	// 				levelIdx = levelIdx + 1 //the level is incremented only if the client was not sexist and the repair done
-	// 				isIncreaseTrue = true
-	// 			}
-	// 			// destroy client
-	// 			delete clientsList[clientKey]
-	// 			music.paused = true
-	// 			go("RepairSucceeded", levelIdx,percent,totalCoins,force,score,isIncreaseTrue,percentIncrease)})
-	// 		}
-	// 		// if you get too many of one tool you lose
-	// 		if(toolsHit[index] > toolsGoal[index]){
-	// 			score = 0 // if you lose you take no coins with you back in the main game
-	// 			life -= 1
-	// 			if (life>0){
-	// 				music.paused = true
-	// 			go("lose",clientKey,levelIdx,percent,totalCoins,force,life)
-	// 		}else{
-	// 			music.paused = true
-	// 			go("tripleLose",clientKey,levelIdx,percent,totalCoins,force,life)
-	// 		}
-	// 		}
-	// 	})
-	// 	// delay the tools' falling
-	// 	wait(1, () => {
-	//
-	// 		// do this every 0.3 seconds
-	// 		loop(0.7, () => {
-	// 			//let bombs = list_bombs[levelIdx-1]
-	// 			let bombs = clientsList[clientKey].bombsSprite
-	// 			// spawn from top side of the screen
-	// 			const x = rand(center().x-(MAP_WIDTH/2)+48,center().x+(MAP_WIDTH/2)-48)
-	// 			// spawn from a random y position
-	// 			const y = 0 + 14//rand(0, height())
-	// 			// get a random speed
-	// 			const speed = rand(SPEED_MIN, SPEED_MAX)
-	// 			// 50% percent chance is bomb
-	// 			const isBomb = chance(0.5)
-	// 			//smth to do here to select which one are bomb or not
-	// 			const spriteName = isBomb ? choose(bombs) : choose(outils)
-	//
-	// 			add([
-	// 				sprite(spriteName),
-	// 				pos(x, y),
-	// 				area({ scale: 0.8 }),
-	// 				rotate(rand(-15,15)),
-	// 				scale(0.8),
-	// 				anchor("center"),
-	// 				"outils_all", //add tag outils_all to any tools
-	// 				spriteName,//add tag as spritename
-	// 				// can I add a property to keep track of which tool
-	// 				isBomb ? "bomb" : "outil",
-	// 				//isBomb ? "bomb" : "outil",
-	// 				{ speed: speed , name : spriteName}
-	// 			])
-	// 		})
-	// 	})
-	// })
-
-
-// scene("lose",(clientKey,jourIdx,percent,totalCoins,force,life)=>{
-// 	// MAP
-// 	add_minigame_map("scene_jeu_fondjaune")
-// 	const txt = add([
-// 		text("Ce n'est pas le bon outil!\n tu as perdu!\n Essaie encore!", { size: TXTSIZE+5 }),
-// 		scale(1),
-// 		anchor("center"),
-// 		pos(center().x,MAP_HEIGHT/2),
-// 		color(MYPURPLE)
-// 	])
-// 	onKeyPress("enter", () => {
-// 		// go back to game with new life
-//
-// 		go("Carton_Journalier",clientKey, jourIdx, percent,totalCoins,force,life)})
-// 	})
-// scene("tripleLose",(clientKey,jourIdx,percent,totalCoins,force,life)=>{
-// 	add_minigame_map("scene_jeu_fondjaune")
-//
-// 		const txt = add([
-// 			text("Tu as encore perdu...\nil est temps de retourner à l'atelier", { size: TXTSIZE+5 }),
-// 			scale(1),
-// 			anchor("center"),
-// 			pos(center().x,MAP_HEIGHT/2),
-// 			color(MYPURPLE)
-// 		])
-// 		onKeyPress("enter", () => {
-// 			// destroy client
-// 			delete clientsList[clientKey]
-// 			// go back to game with new life
-// 			go("atelier",clientKey, jourIdx, percent,totalCoins,force,INITIALPOSITION)})
-// 		})
-	// scene("RepairSucceeded", (carton_jercent,totalCoins,force,score,isIncreaseTrue,percentIncrease) => {
-	// 	play("carton")
-	// 	add_bordure_map()
-	// 	// STATUS COMMUNICATION
-	// 	// COINS
-	// 	const generalMessage = add([
-	// 			text("En réussisant cette réparation tu as gagné "+score+"$", { size: TXTSIZE }),
-	// 			scale(1),
-	// 			anchor("center"),
-	// 			pos(center().x,BOTTOM-20),
-	// 		])
-	// 	// LEVEL
-	// 	if (isIncreaseTrue==true){
-	// 		add([
-	// 		text("Tu es monté d'un niveau! Bravo! ", { size: TXTSIZE }),
-	// 		scale(1),
-	// 		anchor("center"),
-	// 		pos(center().x,MAP_HEIGHT/4),
-	// 	])
-	// 	}else{
-	// 	add([
-	// 	text("Tu n'as pas changé de niveau...dommage ", { size: TXTSIZE }),
-	// 	scale(1),
-	// 	anchor("center"),
-	// 	pos(center().x,MAP_HEIGHT/4),
-	// ])
-	// }
-	//
-	// 	// CLIENTELE BAR
-	// 	const clientTxt = add([
-	// 		text("CLIENTS", {size:TXTSIZE}),
-	// 		pos(center().x-50, center().y),
-	// 	])
-	//
-	// 	const clientHolder = add([
-  // 	rect(62, 7),
-  // 	pos(center().x-20, center().y),
-	// 	outline(1,MYPURPLE),
-	// 	color(1,1,1,0)
-	// 	])
-	// 	const clientBarWidthInit = 62
-	// 	const clientBarWidth = (percent*clientBarWidthInit/100)
-	// 	const clientBar = add([
-  // 	rect(clientBarWidth, 5),
-  // 	pos(center().x-19, center().y+1),
-	// 	color(MYYELLOW)
-	// 	])
-	// 	//recolor based on percentage
-	// 	percentColoring(percent,clientBar,clientBarWidth)
-	// 	// increase of bar Width
-	// 	const widthIncrease = (percentIncrease*clientBarWidthInit/100)
-	//
-	//  	wait(0.3, () => {
-  //   tween(clientBar.width,clientBar.width+widthIncrease, 1, (p) => clientBar.width =p)
-	// 	wait(1.2, () => {percentColoring(percent+percentIncrease,clientBar,clientBar.width+widthIncrease)})
-	// 	})
-	// 	// instruction
-	// 	const instructions = add([
-	// 			text("(appuie sur enter pour retourner à l'atelier)", { size: TXTSIZE }),
-	// 			scale(1),
-	// 			anchor("center"),
-	// 			pos(center().x,BOTTOM),
-	// 		])
-	// 	onKeyPress("enter", () => {
-	// 		// go back to clients with the new percentage of clientele
-	// 		percent = (percent + percentIncrease)%100
-	//
-	// 		go("atelier", carton_jercent,totalCoins,force,{x:center().x,y:center().y})
-	// 	})
-	// })
-
 // ADD GAME OVER SCENE
-scene("Bankrupt", (jourIdx,percent,totalCoins,force) => {
+scene("Bankrupt", (jourIdx,totalCoins,totalStars) => {
 	add_bordure_map()
 	// Titre
 	const title = add([
@@ -3220,7 +2656,7 @@ scene("Bankrupt", (jourIdx,percent,totalCoins,force) => {
 			  				})
 })
 
-scene("Burnout", (jourIdx,percent,totalCoins,force) => {
+scene("Burnout", (jourIdx,totalCoins,totalStars) => {
 	add_atelier_map()
 	// Titre
 	const title = add([
@@ -3240,14 +2676,11 @@ scene("Burnout", (jourIdx,percent,totalCoins,force) => {
 				})
 })
 
-
-
-	///SOURCE
-	function start() {
+function start() {
 		// Start with the "game" scene, with initial parameters
 	//	go("atelier", 1, 85,0/*totalCoins*/,50,INITIALPOSITION)
-go("start",jourIdx,percent,totalCoins,force/*force*/,INITIALPOSITION)
-	//go("interactionJour1", (1,0,40,20,INITIALPOSITION))//go("clientDialog",1,75,100/*totalCoins*/,50/*force*/)
+go("start",jourIdx,totalCoins,totalStars/*force*/,INITIALPOSITION)
+//go("outside",2,30,30,INITIALPOSITION)	//go("interactionJour1", (1,0,40,20,INITIALPOSITION))//go("clientDialog",1,75,100/*totalCoins*/,50/*force*/)
 
 	}
-	start()
+start()
