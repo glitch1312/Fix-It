@@ -1463,7 +1463,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			let modified_pos = ({x:center().x+BORDERNOCOLLISION,y:player.pos.y})//keep the height and modify the x, leaving on the right means arriving on left side
 			// If there's a next level, origin() to the same scene but load the next level
 			music.paused=true
-			go("atelier", jourIdx, percent, totalCoins,totalStars,modified_pos)
+			go("atelier", jourIdx, totalCoins,totalStars,modified_pos,1)
 		})
 
 
