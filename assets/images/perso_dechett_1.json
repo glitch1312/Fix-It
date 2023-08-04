@@ -1,6 +1,6 @@
 { "frames": [
    {
-    "filename": "client_4_petit 0.aseprite",
+    "filename": "perso_dechett 0.aseprite",
     "frame": { "x": 0, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -9,7 +9,7 @@
     "duration": 250
    },
    {
-    "filename": "client_4_petit 1.aseprite",
+    "filename": "perso_dechett 1.aseprite",
     "frame": { "x": 16, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -18,7 +18,7 @@
     "duration": 250
    },
    {
-    "filename": "client_4_petit 2.aseprite",
+    "filename": "perso_dechett 2.aseprite",
     "frame": { "x": 32, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -27,7 +27,7 @@
     "duration": 250
    },
    {
-    "filename": "client_4_petit 3.aseprite",
+    "filename": "perso_dechett 3.aseprite",
     "frame": { "x": 48, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -36,7 +36,7 @@
     "duration": 250
    },
    {
-    "filename": "client_4_petit 4.aseprite",
+    "filename": "perso_dechett 4.aseprite",
     "frame": { "x": 64, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -45,7 +45,7 @@
     "duration": 250
    },
    {
-    "filename": "client_4_petit 5.aseprite",
+    "filename": "perso_dechett 5.aseprite",
     "frame": { "x": 80, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -54,7 +54,7 @@
     "duration": 250
    },
    {
-    "filename": "client_4_petit 6.aseprite",
+    "filename": "perso_dechett 6.aseprite",
     "frame": { "x": 96, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -63,7 +63,7 @@
     "duration": 250
    },
    {
-    "filename": "client_4_petit 7.aseprite",
+    "filename": "perso_dechett 7.aseprite",
     "frame": { "x": 112, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -72,7 +72,7 @@
     "duration": 250
    },
    {
-    "filename": "client_4_petit 8.aseprite",
+    "filename": "perso_dechett 8.aseprite",
     "frame": { "x": 128, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -81,7 +81,7 @@
     "duration": 250
    },
    {
-    "filename": "client_4_petit 9.aseprite",
+    "filename": "perso_dechett 9.aseprite",
     "frame": { "x": 144, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -90,7 +90,7 @@
     "duration": 250
    },
    {
-    "filename": "client_4_petit 10.aseprite",
+    "filename": "perso_dechett 10.aseprite",
     "frame": { "x": 160, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -99,7 +99,7 @@
     "duration": 250
    },
    {
-    "filename": "client_4_petit 11.aseprite",
+    "filename": "perso_dechett 11.aseprite",
     "frame": { "x": 176, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -111,7 +111,7 @@
  "meta": {
   "app": "https://www.aseprite.org/",
   "version": "1.2.40-x64",
-  "image": "client_4_petit.png",
+  "image": "perso_dechett_1.png",
   "format": "RGBA8888",
   "size": { "w": 192, "h": 16 },
   "scale": "1",

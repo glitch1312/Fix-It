@@ -1,6 +1,6 @@
 { "frames": [
    {
-    "filename": "client_11_petit 0.aseprite",
+    "filename": "client_6_petit 0.aseprite",
     "frame": { "x": 0, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -9,7 +9,7 @@
     "duration": 250
    },
    {
-    "filename": "client_11_petit 1.aseprite",
+    "filename": "client_6_petit 1.aseprite",
     "frame": { "x": 16, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -18,7 +18,7 @@
     "duration": 250
    },
    {
-    "filename": "client_11_petit 2.aseprite",
+    "filename": "client_6_petit 2.aseprite",
     "frame": { "x": 32, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -27,7 +27,7 @@
     "duration": 250
    },
    {
-    "filename": "client_11_petit 3.aseprite",
+    "filename": "client_6_petit 3.aseprite",
     "frame": { "x": 48, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -36,7 +36,7 @@
     "duration": 250
    },
    {
-    "filename": "client_11_petit 4.aseprite",
+    "filename": "client_6_petit 4.aseprite",
     "frame": { "x": 64, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -48,7 +48,7 @@
  "meta": {
   "app": "https://www.aseprite.org/",
   "version": "1.2.40-x64",
-  "image": "client_11_petit.png",
+  "image": "client_6_petit.png",
   "format": "RGBA8888",
   "size": { "w": 80, "h": 16 },
   "scale": "1",
@@ -57,7 +57,8 @@
    { "name": "idle", "from": 4, "to": 4, "direction": "forward" }
   ],
   "layers": [
-   { "name": "character", "opacity": 255, "blendMode": "normal" }
+   { "name": "character", "opacity": 255, "blendMode": "normal" },
+   { "name": "shadow", "opacity": 255, "blendMode": "normal" }
   ],
   "slices": [
   ]
