@@ -33,6 +33,7 @@ loadAseprite("client_6_petit","images/client_6_petit.png", "images/client_6_peti
 loadAseprite("client_7_petit","images/client_7_petit.png","images/client_7_petit.json")
 loadAseprite("client_8_petit","images/client_8_petit.png","images/client_8_petit.json")
 loadAseprite("client_9_petit","images/client_9_petit.png","images/client_9_petit.json")
+loadAseprite("client_10_petit","images/client_10_petit.png","images/client_10_petit.json")
 
 loadAseprite("client_11_petit","images/client_11_petit.png","images/client_11_petit.json")
 loadAseprite("client_12_petit","images/client_12_petit.png","images/client_12_petit.json")
@@ -73,7 +74,7 @@ loadSprite("client_6_grand","images/client_6_grand.png")
 loadSprite("client_7_grand","images/client_7_grand.png")
 loadSprite("client_8_grand","images/client_8_grand.png")
 loadSprite("client_9_grand","images/client_9_grand.png")
-
+loadSprite("client_10_grand","images/client_10_grand.png")
 loadSprite("client_11_grand","images/client_11_grand.png")
 loadSprite("client_12_grand","images/client_12_grand.png")
 
@@ -304,13 +305,13 @@ const clientsList = {
 
 	},
 	"client10":{
-			spriteName:"client_6_petit",
-			bigSpriteName:"client_6_grand",
+			spriteName:"client_10_petit",
+			bigSpriteName:"client_10_grand",
 			dialogs:[
 				[ "mecanix_en_pied", "Bonjour" ],
-				[ "client_11_grand", "Bonjour! j'ai cassé mon dérailleurs"],
+				[ "client_10_grand", "Bonjour! j'ai cassé mon dérailleurs"],
 				[ "mecanix_en_pied", "Dac, on peut le remplacer avec de l'occasion ou en commander un" ],
-				[ "client_11_grand", "Parfait" ],
+				[ "client_10_grand", "Parfait" ],
 			],
 
 			//repair scene
