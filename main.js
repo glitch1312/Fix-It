@@ -326,9 +326,9 @@ const clientsList = {
 			bigSpriteName:"client_11_grand",
 			dialogs:[
 				[ "mecanix_en_pied", "Salut, qu'est-ce qui se passe?" ],
-				[ "client_6_grand", " Salut, mon vélo freine plus"],
+				[ "client_11_grand", " Salut, mon vélo freine plus"],
 				[ "mecanix_en_pied", "oké je vais checker ça" ],
-				[ "client_6_grand", "Est ce que stan est là ? je préfère que ça soit lui qui le fasse" ],
+				[ "client_11_grand", "Est ce que stan est là ? je préfère que ça soit lui qui le fasse" ],
 				[ "mecanix_en_pied", "il est pas là..."],
 			],
 			//repair scene
@@ -859,7 +859,8 @@ function add_atelier_map(){
 				anchor("center"),
 				pos(center().x-(6*16),8*16),
 				area(),
-						body({isStatic:true})
+						body({isStatic:true}),
+							"pied_velos"
 			])
 			const velo_sur_pied_2 = add([
 				sprite("velo_sur_pied",{anim:"idle"}),
@@ -867,7 +868,8 @@ function add_atelier_map(){
 				anchor("center"),
 				pos(center().x+4*16,MAP_HEIGHT-2*16),
 				area(),
-				body({isStatic:true})
+				body({isStatic:true}),
+				"pied_velos"
 			])
 		}
 
@@ -909,7 +911,7 @@ scene("start", (jourIdx,totalCoins,totalStars) => {
 	// ------ Boucle de Gameplay ----  //
 	// ------ Scene d'ouverture ----------------------------------------------- //
 scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=> {
-	let music = play("fond")
+	let music = play("page_debut")
 		add_atelier_map()
 				//status
 				addStatusBar(jourIdx,totalCoins,totalStars)
@@ -929,7 +931,26 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 					// scalePerso
 					scale(PERSOSCALE)
 				])
-
+				// if velot is true add Collision
+				if (veloTag==true){
+					player.onCollide("pied_velos",()=>{
+					let textBox = add([
+					sprite("dialogbox"),//, width: width() - 230
+					anchor("center"),
+					pos(center().x,BOTTOM),
+				])
+				let txt = add([
+					text("Incroyable! Quelles trouvailles on fait a la dechet!", { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
+					anchor("center"),
+					pos(center().x,BOTTOM),
+					color(MYPURPLE),
+				])
+				onKeyPress(()=>{
+					destroy(txt),
+					destroy(textBox)
+			})
+		})
+		}
 				// animate the player
 				//player.play("walk_right")
 				//player.flipX = true
@@ -1376,7 +1397,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			sprite("arbre"),
 			// center() returns the center point vec2(width() / 2, height() / 2)
 			anchor("center"),
-			pos(34,64),// the modified position from before
+			pos(center().x-32,center().y),// the modified position from before
 			area(),
 			body({isStatic:true}),
 		])
@@ -1384,7 +1405,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			sprite("arbre"),
 			// center() returns the center point vec2(width() / 2, height() / 2)
 			anchor("center"),
-			pos(34,192),// the modified position from before
+			pos(center().x-36,center().y+32),// the modified position from before
 			area(),
 			body({isStatic:true}),
 		])
@@ -1414,6 +1435,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			scale(PERSOSCALE),
 			"perso_dechett_1"
 		])
+		persoDechett.flipX = true
 
 
 		// DECHETERRIE DIALOG
@@ -1456,8 +1478,10 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			color(MYPURPLE),
 			])
 			onKeyPress(()=>{
+				play("audio_reussite")
 				destroy(txt),
 				destroy(textBox)
+				wait(0.1,()=>play("exte"))
 			})
 		}
 		})
@@ -2011,7 +2035,10 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 
 			switch(DoSituationTest(repairFlag,clientKey)){
 				case 0:
+				//choix reparer est juste
 				repairCounter++
+				play("audio_reparer")
+				wait(0.3,()=>play("audio_piece"))
 				add([
 				sprite("choix_reparer",{anim:"move"}),
 				scale(1),
@@ -2019,17 +2046,21 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 				pos(center().x,center().y-25),
 				lifespan(1.6),
 			  ])
+
 				wait(1.6, () => {add([
 					text("Superbe reparation!",{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
 					anchor("center"),
 					pos(center().x,BOTTOM),
-				])})
+				])
+				play("action_juste")})
 			 // if you repair you get money
 			 totalCoins = totalCoins + 10
 				break;
 
 				case 1: // Reparation mauvaix choix
 				repairCounter++
+				play("audio_reparer")
+				wait(0.3,()=>play("audio_piece"))
 				add([
 				sprite("choix_reparer",{anim:"move"}),
 				scale(1),
@@ -2051,6 +2082,9 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 			 fightCounter++
 			 justifiedFightCounter++
 			// animation
+			play("hitSound")
+			wait(0.4,()=>play("ouinouin"))
+			wait(0.6,()=>play("extraBonus"))
 			add([
 			sprite("choix_frapper_juste",{anim:"hit"}),
 			scale(1),
@@ -2058,17 +2092,22 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 			pos(center().x,center().y-25),
 			lifespan(1.6),
 		  ])
+
 			wait(1.6, () => {add([
 				text("Dans ta geule!",{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
 				anchor("center"),
 				pos(center().x,BOTTOM),
-			])})
+			])
+			play("action_juste")})
 			// if you fight  you get experience
 			totalStars = totalStars + 10
 			break;
 
 			case 3: // Fight mauvais choix
 			fightCounter++
+			play("hitSound")
+			wait(0.4,()=>play("ouinouin"))
+			wait(0.6,()=>play("extraBonus"))
 			add([
 			sprite("choix_frapper_juste",{anim:"hit"}),
 			scale(1),
@@ -2167,7 +2206,7 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 			case 0 :
 			// message
 				add([text("Wouahhh quel superbe travail tu fais!",
-				{ size: TXTSIZE, font:"arcade"}),scale(1),anchor("center"),pos(center().x,BOTTOM-5)])
+				{ size: TXTSIZE, width:TXTWIDTH, font:"arcade"}),scale(1),anchor("center"),pos(center().x,BOTTOM-5)])
 			// instruction
 				 add([
 						text("(appuie sur enter pour retourner à l'atelier)", { size: TXTSIZE }),
@@ -2178,7 +2217,7 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 			// BASIC
 			case 1 :
 			add([text("Tu as fait du bon travail.",
-				{ size: TXTSIZE, font:"arcade"}),scale(1),anchor("center"),pos(center().x,BOTTOM-5)])
+				{ size: TXTSIZE,width:TXTWIDTH, font:"arcade"}),scale(1),anchor("center"),pos(center().x,BOTTOM-5)])
 			// instruction
 				add([
 							text("(appuie sur enter pour retourner à l'atelier)", { size: TXTSIZE }),
@@ -2188,8 +2227,8 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 				break;
 			case 2 :
 			// BASIC with Burnout WARNING:
-			add([text("Tu as fait du bon travail,\n mais attention tu t'epuises...",
-				{ size: TXTSIZE, font:"arcade"}),scale(1),anchor("center"),pos(center().x,BOTTOM-5)])
+			add([text("Tu as fait du bon travail, mais attention tu t'epuises...",
+				{ size: TXTSIZE,width:TXTWIDTH, font:"arcade"}),scale(1),anchor("center"),pos(center().x,BOTTOM-5)])
 				// instruction
 					 add([
 							text("(appuie sur enter pour retourner à l'atelier)", { size: TXTSIZE }),
@@ -2199,8 +2238,8 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 break;
 			case 3 :
 			// BASIC with Bankfrupt WARNING:
-				add([text("Tu as fait du bon travail,\n mais attention tu n'as pas gagne beaucoup d'argent...",
-					{ size: TXTSIZE, font:"arcade"}),scale(1),anchor("center"),pos(center().x,BOTTOM-5)])
+				add([text("Tu as fait du bon travail, mais attention tu n'as pas gagne beaucoup d'argent...",
+					{ size: TXTSIZE, width:TXTWIDTH,font:"arcade"}),scale(1),anchor("center"),pos(center().x,BOTTOM-5)])
 					// instruction
 						 add([
 								text("(appuie sur enter pour retourner à l'atelier)", { size: TXTSIZE }),
@@ -2210,8 +2249,8 @@ break;
 break;
 			case 4 :
 			// GAMEOVER BURNOUT
-			add([text("Tu es plein d'argent \n mais completement epuise...\n tu es en burnout..",
-				{ size: TXTSIZE, font:"arcade"}),scale(1),anchor("center"),pos(center().x,BOTTOM-5)])
+			add([text("Tu es plein d'argent  mais completement epuise...\n tu es en burnout..",
+				{ size: TXTSIZE,width:TXTWIDTH, font:"arcade"}),scale(1),anchor("center"),pos(center().x,BOTTOM-5)])
 			wait(2,()=>go("Burnout"))
 break;
 			case 5 :
@@ -2587,6 +2626,7 @@ scene("interactionJour1", (jourIdx,totalCoins,totalStars,position) => {
 			// dialog finished, options to choose
 			dialogAction.paused = true
 			firstTarget.paused=true
+			play("audio_reussite")
 			destroy(textBox)
 			destroy(txt)
 			onKeyPress("enter",() => {
@@ -2629,6 +2669,7 @@ scene("interactionJour1", (jourIdx,totalCoins,totalStars,position) => {
 
 // ADD GAME OVER SCENE
 scene("Bankrupt", (jourIdx,totalCoins,totalStars) => {
+	play("audio_fete")
 	add_bordure_map()
 	// Titre
 	const title = add([
@@ -2649,6 +2690,7 @@ scene("Bankrupt", (jourIdx,totalCoins,totalStars) => {
 })
 
 scene("Burnout", (jourIdx,totalCoins,totalStars) => {
+	play("audio_burnout")
 	add_atelier_map()
 	// Titre
 	const title = add([
