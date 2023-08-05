@@ -35,11 +35,13 @@ loadAseprite("client_8_petit","images/client_8_petit.png","images/client_8_petit
 loadAseprite("client_9_petit","images/client_9_petit.png","images/client_9_petit.json")
 loadAseprite("client_10_petit","images/client_10_petit.png","images/client_10_petit.json")
 
-loadAseprite("client_11_petit","images/client_11_petit.png","images/client_11_petit.json")
+//loadAseprite("client_11_petit","images/client_11_petit.png","images/client_11_petit.json")
 loadAseprite("client_12_petit","images/client_12_petit.png","images/client_12_petit.json")
 // perso autres
 loadAseprite("perso_dechett_1","images/perso_dechett_1.png","images/perso_dechett_1.json")
 loadAseprite("perso_interaction_1","images/perso_interaction_1.png","images/perso_interaction_1.json")
+loadAseprite("perso_interaction_2","images/perso_interaction_2.png","images/perso_interaction_2.json")
+
 
 // SPRITE ATLAS
 //Leshy SpriteSheet Tool https://www.leshylabs.com/apps/sstool/ to create the sprite atlas
@@ -64,6 +66,12 @@ loadSprite("mecanix_en_pied","images/Sprite_maincharacter_enpied.png")
 loadSprite("velo_rouge","images/Sprite-velorouge.png")
 loadSprite("arbre","images/Sprite_arbre.png")
 loadSprite("dechett","images/Sprite_dechett.png")
+loadSprite("carton_bulle","images/bulle.png")
+loadSprite("carton_bilan","images/bilan_resume.png")
+loadSprite("choix_bulle","images/choix_bulle.png")
+loadSprite("atelier_poster","images/poster.png")
+loadSprite("atelier_poster_grand","images/atelier_poster_grand.png")
+
 //clients
 loadSprite("client_1_grand", "images/client_1_grand.png") //punk
 loadSprite("client_2_grand","images/client_2_grand.png") // brunex en pied
@@ -75,7 +83,7 @@ loadSprite("client_7_grand","images/client_7_grand.png")
 loadSprite("client_8_grand","images/client_8_grand.png")
 loadSprite("client_9_grand","images/client_9_grand.png")
 loadSprite("client_10_grand","images/client_10_grand.png")
-loadSprite("client_11_grand","images/client_11_grand.png")
+//loadSprite("client_11_grand","images/client_11_grand.png")
 loadSprite("client_12_grand","images/client_12_grand.png")
 
 // AUDIOS
@@ -88,7 +96,10 @@ loadSound("audio_reussite", "audio/porte.mp3");
 loadSound("action_juste", "audio/reparer_frapper_juste.wav");
 loadSound("audio_reparer", "audio/reparer.wav");
 loadSound("page_debut", "audio/start.mp3");
-loadSound("hitSound", "audio/bomb_explosion.wav");
+//loadSound("hitSound", "audio/bomb_explosion.wav");
+loadSound("hitSound", "audio/audio_frapper.wav");
+loadSound("choix_faux","audio/cfaux.mp3")
+
 loadSound("extraBonus", "audio/extra_bonus.wav");
 loadSound("hitInRepair", "audio/retro_click.wav");
 loadSound("unlock", "audio/unlock.wav");
@@ -113,7 +124,7 @@ loadSound("exte", "audio/exte.mp3");
 // coup de <3 pixel
 // retro pour tout prstartK
 //https:www.1001fonts.com/pixel-millennium-font.html#license Pixel Millennium is licensed under the Creative Commons Attribution-NonCommercial-NoDerivs License (CC BY-NC-ND)
-loadFont("arcade","assets/fonts/joystix.otf")
+//loadFont("arcade","assets/fonts/joystix.otf")
 loadFont("prstart","assets/fonts/pixel.ttf")
 // downloaded at https://www.1001fonts.com/joystix-font.html under the https://www.1001fonts.com/joystix-font.html#license license
 loadFont("joystix","assets/fonts/joystix.otf")
@@ -123,6 +134,7 @@ let totalCoins = 0
 let totalStars = 0
 let interactionDechetFlag = false // no interaction with dechetterie perso
 let veloTag = false // no bikePost yet
+let posterFlag = false
 let jourIdx = 1 // game starts at day 1
 let clientCounter = 1 // no client interaction at start
 let fightCounter = 0
@@ -322,13 +334,13 @@ const clientsList = {
 
 	},
 	"client11":{
-			spriteName:"client_11_petit",
-			bigSpriteName:"client_11_grand",
+			spriteName:"client_6_petit",
+			bigSpriteName:"client_6_grand",
 			dialogs:[
 				[ "mecanix_en_pied", "Salut, qu'est-ce qui se passe?" ],
-				[ "client_11_grand", " Salut, mon vélo freine plus"],
+				[ "client_6_grand", " Salut, mon vélo freine plus"],
 				[ "mecanix_en_pied", "oké je vais checker ça" ],
-				[ "client_11_grand", "Est ce que stan est là ? je préfère que ça soit lui qui le fasse" ],
+				[ "client_6_grand", "Est ce que stan est là ? je préfère que ça soit lui qui le fasse" ],
 				[ "mecanix_en_pied", "il est pas là..."],
 			],
 			//repair scene
@@ -454,6 +466,129 @@ function resetDayVariables(totalCoins,totalStars){
 			console.log("in the reset function the dayis " +jourIdx)
 			return jourIdx;
 		}
+
+// Function to automatixe the path and dialog for endoftheday interaction
+function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,totalStars,
+	playerPosition/*{x:,y:}*/,persoSprite,target1/*{x:,y:}*/,dialogInteractionList,target2,flag){
+			// map and status are already loaded
+		const colBox = 3
+		const player = add([
+			sprite("mecanix",{anim:"idle"}),
+			anchor("center"),
+			pos(playerPosition.x,playerPosition.y),
+			area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
+			body(),
+			scale(PERSOSCALE)
+		])
+		player.flipX = true
+
+		// Add the other pers
+		const perso = levelAtelier.spawn([
+			sprite(persoSprite,{anim:"walk_right"}),
+			anchor("center"),
+			pos(0,160),//the default position is in front of the workshop
+			area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
+			body(),
+			scale(PERSOSCALE),
+			agent({ speed: 80, allowDiagonals: true }),],1,1)
+		let aller = onKeyPress("enter",() => {
+			perso.setTarget(vec2(
+				target1.x,//Math.floor((center().x+45) / TILE_WIDTH) * TILE_WIDTH + TILE_WIDTH / 2,
+				target1.y//Math.floor((center().y-65)  / TILE_HEIGHT) * TILE_HEIGHT + TILE_HEIGHT / 2,
+			))
+		})
+	//once the aller is done
+let firstTarget= 	perso.onTargetReached(()=>{
+
+let dialogInteraction1 = dialogInteractionList
+			aller.paused =true
+
+	// add dialog box
+	let textBox = add([
+		sprite("dialogbox"),//, width: width() - 230
+		anchor("center"),
+		pos(center().x,BOTTOM),
+		"textBox"
+	])
+	//initialization
+	let initDialog = dialogInteraction1.length
+	let levelDialog = dialogInteraction1
+
+	// Text bubble
+	const txtWidth = 150; // Ideal Width
+	const txtMargins = 15;
+	let txt = add([
+		text("", { size:  TXTSIZE,  width: txtWidth }),//, width: width() - 230
+		anchor("center"),
+		pos(center().x,BOTTOM),
+		color(MYPURPLE),
+	])
+	// Update the on screen sprite & text
+	function updateDialog() {
+		const [ char, dialog ] = dialogInteraction1[curDialog]
+		console.log(dialog);
+		// Use a new sprite component to replace the old one
+	//	avatar.use(sprite(char))
+		// Update the dialog text
+		// mettre le texte lettre apres lettre
+		txt.text = dialog
+	}
+	//initialization
+	let curDialog = 0
+		updateDialog()
+	let dialogAction = onKeyPress("enter", () => {
+		// Cycle through the dialogs
+		curDialog = (curDialog + 1) % dialogInteraction1.length
+		if (curDialog==0){
+			// dialog finished, options to choose
+			dialogAction.paused = true
+			firstTarget.paused=true
+			play("audio_reussite")
+			destroy(textBox)
+			destroy(txt)
+			onKeyPress("enter",() => {
+				dialogAction.paused = true
+				firstTarget.paused=true
+				perso.flipX=true
+				let retour = perso.setTarget(vec2(
+					target2.x,//Math.floor((center().x+45) / TILE_WIDTH) * TILE_WIDTH + TILE_WIDTH / 2,
+					target2.y//Math.floor((center().y-65)  / TILE_HEIGHT) * TILE_HEIGHT + TILE_HEIGHT / 2,
+				))
+				console.log("Before the fade\n le jour "+jourIdx+"\n le justifiedFightCounter "+justifiedFightCounter+"\n la thune c'est "+totalCoins+"\n les stars "+totalStars)
+				perso.onTargetReached(()=>{
+					dialogAction.paused =true
+					if(flag==true){
+						let poster = add([
+							sprite("atelier_poster"),
+							pos(center().x-(6.5*16),center().y-(7.2*16))
+						])
+						posterFlag = true
+					}
+					wait(0.3,()=>{
+						let fadeOut = add([
+						pos(center().x, center().y-30),
+						anchor("center"),
+						color(BLACK),
+    				rect(256, 256),
+    				area(),
+						fadeIn(1),
+						opacity(1),
+					])
+					//to the next day
+					let newjourIdx = resetDayVariables(totalCoins,totalStars)
+					// door is open now
+					outdoorKey = true
+					console.log("apres le reset\n le jour"+newjourIdx+"\n le justifiedFightCounter "+justifiedFightCounter+"\n la thune c'est "+totalCoins+"\n les stars "+totalStars)
+				wait(1,()=>go("atelier",newjourIdx,totalCoins,totalStars,INITIALPOSITION))
+			})
+			})
+			}
+		)
+	}else{
+		updateDialog()
+	}
+	})
+})}
 
 // Status bar
 function addStatusBar(jourIdx,totalCoins,totalStars){
@@ -881,7 +1016,7 @@ scene("start", (jourIdx,totalCoins,totalStars) => {
 		add_bordure_map()
 		// Titre
 		const title = add([
-			text("Fix it !", { size: LARGETXTSIZE, font:"arcade" ,width:MAP_WIDTH-64}),
+			text("Fix it !", { size: LARGETXTSIZE, font:"joystix" ,width:MAP_WIDTH-64}),
 			scale(1),
 			anchor("center"),
 			pos(center().x,center().y-0.6*(MAP_HEIGHT/2))
@@ -951,7 +1086,14 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 			})
 		})
 		}
-				// animate the player
+
+				if (posterFlag==true){
+					let poster = add([
+						sprite("atelier_poster"),
+						pos(center().x-(6.5*16),center().y-(7.2*16)),
+						"affiche"
+					])
+				}// animate the player
 				//player.play("walk_right")
 				//player.flipX = true
 				const SPEED = 100;
@@ -1042,20 +1184,21 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 					// This collision shows the state of the inventory.
 					go("inventaire", jourIdx, totalCoins, totalStars,saved_position)
 				})
+				// poster collision
 				player.onCollide("affiche", () => {
 					let textBox = add([
-					sprite("dialogbox"),//, width: width() - 230
+					sprite("atelier_poster_grand"),//, width: width() - 230
 					anchor("center"),
-					pos(center().x,BOTTOM),
+					pos(center().x,center().y-10),
 					"afficheMessage"
 				])
-				let txt = add([
-					text("Complète ton inventaire pour\n un TURFU RADIEUX!", { size:  TXTSIZE }),//, width: width() - 230
-					anchor("center"),
-					pos(center().x,BOTTOM),
-					color(MYPURPLE),
-					"afficheMessage"
-				])
+				// let txt = add([
+				// 	text("Complète ton inventaire pour\n un TURFU RADIEUX!", { size:  TXTSIZE }),//, width: width() - 230
+				// 	anchor("center"),
+				// 	pos(center().x,BOTTOM),
+				// 	color(MYPURPLE),
+				// 	"afficheMessage"
+				// ])
 			})
 	onKeyPress(()=>{destroyAll("afficheMessage")})
 
@@ -2047,10 +2190,19 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 				lifespan(1.6),
 			  ])
 
-				wait(1.6, () => {add([
-					text("Superbe reparation!",{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
+				wait(1.6, () => {
+					add([
+						 sprite("choix_bulle"),//, width: width() - 230
+						 anchor("center"),
+						 scale(1),
+						 pos(center().x-10,BOTTOM+15),
+						 "textBox"
+					 ])
+					 add([
+					text("Bien joue!",{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
 					anchor("center"),
 					pos(center().x,BOTTOM),
+					color(MYPURPLE)
 				])
 				play("action_juste")})
 			 // if you repair you get money
@@ -2068,11 +2220,21 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 				pos(center().x,center().y-25),
 				lifespan(1.6),
 			  ])
-				wait(1.6, () => {add([
-					text("Ca me fatigue...",{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
+				wait(1.6, () => {
+					add([
+						 sprite("choix_bulle"),//, width: width() - 230
+						 anchor("center"),
+						 scale(1),
+						 pos(center().x-10,BOTTOM+15),
+						 "textBox"
+					 ])
+				//commnet
+				add([text("Ca me fatigue...",{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
 					anchor("center"),
 					pos(center().x,BOTTOM),
-				])})
+					color(MYPURPLE)
+				])
+			play("choix_faux")})
 
 		 // if you hit you get experience
 		 totalCoins = totalCoins + 10
@@ -2083,7 +2245,7 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 			 justifiedFightCounter++
 			// animation
 			play("hitSound")
-			wait(0.4,()=>play("ouinouin"))
+			wait(0.5,()=>play("ouinouin"))
 			wait(0.6,()=>play("extraBonus"))
 			add([
 			sprite("choix_frapper_juste",{anim:"hit"}),
@@ -2093,10 +2255,19 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 			lifespan(1.6),
 		  ])
 
-			wait(1.6, () => {add([
-				text("Dans ta geule!",{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
+			wait(1.6, () => {
+				add([
+					 sprite("choix_bulle"),//, width: width() - 230
+					 anchor("center"),
+					 scale(1),
+					 pos(center().x-10,BOTTOM+15),
+					 "textBox"
+				 ])
+				 add([
+				text("Dans ta gueule!",{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
 				anchor("center"),
 				pos(center().x,BOTTOM),
+				color(MYPURPLE)
 			])
 			play("action_juste")})
 			// if you fight  you get experience
@@ -2106,7 +2277,7 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 			case 3: // Fight mauvais choix
 			fightCounter++
 			play("hitSound")
-			wait(0.4,()=>play("ouinouin"))
+			wait(0.5,()=>play("ouinouin"))
 			wait(0.6,()=>play("extraBonus"))
 			add([
 			sprite("choix_frapper_juste",{anim:"hit"}),
@@ -2115,11 +2286,23 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 			pos(center().x,center().y-25),
 			lifespan(1.6),
 			])
-			wait(1.6, () => {add([
+			wait(1.6, () => {
+			//choix bulle de fond
+			add([
+				 sprite("choix_bulle"),//, width: width() - 230
+				 anchor("center"),
+				 scale(1),
+				 pos(center().x-10,BOTTOM+15),
+				 "textBox"
+			 ])
+			 add([
 				text("Oups",{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
 				anchor("center"),
 				pos(center().x,BOTTOM),
-			])})
+				color(MYPURPLE)
+			])
+		play("choix_faux")
+	})
 
 	 // if you hit you get experience
 	 totalStars = totalStars + 10
@@ -2148,25 +2331,27 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercentIncrease,clientelePercentIncrease,isIncreaseTrue) => {
 		add_bordure_map()
 		play("carton")
-
-		// JOUR
-		const jourText =add([
-			text("Tu as fini le jour "+(jourIdx), { size: TXTSIZE }),
-			scale(1),
+		const TXTSIZEBILAN = TXTSIZE+3
+		// FOND BILAN
+		let textBox = add([
+			sprite("carton_bilan"),//, width: width() - 230
 			anchor("center"),
-			pos(center().x,MAP_HEIGHT/4),
+			scale(1),
+			pos(center().x,center().y-80),
+			"textBox"
 		])
+		// JOUR
 		const bilanTxt = add([
-			text("Bilan du jour\n -------------\n 6 CLIENTS \n"+repairCounter+" reparations\n"+fightCounter+" claques\n ______________", {font: "prstart", size:TXTSIZE}),
-			pos(center().x-50,  center().y-80),
+			text("BILAN DU JOUR\n--------------\n"+repairCounter+" REPARATIONS\n"+fightCounter+" CLAQUES\n--------------\n6 CLIENTS", {font: "prstart", size:TXTSIZEBILAN}),color(MYPURPLE),
+			pos(center().x-70, MAP_HEIGHT/4-20),
 		])
 		let coinsAnim = add([
-			text("$ : ", {font: "prstart", size:TXTSIZE}),
-			pos(center().x-50,  center().y-20),
+			text("$ : ", {font: "prstart", size:TXTSIZEBILAN}),color(MYPURPLE),
+			pos(center().x+45,  (MAP_HEIGHT/4)),
 		])
 		let starsAnim = add([
-			text("* : ", {font: "prstart", size:TXTSIZE}),
-			pos(center().x-50,  center().y-10),
+			text("* : ", {font: "prstart", size:TXTSIZEBILAN}),color(MYPURPLE),
+			pos(center().x+45,  (MAP_HEIGHT/4)+14),
 		])
 
 		// compare the obtained statistics (fights and repairs) with the ideal situation
@@ -2199,65 +2384,84 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 		// based on the comparison of stats produce the right follow-up
 		function bilanJournalier(caseNumber,jourIdx){
 			console.log("The case number is"+caseNumber);
-
-
+			const BOTTOMTEXT = BOTTOM-35
+			// FOND BILAN
+			 let bulleFond = add([
+				sprite("carton_bulle"),//, width: width() - 230
+				anchor("center"),
+				scale(1),
+				pos(center().x-10,BOTTOM-25),
+				"textBox"
+			])
 			switch(caseNumber){
+
 			// BONUS
 			case 0 :
 			// message
-				add([text("Wouahhh quel superbe travail tu fais!",
-				{ size: TXTSIZE, width:TXTWIDTH, font:"arcade"}),scale(1),anchor("center"),pos(center().x,BOTTOM-5)])
+				add([text("Wouahhh quel superbe travail je fais!",
+				{ size: TXTSIZE, width:TXTWIDTH, font:"joystix"}),color(MYPURPLE),scale(1),anchor("center"),pos(center().x,BOTTOMTEXT)])
 			// instruction
 				 add([
 						text("(appuie sur enter pour retourner à l'atelier)", { size: TXTSIZE }),
-						scale(1),anchor("center"),pos(center().x,BOTTOM+5),])
-						onKeyPress("enter", () => { go("interactionJour1", jourIdx, totalCoins,totalStars,INITIALPOSITION)})
+						scale(1),anchor("center"),pos(center().x,BOTTOM+10),])
+						onKeyPress("enter", () => {
+							if(jourIdx==1){go("interactionJour1", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
+							if(jourIdx==2){go("interactionJour2", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
+						})
 
 			break;
 			// BASIC
 			case 1 :
-			add([text("Tu as fait du bon travail.",
-				{ size: TXTSIZE,width:TXTWIDTH, font:"arcade"}),scale(1),anchor("center"),pos(center().x,BOTTOM-5)])
+			add([text("J'ai fait du bon travail.",
+				{ size: TXTSIZE,width:TXTWIDTH, font:"joystix"}),color(MYPURPLE),scale(1),anchor("center"),pos(center().x,BOTTOMTEXT)])
 			// instruction
 				add([
 							text("(appuie sur enter pour retourner à l'atelier)", { size: TXTSIZE }),
-							scale(1),anchor("center"),pos(center().x,BOTTOM+5),])
-							onKeyPress("enter", () => { go("interactionJour1", jourIdx, totalCoins,totalStars,INITIALPOSITION)})
-
+							scale(1),anchor("center"),pos(center().x,BOTTOM+10),])
+							onKeyPress("enter", () => {
+								if(jourIdx==1){go("interactionJour1", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
+								if(jourIdx==2){go("interactionJour2", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
+							})
 				break;
 			case 2 :
-			// BASIC with Burnout WARNING:
-			add([text("Tu as fait du bon travail, mais attention tu t'epuises...",
-				{ size: TXTSIZE,width:TXTWIDTH, font:"arcade"}),scale(1),anchor("center"),pos(center().x,BOTTOM-5)])
+			// BASIC with Burnout WARNING:=
+			add([text("J'ai fait du bon travail, mais je suis epuiseex...",
+				{ size: TXTSIZE,width:TXTWIDTH, font:"joystix"}),color(MYPURPLE),scale(1),anchor("center"),pos(center().x,BOTTOMTEXT)])
 				// instruction
 					 add([
 							text("(appuie sur enter pour retourner à l'atelier)", { size: TXTSIZE }),
-							scale(1),anchor("center"),pos(center().x,BOTTOM+5),])
+							scale(1),anchor("center"),pos(center().x,BOTTOM+10),])
 							// next
-							onKeyPress("enter", () => { go("interactionJour1", jourIdx, totalCoins,totalStars,INITIALPOSITION)})
-break;
+							onKeyPress("enter", () => {
+								if(jourIdx==1){go("interactionJour1", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
+								if(jourIdx==2){go("interactionJour2", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
+							})
+							break;
 			case 3 :
 			// BASIC with Bankfrupt WARNING:
-				add([text("Tu as fait du bon travail, mais attention tu n'as pas gagne beaucoup d'argent...",
-					{ size: TXTSIZE, width:TXTWIDTH,font:"arcade"}),scale(1),anchor("center"),pos(center().x,BOTTOM-5)])
+				add([text("J'ai fait du bon travail, mais je ne gagne pas tant d'argent...",
+					{ size: TXTSIZE, width:TXTWIDTH,font:"joystix"}),color(MYPURPLE),scale(1),anchor("center"),pos(center().x,BOTTOMTEXT)])
 					// instruction
 						 add([
 								text("(appuie sur enter pour retourner à l'atelier)", { size: TXTSIZE }),
-								scale(1),anchor("center"),pos(center().x,BOTTOM+5),])
+								scale(1),anchor("center"),pos(center().x,BOTTOM+10),])
 				// next
-				onKeyPress("enter", () => { go("interactionJour1", jourIdx, totalCoins,totalStars,INITIALPOSITION)})
-break;
+				onKeyPress("enter", () => {
+					if(jourIdx==1){go("interactionJour1", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
+					if(jourIdx==2){go("interactionJour2", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
+				})
+				break;
 			case 4 :
 			// GAMEOVER BURNOUT
-			add([text("Tu es plein d'argent  mais completement epuise...\n tu es en burnout..",
-				{ size: TXTSIZE,width:TXTWIDTH, font:"arcade"}),scale(1),anchor("center"),pos(center().x,BOTTOM-5)])
-			wait(2,()=>go("Burnout"))
+			add([text("Je suis riche mais epuiseex...\nC'est le burnout..",
+				{ size: TXTSIZE,width:TXTWIDTH, font:"joystix"}),scale(1),color(MYPURPLE),anchor("center"),pos(center().x,BOTTOMTEXT)])
+			wait(7,()=>go("Burnout"))
 break;
 			case 5 :
 			// GAMEOVER BANKRUPT
-			add([text("Tu t'es bien amuse!\n mais tu es en faillite...",
-				{ size: TXTSIZE, font:"arcade"}),scale(1),anchor("center"),pos(center().x,BOTTOM-5)])
-		  wait(4,()=>go("Burnout"))
+			add([text("Je me suis bien amuseex!\nmais c'est la faillite...",
+				{ size: TXTSIZE, font:"joystix"}),scale(1),anchor("center"),color(MYPURPLE),pos(center().x,BOTTOMTEXT)])
+		  wait(7,()=>go("Burnout"))
 			break;
 		}
 }
@@ -2304,6 +2508,270 @@ break;
 //			onDestroy("statusUpdate", () => console.log("Now there is no more update and I print smth ");)
 	})
 
+	scene("interactionJour2", (jourIdx,totalCoins,totalStars,position) => {
+			//	// MAP
+				const MAP_WIDTH = 256;
+				const MAP_HEIGHT = 256;
+				const TILE_WIDTH = 16;
+				const TILE_HEIGHT = 16;
+				const levelAtelier = addLevel([
+					"KbbbbbbbbbbbbbbN",
+					"GMMMMMMMMMMMMMML",
+					"GmmmmmmmmmmmmmmL",
+					"GooooooooooooooL",
+					"G--oot---------L",
+					"G--tt-OOOOOO---L",
+					"G---T----t-----L",
+					"Gt-------------L",
+					"G-----tttt-----L",
+					"G-------tt-----L",
+					"X-T-------t----L",
+					"W--tt---t------L",
+					"w-----------t--e",
+					"S---T----------D",
+					"Gt--TT----t----c",
+					"QvvvvvvvvvvvvvvP",
+				],{
+					// define the size of each block
+					tileWidth:16,
+					tileHeight:16,
+					//scale :2,
+					pos:vec2(center().x - (MAP_WIDTH/2), 0),
+					// assign to each symbol a sprite
+					tiles: {
+						"W": () => [
+							sprite("scene_atelier_tile_sortiegaucheH1"),
+							area(),
+							body({ isStatic: true }),
+							"clientEntrance"
+						],
+						"w": () => [
+							sprite("scene_atelier_tile_sortiegaucheH2"),
+							area(),
+							body({ isStatic: true }),
+								"clientEntrance"
+						],
+						"S": () => [
+							sprite("sortieBasGauche"),
+							area(),
+							body({ isStatic: true }),
+							"clientEntrance"
+
+						],
+						"X": () => [
+							sprite("sortieHautGauche"),
+							area(),
+							body({ isStatic: true }),
+							"clientEntrance"
+						],
+
+						"=": () => [
+							sprite("etabli"),
+							area(),
+							body({ isStatic: true }),
+							"etabli"
+						],
+						"K": () => [
+							sprite("coinHauteGauche"),
+							area(),
+							body({isStatic:true}),
+						],
+						"b": () => [
+							sprite("bordHaute"),
+							area(),
+							body({isStatic:true}),
+						],
+						"N": () => [
+							sprite("coinHauteDroite"),
+							area(),
+							body({isStatic:true}),
+						],
+						"P": () => [
+							sprite("coinBasDroite"),
+							area(),
+							body({isStatic:true}),
+						],
+						"Q": () => [
+							sprite("coinBasGauche"),
+							area(),
+							body({isStatic:true}),
+						],
+						"o": () => [
+							sprite("tuileOmbre"),
+							area(),
+							body({isStatic:true}),
+						],
+						"O": () => [//ombre avec colliion
+							sprite("tuileOmbre"),
+							area(),
+							body({isStatic:true}),
+							"etabli"
+						],
+						"G": () => [
+							sprite("bordDroite"),
+							area(),
+							body({isStatic:true}),
+						],
+						"M": () => [
+							sprite("murFond"),
+							area(),
+							body({isStatic:true}),
+						],
+						"Z": () => [
+							sprite("tuileOmbre"),
+							area(),
+							body({isStatic:true}),
+							"affiche"
+						],
+						"m": () => [
+							sprite("basMurFond"),
+							area(),
+							body({isStatic:true}),
+
+						],
+						"L": () => [
+							sprite("bordGauche"),
+							area(),
+							body({isStatic:true}),
+						],
+						"D": () => [
+							sprite("sortieDroite"),
+							area(),
+							body({ isStatic: true} ),
+							"outsideDoorDroite",
+						],
+						"c": () => [
+							sprite("sortieBasDroite"),
+							area(),
+							body({ isStatic: true} ),
+
+						],
+						"e": () => [
+							sprite("sortieHautDroite"),
+							area(),
+							body({ isStatic: true} ),
+
+						],
+						"C": () => [
+							sprite("tuile1"),
+							area(),
+							body({isStatic:true}),
+						],
+						"H": () => [
+							sprite("tuileHaut"),
+							area(),
+							body({isStatic:true}),
+
+						],
+						"v": () => [
+							sprite("bordBas"),
+							area(),
+							body({isStatic:true}),
+
+						],
+						"-": () => [
+							sprite("tuile1"),
+							outline(40, 40),
+						],
+						"t": () => [
+							sprite("tuile2"),
+							outline(40, 40),
+						],
+						"T": () => [
+							sprite("tuile3"),
+							outline(40, 40),
+						],
+
+					}
+					})
+
+					// ADD ATELIER ITEMS
+					// table du milieu
+					const table = add([
+						sprite("etabli_fini",{anim:"idle"}),
+						scale(1),
+						anchor("center"),
+						pos(center().x,center().y-10),
+						area(),
+						body({isStatic:true})
+					])
+				//	mur du murFond
+					const murFond = add([
+						sprite("atelier_mur_fond",{quad:(0.5,0.5,1,1)}),
+						anchor("center"),
+						pos(center().x,56),
+					])
+					//velos
+
+					const velo= add([
+						sprite("velo_rouge"),
+						scale(1),
+						anchor("center"),
+						pos(center().x,5*16),
+						area(),
+						body({isStatic:true})
+					])
+					add([
+						sprite("velo_rouge"),
+						scale(1),
+						anchor("center"),
+						pos(center().x+6*16,7.75*16),
+						area(),
+					body({isStatic:true})
+					])
+					add([
+							sprite("velo_rouge"),
+							scale(1),
+							anchor("center"),
+							pos(center().x+6*16,8.5*16),
+							area(),
+						body({isStatic:true})
+						])
+					add([
+							sprite("velo_rouge"),
+							scale(1),
+							anchor("center"),
+							pos(center().x+6*16,9.25*16),
+							area(),
+							body({isStatic:true})
+						])
+
+						if(veloTag==true){
+						const velo_sur_pied_1 = add([
+						sprite("velo_sur_pied",{anim:"idle"}),
+						scale(1),
+						anchor("center"),
+						pos(center().x-(6*16),8*16),
+						area(),
+								body({isStatic:true}),
+									"pied_velos"
+						])
+						const velo_sur_pied_2 = add([
+						sprite("velo_sur_pied",{anim:"idle"}),
+						scale(1),
+						anchor("center"),
+						pos(center().x+4*16,MAP_HEIGHT-2*16),
+						area(),
+						body({isStatic:true}),
+						"pied_velos"
+						])
+						}
+			//status
+			addStatusBar(jourIdx,totalCoins,totalStars)
+
+			let dialogInteraction2 =[
+["PNJ","Hello ! je suis en train de faire le tour du quartier et je me demandais si je pouvais poser une affiche ici?"],
+["M","Salut, oui ok tu peux la mettre sur le mur du fond."],
+["PNJ","Merci! c'est stylé que tu bosses ici!"],
+["PNJ","ha et t'es dac de me prêter un tournevis plat?"],
+["M","oui pas de soucis, voilà"],
+["PNJ","merci à bientôt!"],
+]
+
+			// try with function
+		interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,totalStars,
+				{x:center().x-44,y:center().y-(3*16)},"perso_interaction_2",{x:16*4,y:16*7},dialogInteraction2,{x:16*2,y:16*5},true)
+		})
 scene("interactionJour1", (jourIdx,totalCoins,totalStars,position) => {
 		//	// MAP
 			const MAP_WIDTH = 256;
@@ -2507,7 +2975,7 @@ scene("interactionJour1", (jourIdx,totalCoins,totalStars,position) => {
 					area(),
 					body({isStatic:true})
 				])
-			add([
+				add([
 					sprite("velo_rouge"),
 					scale(1),
 					anchor("center"),
@@ -2532,139 +3000,149 @@ scene("interactionJour1", (jourIdx,totalCoins,totalStars,position) => {
 						body({isStatic:true})
 					])
 
-
 		//status
 		addStatusBar(jourIdx,totalCoins,totalStars)
-		// add the mecanix// Add player game object
-
-		const colBox = 3
-		const player = add([
-			sprite("mecanix",{anim:"idle"}),
-			anchor("center"),
-			pos(center().x-2*16,center().y-(3*16)),//the default position is in front of the workshop
-			area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
-			body(),
-			scale(PERSOSCALE)
-		])
-		player.flipX = true
-
-		// Add the other pers
-		const perso = levelAtelier.spawn([
-			sprite("perso_interaction_1",{anim:"walk_right"}),
-			anchor("center"),
-			pos(0,160),//the default position is in front of the workshop
-			area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
-			body(),
-			scale(PERSOSCALE),
-			agent({ speed: 80, allowDiagonals: true }),
-		],1,1)
-
-		let aller = onKeyPress("enter",() => {
-			perso.setTarget(vec2(
-				16*5,//Math.floor((center().x+45) / TILE_WIDTH) * TILE_WIDTH + TILE_WIDTH / 2,
-				16*7//Math.floor((center().y-65)  / TILE_HEIGHT) * TILE_HEIGHT + TILE_HEIGHT / 2,
-			))
-		})
-		// let retour = onKeyPress("enter",() => { perso.setTarget(vec2(
-		// 		16*0,//Math.floor((center().x+45) / TILE_WIDTH) * TILE_WIDTH + TILE_WIDTH / 2,
-		// 		16*12//Math.floor((center().y-65)  / TILE_HEIGHT) * TILE_HEIGHT + TILE_HEIGHT / 2,
-		// 	))})
-		// retour.paused
-
-
-	//once the aller is done
- let firstTarget= 	perso.onTargetReached(()=>{
 
 		let dialogInteraction1 = [
-			["pnj","Hé salut"],
-		["m","Salut! désolée c'est fini pour aujourd'hui, il faut revenir demain..."],
-		["pnj","oui, oui je venais pas pour réparer mon vélo..."],
-		["m","heu ok, tu viens pour quoi alors?"],
-		[" pnj","heu... ha oui! haha pardon. je viens te filer la clée que j'ai oublié de rendre quand j'ai arrêté de bosser ici. je suis un peu tête en l'air des fois."],
-		["m","ah! merci"],
-		["pnj","de rien, allé à la proch ciao ciao! heu, la sortie c'est par là hein."]
-		]
-			aller.paused =true
+					["pnj","Hé salut"],
+				["m","Salut! désolée c'est fini pour aujourd'hui, il faut revenir demain..."],
+				["pnj","oui, oui je venais pas pour réparer mon vélo..."],
+				["m","heu ok, tu viens pour quoi alors?"],
+				[" pnj","heu... ha oui! haha pardon. je viens te filer la clée que j'ai oublié de rendre quand j'ai arrêté de bosser ici. je suis un peu tête en l'air des fois."],
+				["m","ah! merci"],
+				["pnj","de rien, allé à la proch ciao ciao! heu, la sortie c'est par là hein."]
+				]
 
-	// add dialog box
-	let textBox = add([
-		sprite("dialogbox"),//, width: width() - 230
-		anchor("center"),
-		pos(center().x,BOTTOM),
-		"textBox"
-	])
-	//initialization
-	let initDialog = dialogInteraction1.length
-	let levelDialog = dialogInteraction1
-
-	// Text bubble
-	const txtWidth = 150; // Ideal Width
-	const txtMargins = 15;
-	let txt = add([
-		text("", { size:  TXTSIZE,  width: txtWidth }),//, width: width() - 230
-		anchor("center"),
-		pos(center().x,BOTTOM),
-		color(MYPURPLE),
-	])
-	// Update the on screen sprite & text
-	function updateDialog() {
-		const [ char, dialog ] = dialogInteraction1[curDialog]
-		console.log(dialog);
-		// Use a new sprite component to replace the old one
-	//	avatar.use(sprite(char))
-		// Update the dialog text
-		// mettre le texte lettre apres lettre
-		txt.text = dialog
-	}
-	//initialization
-	let curDialog = 0
-		updateDialog()
-	let dialogAction = onKeyPress("enter", () => {
-		// Cycle through the dialogs
-		curDialog = (curDialog + 1) % dialogInteraction1.length
-		if (curDialog==0){
-			// dialog finished, options to choose
-			dialogAction.paused = true
-			firstTarget.paused=true
-			play("audio_reussite")
-			destroy(textBox)
-			destroy(txt)
-			onKeyPress("enter",() => {
-				dialogAction.paused = true
-				firstTarget.paused=true
-				perso.flipX=true
-				let retour = perso.setTarget(vec2(
-					16*1,//Math.floor((center().x+45) / TILE_WIDTH) * TILE_WIDTH + TILE_WIDTH / 2,
-					16*11//Math.floor((center().y-65)  / TILE_HEIGHT) * TILE_HEIGHT + TILE_HEIGHT / 2,
-				))
-				console.log("Before the fade\n le jour "+jourIdx+"\n le justifiedFightCounter "+justifiedFightCounter+"\n la thune c'est "+totalCoins+"\n les stars "+totalStars)
-				perso.onTargetReached(()=>{
-					dialogAction.paused =true
-					let fadeOut = add([
-						pos(center().x, center().y-30),
-						anchor("center"),
-						color(BLACK),
-    				rect(256, 256),
-    				area(),
-						fadeIn(1),
-						opacity(1),
-					])
-					//to the next day
-					let newjourIdx = resetDayVariables(totalCoins,totalStars)
-					// door is open now
-					outdoorKey = true
-					console.log("apres le reset\n le jour"+newjourIdx+"\n le justifiedFightCounter "+justifiedFightCounter+"\n la thune c'est "+totalCoins+"\n les stars "+totalStars)
-				wait(1,()=>go("atelier",newjourIdx,totalCoins,totalStars,INITIALPOSITION))
-			})
-			}
-		)
-	}else{
-		updateDialog()
-	}
-	})
-
-})
-
+		// try with function
+		interactionJour(1,levelAtelier,justifiedFightCounter,totalCoins,totalStars,
+			{x:center().x-2*16,y:center().y-(3*16)},"perso_interaction_1",{x:16*5,y:16*7},dialogInteraction1,{x:16*1,y:16*11},false)
+		// without function
+// 		// add the mecanix// Add player game object
+// 		const colBox = 3
+// 		const player = add([
+// 			sprite("mecanix",{anim:"idle"}),
+// 			anchor("center"),
+// 			pos(center().x-2*16,center().y-(3*16)),//the default position is in front of the workshop
+// 			area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
+// 			body(),
+// 			scale(PERSOSCALE)
+// 		])
+// 		player.flipX = true
+//
+// 		// Add the other pers
+// 		const perso = levelAtelier.spawn([
+// 			sprite("perso_interaction_1",{anim:"walk_right"}),
+// 			anchor("center"),
+// 			pos(0,160),//the default position is in front of the workshop
+// 			area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
+// 			body(),
+// 			scale(PERSOSCALE),
+// 			agent({ speed: 80, allowDiagonals: true }),
+// 		],1,1)
+//
+// 		let aller = onKeyPress("enter",() => {
+// 			perso.setTarget(vec2(
+// 				16*5,//Math.floor((center().x+45) / TILE_WIDTH) * TILE_WIDTH + TILE_WIDTH / 2,
+// 				16*7//Math.floor((center().y-65)  / TILE_HEIGHT) * TILE_HEIGHT + TILE_HEIGHT / 2,
+// 			))
+// 		})
+// 		// let retour = onKeyPress("enter",() => { perso.setTarget(vec2(
+// 		// 		16*0,//Math.floor((center().x+45) / TILE_WIDTH) * TILE_WIDTH + TILE_WIDTH / 2,
+// 		// 		16*12//Math.floor((center().y-65)  / TILE_HEIGHT) * TILE_HEIGHT + TILE_HEIGHT / 2,
+// 		// 	))})
+// 		// retour.paused
+//
+// 	//once the aller is done
+// let firstTarget= 	perso.onTargetReached(()=>{
+//
+// let dialogInteraction1 = [
+// 			["pnj","Hé salut"],
+// 		["m","Salut! désolée c'est fini pour aujourd'hui, il faut revenir demain..."],
+// 		["pnj","oui, oui je venais pas pour réparer mon vélo..."],
+// 		["m","heu ok, tu viens pour quoi alors?"],
+// 		[" pnj","heu... ha oui! haha pardon. je viens te filer la clée que j'ai oublié de rendre quand j'ai arrêté de bosser ici. je suis un peu tête en l'air des fois."],
+// 		["m","ah! merci"],
+// 		["pnj","de rien, allé à la proch ciao ciao! heu, la sortie c'est par là hein."]
+// 		]
+// 			aller.paused =true
+//
+// 	// add dialog box
+// 	let textBox = add([
+// 		sprite("dialogbox"),//, width: width() - 230
+// 		anchor("center"),
+// 		pos(center().x,BOTTOM),
+// 		"textBox"
+// 	])
+// 	//initialization
+// 	let initDialog = dialogInteraction1.length
+// 	let levelDialog = dialogInteraction1
+//
+// 	// Text bubble
+// 	const txtWidth = 150; // Ideal Width
+// 	const txtMargins = 15;
+// 	let txt = add([
+// 		text("", { size:  TXTSIZE,  width: txtWidth }),//, width: width() - 230
+// 		anchor("center"),
+// 		pos(center().x,BOTTOM),
+// 		color(MYPURPLE),
+// 	])
+// 	// Update the on screen sprite & text
+// 	function updateDialog() {
+// 		const [ char, dialog ] = dialogInteraction1[curDialog]
+// 		console.log(dialog);
+// 		// Use a new sprite component to replace the old one
+// 	//	avatar.use(sprite(char))
+// 		// Update the dialog text
+// 		// mettre le texte lettre apres lettre
+// 		txt.text = dialog
+// 	}
+// 	//initialization
+// 	let curDialog = 0
+// 		updateDialog()
+// 	let dialogAction = onKeyPress("enter", () => {
+// 		// Cycle through the dialogs
+// 		curDialog = (curDialog + 1) % dialogInteraction1.length
+// 		if (curDialog==0){
+// 			// dialog finished, options to choose
+// 			dialogAction.paused = true
+// 			firstTarget.paused=true
+// 			play("audio_reussite")
+// 			destroy(textBox)
+// 			destroy(txt)
+// 			onKeyPress("enter",() => {
+// 				dialogAction.paused = true
+// 				firstTarget.paused=true
+// 				perso.flipX=true
+// 				let retour = perso.setTarget(vec2(
+// 					16*1,//Math.floor((center().x+45) / TILE_WIDTH) * TILE_WIDTH + TILE_WIDTH / 2,
+// 					16*11//Math.floor((center().y-65)  / TILE_HEIGHT) * TILE_HEIGHT + TILE_HEIGHT / 2,
+// 				))
+// 				console.log("Before the fade\n le jour "+jourIdx+"\n le justifiedFightCounter "+justifiedFightCounter+"\n la thune c'est "+totalCoins+"\n les stars "+totalStars)
+// 				perso.onTargetReached(()=>{
+// 					dialogAction.paused =true
+// 					let fadeOut = add([
+// 						pos(center().x, center().y-30),
+// 						anchor("center"),
+// 						color(BLACK),
+//     				rect(256, 256),
+//     				area(),
+// 						fadeIn(1),
+// 						opacity(1),
+// 					])
+// 					//to the next day
+// 					let newjourIdx = resetDayVariables(totalCoins,totalStars)
+// 					// door is open now
+// 					outdoorKey = true
+// 					console.log("apres le reset\n le jour"+newjourIdx+"\n le justifiedFightCounter "+justifiedFightCounter+"\n la thune c'est "+totalCoins+"\n les stars "+totalStars)
+// 				wait(1,()=>go("atelier",newjourIdx,totalCoins,totalStars,INITIALPOSITION))
+// 			})
+// 			}
+// 		)
+// 	}else{
+// 		updateDialog()
+// 	}
+// 	})
+// })
 	})
 
 // ADD GAME OVER SCENE
@@ -2673,7 +3151,7 @@ scene("Bankrupt", (jourIdx,totalCoins,totalStars) => {
 	add_bordure_map()
 	// Titre
 	const title = add([
-		text("GAME OVER!\n ", { size: LARGETXTSIZE, font:"arcade" }),
+		text("GAME OVER!\n ", { size: LARGETXTSIZE, font:"joystix" }),
 		scale(1),
 		anchor("center"),
 		pos(center().x,center().y-0.6*(MAP_HEIGHT/2))
@@ -2694,7 +3172,7 @@ scene("Burnout", (jourIdx,totalCoins,totalStars) => {
 	add_atelier_map()
 	// Titre
 	const title = add([
-		text("GAME OVER!\n ", { size: LARGETXTSIZE, font:"arcade" }),
+		text("GAME OVER!\n ", { size: LARGETXTSIZE, font:"joystix" }),
 		scale(1),
 		anchor("center"),
 		pos(center().x,center().y-0.3*(MAP_HEIGHT/2))
@@ -2713,8 +3191,10 @@ scene("Burnout", (jourIdx,totalCoins,totalStars) => {
 function start() {
 		// Start with the "game" scene, with initial parameters
 	//	go("atelier", 1, 85,0/*totalCoins*/,50,INITIALPOSITION)
+//	go("interactionJour2",2,totalCoins,totalStars,INITIALPOSITION)
 go("start",jourIdx,totalCoins,totalStars/*force*/,INITIALPOSITION)
 //go("outside",2,30,30,INITIALPOSITION)	//go("interactionJour1", (1,0,40,20,INITIALPOSITION))//go("clientDialog",1,75,100/*totalCoins*/,50/*force*/)
-
+ //justifiedFightCounter=4
+ //go("Carton_Journalier","client1",1,30,30,10,10,1)
 	}
 start()
