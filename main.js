@@ -451,6 +451,43 @@ let inventory = {
 const speedMin_List = [35,40,60,75]
 
 // --FUNCTIONS-- //
+function addTextOnDialogBox(msg){
+let textBox = add([
+	sprite("dialogbox"),//, width: width() - 230
+	anchor("center"),
+	pos(center().x,BOTTOM),
+])
+let txt = add([
+	text(msg, { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
+	anchor("center"),
+	pos(center().x,BOTTOM),
+	color(MYPURPLE),
+])
+onKeyPress(()=>{
+	destroy(txt),
+	destroy(textBox)})
+}
+
+// Add messages on collision with an object
+function affichageOnCollision(player,colObjTag,colMsg){
+		player.onCollide(colObjTag,()=>{
+		let textBox = add([
+		sprite("dialogbox"),//, width: width() - 230
+		anchor("center"),
+		pos(center().x,BOTTOM),
+	])
+	let txt = add([
+		text(colMsg, { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
+		anchor("center"),
+		pos(center().x,BOTTOM),
+		color(MYPURPLE),
+	])
+	onKeyPress(()=>{
+		destroy(txt),
+		destroy(textBox)})
+})
+}
+
 // Reset variables to restard day cycle
 function resetDayVariables(totalCoins,totalStars){
 			coinsAnimValueList.push(totalCoins);
@@ -566,7 +603,7 @@ let dialogInteraction1 = dialogInteractionList
 					}
 					wait(0.3,()=>{
 						let fadeOut = add([
-						pos(center().x, center().y-30),
+						pos(center().x, center().y-29),
 						anchor("center"),
 						color(BLACK),
     				rect(256, 256),
@@ -1177,12 +1214,14 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 					go("outside", jourIdx, totalCoins,totalStars, modified_pos )
 				})
 				}
+				// explanation message for the closed door
+				affichageOnCollision(player,"outsideDoorDroite","Tu n'as pas la clé pour ouvrir cette porte...")
 
 				player.onCollide("etabli", () => {
 					let saved_position = player.pos
 					music.paused = true
 					// This collision shows the state of the inventory.
-					go("inventaire", jourIdx, totalCoins, totalStars,saved_position)
+					go("inventaire", jourIdx, totalCoins, totalStars,saved_position,clientCounter)
 				})
 				// poster collision
 				player.onCollide("affiche", () => {
@@ -1349,7 +1388,7 @@ scene("clientDialog", (clientKey,jourIdx,totalCoins,totalStars) => {
 
 // ---- Monde exterieur -----//
 scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
-			let music = play("exte")
+			let musicOutside = play("exte")
 			// at start of the outside scene the contenair is closed
 			//let ouvertTag=false
 
@@ -1602,6 +1641,43 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			//interaction happened
 			interactionDechetFlag = launchDialog(dechettDialog1)
 			veloTag =true // now you have the bikePost
+			let leftWin = onKeyPress("left",()=>{
+				musicOutside.paused=true
+				play("audio_reussite")
+				musicOutside.paused=false
+				leftWin.paused =true
+				rightWin.paused =true
+				upWin.paused =true
+				downWin.paused =true
+			})
+			let rightWin = onKeyPress("right",()=>{
+				musicOutside.paused=true
+				play("audio_reussite")
+				musicOutside.paused=false
+				leftWin.paused =true
+				rightWin.paused =true
+				upWin.paused =true
+				downWin.paused =true
+			})
+			let upWin = onKeyPress("up",()=>{
+				musicOutside.paused=true
+				play("audio_reussite")
+				musicOutside.paused=false
+				leftWin.paused =true
+				rightWin.paused =true
+				upWin.paused =true
+				downWin.paused =true
+			})
+			let downWin = onKeyPress("down",()=>{
+				musicOutside.paused=true
+				play("audio_reussite")
+				musicOutside.paused=false
+				leftWin.paused =true
+				rightWin.paused =true
+				upWin.paused =true
+				downWin.paused =true
+			})
+
 			}else{
 			// Other days
 			// add dialog box
@@ -1621,11 +1697,10 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			color(MYPURPLE),
 			])
 			onKeyPress(()=>{
-				play("audio_reussite")
 				destroy(txt),
 				destroy(textBox)
-				wait(0.1,()=>play("exte"))
 			})
+
 		}
 		})
 
@@ -1635,7 +1710,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			let BORDERNOCOLLISION = 96; // this is the distance from the center to the border without colliding to left door
 			let modified_pos = ({x:center().x+BORDERNOCOLLISION,y:player.pos.y})//keep the height and modify the x, leaving on the right means arriving on left side
 			// If there's a next level, origin() to the same scene but load the next level
-			music.paused=true
+			musicOutside.paused=true
 			go("atelier", jourIdx, totalCoins,totalStars,modified_pos,1)
 		})
 
@@ -1727,7 +1802,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 
 // ------ Boucle de Gameplay ----  //
 // ------ Scene d'inventaire' ----------------------------------------------- //
-scene("inventaire", (jourIdx,totalCoins,totalStars,saved_position)=> {
+scene("inventaire", (jourIdx,totalCoins,totalStars,saved_position,clientCounter)=> {
 
 		// MAP POUR FAIRE L'INVENTAIRE
 		const MAP_WIDTH = 256;
@@ -1858,9 +1933,9 @@ scene("inventaire", (jourIdx,totalCoins,totalStars,saved_position)=> {
 
 		// add INSTRUCTIONS sur le fond
 		const return_instruction = add([
-			text("( appuie sur esc pour retour à l'atelier) ", {font: "prstart", size:TXTSIZE}),
+			text("( appuie sur esc pour retour à l'atelier) ", {font: "prstart", size:TXTSIZE, width:TXTWIDTH}),
 			anchor("center"),
-			pos(center().x, BOTTOM-(2*16)),
+			pos(center().x+36, BOTTOM+40),
 		])
 
 		// add STATUS bar
@@ -1976,10 +2051,9 @@ scene("inventaire", (jourIdx,totalCoins,totalStars,saved_position)=> {
 		// 		achat.paused = true
 		// 	}
 		//	})
-		onKeyPress("enter", () => {
-			console.log(inventory)
-			go("inventaire", jourIdx, totalCoins, totalStars,saved_position)
-		})
+		// onKeyPress("enter", () => {
+		// 	go("inventaire", jourIdx, totalCoins, totalStars,saved_position,clientCounter)
+		// })
 
 		// leave the inventory for the workshop
 		// the saved_position needs to be tweeked to avoid colliding again with the inventory
@@ -1991,9 +2065,11 @@ scene("inventaire", (jourIdx,totalCoins,totalStars,saved_position)=> {
 		}
 		let mod_saved_position = saved_position.add(vec2(shiftX,+8)) // backward half a tile to avoid coliding again
 
+		// ADD INITIAL MESSAGE
+		addTextOnDialogBox("Si je trouve tous les outils manquants, mon atelier sera le plus classe!")
 		// LEAVE SCENE
 		onKeyPress("escape", () => {
-			go("atelier", jourIdx,totalCoins,totalStars,mod_saved_position)})
+			go("atelier",jourIdx,totalCoins,totalStars,mod_saved_position,clientCounter)})
 
 	})
 
@@ -2181,7 +2257,9 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 				//choix reparer est juste
 				repairCounter++
 				play("audio_reparer")
-				wait(0.3,()=>play("audio_piece"))
+				wait(0.4,()=>play("audio_piece"))
+				wait(1,()=>play("audio_reparer"))
+				wait(1.4,()=>play("audio_piece"))
 				add([
 				sprite("choix_reparer",{anim:"move"}),
 				scale(1),
@@ -2199,7 +2277,7 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 						 "textBox"
 					 ])
 					 add([
-					text("Bien joue!",{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
+					text("Bien joué!",{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
 					anchor("center"),
 					pos(center().x,BOTTOM),
 					color(MYPURPLE)
@@ -2212,7 +2290,9 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 				case 1: // Reparation mauvaix choix
 				repairCounter++
 				play("audio_reparer")
-				wait(0.3,()=>play("audio_piece"))
+				wait(0.4,()=>play("audio_piece"))
+				wait(1,()=>play("audio_reparer"))
+				wait(1.4,()=>play("audio_piece"))
 				add([
 				sprite("choix_reparer",{anim:"move"}),
 				scale(1),
@@ -2220,7 +2300,7 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 				pos(center().x,center().y-25),
 				lifespan(1.6),
 			  ])
-				wait(1.6, () => {
+				wait(2.2, () => {
 					add([
 						 sprite("choix_bulle"),//, width: width() - 230
 						 anchor("center"),
@@ -2229,7 +2309,7 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 						 "textBox"
 					 ])
 				//commnet
-				add([text("Ca me fatigue...",{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
+				add([text("ça me fatigue...",{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
 					anchor("center"),
 					pos(center().x,BOTTOM),
 					color(MYPURPLE)
@@ -2245,8 +2325,9 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 			 justifiedFightCounter++
 			// animation
 			play("hitSound")
-			wait(0.5,()=>play("ouinouin"))
-			wait(0.6,()=>play("extraBonus"))
+			wait(0.8,()=>play("hitSound"))
+			//wait(1.3,()=>play("ouinouin"))
+			//wait(0.6,()=>play("extraBonus"))
 			add([
 			sprite("choix_frapper_juste",{anim:"hit"}),
 			scale(1),
@@ -2255,7 +2336,7 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 			lifespan(1.6),
 		  ])
 
-			wait(1.6, () => {
+			wait(1.8, () => {
 				add([
 					 sprite("choix_bulle"),//, width: width() - 230
 					 anchor("center"),
@@ -2277,8 +2358,11 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 			case 3: // Fight mauvais choix
 			fightCounter++
 			play("hitSound")
-			wait(0.5,()=>play("ouinouin"))
-			wait(0.6,()=>play("extraBonus"))
+			wait(0.3,()=>play("extraBonus"))
+			wait(0.8,()=>play("hitSound"))
+			wait(1.1,()=>play("extraBonus"))
+			//wait(1.3,()=>play("ouinouin"))
+
 			add([
 			sprite("choix_frapper_juste",{anim:"hit"}),
 			scale(1),
@@ -2425,7 +2509,7 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 				break;
 			case 2 :
 			// BASIC with Burnout WARNING:=
-			add([text("J'ai fait du bon travail, mais je suis epuiseex...",
+			add([text("J'ai fait du bon travail, mais je suis épuiséex...",
 				{ size: TXTSIZE,width:TXTWIDTH, font:"joystix"}),color(MYPURPLE),scale(1),anchor("center"),pos(center().x,BOTTOMTEXT)])
 				// instruction
 					 add([
@@ -2453,13 +2537,13 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 				break;
 			case 4 :
 			// GAMEOVER BURNOUT
-			add([text("Je suis riche mais epuiseex...\nC'est le burnout..",
+			add([text("Je suis riche mais epuiséex...\nC'est le burnout..",
 				{ size: TXTSIZE,width:TXTWIDTH, font:"joystix"}),scale(1),color(MYPURPLE),anchor("center"),pos(center().x,BOTTOMTEXT)])
-			wait(7,()=>go("Burnout"))
+			wait(4,()=>go("Burnout"))
 break;
 			case 5 :
 			// GAMEOVER BANKRUPT
-			add([text("Je me suis bien amuseex!\nmais c'est la faillite...",
+			add([text("Je me suis bien amuséex!\nmais c'est la faillite...",
 				{ size: TXTSIZE, font:"joystix"}),scale(1),anchor("center"),color(MYPURPLE),pos(center().x,BOTTOMTEXT)])
 		  wait(7,()=>go("Burnout"))
 			break;
@@ -3191,7 +3275,7 @@ scene("Burnout", (jourIdx,totalCoins,totalStars) => {
 function start() {
 		// Start with the "game" scene, with initial parameters
 	//	go("atelier", 1, 85,0/*totalCoins*/,50,INITIALPOSITION)
-//	go("interactionJour2",2,totalCoins,totalStars,INITIALPOSITION)
+//go("interactionJour2",2,totalCoins,totalStars,INITIALPOSITION)
 go("start",jourIdx,totalCoins,totalStars/*force*/,INITIALPOSITION)
 //go("outside",2,30,30,INITIALPOSITION)	//go("interactionJour1", (1,0,40,20,INITIALPOSITION))//go("clientDialog",1,75,100/*totalCoins*/,50/*force*/)
  //justifiedFightCounter=4
