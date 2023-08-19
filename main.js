@@ -23,27 +23,32 @@ loadAseprite("mecanix","images/sprite_maincharacter_petit.png","images/sprite_ma
 loadAseprite("mecanix_velo","images/Sprite_maincharacter_velo.png","images/Sprite_maincharacter_velo.json")
 loadAseprite("choix_frapper_juste", "images/choix_frapper_juste_8images.png", "images/choix_frapper_juste_8images.json")
 loadAseprite("choix_reparer", "images/choix_reparer.png", "images/choix_reparer.json")
+loadAseprite("atelier_rave", "images/atelier_rave.png", "images/atelier_rave.json")
 // clients
-loadAseprite("client_1_petit","images/client_1_petit.png", "images/client_1_petit.json") //punk
-loadAseprite("client_2_petit","images/client_2_petit.png", "images/client_2_petit.json")
-loadAseprite("client_3_petit","images/client_3_petit.png", "images/client_3_petit.json")
-loadAseprite("client_4_petit","images/client_4_petit.png", "images/client_4_petit.json") //old
-loadAseprite("client_5_petit","images/client_5_petit.png", "images/client_5_petit.json") //old
-loadAseprite("client_6_petit","images/client_6_petit.png", "images/client_6_petit.json") //old
-loadAseprite("client_7_petit","images/client_7_petit.png","images/client_7_petit.json")
-loadAseprite("client_8_petit","images/client_8_petit.png","images/client_8_petit.json")
-loadAseprite("client_9_petit","images/client_9_petit.png","images/client_9_petit.json")
-loadAseprite("client_10_petit","images/client_10_petit.png","images/client_10_petit.json")
+for (var i = 1; i <=24; i++) {
+	loadAseprite("client_"+i+"_petit","images/client_"+i+"_petit.png", "images/client_"+i+"_petit.json") //punk
+}
+//clients grand
+for (var i = 1; i <=24; i++) {
+loadSprite("client_"+i+"_grand", "images/client_"+i+"_grand.png")
+}
 
-//loadAseprite("client_11_petit","images/client_11_petit.png","images/client_11_petit.json")
-loadAseprite("client_12_petit","images/client_12_petit.png","images/client_12_petit.json")
 // perso autres
 loadAseprite("perso_dechett_1","images/perso_dechett_1.png","images/perso_dechett_1.json")
 loadAseprite("perso_interaction_1","images/perso_interaction_1.png","images/perso_interaction_1.json")
 loadAseprite("perso_interaction_2","images/perso_interaction_2.png","images/perso_interaction_2.json")
+loadAseprite("perso_interaction_3","images/perso_interaction_3.png","images/perso_interaction_3.json")
+loadAseprite("perso_interaction_4","images/perso_interaction_4.png","images/perso_interaction_4.json")
 
+loadAseprite("perso_flinta_1","images/flinta_1_petit.png","images/flinta_1_petit.json")
+loadAseprite("perso_flinta_2","images/flinta_2_petit.png","images/flinta_2_petit.json")
+loadAseprite("perso_flinta_3","images/flinta_3_petit.png","images/flinta_3_petit.json")
+loadAseprite("perso_flinta_4","images/flinta_4_petit.png","images/flinta_4_petit.json")
+loadAseprite("atelier_etabli_flyer","images/atelier_etabli_flyer.png","images/atelier_etabli_flyer.json")
+loadAseprite("atelier_velo_sur_pied_kc","images/atelier_velo_sur_pied_kc.png","images/atelier_velo_sur_pied_kc.json")
+loadAseprite("exte_maki","images/exte_maki.png","images/exte_maki.json")
 
-// SPRITE ATLAS
+// SPRITE ATLA
 //Leshy SpriteSheet Tool https://www.leshylabs.com/apps/sstool/ to create the sprite atlas
 loadSpriteAtlas("images/scene_repairfix.png", "images/scene_repairfix.json")
 loadSpriteAtlas("images/scene_repair.png", "images/scene_repair.json")
@@ -71,20 +76,15 @@ loadSprite("carton_bilan","images/bilan_resume.png")
 loadSprite("choix_bulle","images/choix_bulle.png")
 loadSprite("atelier_poster","images/poster.png")
 loadSprite("atelier_poster_grand","images/atelier_poster_grand.png")
+loadSprite("atelier_armoire_kc","images/atelier_armoire_kc.png")
+loadSprite("atelier_clee","images/atelier_clee.png")
+loadSprite("atelier_poster2_grand","images/atelier_poster2_grand.png")
+loadSprite("exte_banc","images/exte_banc.png")
+loadSprite("exte_sirius","images/exte_sirius.png")
 
-//clients
-loadSprite("client_1_grand", "images/client_1_grand.png") //punk
-loadSprite("client_2_grand","images/client_2_grand.png") // brunex en pied
-loadSprite("client_3_grand","images/client_3_grand.png")
-loadSprite("client_4_grand","images/client_4_grand.png")
-loadSprite("client_5_grand","images/client_5_grand.png")
-loadSprite("client_6_grand","images/client_6_grand.png")
-loadSprite("client_7_grand","images/client_7_grand.png")
-loadSprite("client_8_grand","images/client_8_grand.png")
-loadSprite("client_9_grand","images/client_9_grand.png")
-loadSprite("client_10_grand","images/client_10_grand.png")
-//loadSprite("client_11_grand","images/client_11_grand.png")
-loadSprite("client_12_grand","images/client_12_grand.png")
+
+
+
 
 // AUDIOS
 loadRoot("assets/")
@@ -135,12 +135,13 @@ let totalStars = 0
 let interactionDechetFlag = false // no interaction with dechetterie perso
 let veloTag = false // no bikePost yet
 let posterFlag = false
+let flyersFlag = false
 let jourIdx = 1 // game starts at day 1
 let clientCounter = 1 // no client interaction at start
 let fightCounter = 0
 let justifiedFightCounter = 0
 let repairCounter = 0
-let fightGoalsList = [4,4]
+let fightGoalsList = [4,4,2,2]
 let outdoorKey = false
 let coinsAnimValueList = [0] //list for starting bilan journalier
 let starsAnimValueList = [0]
@@ -206,10 +207,10 @@ const clientsList = {
 			bigSpriteName:"client_3_grand",
 			dialogs:[
 				[ "mecanix_en_pied", "Bonjour, dites-moi tout!" ],
-				[ "client_3_grand", "J'ai un problème avec mon vélo"],
-				[ "mecanix_en_pied", "Je peux vous répondre" ],
-				[ "client_3_grand", "Je veux changer les plaquettes" ],
-				[ "mecanix_en_pied", "D'accord!"]
+				[ "client_3_grand", "Je veux changer les plaquettes des mes freins à disques"],
+				[ "mecanix_en_pied", "Bonne idée, elles sont usées?" ],
+				[ "client_3_grand", "Nan mais ça couine...alors j'aimerais bien les changer" ],
+				[ "mecanix_en_pied", "D'accord! On peut aussi essayer de nettoyer le tout d'abord"]
 			],
 			//repair scene
 			outilsSprite:["sprite_tournevis","sprite_pince"],
@@ -323,7 +324,7 @@ const clientsList = {
 				[ "mecanix_en_pied", "Bonjour" ],
 				[ "client_10_grand", "Bonjour! j'ai cassé mon dérailleurs"],
 				[ "mecanix_en_pied", "Dac, on peut le remplacer avec de l'occasion ou en commander un" ],
-				[ "client_10_grand", "Parfait" ],
+				[ "client_10_grand", "D'occas si possible ça serait parfait" ],
 			],
 
 			//repair scene
@@ -358,15 +359,217 @@ const clientsList = {
 				[ "mecanix_en_pied", "Salut" ],
 				[ "client_12_grand", "ça fait plaisir de voir une femme ici" ],
 				[ "mecanix_en_pied", "Yessay.. et donc ce vélo ?" ],
-				[ "client_12_grand", "Voilà. Hé pis vous êtes quand même plus joli avec le sourire !" ],
+				[ "client_12_grand", "Voilà. Hé pis vous êtes quand même plus jolie avec le sourire !" ],
 			],
 			//repair scene
 			outilsSprite:["sprite_demontechaine","sprite_tournevis"],
 			outilsGoals:	[2,2],
 			bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
 			isSexist: true,
-
 	},
+	"client13":{
+			spriteName:"client_13_petit",
+			bigSpriteName:"client_13_grand",
+			dialogs:[
+				[ "client_13_grand", "Bonjour bonjour! j'aimerais changer de selle, celle-ci a un trou.."],
+				[ "mecanix_en_pied", "Bonjour, oui ok, j'en ai pas en stock mais je peux en commander une si vous voulez?" ],
+				[ "client_13_grand", "Ouais... hé ben on dirait que le lobby lgbt est venu refaire votre déco là" ],
+			],
+			//repair scene
+			outilsSprite:["sprite_demontechaine","sprite_tournevis"],
+			outilsGoals:	[2,2],
+			bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
+			isSexist: false,
+	},
+	"client14":{
+			spriteName:"client_14_petit",
+			bigSpriteName:"client_14_grand",
+			dialogs:[
+				[ "client_14_grand", "Bonjour! j'ai cassé un rayon sur ma roue avant.."],
+				[ "mecanix_en_pied", "Okay, je vais le changer et dévoiler la roue s'il-y-a besoin" ],
+				[ "client_14_grand", "Okay mais j'espère que ce sera pas aussi cher que la dernière fois" ],
+			],
+			//repair scene
+			outilsSprite:["sprite_demontechaine","sprite_tournevis"],
+			outilsGoals:	[2,2],
+			bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
+			isSexist: false,
+	},
+	"client15":{
+			spriteName:"client_15_petit",
+			bigSpriteName:"client_15_grand",
+			dialogs:[
+				[ "mecanix_en_pied", "Bonjour" ],
+				[ "client_15_grand", "Hello, c'est possible de réparer mon vélo"],
+				[ "mecanix_en_pied", "Oui bien sûr, il a quoi?" ],
+				[ "client_15_grand", "Je sais pas, il est tout foutu il faut le réparer" ],
+				[ "mecanix_en_pied", "Okay je vais regarder" ],
+				[ "client_15_grand", "Merci, mais il est vraiment vieux et en mauvais état " ],
+				[ "mecanix_en_pied", "Pas de soucis, tu me le passes?r" ],
+				[ "client_15_grand", "Oui." ],
+
+
+			],
+			//repair scene
+			outilsSprite:["sprite_demontechaine","sprite_tournevis"],
+			outilsGoals:	[2,2],
+			bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
+			isSexist: false,
+	},
+	"client16":{
+			spriteName:"client_16_petit",
+			bigSpriteName:"client_16_grand",
+			dialogs:[
+				[ "mecanix_en_pied", "Salut" ],
+				[ "client_16_grand", "Salut! il y a un truc qui marche pas bien avec mon vélo"],
+				[ "mecanix_en_pied", "Tu veux m'expliquer plus en détail?" ],
+				[ "client_16_grand", "Oui, quand je roule surtout à la montée il se passe des trucs bizarres avec les vitesses..." ],
+			],
+			//repair scene
+			outilsSprite:["sprite_demontechaine","sprite_tournevis"],
+			outilsGoals:	[2,2],
+			bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
+			isSexist: false,
+	},
+	"client17":{
+			spriteName:"client_17_petit",
+			bigSpriteName:"client_17_grand",
+					dialogs:[
+				[ "client_17_grand", "Hello"],
+				[ "mecanix_en_pied", "Salut" ],
+				[ "client_17_grand", "ça fait plaisir de voir une femme ici mais il parait qu'il y'a des moments ou c'est pas ouvert à tous le monde... c'est un peu limite quand même" ],
+				[ "mecanix_en_pied", "Je pense que c'est nécessaire, et puis c'est un pratique qui date maintenant et qui se fait pour différents groupes" ],
+				[ "client_17_grand", "Ah bon... je pensais que c'était une nouvelle mode..." ],
+			],
+			//repair scene
+			outilsSprite:["sprite_demontechaine","sprite_tournevis"],
+			outilsGoals:	[2,2],
+			bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
+			isSexist: true,
+	},
+	"client18":{
+		spriteName:"client_18_petit",
+		bigSpriteName:"client_18_grand",
+		dialogs :[
+			["client_18_grand","Salut! merci pour le tournevis ça m'a bien aidé"],
+			["mecanix_en_pied","Hey, pas de soucis! merci de le ramener surtout!  ça a marché comme tu voulais?"],
+			["client_18_grand","J'ai réussi à faire certains trucs, mais y'a des choses qui sont trop compliqués je crois, ça me ferait plaisir d'apprendre à l'occas mais je suis pas toujours à l'aise avec les trucs manuels... tu voudrais bien jeter un oeil ?"],
+		]
+		,
+		//repair scene
+		outilsSprite:["sprite_demontechaine","sprite_tournevis"],
+		outilsGoals:	[2,2],
+		bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
+		isSexist: true,
+	},
+	"client19":{
+			spriteName:"client_19_petit",
+			bigSpriteName:"client_19_grand",
+			dialogs:[
+				[ "mecanix_en_pied", "Hello!" ],
+				[ "client_19_grand", "Salut, je viens changer mes pédales "],
+				[ "mecanix_en_pied", "Yes, ça marche" ],
+				[ "client_19_grand", "Et je voulais dire aussi, avec mes potes on va venir les enlever vos affiches arc-en-ciel si vous les laisser" ],
+				[ "mecanix_en_pied", "..." ],
+				[ "client_19_grand", "..." ],
+			],
+			//repair scene
+			outilsSprite:["sprite_demontechaine","sprite_tournevis"],
+			outilsGoals:	[2,2],
+			bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
+			isSexist: true,
+	},
+	"client20":{
+			spriteName:"client_20_petit",
+			bigSpriteName:"client_20_grand",
+				dialogs:[
+					[ "mecanix_en_pied", "Salut" ],
+					[ "client_18_grand", "Bonjour Madame!" ],
+					[ "mecanix_en_pied", "Euh... je préfère que vous disiez pas Madame" ],
+					[ "client_18_grand", "Rohlalala...on peut plus rien dire" ],
+					[ "mecanix_en_pied", "C'est juste que vous ne me connaissez pas et en plus monsieur, madame c'est très binaire" ],
+					[ "client_18_grand", "Oui bon vous êtes pas un Monsieur nan plus.." ],
+					[ "mecanix_en_pied", "Peut-être bien que si.." ],
+				],
+			//repair scene
+			outilsSprite:["sprite_demontechaine","sprite_tournevis"],
+			outilsGoals:	[2,2],
+			bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
+			isSexist: true,
+	},
+	"client21":{
+			spriteName:"client_21_petit",
+			bigSpriteName:"client_21_grand",
+			dialogs:[
+				[ "mecanix_en_pied", "Hello!" ],
+				[ "client_21_grand", "Coucou, dis j'ai un projet avec un cadre que j'ai récupéré, j'aimerais le repeindre."],
+				[ "client_21_grand", "C'est possible de le faire ici?"],
+				[ "mecanix_en_pied", "C'est pas l'idéal en vrai je fais pas trop de peinture" ],
+				[ "client_21_grand", "Ha yut... bon et meuler des pièces, c'est possible?" ],
+				[ "mecanix_en_pied", "Oui à fond!" ],
+				[ "client_21_grand", "Trop bien !" ],
+			],
+			//repair scene
+			outilsSprite:["sprite_demontechaine","sprite_tournevis"],
+			outilsGoals:	[2,2],
+			bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
+			isSexist: false,
+	},
+	"client22":{
+			spriteName:"client_22_petit",
+			bigSpriteName:"client_22_grand",
+			dialogs:[
+				[ "mecanix_en_pied", "Hello!" ],
+				[ "client_22_grand", "Coucou, dis j'ai un projet avec un cadre que j'ai récupéré, j'aimerais le repeindre."],
+				[ "client_22_grand", "C'est possible de le faire ici?"],
+				[ "mecanix_en_pied", "C'est pas l'idéal en vrai je fais pas trop de peinture" ],
+				[ "client_22_grand", "Ha yut... bon et meuler des pièces, c'est possible?" ],
+				[ "mecanix_en_pied", "Oui à fond!" ],
+				[ "client_22_grand", "Trop bien !" ],
+			],
+			//repair scene
+			outilsSprite:["sprite_demontechaine","sprite_tournevis"],
+			outilsGoals:	[2,2],
+			bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
+			isSexist: false,
+	},
+	"client23":{
+			spriteName:"client_23_petit",
+			bigSpriteName:"client_23_grand",
+			dialogs:[
+				[ "mecanix_en_pied", "Hello!" ],
+				[ "client_23_grand", "Coucou, dis j'ai un projet avec un cadre que j'ai récupéré, j'aimerais le repeindre."],
+				[ "client_23_grand", "C'est possible de le faire ici?"],
+				[ "mecanix_en_pied", "C'est pas l'idéal en vrai je fais pas trop de peinture" ],
+				[ "client_23_grand", "Ha yut... bon et meuler des pièces, c'est possible?" ],
+				[ "mecanix_en_pied", "Oui à fond!" ],
+				[ "client_23_grand", "Trop bien !" ],
+			],
+			//repair scene
+			outilsSprite:["sprite_demontechaine","sprite_tournevis"],
+			outilsGoals:	[2,2],
+			bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
+			isSexist: false,
+	},
+	"client24":{
+			spriteName:"client_24_petit",
+			bigSpriteName:"client_24_grand",
+			dialogs:[
+				[ "mecanix_en_pied", "Hello!" ],
+				[ "client_24_grand", "Coucou, dis j'ai un projet avec un cadre que j'ai récupéré, j'aimerais le repeindre."],
+				[ "client_24_grand", "C'est possible de le faire ici?"],
+				[ "mecanix_en_pied", "C'est pas l'idéal en vrai je fais pas trop de peinture" ],
+				[ "client_24_grand", "Ha yut... bon et meuler des pièces, c'est possible?" ],
+				[ "mecanix_en_pied", "Oui à fond!" ],
+				[ "client_24_grand", "Trop bien !" ],
+			],
+			//repair scene
+			outilsSprite:["sprite_demontechaine","sprite_tournevis"],
+			outilsGoals:	[2,2],
+			bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
+			isSexist: false,
+	},
+
 }
 
 // INVENTORY
@@ -507,6 +710,7 @@ function resetDayVariables(totalCoins,totalStars){
 // Function to automatixe the path and dialog for endoftheday interaction
 function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,totalStars,
 	playerPosition/*{x:,y:}*/,persoSprite,target1/*{x:,y:}*/,dialogInteractionList,target2,flag){
+		let waitTime = 0.3
 			// map and status are already loaded
 		const colBox = 3
 		const player = add([
@@ -528,17 +732,14 @@ function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,t
 			body(),
 			scale(PERSOSCALE),
 			agent({ speed: 80, allowDiagonals: true }),],1,1)
-		let aller = onKeyPress("enter",() => {
-			perso.setTarget(vec2(
+		let aller = wait(0.5,()=>{perso.setTarget(vec2(
 				target1.x,//Math.floor((center().x+45) / TILE_WIDTH) * TILE_WIDTH + TILE_WIDTH / 2,
 				target1.y//Math.floor((center().y-65)  / TILE_HEIGHT) * TILE_HEIGHT + TILE_HEIGHT / 2,
-			))
-		})
+			))})
 	//once the aller is done
 let firstTarget= 	perso.onTargetReached(()=>{
+	let dialogInteraction1 = dialogInteractionList
 
-let dialogInteraction1 = dialogInteractionList
-			aller.paused =true
 
 	// add dialog box
 	let textBox = add([
@@ -568,14 +769,15 @@ let dialogInteraction1 = dialogInteractionList
 	//	avatar.use(sprite(char))
 		// Update the dialog text
 		// mettre le texte lettre apres lettre
-		txt.text = dialog
-	}
+	txt.text = dialog
+}
 	//initialization
 	let curDialog = 0
 		updateDialog()
 	let dialogAction = onKeyPress("enter", () => {
 		// Cycle through the dialogs
 		curDialog = (curDialog + 1) % dialogInteraction1.length
+		console.log(curDialog);
 		if (curDialog==0){
 			// dialog finished, options to choose
 			dialogAction.paused = true
@@ -583,7 +785,8 @@ let dialogInteraction1 = dialogInteractionList
 			play("audio_reussite")
 			destroy(textBox)
 			destroy(txt)
-			onKeyPress("enter",() => {
+			let lastKeyPress = onKeyPress("enter",() => {
+				lastKeyPress.paused = true
 				dialogAction.paused = true
 				firstTarget.paused=true
 				perso.flipX=true
@@ -591,24 +794,87 @@ let dialogInteraction1 = dialogInteractionList
 					target2.x,//Math.floor((center().x+45) / TILE_WIDTH) * TILE_WIDTH + TILE_WIDTH / 2,
 					target2.y//Math.floor((center().y-65)  / TILE_HEIGHT) * TILE_HEIGHT + TILE_HEIGHT / 2,
 				))
+
 				console.log("Before the fade\n le jour "+jourIdx+"\n le justifiedFightCounter "+justifiedFightCounter+"\n la thune c'est "+totalCoins+"\n les stars "+totalStars)
 				perso.onTargetReached(()=>{
+					console.log("Target reached")
 					dialogAction.paused =true
-					if(flag==true){
+					// day two
+					if (jourIdx==2){
+						if(flag==true){
 						let poster = add([
 							sprite("atelier_poster"),
-							pos(center().x-(6.5*16),center().y-(7.2*16))
+							pos(center().x-(6.5*16),MAP_HEIGHT/2-(5.5*16))
 						])
 						posterFlag = true
 					}
-					wait(0.3,()=>{
+				}
+					// dqy three
+					// additional person for day three
+					if(jourIdx==3){
+						const flinta1 = levelAtelier.spawn([
+							sprite("perso_flinta_1",{anim:"walk_right"}),
+							anchor("center"),
+							pos(MAP_WIDTH/2-6*16,MAP_HEIGHT/2+2*16),//the default position is in front of the workshop
+							area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
+							body(),
+							scale(PERSOSCALE),
+							agent({ speed: 80, allowDiagonals: true }),],1,1)
+
+						const flinta2 = levelAtelier.spawn([
+								sprite("perso_flinta_2",{anim:"walk_right"}),
+								anchor("center"),
+								pos(MAP_WIDTH/2-6*16,MAP_HEIGHT/2+3.5*16),//the default position is in front of the workshop
+								area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
+								body(),
+								scale(PERSOSCALE),
+								agent({ speed: 80, allowDiagonals: true }),],1,1)
+
+								const flinta3 = levelAtelier.spawn([
+									sprite("perso_flinta_3",{anim:"walk_right"}),
+									anchor("center"),
+										pos(MAP_WIDTH/2-7*16,center().y+2*16),//the default position is in front of the workshop
+									area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
+									body(),
+									scale(PERSOSCALE),
+									agent({ speed: 80, allowDiagonals: true }),],1,1)
+
+									const flinta4 = levelAtelier.spawn([
+										sprite("perso_flinta_4",{anim:"walk_right"}),
+										anchor("center"),
+										pos(MAP_WIDTH/2-7*16,center().y+4*16),//the default position is in front of the workshop
+										area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
+										body(),
+										scale(PERSOSCALE),
+										agent({ speed: 80, allowDiagonals: true }),],1,1)
+
+						wait(0.5,()=>{
+						flinta1.setTarget(vec2(7*16,11*16))
+						flinta2.setTarget(vec2(8*16,12*16))
+						flinta2.onTargetReached(()=>{
+							flinta3.setTarget(vec2(6*16,11*16))
+							flinta4.setTarget(vec2(4*16,9*16))
+						})
+					})
+					// update the flyerFlag
+					flyersFlag = true
+					}
+
+					if(jourIdx==3){
+						console.log("wea rea in the waiting time");
+						waitTime= 3.3 // to wait to reach target
+					}else {
+						waitTime = 0.3
+					}
+					wait(waitTime,()=>{
+						console.log("Wait time is"+waitTime);
 						let fadeOut = add([
-						pos(center().x, center().y-29),
+						pos(center().x, center().y),
 						anchor("center"),
 						color(BLACK),
     				rect(256, 256),
     				area(),
-						fadeIn(1),
+						fadeIn(1.2),
 						opacity(1),
 					])
 					//to the next day
@@ -616,8 +882,9 @@ let dialogInteraction1 = dialogInteractionList
 					// door is open now
 					outdoorKey = true
 					console.log("apres le reset\n le jour"+newjourIdx+"\n le justifiedFightCounter "+justifiedFightCounter+"\n la thune c'est "+totalCoins+"\n les stars "+totalStars)
-				wait(1,()=>go("atelier",newjourIdx,totalCoins,totalStars,INITIALPOSITION))
+					wait(1,()=>go("atelier",newjourIdx,totalCoins,totalStars,INITIALPOSITION))
 			})
+
 			})
 			}
 		)
@@ -625,7 +892,8 @@ let dialogInteraction1 = dialogInteractionList
 		updateDialog()
 	}
 	})
-})}
+})
+}
 
 // Status bar
 function addStatusBar(jourIdx,totalCoins,totalStars){
@@ -803,14 +1071,13 @@ function add_atelier_map(){
 		// MAP
 		const MAP_WIDTH = 256;
 		const MAP_HEIGHT = 256;
-		const atelierMAP =
-		addLevel([
+		const levelAtelier = addLevel([
 			"KbbbbbbbbbbbbbbN",
 			"GMMMMMMMMMMMMMML",
 			"GmmmmmmmmmmmmmmL",
 			"GZoooooooooooooL",
-			"G--oot---------L",
-			"G--tt-OOOOOO---L",
+			"G--ootOOOOOO---L",
+			"G--tt----------L",
 			"G---T----t-----L",
 			"Gt-------------L",
 			"G------tt------L",
@@ -894,8 +1161,9 @@ function add_atelier_map(){
 				"O": () => [//ombre avec colliion
 					sprite("tuileOmbre"),
 					area(),
-					body({isStatic:true}),
-					"etabli"
+						body({isStatic:true}),
+						"etabli"
+
 				],
 				"G": () => [
 					sprite("bordDroite"),
@@ -977,14 +1245,37 @@ function add_atelier_map(){
 
 			// ADD ATELIER ITEMS
 			// table du milieu
-			const table = add([
+			if (flyersFlag==false){
+				const table = add([
 				sprite("etabli_fini",{anim:"idle"}),
 				scale(1),
 				anchor("center"),
-				pos(center().x,center().y-10),
+				pos(center().x,MAP_HEIGHT/2+16),
 				area(),
 				body({isStatic:true})
+				])
+			}else {
+				console.log("In the loop with flyers");
+				const table = add([
+				sprite("etabli_fini",{anim:"idle"}),
+				scale(1),
+				anchor("center"),
+				pos(center().x,MAP_HEIGHT/2+16),
+				area(),
+				body({isStatic:true})
+				])
+
+				let colBox =5
+				const tableFlyers = add([
+				sprite("atelier_etabli_flyer",{anim:"idle"}),
+				scale(1),
+				anchor("center"),
+				pos(center().x,MAP_HEIGHT/2+16),
+				area({ shape: new Polygon([vec2(-25,-17),vec2(-25,10), vec2(-5,10),vec2(-5,-17)]) }),
+				body({isStatic:true}),
+				"flyers"
 			])
+			}
 			//mur du murFond
 			const murFond = add([
 				sprite("atelier_mur_fond"),
@@ -992,7 +1283,7 @@ function add_atelier_map(){
 				pos(center().x,56)
 			])
 			//velos
-			const velo= add([
+			const velo_rouge_1 = add([
 				sprite("velo_rouge"),
 				scale(1),
 				anchor("center"),
@@ -1000,23 +1291,21 @@ function add_atelier_map(){
 				area(),
 				body({isStatic:true})
 			])
-		add([
+		  const velo_rouge_2 = add([
 				sprite("velo_rouge"),
 				scale(1),
 				anchor("center"),
 				pos(center().x+6*16,7.75*16),
-				area(),
-			body({isStatic:true})
-			])
-			add([
+				area(),body({isStatic:true})])
+			const velo_rouge_3 = add([
 					sprite("velo_rouge"),
 					scale(1),
 					anchor("center"),
 					pos(center().x+6*16,8.5*16),
 					area(),
 				body({isStatic:true})
-				])
-			add([
+			])
+			const velo_rouge_4 = add([
 					sprite("velo_rouge"),
 					scale(1),
 					anchor("center"),
@@ -1024,7 +1313,8 @@ function add_atelier_map(){
 					area(),
 					body({isStatic:true})
 				])
-				if(veloTag==true){
+// add velo sur pied items
+if(veloTag==true){
 			const velo_sur_pied_1 = add([
 				sprite("velo_sur_pied",{anim:"idle"}),
 				scale(1),
@@ -1038,13 +1328,28 @@ function add_atelier_map(){
 				sprite("velo_sur_pied",{anim:"idle"}),
 				scale(1),
 				anchor("center"),
-				pos(center().x+4*16,MAP_HEIGHT-2*16),
+				pos(center().x+2*16,MAP_HEIGHT-2*16),
 				area(),
 				body({isStatic:true}),
 				"pied_velos"
 			])
 		}
 
+// add poster item
+	if(posterFlag==true){
+			let poster = add([
+				sprite("atelier_poster"),
+				pos(center().x-(6.5*16),MAP_HEIGHT/2-(5.5*16))
+			])
+		}
+
+		// if(flyersFlag==true){
+		// 		let flyers = add([
+		// 			sprite("atelier_flyers"),
+		// 			pos(center().x-(6.5*16),center().y-(7.2*16))
+		// 		])
+		// 	}
+return levelAtelier
 	}
 // ------ Boucle de Gameplay ------- //
 // ------ Start --------------------------------------------------- //
@@ -1085,61 +1390,82 @@ scene("start", (jourIdx,totalCoins,totalStars) => {
 scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=> {
 	let music = play("page_debut")
 		add_atelier_map()
+		// collision Box size
+		const colBox = 5
+		const player = add([
+			sprite("mecanix"),
+			// center() returns the center point vec2(width() / 2, height() / 2)
+			anchor("center"),
+			//console.log(saved_position),
+			pos(saved_position.x,saved_position.y),//the default position is in front of the workshop
+			area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
+			//area(),
+			body(),
+			// scalePerso
+			scale(PERSOSCALE)])
+			// animate the player
+		//player.play("walk_right")
+		//player.flipX = true
+		const SPEED = 100;
+		player_movement(player,SPEED)
+
+		// add collision// add velo sur provided Collision
+		if (veloTag==true){
+				player.onCollide("pied_velos",()=>{
+				let textBox = add([
+				sprite("dialogbox"),//, width: width() - 230
+				anchor("center"),
+				pos(center().x,BOTTOM),
+			])
+			let txt = add([
+				text("Incroyable! Quelles trouvailles on fait a la dechet!", { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
+				anchor("center"),
+				pos(center().x,BOTTOM),
+				color(MYPURPLE),
+			])
+			onKeyPress(()=>{
+				destroy(txt),
+				destroy(textBox)
+			})
+			})}
+		// add poster collision
+		if(posterFlag==true){
+			player.onCollide("affiche", () => {
+				let textBox = add([
+					sprite("atelier_poster_grand"),//, width: width() - 230
+					// 	text("Complète ton inventaire pour\n un TURFU RADIEUX!", { size:  TXTSIZE }),//, width: width() - 230
+					anchor("center"),
+					pos(center().x,center().y-10),
+					"afficheMessage"
+				])
+				onKeyPress(()=>{destroyAll("afficheMessage")})
+			})	}
+			// add flyers collision
+			if(flyersFlag==true){
+				player.onCollide("flyers", () => {
+					let textBox = add([
+						sprite("atelier_poster2_grand"),//, width: width() - 230
+						// 	text("Complète ton inventaire pour\n un TURFU RADIEUX!", { size:  TXTSIZE }),//, width: width() - 230
+						anchor("center"),
+						pos(center().x,center().y-10),
+						"afficheMessage2"
+					])
+					onKeyPress(()=>{destroyAll("afficheMessage2")})
+				})	}
+
+
+
 				//status
 				addStatusBar(jourIdx,totalCoins,totalStars)
 				// add the mecanix// Add player game object
 				let default_position = saved_position
-				// collision Box size
-				const colBox = 5
-				const player = add([
-					sprite("mecanix"),
-					// center() returns the center point vec2(width() / 2, height() / 2)
-					anchor("center"),
-					//console.log(saved_position),
-					pos(saved_position.x,saved_position.y),//the default position is in front of the workshop
-					area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
-					//area(),
-					body(),
-					// scalePerso
-					scale(PERSOSCALE)
-				])
-				// if velot is true add Collision
-				if (veloTag==true){
-					player.onCollide("pied_velos",()=>{
-					let textBox = add([
-					sprite("dialogbox"),//, width: width() - 230
-					anchor("center"),
-					pos(center().x,BOTTOM),
-				])
-				let txt = add([
-					text("Incroyable! Quelles trouvailles on fait a la dechet!", { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
-					anchor("center"),
-					pos(center().x,BOTTOM),
-					color(MYPURPLE),
-				])
-				onKeyPress(()=>{
-					destroy(txt),
-					destroy(textBox)
-			})
-		})
-		}
 
-				if (posterFlag==true){
-					let poster = add([
-						sprite("atelier_poster"),
-						pos(center().x-(6.5*16),center().y-(7.2*16)),
-						"affiche"
-					])
-				}// animate the player
-				//player.play("walk_right")
-				//player.flipX = true
-				const SPEED = 100;
-				player_movement(player,SPEED)
+
 
 
 				// CLIENTS LINE IN ATELIER
-				let SHIFT_CLIENTLINE = {x:-20,y:Math.random([-10,10])}
-				let FIRST_CLIENTLINE = {x:center().x-10, y:center().y+30}
+				let SHIFT_CLIENTLINE = {x:-20,y:Math.random([-15,15])}
+				let FIRST_CLIENTLINE = {x:center().x-10, y:MAP_HEIGHT/2+16*3.8}
 
 				// FUNCTION TO LOOP ON CLIENT SPRITES
 				function addClientInLine(clientkey,index,tag){
@@ -1215,31 +1541,16 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 				})
 				}
 				// explanation message for the closed door
-				affichageOnCollision(player,"outsideDoorDroite","Tu n'as pas la clé pour ouvrir cette porte...")
-
+				if (outdoorKey == false){
+					affichageOnCollision(player,"outsideDoorDroite","Tu n'as pas la clé pour ouvrir cette porte...")
+				}
 				player.onCollide("etabli", () => {
 					let saved_position = player.pos
 					music.paused = true
 					// This collision shows the state of the inventory.
 					go("inventaire", jourIdx, totalCoins, totalStars,saved_position,clientCounter)
 				})
-				// poster collision
-				player.onCollide("affiche", () => {
-					let textBox = add([
-					sprite("atelier_poster_grand"),//, width: width() - 230
-					anchor("center"),
-					pos(center().x,center().y-10),
-					"afficheMessage"
-				])
-				// let txt = add([
-				// 	text("Complète ton inventaire pour\n un TURFU RADIEUX!", { size:  TXTSIZE }),//, width: width() - 230
-				// 	anchor("center"),
-				// 	pos(center().x,BOTTOM),
-				// 	color(MYPURPLE),
-				// 	"afficheMessage"
-				// ])
-			})
-	onKeyPress(()=>{destroyAll("afficheMessage")})
+
 
 			})
 
@@ -1611,7 +1922,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			sprite("perso_dechett_1"),
 			// center() returns the center point vec2(width() / 2, height() / 2)
 			anchor("center"),
-			pos(center().x+3*16,center().y-7*16),// the modified position from before
+			pos(center().x+3*16,MAP_HEIGHT/2-5*16),// the modified position from before
 			area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
 			body({isStatic:true}),
 			scale(PERSOSCALE),
@@ -2182,7 +2493,7 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 		// buttons
 		const RepairBtn = add([
 				text("Reparez!",{font:"joystix",size:TXTSIZE+6}),
-				pos(vec2(center().x,center().y+0.1*(MAP_HEIGHT/2))),
+				pos(vec2(center().x,center().y+0.3*(MAP_HEIGHT/2))),
 				area({ cursor: "pointer", }),
 				scale(1),
 				anchor("center"),
@@ -2190,7 +2501,7 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 
 		const FightBtn = add([
 					text("Frappez!",{font:"joystix",size:TXTSIZE+6}),
-					pos(vec2(center().x,center().y+0.3*(MAP_HEIGHT/2))),
+					pos(vec2(center().x,center().y+0.5*(MAP_HEIGHT/2))),
 					area({ cursor: "pointer", }),
 					scale(1),
 					anchor("center"),
@@ -2207,13 +2518,13 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 		const tinyShift = 14
 		const arrow = add([
 			text(">",{size:LARGETXTSIZE}),
-			pos(center().x-64,center().y+0.1*(MAP_HEIGHT/2)-tinyShift)
+			pos(center().x-64,center().y+0.3*(MAP_HEIGHT/2)-tinyShift)
 
 		])
 		//option Réparez
 		onKeyPress("up", () => {
 					//move arrow
-					arrow.pos.y = center().y+0.1*(MAP_HEIGHT/2)-tinyShift
+					arrow.pos.y = center().y+0.3*(MAP_HEIGHT/2)-tinyShift
 					// putting the other button color back to default_position
 					FightBtn.onUpdate(() => {
 						FightBtn.color = (0,0,0)
@@ -2229,7 +2540,7 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 		//option Frappez
 		onKeyPress("down", () => {
 				// moving the arrow
-				arrow.pos.y = center().y+0.3*(MAP_HEIGHT/2)-tinyShift
+				arrow.pos.y = center().y+0.5*(MAP_HEIGHT/2)-tinyShift
 				// puttint the other button color back to default_position
 				RepairBtn.onUpdate(() => {RepairBtn.color = (0,0,0)	})
 				// Coloring button
@@ -2264,7 +2575,7 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 				sprite("choix_reparer",{anim:"move"}),
 				scale(1),
 				anchor("center"),
-				pos(center().x,center().y-25),
+				pos(center().x,center().y),
 				lifespan(1.6),
 			  ])
 
@@ -2297,7 +2608,7 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 				sprite("choix_reparer",{anim:"move"}),
 				scale(1),
 				anchor("center"),
-				pos(center().x,center().y-25),
+				pos(center().x,center().y),
 				lifespan(1.6),
 			  ])
 				wait(2.2, () => {
@@ -2332,7 +2643,7 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 			sprite("choix_frapper_juste",{anim:"hit"}),
 			scale(1),
 			anchor("center"),
-			pos(center().x,center().y-25),
+			pos(center().x,center().y),
 			lifespan(1.6),
 		  ])
 
@@ -2421,7 +2732,7 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 			sprite("carton_bilan"),//, width: width() - 230
 			anchor("center"),
 			scale(1),
-			pos(center().x,center().y-80),
+			pos(center().x,center().y-55),
 			"textBox"
 		])
 		// JOUR
@@ -2444,19 +2755,25 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 			console.log("In the compareStats function");
 			console.log("justifiedFightCounter is :"+justifiedFightCounter);
 			console.log("goal is :"+fightGoalsList[jourIdx-1]);
-			if(justifiedFightCounter == fightGoalsList[jourIdx-1]){
+			console.log("fightCounter is :"+fightCounter);
+
+			// we use the fight counter to make sure you didnt fight too much
+			if(justifiedFightCounter == fightGoalsList[jourIdx-1] && fightCounter == fightGoalsList[jourIdx-1]){
 				caseNumber = 0
 			}
-			if(justifiedFightCounter == fightGoalsList[jourIdx-1]+1 || justifiedFightCounter == fightGoalsList[jourIdx-1]-1){
+			if(fightCounter == fightGoalsList[jourIdx-1]+1 || justifiedFightCounter == fightGoalsList[jourIdx-1]-1){
 				caseNumber = 1
 			}
-			if(justifiedFightCounter == fightGoalsList[jourIdx-1]+2){
+			// you fighted 2 times too much but hit all the ones you should ahve hit
+			if(fightCounter == fightGoalsList[jourIdx-1]+2 || justifiedFightCounter == fightGoalsList[jourIdx-1]){
 				caseNumber = 3
 			}
+			// you fighted two times not enough when you should have fighted
 			if(justifiedFightCounter == fightGoalsList[jourIdx-1]-2){
 				caseNumber = 2
 			}
-			if(justifiedFightCounter > fightGoalsList[jourIdx-1]+2){
+			// you fighted more than two times too much but hit all the ones you should have hit
+			if(fightCounter > fightGoalsList[jourIdx-1]+2 && justifiedFightCounter == fightGoalsList[jourIdx-1]){
 				caseNumber = 5
 			}
 			if(justifiedFightCounter < fightGoalsList[jourIdx-1]-2){
@@ -2491,6 +2808,9 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 						onKeyPress("enter", () => {
 							if(jourIdx==1){go("interactionJour1", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
 							if(jourIdx==2){go("interactionJour2", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
+							if(jourIdx==3){go("interactionJour3", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
+							if(jourIdx==4){go("interactionJour4", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
+
 						})
 
 			break;
@@ -2505,6 +2825,10 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 							onKeyPress("enter", () => {
 								if(jourIdx==1){go("interactionJour1", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
 								if(jourIdx==2){go("interactionJour2", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
+								if(jourIdx==3){go("interactionJour3", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
+								if(jourIdx==4){go("interactionJour4", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
+
+
 							})
 				break;
 			case 2 :
@@ -2519,10 +2843,14 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 							onKeyPress("enter", () => {
 								if(jourIdx==1){go("interactionJour1", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
 								if(jourIdx==2){go("interactionJour2", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
+								if(jourIdx==3){go("interactionJour3", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
+								if(jourIdx==4){go("interactionJour4", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
+
+
 							})
 							break;
 			case 3 :
-			// BASIC with Bankfrupt WARNING:
+			// BASIC with Bankrupt WARNING:
 				add([text("J'ai fait du bon travail, mais je ne gagne pas tant d'argent...",
 					{ size: TXTSIZE, width:TXTWIDTH,font:"joystix"}),color(MYPURPLE),scale(1),anchor("center"),pos(center().x,BOTTOMTEXT)])
 					// instruction
@@ -2533,6 +2861,10 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 				onKeyPress("enter", () => {
 					if(jourIdx==1){go("interactionJour1", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
 					if(jourIdx==2){go("interactionJour2", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
+					if(jourIdx==3){go("interactionJour3", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
+					if(jourIdx==4){go("interactionJour4", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
+
+
 				})
 				break;
 			case 4 :
@@ -2545,7 +2877,7 @@ break;
 			// GAMEOVER BANKRUPT
 			add([text("Je me suis bien amuséex!\nmais c'est la faillite...",
 				{ size: TXTSIZE, font:"joystix"}),scale(1),anchor("center"),color(MYPURPLE),pos(center().x,BOTTOMTEXT)])
-		  wait(7,()=>go("Burnout"))
+		  wait(7,()=>go("Bankrupt"))
 			break;
 		}
 }
@@ -2593,646 +2925,223 @@ break;
 	})
 
 	scene("interactionJour2", (jourIdx,totalCoins,totalStars,position) => {
-			//	// MAP
-				const MAP_WIDTH = 256;
-				const MAP_HEIGHT = 256;
-				const TILE_WIDTH = 16;
-				const TILE_HEIGHT = 16;
-				const levelAtelier = addLevel([
-					"KbbbbbbbbbbbbbbN",
-					"GMMMMMMMMMMMMMML",
-					"GmmmmmmmmmmmmmmL",
-					"GooooooooooooooL",
-					"G--oot---------L",
-					"G--tt-OOOOOO---L",
-					"G---T----t-----L",
-					"Gt-------------L",
-					"G-----tttt-----L",
-					"G-------tt-----L",
-					"X-T-------t----L",
-					"W--tt---t------L",
-					"w-----------t--e",
-					"S---T----------D",
-					"Gt--TT----t----c",
-					"QvvvvvvvvvvvvvvP",
-				],{
-					// define the size of each block
-					tileWidth:16,
-					tileHeight:16,
-					//scale :2,
-					pos:vec2(center().x - (MAP_WIDTH/2), 0),
-					// assign to each symbol a sprite
-					tiles: {
-						"W": () => [
-							sprite("scene_atelier_tile_sortiegaucheH1"),
-							area(),
-							body({ isStatic: true }),
-							"clientEntrance"
-						],
-						"w": () => [
-							sprite("scene_atelier_tile_sortiegaucheH2"),
-							area(),
-							body({ isStatic: true }),
-								"clientEntrance"
-						],
-						"S": () => [
-							sprite("sortieBasGauche"),
-							area(),
-							body({ isStatic: true }),
-							"clientEntrance"
-
-						],
-						"X": () => [
-							sprite("sortieHautGauche"),
-							area(),
-							body({ isStatic: true }),
-							"clientEntrance"
-						],
-
-						"=": () => [
-							sprite("etabli"),
-							area(),
-							body({ isStatic: true }),
-							"etabli"
-						],
-						"K": () => [
-							sprite("coinHauteGauche"),
-							area(),
-							body({isStatic:true}),
-						],
-						"b": () => [
-							sprite("bordHaute"),
-							area(),
-							body({isStatic:true}),
-						],
-						"N": () => [
-							sprite("coinHauteDroite"),
-							area(),
-							body({isStatic:true}),
-						],
-						"P": () => [
-							sprite("coinBasDroite"),
-							area(),
-							body({isStatic:true}),
-						],
-						"Q": () => [
-							sprite("coinBasGauche"),
-							area(),
-							body({isStatic:true}),
-						],
-						"o": () => [
-							sprite("tuileOmbre"),
-							area(),
-							body({isStatic:true}),
-						],
-						"O": () => [//ombre avec colliion
-							sprite("tuileOmbre"),
-							area(),
-							body({isStatic:true}),
-							"etabli"
-						],
-						"G": () => [
-							sprite("bordDroite"),
-							area(),
-							body({isStatic:true}),
-						],
-						"M": () => [
-							sprite("murFond"),
-							area(),
-							body({isStatic:true}),
-						],
-						"Z": () => [
-							sprite("tuileOmbre"),
-							area(),
-							body({isStatic:true}),
-							"affiche"
-						],
-						"m": () => [
-							sprite("basMurFond"),
-							area(),
-							body({isStatic:true}),
-
-						],
-						"L": () => [
-							sprite("bordGauche"),
-							area(),
-							body({isStatic:true}),
-						],
-						"D": () => [
-							sprite("sortieDroite"),
-							area(),
-							body({ isStatic: true} ),
-							"outsideDoorDroite",
-						],
-						"c": () => [
-							sprite("sortieBasDroite"),
-							area(),
-							body({ isStatic: true} ),
-
-						],
-						"e": () => [
-							sprite("sortieHautDroite"),
-							area(),
-							body({ isStatic: true} ),
-
-						],
-						"C": () => [
-							sprite("tuile1"),
-							area(),
-							body({isStatic:true}),
-						],
-						"H": () => [
-							sprite("tuileHaut"),
-							area(),
-							body({isStatic:true}),
-
-						],
-						"v": () => [
-							sprite("bordBas"),
-							area(),
-							body({isStatic:true}),
-
-						],
-						"-": () => [
-							sprite("tuile1"),
-							outline(40, 40),
-						],
-						"t": () => [
-							sprite("tuile2"),
-							outline(40, 40),
-						],
-						"T": () => [
-							sprite("tuile3"),
-							outline(40, 40),
-						],
-
-					}
-					})
-
-					// ADD ATELIER ITEMS
-					// table du milieu
-					const table = add([
-						sprite("etabli_fini",{anim:"idle"}),
-						scale(1),
-						anchor("center"),
-						pos(center().x,center().y-10),
-						area(),
-						body({isStatic:true})
-					])
-				//	mur du murFond
-					const murFond = add([
-						sprite("atelier_mur_fond",{quad:(0.5,0.5,1,1)}),
-						anchor("center"),
-						pos(center().x,56),
-					])
-					//velos
-
-					const velo= add([
-						sprite("velo_rouge"),
-						scale(1),
-						anchor("center"),
-						pos(center().x,5*16),
-						area(),
-						body({isStatic:true})
-					])
-					add([
-						sprite("velo_rouge"),
-						scale(1),
-						anchor("center"),
-						pos(center().x+6*16,7.75*16),
-						area(),
-					body({isStatic:true})
-					])
-					add([
-							sprite("velo_rouge"),
-							scale(1),
-							anchor("center"),
-							pos(center().x+6*16,8.5*16),
-							area(),
-						body({isStatic:true})
-						])
-					add([
-							sprite("velo_rouge"),
-							scale(1),
-							anchor("center"),
-							pos(center().x+6*16,9.25*16),
-							area(),
-							body({isStatic:true})
-						])
-
-						if(veloTag==true){
-						const velo_sur_pied_1 = add([
-						sprite("velo_sur_pied",{anim:"idle"}),
-						scale(1),
-						anchor("center"),
-						pos(center().x-(6*16),8*16),
-						area(),
-								body({isStatic:true}),
-									"pied_velos"
-						])
-						const velo_sur_pied_2 = add([
-						sprite("velo_sur_pied",{anim:"idle"}),
-						scale(1),
-						anchor("center"),
-						pos(center().x+4*16,MAP_HEIGHT-2*16),
-						area(),
-						body({isStatic:true}),
-						"pied_velos"
-						])
-						}
-			//status
-			addStatusBar(jourIdx,totalCoins,totalStars)
-
-			let dialogInteraction2 =[
-["PNJ","Hello ! je suis en train de faire le tour du quartier et je me demandais si je pouvais poser une affiche ici?"],
-["M","Salut, oui ok tu peux la mettre sur le mur du fond."],
-["PNJ","Merci! c'est stylé que tu bosses ici!"],
-["PNJ","ha et t'es dac de me prêter un tournevis plat?"],
-["M","oui pas de soucis, voilà"],
-["PNJ","merci à bientôt!"],
-]
-
-			// try with function
-		interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,totalStars,
-				{x:center().x-44,y:center().y-(3*16)},"perso_interaction_2",{x:16*4,y:16*7},dialogInteraction2,{x:16*2,y:16*5},true)
-		})
-scene("interactionJour1", (jourIdx,totalCoins,totalStars,position) => {
-		//	// MAP
-			const MAP_WIDTH = 256;
-			const MAP_HEIGHT = 256;
-			const TILE_WIDTH = 16;
-			const TILE_HEIGHT = 16;
-			const levelAtelier = addLevel([
-				"KbbbbbbbbbbbbbbN",
-				"GMMMMMMMMMMMMMML",
-				"GmmmmmmmmmmmmmmL",
-				"GZoooooooooooooL",
-				"G--oot---------L",
-				"G--tt-OOOOOO---L",
-				"G---T----t-----L",
-				"Gt-------------L",
-				"G-----tttt-----L",
-				"G-------tt-----L",
-				"X-T-------t----L",
-				"W--tt---t------L",
-				"w-----------t--e",
-				"S---T----------D",
-				"Gt--TT----t----c",
-				"QvvvvvvvvvvvvvvP",
-			],{
-				// define the size of each block
-				tileWidth:16,
-				tileHeight:16,
-				//scale :2,
-				pos:vec2(center().x - (MAP_WIDTH/2), 0),
-				// assign to each symbol a sprite
-				tiles: {
-					"W": () => [
-						sprite("scene_atelier_tile_sortiegaucheH1"),
-						area(),
-						body({ isStatic: true }),
-						"clientEntrance"
-					],
-					"w": () => [
-						sprite("scene_atelier_tile_sortiegaucheH2"),
-						area(),
-						body({ isStatic: true }),
-							"clientEntrance"
-					],
-					"S": () => [
-						sprite("sortieBasGauche"),
-						area(),
-						body({ isStatic: true }),
-						"clientEntrance"
-
-					],
-					"X": () => [
-						sprite("sortieHautGauche"),
-						area(),
-						body({ isStatic: true }),
-						"clientEntrance"
-					],
-
-					"=": () => [
-						sprite("etabli"),
-						area(),
-						body({ isStatic: true }),
-						"etabli"
-					],
-					"K": () => [
-						sprite("coinHauteGauche"),
-						area(),
-						body({isStatic:true}),
-					],
-					"b": () => [
-						sprite("bordHaute"),
-						area(),
-						body({isStatic:true}),
-					],
-					"N": () => [
-						sprite("coinHauteDroite"),
-						area(),
-						body({isStatic:true}),
-					],
-					"P": () => [
-						sprite("coinBasDroite"),
-						area(),
-						body({isStatic:true}),
-					],
-					"Q": () => [
-						sprite("coinBasGauche"),
-						area(),
-						body({isStatic:true}),
-					],
-					"o": () => [
-						sprite("tuileOmbre"),
-						area(),
-						body({isStatic:true}),
-					],
-					"O": () => [//ombre avec colliion
-						sprite("tuileOmbre"),
-						area(),
-						body({isStatic:true}),
-						"etabli"
-					],
-					"G": () => [
-						sprite("bordDroite"),
-						area(),
-						body({isStatic:true}),
-					],
-					"M": () => [
-						sprite("murFond"),
-						area(),
-						body({isStatic:true}),
-					],
-					"Z": () => [
-						sprite("tuileOmbre"),
-						area(),
-						body({isStatic:true}),
-						"affiche"
-					],
-					"m": () => [
-						sprite("basMurFond"),
-						area(),
-						body({isStatic:true}),
-
-					],
-					"L": () => [
-						sprite("bordGauche"),
-						area(),
-						body({isStatic:true}),
-					],
-					"D": () => [
-						sprite("sortieDroite"),
-						area(),
-						body({ isStatic: true} ),
-						"outsideDoorDroite",
-					],
-					"c": () => [
-						sprite("sortieBasDroite"),
-						area(),
-						body({ isStatic: true} ),
-
-					],
-					"e": () => [
-						sprite("sortieHautDroite"),
-						area(),
-						body({ isStatic: true} ),
-
-					],
-					"C": () => [
-						sprite("tuile1"),
-						area(),
-						body({isStatic:true}),
-					],
-					"H": () => [
-						sprite("tuileHaut"),
-						area(),
-						body({isStatic:true}),
-
-					],
-					"v": () => [
-						sprite("bordBas"),
-						area(),
-						body({isStatic:true}),
-
-					],
-					"-": () => [
-						sprite("tuile1"),
-						outline(40, 40),
-					],
-					"t": () => [
-						sprite("tuile2"),
-						outline(40, 40),
-					],
-					"T": () => [
-						sprite("tuile3"),
-						outline(40, 40),
-					],
-
-				}
-				})
-
-				// ADD ATELIER ITEMS
-				// table du milieu
-				const table = add([
-					sprite("etabli_fini",{anim:"idle"}),
-					scale(1),
-					anchor("center"),
-					pos(center().x,center().y-10),
-					area(),
-					body({isStatic:true})
-				])
-				//mur du murFond
-				const murFond = add([
-					sprite("atelier_mur_fond"),
-					anchor("center"),
-					pos(center().x,56)
-				])
-				//velos
-
-				const velo= add([
-					sprite("velo_rouge"),
-					scale(1),
-					anchor("center"),
-					pos(center().x,5*16),
-					area(),
-					body({isStatic:true})
-				])
-				add([
-					sprite("velo_rouge"),
-					scale(1),
-					anchor("center"),
-					pos(center().x+6*16,7.75*16),
-					area(),
-				body({isStatic:true})
-				])
-				add([
-						sprite("velo_rouge"),
-						scale(1),
-						anchor("center"),
-						pos(center().x+6*16,8.5*16),
-						area(),
-					body({isStatic:true})
-					])
-				add([
-						sprite("velo_rouge"),
-						scale(1),
-						anchor("center"),
-						pos(center().x+6*16,9.25*16),
-						area(),
-						body({isStatic:true})
-					])
-
+		//function instead of commander
+		levelAtelier = add_atelier_map()
 		//status
 		addStatusBar(jourIdx,totalCoins,totalStars)
 
-		let dialogInteraction1 = [
-					["pnj","Hé salut"],
+		let dialogInteraction2 =[
+			["PNJ","Hello ! je suis en train de faire le tour du quartier et je me demandais si je pouvais poser une affiche ici?"],
+			["M","Salut, oui ok tu peux la mettre sur le mur du fond."],
+			["PNJ","Merci! c'est stylé que tu bosses ici!"],
+			["PNJ","ha et t'es dac de me prêter un tournevis plat?"],
+			["M","oui pas de soucis, voilà"],
+			["PNJ","merci à bientôt!"],
+		]
+
+		// try with function
+		interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,totalStars,
+			{x:center().x-44,y:center().y-(3*16)},"perso_interaction_2",{x:16*4,y:16*7},dialogInteraction2,{x:16*2,y:16*5},true)
+		})
+	scene("interactionJour1", (jourIdx,totalCoins,totalStars,position) => {
+			//function instead of commander
+			levelAtelier = add_atelier_map()
+
+			//status
+			addStatusBar(jourIdx,totalCoins,totalStars)
+
+			let dialogInteraction1 = [
+				["pnj","Hé salut"],
 				["m","Salut! désolée c'est fini pour aujourd'hui, il faut revenir demain..."],
 				["pnj","oui, oui je venais pas pour réparer mon vélo..."],
 				["m","heu ok, tu viens pour quoi alors?"],
 				[" pnj","heu... ha oui! haha pardon. je viens te filer la clée que j'ai oublié de rendre quand j'ai arrêté de bosser ici. je suis un peu tête en l'air des fois."],
 				["m","ah! merci"],
 				["pnj","de rien, allé à la proch ciao ciao! heu, la sortie c'est par là hein."]
+			]
+
+			// try with function
+			interactionJour(1,levelAtelier,justifiedFightCounter,totalCoins,totalStars,
+				{x:center().x-2*16,y:center().y-(3*16)},"perso_interaction_1",{x:16*5,y:16*7},dialogInteraction1,{x:16*1.5,y:16*11},false)
+				// without function
+				// 		// add the mecanix// Add player game object
+				// 		const colBox = 3
+				// 		const player = add([
+				// 			sprite("mecanix",{anim:"idle"}),
+				// 			anchor("center"),
+				// 			pos(center().x-2*16,center().y-(3*16)),//the default position is in front of the workshop
+				// 			area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
+				// 			body(),
+				// 			scale(PERSOSCALE)
+				// 		])
+				// 		player.flipX = true
+				//
+				// 		// Add the other pers
+				// 		const perso = levelAtelier.spawn([
+				// 			sprite("perso_interaction_1",{anim:"walk_right"}),
+				// 			anchor("center"),
+				// 			pos(0,160),//the default position is in front of the workshop
+				// 			area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
+				// 			body(),
+				// 			scale(PERSOSCALE),
+				// 			agent({ speed: 80, allowDiagonals: true }),
+				// 		],1,1)
+				//
+				// 		let aller = onKeyPress("enter",() => {
+				// 			perso.setTarget(vec2(
+				// 				16*5,//Math.floor((center().x+45) / TILE_WIDTH) * TILE_WIDTH + TILE_WIDTH / 2,
+				// 				16*7//Math.floor((center().y-65)  / TILE_HEIGHT) * TILE_HEIGHT + TILE_HEIGHT / 2,
+				// 			))
+				// 		})
+				// 		// let retour = onKeyPress("enter",() => { perso.setTarget(vec2(
+				// 		// 		16*0,//Math.floor((center().x+45) / TILE_WIDTH) * TILE_WIDTH + TILE_WIDTH / 2,
+				// 		// 		16*12//Math.floor((center().y-65)  / TILE_HEIGHT) * TILE_HEIGHT + TILE_HEIGHT / 2,
+				// 		// 	))})
+				// 		// retour.paused
+				//
+				// 	//once the aller is done
+				// let firstTarget= 	perso.onTargetReached(()=>{
+				//
+				// let dialogInteraction1 = [
+				// 			["pnj","Hé salut"],
+				// 		["m","Salut! désolée c'est fini pour aujourd'hui, il faut revenir demain..."],
+				// 		["pnj","oui, oui je venais pas pour réparer mon vélo..."],
+				// 		["m","heu ok, tu viens pour quoi alors?"],
+				// 		[" pnj","heu... ha oui! haha pardon. je viens te filer la clée que j'ai oublié de rendre quand j'ai arrêté de bosser ici. je suis un peu tête en l'air des fois."],
+				// 		["m","ah! merci"],
+				// 		["pnj","de rien, allé à la proch ciao ciao! heu, la sortie c'est par là hein."]
+				// 		]
+				// 			aller.paused =true
+				//
+				// 	// add dialog box
+				// 	let textBox = add([
+				// 		sprite("dialogbox"),//, width: width() - 230
+				// 		anchor("center"),
+				// 		pos(center().x,BOTTOM),
+				// 		"textBox"
+				// 	])
+				// 	//initialization
+				// 	let initDialog = dialogInteraction1.length
+				// 	let levelDialog = dialogInteraction1
+				//
+				// 	// Text bubble
+				// 	const txtWidth = 150; // Ideal Width
+				// 	const txtMargins = 15;
+				// 	let txt = add([
+				// 		text("", { size:  TXTSIZE,  width: txtWidth }),//, width: width() - 230
+				// 		anchor("center"),
+				// 		pos(center().x,BOTTOM),
+				// 		color(MYPURPLE),
+				// 	])
+				// 	// Update the on screen sprite & text
+				// 	function updateDialog() {
+				// 		const [ char, dialog ] = dialogInteraction1[curDialog]
+				// 		console.log(dialog);
+				// 		// Use a new sprite component to replace the old one
+				// 	//	avatar.use(sprite(char))
+				// 		// Update the dialog text
+				// 		// mettre le texte lettre apres lettre
+				// 		txt.text = dialog
+				// 	}
+				// 	//initialization
+				// 	let curDialog = 0
+				// 		updateDialog()
+				// 	let dialogAction = onKeyPress("enter", () => {
+				// 		// Cycle through the dialogs
+				// 		curDialog = (curDialog + 1) % dialogInteraction1.length
+				// 		if (curDialog==0){
+				// 			// dialog finished, options to choose
+				// 			dialogAction.paused = true
+				// 			firstTarget.paused=true
+				// 			play("audio_reussite")
+				// 			destroy(textBox)
+				// 			destroy(txt)
+				// 			onKeyPress("enter",() => {
+				// 				dialogAction.paused = true
+				// 				firstTarget.paused=true
+				// 				perso.flipX=true
+				// 				let retour = perso.setTarget(vec2(
+				// 					16*1,//Math.floor((center().x+45) / TILE_WIDTH) * TILE_WIDTH + TILE_WIDTH / 2,
+				// 					16*11//Math.floor((center().y-65)  / TILE_HEIGHT) * TILE_HEIGHT + TILE_HEIGHT / 2,
+				// 				))
+				// 				console.log("Before the fade\n le jour "+jourIdx+"\n le justifiedFightCounter "+justifiedFightCounter+"\n la thune c'est "+totalCoins+"\n les stars "+totalStars)
+				// 				perso.onTargetReached(()=>{
+				// 					dialogAction.paused =true
+				// 					let fadeOut = add([
+				// 						pos(center().x, center().y-30),
+				// 						anchor("center"),
+				// 						color(BLACK),
+				//     				rect(256, 256),
+				//     				area(),
+				// 						fadeIn(1),
+				// 						opacity(1),
+				// 					])
+				// 					//to the next day
+				// 					let newjourIdx = resetDayVariables(totalCoins,totalStars)
+				// 					// door is open now
+				// 					outdoorKey = true
+				// 					console.log("apres le reset\n le jour"+newjourIdx+"\n le justifiedFightCounter "+justifiedFightCounter+"\n la thune c'est "+totalCoins+"\n les stars "+totalStars)
+				// 				wait(1,()=>go("atelier",newjourIdx,totalCoins,totalStars,INITIALPOSITION))
+				// 			})
+				// 			}
+				// 		)
+				// 	}else{
+				// 		updateDialog()
+				// 	}
+				// 	})
+				// })
+			})
+	scene("interactionJour3", (jourIdx,totalCoins,totalStars,position) => {
+		levelAtelier = add_atelier_map()
+			//status
+			addStatusBar(jourIdx,totalCoins,totalStars)
+
+
+			let dialogInteraction3 = [
+					["pnj","Coucou, excuse-moi c'est possible de te poser une question là?"],
+					["m","Oui, dis-moi! "],
+					["pnj","En fait je fais partie d'un collectif qui s'appelle Vélacyraptix... "],
+					["m","Ah oui! J'en ai entendu parler. Vous faites des atelier de mécanique en mixité choisie sans hommes cisgenres nan?! "],
+					["pnj","Oui c'est ca, on propose des moments pour apprendre à réparer et bricoler des vélos sans homme cisgenres. Le but c'est de limiter l'impact du patriarcat un ptit moment quoi..."],
+					["m","C'est cool! C'est quand le prochain? "],
+					["pnj","Et ben justement...on en a un ce soir mais on savait pas trop ou le faire... notre plan pour emprunter des outils est tombe a l'eau..Est-ce qu'on pourrait se mettre ici?"],
+					["m","Oh... euh oui bien sur! Y'a tout ce qui faut et c'est super comme idée"],
+					]
+
+			// try with function
+			interactionJour(3,levelAtelier,justifiedFightCounter,totalCoins,totalStars,
+				{x:center().x-2*16,y:center().y-(3*16)}/*player postiion*/,"perso_interaction_3",{x:16*5,y:16*7},dialogInteraction3,{x:16*5,y:16*9},true)})
+
+scene("interactionJour4", (jourIdx,totalCoins,totalStars,position) => {
+	levelAtelier = add_atelier_map()
+		//status
+		addStatusBar(jourIdx,totalCoins,totalStars)
+
+
+		let dialogInteraction4 = [
+				["pnj","Hey, j'ai entendu qu'ici tous le mondes est pas le bienvenu... "],
+				["m","T'entends quoi par la? "],
+				["pnj","Bah que c'est un peu extreme d'exclure des gars, en plus il parait qu'on se ramasse des claques si on dit des trucs qui vous plaisent pas"],
+				["m","Ah oui! "],
+				["pnj","Bref faites gaffe  a vous ..."],
 				]
 
 		// try with function
-		interactionJour(1,levelAtelier,justifiedFightCounter,totalCoins,totalStars,
-			{x:center().x-2*16,y:center().y-(3*16)},"perso_interaction_1",{x:16*5,y:16*7},dialogInteraction1,{x:16*1,y:16*11},false)
-		// without function
-// 		// add the mecanix// Add player game object
-// 		const colBox = 3
-// 		const player = add([
-// 			sprite("mecanix",{anim:"idle"}),
-// 			anchor("center"),
-// 			pos(center().x-2*16,center().y-(3*16)),//the default position is in front of the workshop
-// 			area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
-// 			body(),
-// 			scale(PERSOSCALE)
-// 		])
-// 		player.flipX = true
-//
-// 		// Add the other pers
-// 		const perso = levelAtelier.spawn([
-// 			sprite("perso_interaction_1",{anim:"walk_right"}),
-// 			anchor("center"),
-// 			pos(0,160),//the default position is in front of the workshop
-// 			area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
-// 			body(),
-// 			scale(PERSOSCALE),
-// 			agent({ speed: 80, allowDiagonals: true }),
-// 		],1,1)
-//
-// 		let aller = onKeyPress("enter",() => {
-// 			perso.setTarget(vec2(
-// 				16*5,//Math.floor((center().x+45) / TILE_WIDTH) * TILE_WIDTH + TILE_WIDTH / 2,
-// 				16*7//Math.floor((center().y-65)  / TILE_HEIGHT) * TILE_HEIGHT + TILE_HEIGHT / 2,
-// 			))
-// 		})
-// 		// let retour = onKeyPress("enter",() => { perso.setTarget(vec2(
-// 		// 		16*0,//Math.floor((center().x+45) / TILE_WIDTH) * TILE_WIDTH + TILE_WIDTH / 2,
-// 		// 		16*12//Math.floor((center().y-65)  / TILE_HEIGHT) * TILE_HEIGHT + TILE_HEIGHT / 2,
-// 		// 	))})
-// 		// retour.paused
-//
-// 	//once the aller is done
-// let firstTarget= 	perso.onTargetReached(()=>{
-//
-// let dialogInteraction1 = [
-// 			["pnj","Hé salut"],
-// 		["m","Salut! désolée c'est fini pour aujourd'hui, il faut revenir demain..."],
-// 		["pnj","oui, oui je venais pas pour réparer mon vélo..."],
-// 		["m","heu ok, tu viens pour quoi alors?"],
-// 		[" pnj","heu... ha oui! haha pardon. je viens te filer la clée que j'ai oublié de rendre quand j'ai arrêté de bosser ici. je suis un peu tête en l'air des fois."],
-// 		["m","ah! merci"],
-// 		["pnj","de rien, allé à la proch ciao ciao! heu, la sortie c'est par là hein."]
-// 		]
-// 			aller.paused =true
-//
-// 	// add dialog box
-// 	let textBox = add([
-// 		sprite("dialogbox"),//, width: width() - 230
-// 		anchor("center"),
-// 		pos(center().x,BOTTOM),
-// 		"textBox"
-// 	])
-// 	//initialization
-// 	let initDialog = dialogInteraction1.length
-// 	let levelDialog = dialogInteraction1
-//
-// 	// Text bubble
-// 	const txtWidth = 150; // Ideal Width
-// 	const txtMargins = 15;
-// 	let txt = add([
-// 		text("", { size:  TXTSIZE,  width: txtWidth }),//, width: width() - 230
-// 		anchor("center"),
-// 		pos(center().x,BOTTOM),
-// 		color(MYPURPLE),
-// 	])
-// 	// Update the on screen sprite & text
-// 	function updateDialog() {
-// 		const [ char, dialog ] = dialogInteraction1[curDialog]
-// 		console.log(dialog);
-// 		// Use a new sprite component to replace the old one
-// 	//	avatar.use(sprite(char))
-// 		// Update the dialog text
-// 		// mettre le texte lettre apres lettre
-// 		txt.text = dialog
-// 	}
-// 	//initialization
-// 	let curDialog = 0
-// 		updateDialog()
-// 	let dialogAction = onKeyPress("enter", () => {
-// 		// Cycle through the dialogs
-// 		curDialog = (curDialog + 1) % dialogInteraction1.length
-// 		if (curDialog==0){
-// 			// dialog finished, options to choose
-// 			dialogAction.paused = true
-// 			firstTarget.paused=true
-// 			play("audio_reussite")
-// 			destroy(textBox)
-// 			destroy(txt)
-// 			onKeyPress("enter",() => {
-// 				dialogAction.paused = true
-// 				firstTarget.paused=true
-// 				perso.flipX=true
-// 				let retour = perso.setTarget(vec2(
-// 					16*1,//Math.floor((center().x+45) / TILE_WIDTH) * TILE_WIDTH + TILE_WIDTH / 2,
-// 					16*11//Math.floor((center().y-65)  / TILE_HEIGHT) * TILE_HEIGHT + TILE_HEIGHT / 2,
-// 				))
-// 				console.log("Before the fade\n le jour "+jourIdx+"\n le justifiedFightCounter "+justifiedFightCounter+"\n la thune c'est "+totalCoins+"\n les stars "+totalStars)
-// 				perso.onTargetReached(()=>{
-// 					dialogAction.paused =true
-// 					let fadeOut = add([
-// 						pos(center().x, center().y-30),
-// 						anchor("center"),
-// 						color(BLACK),
-//     				rect(256, 256),
-//     				area(),
-// 						fadeIn(1),
-// 						opacity(1),
-// 					])
-// 					//to the next day
-// 					let newjourIdx = resetDayVariables(totalCoins,totalStars)
-// 					// door is open now
-// 					outdoorKey = true
-// 					console.log("apres le reset\n le jour"+newjourIdx+"\n le justifiedFightCounter "+justifiedFightCounter+"\n la thune c'est "+totalCoins+"\n les stars "+totalStars)
-// 				wait(1,()=>go("atelier",newjourIdx,totalCoins,totalStars,INITIALPOSITION))
-// 			})
-// 			}
-// 		)
-// 	}else{
-// 		updateDialog()
-// 	}
-// 	})
-// })
-	})
+		interactionJour(4,levelAtelier,justifiedFightCounter,totalCoins,totalStars,
+			{x:center().x-2*16,y:center().y-(3*16)}/*player postiion*/,"perso_interaction_4",{x:16*5,y:16*7},dialogInteraction4,{x:16*1.5,y:16*11},true)})
+
 
 // ADD GAME OVER SCENE
 scene("Bankrupt", (jourIdx,totalCoins,totalStars) => {
 	play("audio_fete")
 	add_bordure_map()
+	// add party mood
+	const raveParty = add([
+		sprite("atelier_rave",{anim:"idle"}),
+		anchor("center"),
+		scale(1),
+		pos(center().x-10,BOTTOM-25),
+	])
 	// Titre
 	const title = add([
 		text("GAME OVER!\n ", { size: LARGETXTSIZE, font:"joystix" }),
@@ -3275,8 +3184,8 @@ scene("Burnout", (jourIdx,totalCoins,totalStars) => {
 function start() {
 		// Start with the "game" scene, with initial parameters
 	//	go("atelier", 1, 85,0/*totalCoins*/,50,INITIALPOSITION)
-//go("interactionJour2",2,totalCoins,totalStars,INITIALPOSITION)
-go("start",jourIdx,totalCoins,totalStars/*force*/,INITIALPOSITION)
+//go("interactionJour4",4,totalCoins,totalStars,INITIALPOSITION)
+ go("start",jourIdx,totalCoins,totalStars/*force*/,INITIALPOSITION)
 //go("outside",2,30,30,INITIALPOSITION)	//go("interactionJour1", (1,0,40,20,INITIALPOSITION))//go("clientDialog",1,75,100/*totalCoins*/,50/*force*/)
  //justifiedFightCounter=4
  //go("Carton_Journalier","client1",1,30,30,10,10,1)
