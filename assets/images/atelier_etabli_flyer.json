@@ -1,0 +1,110 @@
+{ "frames": [
+   {
+    "filename": "atelier_etabli_flyer 0.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 64, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 32 },
+    "sourceSize": { "w": 64, "h": 32 },
+    "duration": 250
+   },
+   {
+    "filename": "atelier_etabli_flyer 1.aseprite",
+    "frame": { "x": 64, "y": 0, "w": 64, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 32 },
+    "sourceSize": { "w": 64, "h": 32 },
+    "duration": 250
+   },
+   {
+    "filename": "atelier_etabli_flyer 2.aseprite",
+    "frame": { "x": 128, "y": 0, "w": 64, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 32 },
+    "sourceSize": { "w": 64, "h": 32 },
+    "duration": 250
+   },
+   {
+    "filename": "atelier_etabli_flyer 3.aseprite",
+    "frame": { "x": 192, "y": 0, "w": 64, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 32 },
+    "sourceSize": { "w": 64, "h": 32 },
+    "duration": 250
+   },
+   {
+    "filename": "atelier_etabli_flyer 4.aseprite",
+    "frame": { "x": 256, "y": 0, "w": 64, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 32 },
+    "sourceSize": { "w": 64, "h": 32 },
+    "duration": 250
+   },
+   {
+    "filename": "atelier_etabli_flyer 5.aseprite",
+    "frame": { "x": 320, "y": 0, "w": 64, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 32 },
+    "sourceSize": { "w": 64, "h": 32 },
+    "duration": 250
+   },
+   {
+    "filename": "atelier_etabli_flyer 6.aseprite",
+    "frame": { "x": 384, "y": 0, "w": 64, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 32 },
+    "sourceSize": { "w": 64, "h": 32 },
+    "duration": 250
+   },
+   {
+    "filename": "atelier_etabli_flyer 7.aseprite",
+    "frame": { "x": 448, "y": 0, "w": 64, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 32 },
+    "sourceSize": { "w": 64, "h": 32 },
+    "duration": 250
+   },
+   {
+    "filename": "atelier_etabli_flyer 8.aseprite",
+    "frame": { "x": 512, "y": 0, "w": 64, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 32 },
+    "sourceSize": { "w": 64, "h": 32 },
+    "duration": 250
+   },
+   {
+    "filename": "atelier_etabli_flyer 9.aseprite",
+    "frame": { "x": 576, "y": 0, "w": 64, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 32 },
+    "sourceSize": { "w": 64, "h": 32 },
+    "duration": 250
+   }
+ ],
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.2.40-x64",
+  "image": "atelier_etabli_flyer.png",
+  "format": "RGBA8888",
+  "size": { "w": 640, "h": 32 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "idle", "from": 0, "to": 9, "direction": "forward" }
+  ],
+  "layers": [
+   { "name": "Layer 2", "opacity": 255, "blendMode": "normal" },
+   { "name": "Layer 3", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}
