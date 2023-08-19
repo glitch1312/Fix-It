@@ -1,0 +1,56 @@
+{ "frames": [
+   {
+    "filename": "nuit_Z 0.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 48, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 16 },
+    "sourceSize": { "w": 48, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "nuit_Z 1.aseprite",
+    "frame": { "x": 48, "y": 0, "w": 48, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 16 },
+    "sourceSize": { "w": 48, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "nuit_Z 2.aseprite",
+    "frame": { "x": 96, "y": 0, "w": 48, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 16 },
+    "sourceSize": { "w": 48, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "nuit_Z 3.aseprite",
+    "frame": { "x": 144, "y": 0, "w": 48, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 16 },
+    "sourceSize": { "w": 48, "h": 16 },
+    "duration": 100
+   }
+ ],
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.2.40-x64",
+  "image": "nuit_Z.png",
+  "format": "RGBA8888",
+  "size": { "w": 192, "h": 16 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "idle", "from": 0, "to": 3, "direction": "forward" }
+  ],
+  "layers": [
+   { "name": "Layer 1", "opacity": 255, "blendMode": "normal" },
+   { "name": "Layer 3", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}
