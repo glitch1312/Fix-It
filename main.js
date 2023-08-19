@@ -135,7 +135,7 @@ let totalStars = 0
 let interactionDechetFlag = false // no interaction with dechetterie perso
 let veloTag = false // no bikePost yet
 let posterFlag = false
-let flyersFlag = false
+let flyersFlag = true
 let jourIdx = 1 // game starts at day 1
 let clientCounter = 1 // no client interaction at start
 let fightCounter = 0
@@ -655,6 +655,7 @@ const speedMin_List = [35,40,60,75]
 
 // --FUNCTIONS-- //
 function addTextOnDialogBox(msg){
+	console.log("In the addTextOnDialogBox function");
 let textBox = add([
 	sprite("dialogbox"),//, width: width() - 230
 	anchor("center"),
@@ -1343,12 +1344,7 @@ if(veloTag==true){
 			])
 		}
 
-		// if(flyersFlag==true){
-		// 		let flyers = add([
-		// 			sprite("atelier_flyers"),
-		// 			pos(center().x-(6.5*16),center().y-(7.2*16))
-		// 		])
-		// 	}
+
 return levelAtelier
 	}
 // ------ Boucle de Gameplay ------- //
@@ -1402,7 +1398,8 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 			//area(),
 			body(),
 			// scalePerso
-			scale(PERSOSCALE)])
+			scale(PERSOSCALE)],
+		"player")
 			// animate the player
 		//player.play("walk_right")
 		//player.flipX = true
@@ -1443,15 +1440,20 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 			// add flyers collision
 			if(flyersFlag==true){
 				player.onCollide("flyers", () => {
-					let textBox = add([
+					let poster2 = add([
 						sprite("atelier_poster2_grand"),//, width: width() - 230
 						// 	text("Complète ton inventaire pour\n un TURFU RADIEUX!", { size:  TXTSIZE }),//, width: width() - 230
 						anchor("center"),
 						pos(center().x,center().y-10),
 						"afficheMessage2"
 					])
-					onKeyPress(()=>{destroyAll("afficheMessage2")})
-				})	}
+					onKeyPress(()=>{
+						destroyAll("afficheMessage2")})
+				})
+				player.onCollideEnd("flyers", () => {
+	  			addTextOnDialogBox("Mmmh.. je m'étais dit que je les distribuerai, peut-être que je devrais faire ca avant que les clients arrivent.")
+					})
+			}
 
 
 
