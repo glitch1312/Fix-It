@@ -135,7 +135,9 @@ let totalStars = 0
 let interactionDechetFlag = false // no interaction with dechetterie perso
 let veloTag = false // no bikePost yet
 let posterFlag = false
-let flyersFlag = true
+let flyersFlag = false
+let flyersTaken = false
+let showClients = true
 let jourIdx = 1 // game starts at day 1
 let clientCounter = 1 // no client interaction at start
 let fightCounter = 0
@@ -700,6 +702,7 @@ function resetDayVariables(totalCoins,totalStars){
 			console.log(starsAnimValueList);
 
 			clientCounter = 1 // reset clientCounter for the next day
+			showClients = false //by default clients aren't shown before necessary interactions
 			repairCounter = 0
 			fightCounter = 0
 			justifiedFightCounter = 0
@@ -710,7 +713,7 @@ function resetDayVariables(totalCoins,totalStars){
 
 // Function to automatixe the path and dialog for endoftheday interaction
 function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,totalStars,
-	playerPosition/*{x:,y:}*/,persoSprite,target1/*{x:,y:}*/,dialogInteractionList,target2,flag){
+	playerPosition/*{x:,y:}*/,persoSprite,target1/*{x:,y:}*/,dialogInteractionList,target2){
 		let waitTime = 0.3
 			// map and status are already loaded
 		const colBox = 3
@@ -732,7 +735,9 @@ function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,t
 			area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
 			body(),
 			scale(PERSOSCALE),
-			agent({ speed: 80, allowDiagonals: true }),],1,1)
+			agent({ speed: 80, allowDiagonals: true }),
+				],
+		1,1)
 		let aller = wait(0.5,()=>{perso.setTarget(vec2(
 				target1.x,//Math.floor((center().x+45) / TILE_WIDTH) * TILE_WIDTH + TILE_WIDTH / 2,
 				target1.y//Math.floor((center().y-65)  / TILE_HEIGHT) * TILE_HEIGHT + TILE_HEIGHT / 2,
@@ -802,14 +807,13 @@ let firstTarget= 	perso.onTargetReached(()=>{
 					dialogAction.paused =true
 					// day two
 					if (jourIdx==2){
-						if(flag==true){
 						let poster = add([
 							sprite("atelier_poster"),
 							pos(center().x-(6.5*16),MAP_HEIGHT/2-(5.5*16))
 						])
 						posterFlag = true
 					}
-				}
+
 					// dqy three
 					// additional person for day three
 					if(jourIdx==3){
@@ -880,10 +884,14 @@ let firstTarget= 	perso.onTargetReached(()=>{
 					])
 					//to the next day
 					let newjourIdx = resetDayVariables(totalCoins,totalStars)
+					// day 2 is an exception as it will show clients without any interactions
+					if (jourIdx==2){
+						showClients = true
+					}
 					// door is open now
 					outdoorKey = true
 					console.log("apres le reset\n le jour"+newjourIdx+"\n le justifiedFightCounter "+justifiedFightCounter+"\n la thune c'est "+totalCoins+"\n les stars "+totalStars)
-					wait(1,()=>go("atelier",newjourIdx,totalCoins,totalStars,INITIALPOSITION))
+					wait(1,()=>go("atelier",newjourIdx,totalCoins,totalStars,INITIALPOSITION,clientCounter))//clientcounter is zero because by default we want no clients. Some necessary interaction have to happen first
 			})
 
 			})
@@ -1398,12 +1406,13 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 			//area(),
 			body(),
 			// scalePerso
-			scale(PERSOSCALE)],
-		"player")
+			scale(PERSOSCALE),
+			"player"
+			])
 			// animate the player
 		//player.play("walk_right")
 		//player.flipX = true
-		const SPEED = 100;
+		const SPEED = 80;
 		player_movement(player,SPEED)
 
 		// add collision// add velo sur provided Collision
@@ -1437,32 +1446,52 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 				])
 				onKeyPress(()=>{destroyAll("afficheMessage")})
 			})	}
+			//check for first collision with poster
+			let firstCollisionDone = false
 			// add flyers collision
 			if(flyersFlag==true){
 				player.onCollide("flyers", () => {
-					let poster2 = add([
+
+				let poster2 = add([
 						sprite("atelier_poster2_grand"),//, width: width() - 230
 						// 	text("Complète ton inventaire pour\n un TURFU RADIEUX!", { size:  TXTSIZE }),//, width: width() - 230
 						anchor("center"),
 						pos(center().x,center().y-10),
 						"afficheMessage2"
-					])
-					onKeyPress(()=>{
-						destroyAll("afficheMessage2")})
+						])
+			if(firstCollisionDone){
+					console.log("in the first collision done");
+
+						let distributeInstruction = add([
+							text("(appuie sur espace pour prendre les flyers avec toi) ", {font: "prstart", size:TXTSIZE, width:TXTWIDTH}),
+							anchor("center"),
+							color(MYPURPLE),
+							pos(center().x+16, MAP_HEIGHT/2+3*16),
+							"distributeInstruction"
+							])
+						onKeyPress("space",()=>{
+							destroyAll("distributeInstruction")
+							destroyAll("flyers")
+							pensee.paused = true
+							play("audio_reussite")
+							flyersTaken = true
+							})
+					}
+				onKeyPress(()=>{
+						destroyAll("afficheMessage2")
+					  destroyAll("distributeInstruction")
+					})
 				})
-				player.onCollideEnd("flyers", () => {
+				let pensee = player.onCollideEnd("flyers", () => {
 	  			addTextOnDialogBox("Mmmh.. je m'étais dit que je les distribuerai, peut-être que je devrais faire ca avant que les clients arrivent.")
+					firstCollisionDone = true
 					})
 			}
-
-
 
 				//status
 				addStatusBar(jourIdx,totalCoins,totalStars)
 				// add the mecanix// Add player game object
 				let default_position = saved_position
-
-
 
 
 				// CLIENTS LINE IN ATELIER
@@ -1493,42 +1522,43 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 				// ADD ERROR
 				let lLength = 0
 				console.log("just before the loop, the clientCounter is:"+clientCounter);
-				for (let i = 0; i <= (6-clientCounter); i++) {
-					if (clientsList.hasOwnProperty(Object.keys(clientsList)[i])){
-						// add a counter to know how many clients you have in line
-						lLength = lLength +1
-						// add a client sprite in Line
-						addClientInLine(clientsList[Object.keys(clientsList)[i]],i,Object.keys(clientsList)[i]/*tag*/)
+				if (showClients==true){
+					for (let i = 0; i <= (6-clientCounter); i++) {
+						if (clientsList.hasOwnProperty(Object.keys(clientsList)[i])){
+							// add a counter to know how many clients you have in line
+							lLength = lLength +1
+							// add a client sprite in Line
+							addClientInLine(clientsList[Object.keys(clientsList)[i]],i,Object.keys(clientsList)[i]/*tag*/)
 
-						// add a collision per client
-						player.onCollide(Object.keys(clientsList)[i]/*client key*/, () => {
-							//play("portal")
-							// If there's a next level, origin() to the same scene but load the next level
-							music.paused = true
-							go("clientDialog",Object.keys(clientsList)[i], jourIdx, totalCoins,totalStars)
+							// add a collision per client
+							player.onCollide(Object.keys(clientsList)[i]/*client key*/, () => {
+								//play("portal")
+								// If there's a next level, origin() to the same scene but load the next level
+								music.paused = true
+								go("clientDialog",Object.keys(clientsList)[i], jourIdx, totalCoins,totalStars)
+							})
+
+						}
+						// if there is no client anymore then the game is "finished"
+						if (lLength==0){
+							player.onCollide("clientEntrance", () => {
+								let textBox = add([
+								sprite("dialogbox"),//, width: width() - 230
+								anchor("center"),
+								pos(center().x,BOTTOM),
+								"clientMessage"
+							])
+							let txt = add([
+								text("Les prochains clients\n viendront dans la prochaine démo! \ To be continued...", { size:  TXTSIZE }),//, width: width() - 230
+								anchor("center"),
+								pos(center().x,BOTTOM),
+								color(MYPURPLE),
+								"clientMessage"
+							])
 						})
-
-					}
-					// if there is no client anymore then the game is "finished"
-					if (lLength==0){
-						player.onCollide("clientEntrance", () => {
-							let textBox = add([
-							sprite("dialogbox"),//, width: width() - 230
-							anchor("center"),
-							pos(center().x,BOTTOM),
-							"clientMessage"
-						])
-						let txt = add([
-							text("Les prochains clients\n viendront dans la prochaine démo! \ To be continued...", { size:  TXTSIZE }),//, width: width() - 230
-							anchor("center"),
-							pos(center().x,BOTTOM),
-							color(MYPURPLE),
-							"clientMessage"
-						])
-					})
+						}
 					}
 				}
-
 
 				// PORTAL from atelier to other scenes
 				if (outdoorKey == true){
@@ -1935,34 +1965,45 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 
 		// DECHETERRIE DIALOG
 		let dechettDialog1 = [
-["PNJ","Hé toi ! qu'est ce que tu fais là ?"],
-["M"," Hé salut! C'est quoi cet endroit ?"],
-["PNJ"," C'est la dechetterie, tu connais pas ? t'es pas d'ici ?"],
-["M"," non, je viens de commencer de taffer à l'atelier de vélo pas loin d'ici"],
-["PNJ", "Ha ouais et ça va ? je connaissais la personne d'avant, iel était sympa mais je crois que c'était pas toujours évident avec les clients."],
-["M", "ha ouais je vois... je me fais pas mal expliquer mon taf par des types c'est un peu chiant."],
-["PNJ","je comprends, ça m'arrive ici aussi des fois. Ha aujourd'hui quelqu'un a amené des pieds de vélo même pas pété, tu veux les prendre ?"],
-["M", "Grave! merci. bon j'y retourne... à bientôt !"]
-]
+			["PNJ","Hé toi ! qu'est ce que tu fais là ?"],
+			["M"," Hé salut! C'est quoi cet endroit ?"],
+			["PNJ"," C'est la dechetterie, tu connais pas ? t'es pas d'ici ?"],
+			["M"," non, je viens de commencer de taffer à l'atelier de vélo pas loin d'ici"],
+			["PNJ", "Ha ouais et ça va ? je connaissais la personne d'avant, iel était sympa mais je crois que c'était pas toujours évident avec les clients."],
+			["M", "ha ouais je vois... je me fais pas mal expliquer mon taf par des types c'est un peu chiant."],
+			["PNJ","je comprends, ça m'arrive ici aussi des fois. Ha aujourd'hui quelqu'un a amené des pieds de vélo même pas pété, tu veux les prendre ?"],
+			["M", "Grave! merci. bon j'y retourne... à bientôt !"]
+			]
+
+			let dechettDialog2 = [
+				["M"," Hé salut! Comment tu vas ?"],
+				["PNJ","Pas mal, c'est une journée tranquille. Et toi?"],
+				["M","Un peu fatiguée du taf, mais y'a des personnes sympas qui sont passée.x.s hier c'était cool!"],
+				["PNJ", "Avec le temps t'auras probablement plus de copaine.x.s que de relou.e.x.s!"],
+				["M", "Ouais t'as raison. Aussi je passais par la parce que j'ai des flyers pour la manif contre les violences policieres."],
+				["PNJ","Oh merci, j'en ai entendu parler mais j'ai pas les détails"],
+				["M", "Bah y'a tout écrit dessus,tiens!"],
+				["PNJ","Top, je vais les faire tourner c'est important"],
+				]
 
 
 		// Interaction with the personnage dechetterie
 		player.onCollide("perso_dechett_1",()=>{
 			// First Interaction On Day 1
 			if(interactionDechetFlag == false){
-
-			//interaction happened
-			interactionDechetFlag = launchDialog(dechettDialog1)
-			veloTag =true // now you have the bikePost
-			let leftWin = onKeyPress("left",()=>{
-				musicOutside.paused=true
-				play("audio_reussite")
-				musicOutside.paused=false
-				leftWin.paused =true
-				rightWin.paused =true
-				upWin.paused =true
-				downWin.paused =true
-			})
+				//interaction happened
+				interactionDechetFlag = launchDialog(dechettDialog1)
+				showClients = true// now clients will show up
+				veloTag =true // now you have the bikePost
+				let leftWin = onKeyPress("left",()=>{
+					musicOutside.paused=true
+					play("audio_reussite")
+					musicOutside.paused=false
+					leftWin.paused =true
+					rightWin.paused =true
+					upWin.paused =true
+					downWin.paused =true
+					})
 			let rightWin = onKeyPress("right",()=>{
 				musicOutside.paused=true
 				play("audio_reussite")
@@ -1990,16 +2031,20 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 				upWin.paused =true
 				downWin.paused =true
 			})
-
 			}else{
-			// Other days
+			//The day 4 with flyers
+			if(flyersTaken == true){
+				// the dialog is about giving the flyersFlag
+				launchDialog(dechettDialog2)
+				showClients = true //now clients will show up
+			}else{//Normal days
 			// add dialog box
 			let textBox = add([
-			sprite("dialogbox"),//, width: width() - 230
-			anchor("center"),
-			pos(center().x,BOTTOM),
-			"textBox"
-			])
+				sprite("dialogbox"),//, width: width() - 230
+				anchor("center"),
+				pos(center().x,BOTTOM),
+				"textBox"
+				])
 			// container for text in dialog box
 			const txtWidth = 150; // Ideal Width
 			const txtMargins = 15;
@@ -2012,8 +2057,8 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			onKeyPress(()=>{
 				destroy(txt),
 				destroy(textBox)
-			})
-
+				})
+			}
 		}
 		})
 
@@ -2024,7 +2069,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			let modified_pos = ({x:center().x+BORDERNOCOLLISION,y:player.pos.y})//keep the height and modify the x, leaving on the right means arriving on left side
 			// If there's a next level, origin() to the same scene but load the next level
 			musicOutside.paused=true
-			go("atelier", jourIdx, totalCoins,totalStars,modified_pos,1)
+			go("atelier", jourIdx, totalCoins,totalStars,modified_pos,clientCounter)
 		})
 
 
@@ -2926,25 +2971,7 @@ break;
 //			onDestroy("statusUpdate", () => console.log("Now there is no more update and I print smth ");)
 	})
 
-	scene("interactionJour2", (jourIdx,totalCoins,totalStars,position) => {
-		//function instead of commander
-		levelAtelier = add_atelier_map()
-		//status
-		addStatusBar(jourIdx,totalCoins,totalStars)
 
-		let dialogInteraction2 =[
-			["PNJ","Hello ! je suis en train de faire le tour du quartier et je me demandais si je pouvais poser une affiche ici?"],
-			["M","Salut, oui ok tu peux la mettre sur le mur du fond."],
-			["PNJ","Merci! c'est stylé que tu bosses ici!"],
-			["PNJ","ha et t'es dac de me prêter un tournevis plat?"],
-			["M","oui pas de soucis, voilà"],
-			["PNJ","merci à bientôt!"],
-		]
-
-		// try with function
-		interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,totalStars,
-			{x:center().x-44,y:center().y-(3*16)},"perso_interaction_2",{x:16*4,y:16*7},dialogInteraction2,{x:16*2,y:16*5},true)
-		})
 	scene("interactionJour1", (jourIdx,totalCoins,totalStars,position) => {
 			//function instead of commander
 			levelAtelier = add_atelier_map()
@@ -2964,7 +2991,7 @@ break;
 
 			// try with function
 			interactionJour(1,levelAtelier,justifiedFightCounter,totalCoins,totalStars,
-				{x:center().x-2*16,y:center().y-(3*16)},"perso_interaction_1",{x:16*5,y:16*7},dialogInteraction1,{x:16*1.5,y:16*11},false)
+				{x:center().x-2*16,y:center().y-(3*16)},"perso_interaction_1",{x:16*5,y:16*7},dialogInteraction1,{x:16*1.5,y:16*11},false,1)
 				// without function
 				// 		// add the mecanix// Add player game object
 				// 		const colBox = 3
@@ -3093,6 +3120,25 @@ break;
 				// 	})
 				// })
 			})
+	scene("interactionJour2", (jourIdx,totalCoins,totalStars,position) => {
+		//function instead of commander
+		levelAtelier = add_atelier_map()
+		//status
+		addStatusBar(jourIdx,totalCoins,totalStars)
+
+		let dialogInteraction2 =[
+			["PNJ","Hello ! je suis en train de faire le tour du quartier et je me demandais si je pouvais poser une affiche ici?"],
+			["M","Salut, oui ok tu peux la mettre sur le mur du fond."],
+			["PNJ","Merci! c'est stylé que tu bosses ici!"],
+			["PNJ","ha et t'es dac de me prêter un tournevis plat?"],
+			["M","oui pas de soucis, voilà"],
+			["PNJ","merci à bientôt!"],
+		]
+
+		// try with function
+		interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,totalStars,
+			{x:center().x-44,y:center().y-(3*16)},"perso_interaction_2",{x:16*4,y:16*7},dialogInteraction2,{x:16*2,y:16*5},true,1)
+		})
 	scene("interactionJour3", (jourIdx,totalCoins,totalStars,position) => {
 		levelAtelier = add_atelier_map()
 			//status
@@ -3112,8 +3158,7 @@ break;
 
 			// try with function
 			interactionJour(3,levelAtelier,justifiedFightCounter,totalCoins,totalStars,
-				{x:center().x-2*16,y:center().y-(3*16)}/*player postiion*/,"perso_interaction_3",{x:16*5,y:16*7},dialogInteraction3,{x:16*5,y:16*9},true)})
-
+				{x:center().x-2*16,y:center().y-(3*16)}/*player postiion*/,"perso_interaction_3",{x:16*5,y:16*7},dialogInteraction3,{x:16*5,y:16*9},true,0)})
 scene("interactionJour4", (jourIdx,totalCoins,totalStars,position) => {
 	levelAtelier = add_atelier_map()
 		//status
@@ -3130,7 +3175,7 @@ scene("interactionJour4", (jourIdx,totalCoins,totalStars,position) => {
 
 		// try with function
 		interactionJour(4,levelAtelier,justifiedFightCounter,totalCoins,totalStars,
-			{x:center().x-2*16,y:center().y-(3*16)}/*player postiion*/,"perso_interaction_4",{x:16*5,y:16*7},dialogInteraction4,{x:16*1.5,y:16*11},true)})
+			{x:center().x-2*16,y:center().y-(3*16)}/*player postiion*/,"perso_interaction_4",{x:16*5,y:16*7},dialogInteraction4,{x:16*1.5,y:16*11},true,1)})
 
 
 // ADD GAME OVER SCENE
