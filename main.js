@@ -24,6 +24,8 @@ loadAseprite("mecanix_velo","images/Sprite_maincharacter_velo.png","images/Sprit
 loadAseprite("choix_frapper_juste", "images/choix_frapper_juste_8images.png", "images/choix_frapper_juste_8images.json")
 loadAseprite("choix_reparer", "images/choix_reparer.png", "images/choix_reparer.json")
 loadAseprite("atelier_rave", "images/atelier_rave.png", "images/atelier_rave.json")
+loadAseprite("exte_banc", "images/atelier_rave.png", "images/atelier_rave.json")
+loadAseprite("nuit_Z","images/nuit_Z.png","images/nuit_Z.json")
 // clients
 for (var i = 1; i <=24; i++) {
 	loadAseprite("client_"+i+"_petit","images/client_"+i+"_petit.png", "images/client_"+i+"_petit.json") //punk
@@ -47,6 +49,8 @@ loadAseprite("perso_flinta_4","images/flinta_4_petit.png","images/flinta_4_petit
 loadAseprite("atelier_etabli_flyer","images/atelier_etabli_flyer.png","images/atelier_etabli_flyer.json")
 loadAseprite("atelier_velo_sur_pied_kc","images/atelier_velo_sur_pied_kc.png","images/atelier_velo_sur_pied_kc.json")
 loadAseprite("exte_maki","images/exte_maki.png","images/exte_maki.json")
+loadAseprite("exte_sirius","images/exte_sirius.png","images/exte_sirius.json")
+
 
 // SPRITE ATLA
 //Leshy SpriteSheet Tool https://www.leshylabs.com/apps/sstool/ to create the sprite atlas
@@ -80,7 +84,7 @@ loadSprite("atelier_armoire_kc","images/atelier_armoire_kc.png")
 loadSprite("atelier_clee","images/atelier_clee.png")
 loadSprite("atelier_poster2_grand","images/atelier_poster2_grand.png")
 loadSprite("exte_banc","images/exte_banc.png")
-loadSprite("exte_sirius","images/exte_sirius.png")
+loadSprite("exte_scudo","images/exte_scudo.png")
 
 
 
@@ -133,6 +137,7 @@ loadFont("joystix","assets/fonts/joystix.otf")
 let totalCoins = 0
 let totalStars = 0
 let interactionDechetFlag = false // no interaction with dechetterie perso
+let dialogFinished = false
 let veloTag = false // no bikePost yet
 let posterFlag = false
 let flyersFlag = false
@@ -144,7 +149,7 @@ let fightCounter = 0
 let justifiedFightCounter = 0
 let repairCounter = 0
 let fightGoalsList = [4,4,2,2]
-let outdoorKey = false
+let outdoorKey = true
 let coinsAnimValueList = [0] //list for starting bilan journalier
 let starsAnimValueList = [0]
 
@@ -486,11 +491,11 @@ const clientsList = {
 			bigSpriteName:"client_20_grand",
 				dialogs:[
 					[ "mecanix_en_pied", "Salut" ],
-					[ "client_18_grand", "Bonjour Madame!" ],
+					[ "client_20_grand", "Bonjour Madame!" ],
 					[ "mecanix_en_pied", "Euh... je préfère que vous disiez pas Madame" ],
-					[ "client_18_grand", "Rohlalala...on peut plus rien dire" ],
+					[ "client_20_grand", "Rohlalala...on peut plus rien dire" ],
 					[ "mecanix_en_pied", "C'est juste que vous ne me connaissez pas et en plus monsieur, madame c'est très binaire" ],
-					[ "client_18_grand", "Oui bon vous êtes pas un Monsieur nan plus.." ],
+					[ "client_20_grand", "Oui bon vous êtes pas un Monsieur nan plus.." ],
 					[ "mecanix_en_pied", "Peut-être bien que si.." ],
 				],
 			//repair scene
@@ -594,24 +599,42 @@ let inventory = {
 		cost: "10",
 
 	},
-	"Clef ":	{
-		spriteName : "sprite_clefmonte",
+	"Clé":	{
+		spriteName : "atelier_clee",
 		state: "available",
 		cost: "10",
 
 	},
-	"Clé métrique de 5mm":	{
-		spriteName : "Sprite_clef",
+	// "Clef ":	{
+	// 	spriteName : "sprite_clefmonte",
+	// 	state: "available",
+	// 	cost: "10",
+	//
+	// },
+	"Stand pour vélo #1":	{
+		spriteName : "velo_sur_pied",
 		state: "available",
 		cost: "30",
 
 	},
-	"Double clé de 5mm":	{
-		spriteName : "Sprite-tool-wrench",
+	"Stand pour vélo #2":	{
+		spriteName : "velo_sur_pied",
 		state: "available",
 		cost: "30",
 
 	},
+	// "Clé métrique de 5mm":	{
+	// 	spriteName : "Sprite_clef",
+	// 	state: "available",
+	// 	cost: "30",
+	//
+	// },
+	// "Double clé de 5mm":	{
+	// 	spriteName : "Sprite-tool-wrench",
+	// 	state: "available",
+	// 	cost: "30",
+	//
+	// },
 
 	"Clé à pédale":	{
 		spriteName : "Sprite_clepedale",
@@ -714,39 +737,36 @@ function resetDayVariables(totalCoins,totalStars){
 // Function to automatixe the path and dialog for endoftheday interaction
 function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,totalStars,
 	playerPosition/*{x:,y:}*/,persoSprite,target1/*{x:,y:}*/,dialogInteractionList,target2){
-		let waitTime = 0.3
-			// map and status are already loaded
-		const colBox = 3
-		const player = add([
-			sprite("mecanix",{anim:"idle"}),
-			anchor("center"),
-			pos(playerPosition.x,playerPosition.y),
-			area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
-			body(),
-			scale(PERSOSCALE)
-		])
-		player.flipX = true
-
-		// Add the other pers
-		const perso = levelAtelier.spawn([
-			sprite(persoSprite,{anim:"walk_right"}),
-			anchor("center"),
-			pos(0,160),//the default position is in front of the workshop
-			area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
-			body(),
-			scale(PERSOSCALE),
-			agent({ speed: 80, allowDiagonals: true }),
-				],
-		1,1)
-		let aller = wait(0.5,()=>{perso.setTarget(vec2(
-				target1.x,//Math.floor((center().x+45) / TILE_WIDTH) * TILE_WIDTH + TILE_WIDTH / 2,
-				target1.y//Math.floor((center().y-65)  / TILE_HEIGHT) * TILE_HEIGHT + TILE_HEIGHT / 2,
-			))})
+	let waitTime = 0.3
+	// map and status are already loaded
+	const colBox = 3
+	const player = add([
+		sprite("mecanix",{anim:"idle"}),
+		anchor("center"),
+		pos(playerPosition.x,playerPosition.y),
+		area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
+		body(),
+		scale(PERSOSCALE)
+	])
+	player.flipX = true
+	// Add the other pers
+	const perso = levelAtelier.spawn([
+		sprite(persoSprite,{anim:"walk_right"}),
+		anchor("center"),
+		pos(0,160),//the default position is in front of the workshop
+		area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
+		body(),
+		scale(PERSOSCALE),
+		agent({ speed: 80, allowDiagonals: true }),
+			],
+	1,1)
+	let aller = wait(0.5,()=>{perso.setTarget(vec2(
+			target1.x,//Math.floor((center().x+45) / TILE_WIDTH) * TILE_WIDTH + TILE_WIDTH / 2,
+			target1.y//Math.floor((center().y-65)  / TILE_HEIGHT) * TILE_HEIGHT + TILE_HEIGHT / 2,
+		))})
 	//once the aller is done
-let firstTarget= 	perso.onTargetReached(()=>{
+  let firstTarget= 	perso.onTargetReached(()=>{
 	let dialogInteraction1 = dialogInteractionList
-
-
 	// add dialog box
 	let textBox = add([
 		sprite("dialogbox"),//, width: width() - 230
@@ -757,7 +777,6 @@ let firstTarget= 	perso.onTargetReached(()=>{
 	//initialization
 	let initDialog = dialogInteraction1.length
 	let levelDialog = dialogInteraction1
-
 	// Text bubble
 	const txtWidth = 150; // Ideal Width
 	const txtMargins = 15;
@@ -772,14 +791,14 @@ let firstTarget= 	perso.onTargetReached(()=>{
 		const [ char, dialog ] = dialogInteraction1[curDialog]
 		console.log(dialog);
 		// Use a new sprite component to replace the old one
-	//	avatar.use(sprite(char))
+		//avatar.use(sprite(char))
 		// Update the dialog text
 		// mettre le texte lettre apres lettre
-	txt.text = dialog
-}
+		txt.text = dialog
+	}
 	//initialization
 	let curDialog = 0
-		updateDialog()
+	updateDialog()
 	let dialogAction = onKeyPress("enter", () => {
 		// Cycle through the dialogs
 		curDialog = (curDialog + 1) % dialogInteraction1.length
@@ -788,7 +807,22 @@ let firstTarget= 	perso.onTargetReached(()=>{
 			// dialog finished, options to choose
 			dialogAction.paused = true
 			firstTarget.paused=true
-			play("audio_reussite")
+			// object gained animation
+			// day one: key gained
+			if (jourIdx==1){
+				play("audio_reussite") //indicate that an object has been gained
+				add([
+					sprite("atelier_clee"),
+					scale(1),
+					area(),
+					pos(player.pos),
+					anchor("center"),
+					outline(4),
+					move(UP,100),
+				])
+				// now the object is owned in the INVENTORY
+				inventory["Clé"].state ="owned"
+			}
 			destroy(textBox)
 			destroy(txt)
 			let lastKeyPress = onKeyPress("enter",() => {
@@ -805,6 +839,7 @@ let firstTarget= 	perso.onTargetReached(()=>{
 				perso.onTargetReached(()=>{
 					console.log("Target reached")
 					dialogAction.paused =true
+
 					// day two
 					if (jourIdx==2){
 						let poster = add([
@@ -813,7 +848,6 @@ let firstTarget= 	perso.onTargetReached(()=>{
 						])
 						posterFlag = true
 					}
-
 					// dqy three
 					// additional person for day three
 					if(jourIdx==3){
@@ -864,14 +898,13 @@ let firstTarget= 	perso.onTargetReached(()=>{
 					// update the flyerFlag
 					flyersFlag = true
 					}
-
 					if(jourIdx==3){
 						console.log("wea rea in the waiting time");
 						waitTime= 3.3 // to wait to reach target
-					}else {
+						}else {
 						waitTime = 0.3
-					}
-					wait(waitTime,()=>{
+						}
+				wait(waitTime,()=>{
 						console.log("Wait time is"+waitTime);
 						let fadeOut = add([
 						pos(center().x, center().y),
@@ -882,6 +915,13 @@ let firstTarget= 	perso.onTargetReached(()=>{
 						fadeIn(1.2),
 						opacity(1),
 					])
+					wait(0.8,()=>{
+						add([
+							sprite("nuit_Z"),
+							anchor("center"),
+							pos(center().x, MAP_HEIGHT/2)
+						])
+					})
 					//to the next day
 					let newjourIdx = resetDayVariables(totalCoins,totalStars)
 					// day 2 is an exception as it will show clients without any interactions
@@ -891,12 +931,11 @@ let firstTarget= 	perso.onTargetReached(()=>{
 					// door is open now
 					outdoorKey = true
 					console.log("apres le reset\n le jour"+newjourIdx+"\n le justifiedFightCounter "+justifiedFightCounter+"\n la thune c'est "+totalCoins+"\n les stars "+totalStars)
-					wait(1,()=>go("atelier",newjourIdx,totalCoins,totalStars,INITIALPOSITION,clientCounter))//clientcounter is zero because by default we want no clients. Some necessary interaction have to happen first
+					wait(2,()=>go("atelier",newjourIdx,totalCoins,totalStars,INITIALPOSITION,clientCounter))//clientcounter is zero because by default we want no clients. Some necessary interaction have to happen first
 			})
 
 			})
-			}
-		)
+			})
 	}else{
 		updateDialog()
 	}
@@ -953,7 +992,7 @@ function player_movement(player,speed){
 			player.move(0, speed)
 		})
 	}
-	function launchDialog(interactionDialog){
+	function launchDialog(interactionDialog,dialogFinished){
 
 			// add dialog box
 			let textBox = add([
@@ -982,7 +1021,7 @@ function player_movement(player,speed){
 			//initialization with first sentence text
 			updateDialog()
 
-			let dialogAction = onKeyPress("enter", () => {
+		 	let	dialogAction = onKeyPress("enter", () => {
 		// Cycle through the dialogs
 		curDialog = (curDialog + 1) % interactionDialog.length
 		if (curDialog==0){
@@ -990,13 +1029,22 @@ function player_movement(player,speed){
 			dialogAction.paused = true
 			destroy(textBox)
 			destroy(txt)
-					// flog of the dialog is modified is open now
-					return true;
+			// flog of the dialog is modified is open now
+			dialogFinished = true
+			console.log("dialogFinished is "+dialogFinished);
 			}else{
-		updateDialog()
+			updateDialog()
 		}
 	})
-	}
+
+	// if anything is touched before the end of the dialog
+	onKeyPress("down",()=>{destroy(txt),destroy(textBox)})
+	onKeyPress("up",()=>{destroy(txt),destroy(textBox)})
+	onKeyPress("left",()=>{destroy(txt),destroy(textBox)})
+	onKeyPress("right",()=>{destroy(txt),destroy(textBox)})
+	return dialogFinished
+
+}
 function add_bordure_map(){
 	// MAP POUR FAIRE LA BORDURE
 	const MAP_WIDTH = 256;
@@ -1322,30 +1370,29 @@ function add_atelier_map(){
 					area(),
 					body({isStatic:true})
 				])
-// add velo sur pied items
+// add velo sur pied items, on day 5 we have the broken version
 if(veloTag==true){
-			const velo_sur_pied_1 = add([
-				sprite("velo_sur_pied",{anim:"idle"}),
-				scale(1),
-				anchor("center"),
-				pos(center().x-(6*16),8*16),
-				area(),
-						body({isStatic:true}),
-							"pied_velos"
-			])
-			const velo_sur_pied_2 = add([
-				sprite("velo_sur_pied",{anim:"idle"}),
-				scale(1),
-				anchor("center"),
-				pos(center().x+2*16,MAP_HEIGHT-2*16),
-				area(),
-				body({isStatic:true}),
-				"pied_velos"
-			])
-		}
-
+	const velo_sur_pied_1 = add([
+		sprite("velo_sur_pied",{anim:"idle"}),
+		scale(1),
+		anchor("center"),
+		pos(center().x-(6*16),8*16),
+		area(),
+		body({isStatic:true}),
+		"pied_velos"
+	])
+	const velo_sur_pied_2 = add([
+		sprite("velo_sur_pied",{anim:"idle"}),
+		scale(1),
+		anchor("center"),
+		pos(center().x+2*16,MAP_HEIGHT-2*16),
+		area(),
+		body({isStatic:true}),
+		"pied_velos"
+	])
+}
 // add poster item
-	if(posterFlag==true){
+if(posterFlag==true){
 			let poster = add([
 				sprite("atelier_poster"),
 				pos(center().x-(6.5*16),MAP_HEIGHT/2-(5.5*16))
@@ -1451,7 +1498,6 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 			// add flyers collision
 			if(flyersFlag==true){
 				player.onCollide("flyers", () => {
-
 				let poster2 = add([
 						sprite("atelier_poster2_grand"),//, width: width() - 230
 						// 	text("Complète ton inventaire pour\n un TURFU RADIEUX!", { size:  TXTSIZE }),//, width: width() - 230
@@ -1475,6 +1521,7 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 							pensee.paused = true
 							play("audio_reussite")
 							flyersTaken = true
+							flyersFlag = false //no more flyers on the table for the rest of the game
 							})
 					}
 				onKeyPress(()=>{
@@ -1487,7 +1534,38 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 					firstCollisionDone = true
 					})
 			}
-
+//DAY 5
+// add armoire cassee
+if (jourIdx==5){
+	console.log("in the armoire kc")
+	let armoireKc = add([
+		sprite("atelier_armoire_kc"),
+		anchor("center"),
+		pos(center().x-(4*16),3.5*16)
+	])
+}
+	// replace pied de velo with broken ones
+if (jourIdx==5){
+	destroyAll("velo_sur_pied")
+	const velo_sur_pied_1_kc = add([
+		sprite("atelier_velo_sur_pied_kc"),
+		scale(1),
+		anchor("center"),
+		pos(center().x-(6*16),8*16),
+		area(),
+		body({isStatic:true}),
+		"pied_velos_kc"
+	])
+	const velo_sur_pied_2_kc = add([
+		sprite("atelier_velo_sur_pied_kc"),
+		scale(1),
+		anchor("center"),
+		pos(center().x+2*16,MAP_HEIGHT-2*16),
+		area(),
+		body({isStatic:true}),
+		"pied_velos_kc"
+	])
+}
 				//status
 				addStatusBar(jourIdx,totalCoins,totalStars)
 				// add the mecanix// Add player game object
@@ -1962,7 +2040,6 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 		])
 		persoDechett.flipX = true
 
-
 		// DECHETERRIE DIALOG
 		let dechettDialog1 = [
 			["PNJ","Hé toi ! qu'est ce que tu fais là ?"],
@@ -1974,8 +2051,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			["PNJ","je comprends, ça m'arrive ici aussi des fois. Ha aujourd'hui quelqu'un a amené des pieds de vélo même pas pété, tu veux les prendre ?"],
 			["M", "Grave! merci. bon j'y retourne... à bientôt !"]
 			]
-
-			let dechettDialog2 = [
+		let dechettDialog2 = [
 				["M"," Hé salut! Comment tu vas ?"],
 				["PNJ","Pas mal, c'est une journée tranquille. Et toi?"],
 				["M","Un peu fatiguée du taf, mais y'a des personnes sympas qui sont passée.x.s hier c'était cool!"],
@@ -1986,79 +2062,98 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 				["PNJ","Top, je vais les faire tourner c'est important"],
 				]
 
-
 		// Interaction with the personnage dechetterie
 		player.onCollide("perso_dechett_1",()=>{
-			// First Interaction On Day 1
-			if(interactionDechetFlag == false){
-				//interaction happened
-				interactionDechetFlag = launchDialog(dechettDialog1)
-				showClients = true// now clients will show up
-				veloTag =true // now you have the bikePost
-				let leftWin = onKeyPress("left",()=>{
-					musicOutside.paused=true
-					play("audio_reussite")
-					musicOutside.paused=false
-					leftWin.paused =true
-					rightWin.paused =true
-					upWin.paused =true
-					downWin.paused =true
-					})
-			let rightWin = onKeyPress("right",()=>{
-				musicOutside.paused=true
-				play("audio_reussite")
-				musicOutside.paused=false
-				leftWin.paused =true
-				rightWin.paused =true
-				upWin.paused =true
-				downWin.paused =true
-			})
-			let upWin = onKeyPress("up",()=>{
-				musicOutside.paused=true
-				play("audio_reussite")
-				musicOutside.paused=false
-				leftWin.paused =true
-				rightWin.paused =true
-				upWin.paused =true
-				downWin.paused =true
-			})
-			let downWin = onKeyPress("down",()=>{
-				musicOutside.paused=true
-				play("audio_reussite")
-				musicOutside.paused=false
-				leftWin.paused =true
-				rightWin.paused =true
-				upWin.paused =true
-				downWin.paused =true
-			})
-			}else{
-			//The day 4 with flyers
-			if(flyersTaken == true){
-				// the dialog is about giving the flyersFlag
-				launchDialog(dechettDialog2)
-				showClients = true //now clients will show up
-			}else{//Normal days
-			// add dialog box
-			let textBox = add([
-				sprite("dialogbox"),//, width: width() - 230
+			player_movement(player,0)//stop the movement for the dialog time
+			//After the first interaction
+			if(interactionDechetFlag == true){
+				//The day 4 with flyers
+				if(flyersTaken == true){
+					// the dialog is about giving the flyersFlag
+					launchDialog(dechettDialog2)
+					showClients = true //now clients will show up
+				}else{//Normal days
+				// add dialog box
+				let textBox = add([
+					sprite("dialogbox"),//, width: width() - 230
+					anchor("center"),
+					pos(center().x,BOTTOM),
+					"textBox"
+					])
+				// container for text in dialog box
+				const txtWidth = 150; // Ideal Width
+				const txtMargins = 15;
+				let txt = add([
+				text("Hé resalut! si t'as besoin de quelque chose, tu sais où me trouver haha je bouge jamais d'ici !", { size:  TXTSIZE,  width: txtWidth }),//, width: width() - 230
 				anchor("center"),
 				pos(center().x,BOTTOM),
-				"textBox"
+				color(MYPURPLE),
 				])
-			// container for text in dialog box
-			const txtWidth = 150; // Ideal Width
-			const txtMargins = 15;
-			let txt = add([
-			text("Hé resalut! si t'as besoin de quelque chose, tu sais où me trouver haha je bouge jamais d'ici !", { size:  TXTSIZE,  width: txtWidth }),//, width: width() - 230
-			anchor("center"),
-			pos(center().x,BOTTOM),
-			color(MYPURPLE),
-			])
-			onKeyPress(()=>{
-				destroy(txt),
-				destroy(textBox)
-				})
-			}
+				onKeyPress(()=>{
+					destroy(txt),
+					destroy(textBox)
+					})
+				}
+			}else{
+				//interaction happened
+				dialogFinished = launchDialog(dechettDialog1,dialogFinished)
+
+				console.log("dialogFinished is"+dialogFinished)
+				// day two : bike posts gained at the dechetterie
+					if (jourIdx==2){
+						play("audio_reussite") //indicate that an object has been gained
+						add([
+							sprite("velo_sur_pied"),
+							scale(1),
+							area(),
+							pos(player.pos),
+							anchor("center"),
+							outline(4),
+							move(UP,100),
+						])
+						// add in the inventory
+						inventory["Stand pour vélo #1"].state = "owned"
+						inventory["Stand pour vélo #2"].state = "owned"
+
+					}
+				showClients = true// now clients will show up
+				veloTag =true // now you have the bikePost
+			// 	let leftWin = onKeyPress("left",()=>{
+			// 		musicOutside.paused=true
+			// 		play("audio_reussite")
+			// 		musicOutside.paused=false
+			// 		leftWin.paused =true
+			// 		rightWin.paused =true
+			// 		upWin.paused =true
+			// 		downWin.paused =true
+			// 		})
+			// let rightWin = onKeyPress("right",()=>{
+			// 	musicOutside.paused=true
+			// 	play("audio_reussite")
+			// 	musicOutside.paused=false
+			// 	leftWin.paused =true
+			// 	rightWin.paused =true
+			// 	upWin.paused =true
+			// 	downWin.paused =true
+			// })
+			// let upWin = onKeyPress("up",()=>{
+			// 	musicOutside.paused=true
+			// 	play("audio_reussite")
+			// 	musicOutside.paused=false
+			// 	leftWin.paused =true
+			// 	rightWin.paused =true
+			// 	upWin.paused =true
+			// 	downWin.paused =true
+			// })
+			// let downWin = onKeyPress("down",()=>{
+			// 	musicOutside.paused=true
+			// 	play("audio_reussite")
+			// 	musicOutside.paused=false
+			// 	leftWin.paused =true
+			// 	rightWin.paused =true
+			// 	upWin.paused =true
+			// 	downWin.paused =true
+			// })
 		}
 		})
 
@@ -2341,7 +2436,7 @@ scene("inventaire", (jourIdx,totalCoins,totalStars,saved_position,clientCounter)
 				// 	}
 
 					//achatList.push(key+":\n"+"Cet outil coûte "+inventory[key].cost+"$\n"+possAchat)
-			achatList.push(key+":\n"+"Tu n'as pas encore cet outil")
+			achatList.push(key+":\n"+"Tu n'as pas encore cet objet")
 
 			}
 			// OWNED TOOLS
@@ -2364,7 +2459,7 @@ scene("inventaire", (jourIdx,totalCoins,totalStars,saved_position,clientCounter)
 				// 	pos(posX,posY+20), // the % takes into account how many tools per line we want
 				// ])
 				positionList.push(Array(posX,posY+5))
-				achatList.push(key+":\n"+"Tu as déjà cet outil!")
+				achatList.push(key+":\n"+"Tu as déjà cet objet!")
 			}
 			i++
 		}
@@ -2725,7 +2820,7 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 			sprite("choix_frapper_juste",{anim:"hit"}),
 			scale(1),
 			anchor("center"),
-			pos(center().x,center().y-25),
+			pos(center().x,center().y),
 			lifespan(1.6),
 			])
 			wait(1.6, () => {
@@ -2858,6 +2953,7 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 							if(jourIdx==3){go("interactionJour3", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
 							if(jourIdx==4){go("interactionJour4", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
 
+
 						})
 
 			break;
@@ -2874,6 +2970,7 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 								if(jourIdx==2){go("interactionJour2", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
 								if(jourIdx==3){go("interactionJour3", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
 								if(jourIdx==4){go("interactionJour4", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
+
 
 
 							})
@@ -3145,16 +3242,33 @@ break;
 			addStatusBar(jourIdx,totalCoins,totalStars)
 
 
-			let dialogInteraction3 = [
-					["pnj","Coucou, excuse-moi c'est possible de te poser une question là?"],
-					["m","Oui, dis-moi! "],
-					["pnj","En fait je fais partie d'un collectif qui s'appelle Vélacyraptix... "],
-					["m","Ah oui! J'en ai entendu parler. Vous faites des atelier de mécanique en mixité choisie sans hommes cisgenres nan?! "],
-					["pnj","Oui c'est ca, on propose des moments pour apprendre à réparer et bricoler des vélos sans homme cisgenres. Le but c'est de limiter l'impact du patriarcat un ptit moment quoi..."],
-					["m","C'est cool! C'est quand le prochain? "],
-					["pnj","Et ben justement...on en a un ce soir mais on savait pas trop ou le faire... notre plan pour emprunter des outils est tombe a l'eau..Est-ce qu'on pourrait se mettre ici?"],
-					["m","Oh... euh oui bien sur! Y'a tout ce qui faut et c'est super comme idée"],
-					]
+			let dialogInteraction3 =
+			[
+	        ["PNJ","Hey salut!"],
+	        ["M","Salut, c'est fermé pour aujourd'hui..."],
+	        ["PNJ","Oui justement,je suis venue de demander quelque chose, je fais partie d'un collectif qui s'appelle velociraptix tu as déjà entendu parler?"],
+	         ["M","ha oui ça me dit quelque chose, vous faites des ateliers non?"],
+	          ["PNJ","oui, et il y en avait un ce soir, mais il y a eu un imprévu et on se demandais si on pouvait le faire ici..."],
+	        ["M","Comment ça? vous voulez pas venir la journée plutôt?"],
+	        ["PNJ","En fait on fait des ateliers mixité choisie sans mec cisgenre..."],
+	        ["M","Ha oui ok, je vois! c'est une trop bonne idée, c'est vrai que c'est pas toujours évident de se faire prendre les outils des mains et se faire toujours tout expliquer...haha, je connais ça... Vous êtes bienvenux!"],
+	        ["PNJ","merci c'est trop sympa !"],
+	        ["M","HA! Si vous voyez la personne habillée en dino dites lui que vous faites ça, elle vient de partir et elle disait qu'elle voulait apprendre à mieux bricoler!"],
+	        ["PNJ","bonne idée ! ha oui et tu serais dac qu'on te laisse des flyers et d'en donner aux gens que tu connais?"],
+	         ["M","biensur! bon je vais y aller je vous laisse les clées remettez les dans la boite à clé"],
+	        ["PNJ","ça marche, bonne soirée ! allez les gentes vous pouvez venir !"]
+	        ]
+
+			// [
+			// 		["pnj","Coucou, excuse-moi c'est possible de te poser une question là?"],
+			// 		["m","Oui, dis-moi! "],
+			// 		["pnj","En fait je fais partie d'un collectif qui s'appelle Vélacyraptix... "],
+			// 		["m","Ah oui! J'en ai entendu parler. Vous faites des atelier de mécanique en mixité choisie sans hommes cisgenres nan?! "],
+			// 		["pnj","Oui c'est ca, on propose des moments pour apprendre à réparer et bricoler des vélos sans homme cisgenres. Le but c'est de limiter l'impact du patriarcat un ptit moment quoi..."],
+			// 		["m","C'est cool! C'est quand le prochain? "],
+			// 		["pnj","Et ben justement...on en a un ce soir mais on savait pas trop ou le faire... notre plan pour emprunter des outils est tombe a l'eau..Est-ce qu'on pourrait se mettre ici?"],
+			// 		["m","Oh... euh oui bien sur! Y'a tout ce qui faut et c'est super comme idée"],
+			// 		]
 
 			// try with function
 			interactionJour(3,levelAtelier,justifiedFightCounter,totalCoins,totalStars,
@@ -3230,10 +3344,11 @@ scene("Burnout", (jourIdx,totalCoins,totalStars) => {
 
 function start() {
 		// Start with the "game" scene, with initial parameters
-	//	go("atelier", 1, 85,0/*totalCoins*/,50,INITIALPOSITION)
-//go("interactionJour4",4,totalCoins,totalStars,INITIALPOSITION)
- go("start",jourIdx,totalCoins,totalStars/*force*/,INITIALPOSITION)
-//go("outside",2,30,30,INITIALPOSITION)	//go("interactionJour1", (1,0,40,20,INITIALPOSITION))//go("clientDialog",1,75,100/*totalCoins*/,50/*force*/)
+	//go("atelier", 5, 85,0/*totalCoins*/,50,INITIALPOSITION)
+//go("interactionJour1",1,totalCoins,totalStars,INITIALPOSITION)
+go("start",jourIdx,totalCoins,totalStars/*force*/,INITIALPOSITION)
+//go("outside",2,30,30,INITIALPOSITION)
+	//go("interactionJour1", (1,0,40,20,INITIALPOSITION))//go("clientDialog",1,75,100/*totalCoins*/,50/*force*/)
  //justifiedFightCounter=4
  //go("Carton_Journalier","client1",1,30,30,10,10,1)
 	}
