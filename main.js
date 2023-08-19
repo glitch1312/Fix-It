@@ -159,7 +159,7 @@ const TXTWIDTH = 150
 const LARGETXTSIZE = 24
 const MEDIUMTXTSIZE = 16
 const PERSOSCALE = 1.4
-const INITIALPOSITION = {x:center().x+10,y:center().y}//position in atelier at start, and at any return from other scenes
+const INITIALPOSITION = {x:center().x,y:center().y_40}//position in atelier at start, and at any return from other scenes
 const CLIENTLINEPOSITION =  {x:center().x,y:center().y+30}
 //palette
 const MYPINK = rgb(222, 135,146)
@@ -170,514 +170,467 @@ const MAP_WIDTH = 256
 const MAP_HEIGHT = 256
 
 // LEVELS INITIALIZATION with JSON
-const clientsList = {
-	"client1":{
-			spriteName:"client_1_petit",
-			bigSpriteName:"client_1_grand",
-			dialogs:[
-				[ "client_1_grand", "Bonjour" ],
-				[ "mecanix_en_pied", "Bonjour, comment je peux vous aider ?"],
-				[ "client_1_grand", "Je dois changer les cables des freins." ],
-				[ "mecanix_en_pied", "d'accords, vous voulez me donner votre vélo?" ],
-				[ "client_1_grand", "je le donnerai quand le mécano aura le temps de s'en occuper direct, j'en ai besoin, vous me donner le rendez-vous?" ],
-				[ "mecanix_en_pied", "mais c'est moi la mécano..." ],
-			],
-			//repair scene
-			outilsSprite:	["Sprite-tool-wrench","Sprite_clepedale"],
-			outilsGoals:	[1,1],
-			bombsSprite:	["Sprite_cliket","sprite_clee6pans","Sprite_marteau","sprite_tournevis","Sprite_demontepneu","sprite_demontechaine","sprite_clefmonte","Sprite_fouet","Sprite_clef","sprite_pince",],
+let INITIALCLIENTSLIST = {
+ "client1":{
+		 spriteName:"client_1_petit",
+		 bigSpriteName:"client_1_grand",
+		 dialogs:[
+			 [ "client_1_grand", "Bonjour" ],
+			 [ "mecanix_en_pied", "Bonjour, comment je peux vous aider ?"],
+			 [ "client_1_grand", "Je dois changer les cables des freins." ],
+			 [ "mecanix_en_pied", "d'accords, vous voulez me donner votre vélo?" ],
+			 [ "client_1_grand", "je le donnerai quand le mécano aura le temps de s'en occuper direct, j'en ai besoin, vous me donner le rendez-vous?" ],
+			 [ "mecanix_en_pied", "mais c'est moi la mécano..." ],
+		 ],
+		 isSexist: true,
+ },
+ "client2":{
+		 spriteName:"client_2_petit",
+		 bigSpriteName:"client_2_grand",
+		 dialogs:[
+			 [ "client_2_grand", "Salut, j'ai un problème avec mon vélo" ],
+			 [ "mecanix_en_pied", "Okay!\n Je vois que ta roue est voilée"],
+			 [ "client_2_grand", "Non je pense plutôt que c'est un truc au niveau de la chaine" ],
+			 [ "mecanix_en_pied", "C'est sur que ta roue est voilée. Elle touche le frein de façon irregulière." ],
+			 [ "client_2_grand", "Attends, je vais te montrer, quand on fait tourner le pédalier, ça entraine la chaine tu vois ?"]
+		 ],
+		 isSexist: true,
 
-			//health values
-			isSexist: true,
+ },
+ "client3":{
+		 spriteName:"client_3_petit",
+		 bigSpriteName:"client_3_grand",
+		 dialogs:[
+			 [ "mecanix_en_pied", "Bonjour, dites-moi tout!" ],
+			 [ "client_3_grand", "Je veux changer les plaquettes des mes freins à disques"],
+			 [ "mecanix_en_pied", "Bonne idée, elles sont usées?" ],
+			 [ "client_3_grand", "Nan mais ça couine...alors j'aimerais bien les changer" ],
+			 [ "mecanix_en_pied", "D'accord! On peut aussi essayer de nettoyer le tout d'abord"]
+		 ],
+		 isSexist: false,
 
+ },
+ "client4":{
+		 spriteName:"client_4_petit",
+		 bigSpriteName:"client_4_grand",
+		 dialogs:[
+			 [ "mecanix_en_pied", "Salut, qu'est-ce qui se passe?" ],
+			 [ "client_4_grand", "Je cherche le patron, j'ai un problème avec mon vélo"],
+			 [ "mecanix_en_pied", "Je peux vous répondre,dites-moi tout! " ],
+			 [ "client_4_grand", "Ah, vous êtes mécanicienne?" ],
+			 [ "mecanix_en_pied", "oui"],
+			 [ "client_4_grand", "C'est surprenant! Bravo!" ],
+		 ],
+		 isSexist: true,
 
-	},
-	"client2":{
-			spriteName:"client_2_petit",
-			bigSpriteName:"client_2_grand",
-			dialogs:[
-				[ "client_2_grand", "Salut, j'ai un problème avec mon vélo" ],
-				[ "mecanix_en_pied", "Okay!\n Je vois que ta roue est voilée"],
-				[ "client_2_grand", "Non je pense plutôt que c'est un truc au niveau de la chaine" ],
-				[ "mecanix_en_pied", "C'est sur que ta roue est voilée. Elle touche le frein de façon irregulière." ],
-				[ "client_2_grand", "Attends, je vais te montrer, quand on fait tourner le pédalier, ça entraine la chaine tu vois ?"]
-			],
-			//repair scene
-			outilsSprite:["Sprite-tool-wrench","sprite_clefmonte","Sprite_demontepneu"],
-			outilsGoals:	[1,1,1],
-			bombsSprite:	["Sprite_cliket","sprite_clee6pans","Sprite_marteau","sprite_tournevis","sprite_demontechaine","Sprite_fouet","Sprite_clef","sprite_pince",],
-			isSexist: true,
+ },
+ "client5":{
+		 spriteName:"client_5_petit",
+		 bigSpriteName:"client_5_grand",
+		 dialogs:[
+			 [ "client_5_grand", "Bonjour, est ce que c'est possible de changer mon pneu ?"],
+			 [ "mecanix_en_pied", "heu oui, mais je sais pas trop les réf parce que c'est pas comme les vélos" ],
+			 [ "client_5_grand", "aucun soucis, j'ai pris du matos avec et j'ai une roue de rechange, je vais t'expliquer..." ],
+		 ],
+		 isSexist: false,
 
-	},
-	"client3":{
-			spriteName:"client_3_petit",
-			bigSpriteName:"client_3_grand",
-			dialogs:[
-				[ "mecanix_en_pied", "Bonjour, dites-moi tout!" ],
-				[ "client_3_grand", "Je veux changer les plaquettes des mes freins à disques"],
-				[ "mecanix_en_pied", "Bonne idée, elles sont usées?" ],
-				[ "client_3_grand", "Nan mais ça couine...alors j'aimerais bien les changer" ],
-				[ "mecanix_en_pied", "D'accord! On peut aussi essayer de nettoyer le tout d'abord"]
-			],
-			//repair scene
-			outilsSprite:["sprite_tournevis","sprite_pince"],
-			outilsGoals:	[1,1],
-			bombsSprite:	["Sprite_cliket","sprite_clee6pans","Sprite_marteau","Sprite_demontepneu","sprite_demontechaine","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
-			isSexist: false,
+ },
+ "client6":{
+		 spriteName:"client_6_petit",
+		 bigSpriteName:"client_6_grand",
+		 dialogs:[
+			 [ "client_6_grand", "Bonjour Comment ça va aujourd'hui ? Je vous amène mon vélo pour un check général de printemps héhé..."],
+			 [ "mecanix_en_pied", "Bonjour, Biensur je peux m'en occuper vous voulez me le donner?" ],
+			 [ "client_6_grand", "Attendez je vais vous le porter il est un peu lourd..." ],
+		 ],
+		 isSexist: true,
 
-	},
-	"client4":{
-			spriteName:"client_4_petit",
-			bigSpriteName:"client_4_grand",
-			dialogs:[
-				[ "mecanix_en_pied", "Salut, qu'est-ce qui se passe?" ],
-				[ "client_4_grand", "Je cherche le patron, j'ai un problème avec mon vélo"],
-				[ "mecanix_en_pied", "Je peux vous répondre,dites-moi tout! " ],
-				[ "client_4_grand", "Ah, vous êtes mécanicienne?" ],
-				[ "mecanix_en_pied", "oui"],
-				[ "client_4_grand", "C'est surprenant! Bravo!" ],
-			],
-			//repair scene
-			outilsSprite:["Sprite_marteau"],
-			outilsGoals:	[3],
-			bombsSprite:	["Sprite_cliket","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_demontechaine","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
-			isSexist: true,
+ },
+ "client7":{
+		 spriteName:"client_7_petit",
+		 bigSpriteName:"client_7_grand",
+		 dialogs:[
+			 [ "mecanix_en_pied", "Bonjour" ],
+			 [ "client_7_grand", "J'aurais besoin d'un petit service, vous pourriez faire ca?"],
+			 [ "mecanix_en_pied", "Oui, bien sûr" ],
+			 [ "client_7_grand", "Parfait" ],
+		 ],
+		 isSexist: false,
 
-	},
-	"client5":{
-			spriteName:"client_5_petit",
-			bigSpriteName:"client_5_grand",
-			dialogs:[
-				[ "client_5_grand", "Bonjour, est ce que c'est possible de changer mon pneu ?"],
-				[ "mecanix_en_pied", "heu oui, mais je sais pas trop les réf parce que c'est pas comme les vélos" ],
-				[ "client_5_grand", "aucun soucis, j'ai pris du matos avec et j'ai une roue de rechange, je vais t'expliquer..." ],
-			],
-			//repair scene
-			outilsSprite:["Sprite_marteau"],
-			outilsGoals:	[3],
-			bombsSprite:	["Sprite_cliket","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_demontechaine","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
-			isSexist: false,
+ },
+ "client8":{
+		 spriteName:"client_8_petit",
+		 bigSpriteName:"client_8_grand",
+		 dialogs:[
+			 [ "client_8_grand", "Salut, il est où le mecano?"],
+			 [ "mecanix_en_pied", "C'est moi..." ],
+			 [ "client_8_grand", "ah. tu sais changer la guidoline?" ],
+		 ],
+		 isSexist: true,
 
-	},
-	"client6":{
-			spriteName:"client_6_petit",
-			bigSpriteName:"client_6_grand",
-			dialogs:[
-				[ "client_6_grand", "Bonjour Comment ça va aujourd'hui ? Je vous amène mon vélo pour un check général de printemps héhé..."],
-				[ "mecanix_en_pied", "Bonjour, Biensur je peux m'en occuper vous voulez me le donner?" ],
-				[ "client_6_grand", "Attendez je vais vous le porter il est un peu lourd..." ],
-			],
-			//repair scene
-			outilsSprite:["Sprite_marteau"],
-			outilsGoals:	[3],
-			bombsSprite:	["Sprite_cliket","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_demontechaine","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
-			isSexist: true,
+ },
+ "client9":{
+		 spriteName:"client_9_petit",
+		 bigSpriteName:"client_9_grand",
+		 dialogs:[
+			 [ "client_9_grand", " Salut beauté, ça va ?"],
+			 [ "mecanix_en_pied", "mouais, il a quoi ton vélo?" ],
+			 [ "mecanix_en_pied", "je vois déjà que ton guidon est désaxé..." ],
+			 [ "client_9_grand", "ha ok. ça fait longtemps que tu travailles ici ?" ],
+			 [ "mecanix_en_pied", "c'est mon premier jour." ],
+			 [ "client_9_grand",  "tu finis à quelle heure je t'offre un verre !" ],
+		 ],
+		 isSexist: true,
 
-	},
-	"client7":{
-			spriteName:"client_7_petit",
-			bigSpriteName:"client_7_grand",
-			dialogs:[
-				[ "mecanix_en_pied", "Bonjour" ],
-				[ "client_7_grand", "J'aurais besoin d'un petit service, vous pourriez faire ca?"],
-				[ "mecanix_en_pied", "Oui, bien sûr" ],
-				[ "client_7_grand", "Parfait" ],
-			],
-			//repair scene
-			outilsSprite:["sprite_demontechaine","sprite_tournevis"],
-			outilsGoals:	[2,2],
-			bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
-			isSexist: false,
+ },
+ "client10":{
+		 spriteName:"client_10_petit",
+		 bigSpriteName:"client_10_grand",
+		 dialogs:[
+			 [ "mecanix_en_pied", "Bonjour" ],
+			 [ "client_10_grand", "Bonjour! j'ai cassé mon dérailleurs"],
+			 [ "mecanix_en_pied", "Dac, on peut le remplacer avec de l'occasion ou en commander un" ],
+			 [ "client_10_grand", "D'occas si possible ça serait parfait" ],
+		 ],
+		 isSexist: false,
 
-	},
-	"client8":{
-			spriteName:"client_8_petit",
-			bigSpriteName:"client_8_grand",
-			dialogs:[
-				[ "client_8_grand", "Salut, il est où le mecano?"],
-				[ "mecanix_en_pied", "C'est moi..." ],
-				[ "client_8_grand", "ah. tu sais changer la guidoline?" ],
-			],
-			//repair scene
-			outilsSprite:["sprite_demontechaine","sprite_tournevis"],
-			outilsGoals:	[2,2],
-			bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
-			isSexist: true,
+ },
+ "client11":{
+		 spriteName:"client_6_petit",
+		 bigSpriteName:"client_6_grand",
+		 dialogs:[
+			 [ "mecanix_en_pied", "Salut, qu'est-ce qui se passe?" ],
+			 [ "client_6_grand", " Salut, mon vélo freine plus"],
+			 [ "mecanix_en_pied", "oké je vais checker ça" ],
+			 [ "client_6_grand", "Est ce que stan est là ? je préfère que ça soit lui qui le fasse" ],
+			 [ "mecanix_en_pied", "il est pas là..."],
+		 ],
+		 isSexist: true,
 
-	},
-	"client9":{
-			spriteName:"client_9_petit",
-			bigSpriteName:"client_9_grand",
-			dialogs:[
-				[ "client_9_grand", " Salut beauté, ça va ?"],
-				[ "mecanix_en_pied", "mouais, il a quoi ton vélo?" ],
-				[ "mecanix_en_pied", "je vois déjà que ton guidon est désaxé..." ],
-				[ "client_9_grand", "ha ok. ça fait longtemps que tu travailles ici ?" ],
-				[ "mecanix_en_pied", "c'est mon premier jour." ],
-				[ "client_9_grand",  "tu finis à quelle heure je t'offre un verre !" ],
-
-			],
-			//repair scene
-			outilsSprite:["sprite_demontechaine","sprite_tournevis"],
-			outilsGoals:	[2,2],
-			bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
-			isSexist: true,
-
-	},
-	"client10":{
-			spriteName:"client_10_petit",
-			bigSpriteName:"client_10_grand",
-			dialogs:[
-				[ "mecanix_en_pied", "Bonjour" ],
-				[ "client_10_grand", "Bonjour! j'ai cassé mon dérailleurs"],
-				[ "mecanix_en_pied", "Dac, on peut le remplacer avec de l'occasion ou en commander un" ],
-				[ "client_10_grand", "D'occas si possible ça serait parfait" ],
-			],
-
-			//repair scene
-			outilsSprite:["Sprite_marteau"],
-			outilsGoals:	[3],
-			bombsSprite:	["Sprite_cliket","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_demontechaine","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
-			isSexist: false,
-
-	},
-	"client11":{
-			spriteName:"client_6_petit",
-			bigSpriteName:"client_6_grand",
-			dialogs:[
-				[ "mecanix_en_pied", "Salut, qu'est-ce qui se passe?" ],
-				[ "client_6_grand", " Salut, mon vélo freine plus"],
-				[ "mecanix_en_pied", "oké je vais checker ça" ],
-				[ "client_6_grand", "Est ce que stan est là ? je préfère que ça soit lui qui le fasse" ],
-				[ "mecanix_en_pied", "il est pas là..."],
-			],
-			//repair scene
-			outilsSprite:["sprite_demontechaine","sprite_tournevis"],
-			outilsGoals:	[2,2],
-			bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
-			isSexist: true,
-
-	},
-	"client12":{
-			spriteName:"client_12_petit",
-			bigSpriteName:"client_12_grand",
-					dialogs:[
-				[ "client_12_grand", "Hello"],
-				[ "mecanix_en_pied", "Salut" ],
-				[ "client_12_grand", "ça fait plaisir de voir une femme ici" ],
-				[ "mecanix_en_pied", "Yessay.. et donc ce vélo ?" ],
-				[ "client_12_grand", "Voilà. Hé pis vous êtes quand même plus jolie avec le sourire !" ],
-			],
-			//repair scene
-			outilsSprite:["sprite_demontechaine","sprite_tournevis"],
-			outilsGoals:	[2,2],
-			bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
-			isSexist: true,
-	},
-	"client13":{
-			spriteName:"client_13_petit",
-			bigSpriteName:"client_13_grand",
-			dialogs:[
-				[ "client_13_grand", "Bonjour bonjour! j'aimerais changer de selle, celle-ci a un trou.."],
-				[ "mecanix_en_pied", "Bonjour, oui ok, j'en ai pas en stock mais je peux en commander une si vous voulez?" ],
-				[ "client_13_grand", "Ouais... hé ben on dirait que le lobby lgbt est venu refaire votre déco là" ],
-			],
-			//repair scene
-			outilsSprite:["sprite_demontechaine","sprite_tournevis"],
-			outilsGoals:	[2,2],
-			bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
-			isSexist: false,
-	},
-	"client14":{
-			spriteName:"client_14_petit",
-			bigSpriteName:"client_14_grand",
-			dialogs:[
-				[ "client_14_grand", "Bonjour! j'ai cassé un rayon sur ma roue avant.."],
-				[ "mecanix_en_pied", "Okay, je vais le changer et dévoiler la roue s'il-y-a besoin" ],
-				[ "client_14_grand", "Okay mais j'espère que ce sera pas aussi cher que la dernière fois" ],
-			],
-			//repair scene
-			outilsSprite:["sprite_demontechaine","sprite_tournevis"],
-			outilsGoals:	[2,2],
-			bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
-			isSexist: false,
-	},
-	"client15":{
-			spriteName:"client_15_petit",
-			bigSpriteName:"client_15_grand",
-			dialogs:[
-				[ "mecanix_en_pied", "Bonjour" ],
-				[ "client_15_grand", "Hello, c'est possible de réparer mon vélo"],
-				[ "mecanix_en_pied", "Oui bien sûr, il a quoi?" ],
-				[ "client_15_grand", "Je sais pas, il est tout foutu il faut le réparer" ],
-				[ "mecanix_en_pied", "Okay je vais regarder" ],
-				[ "client_15_grand", "Merci, mais il est vraiment vieux et en mauvais état " ],
-				[ "mecanix_en_pied", "Pas de soucis, tu me le passes?r" ],
-				[ "client_15_grand", "Oui." ],
-
-
-			],
-			//repair scene
-			outilsSprite:["sprite_demontechaine","sprite_tournevis"],
-			outilsGoals:	[2,2],
-			bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
-			isSexist: false,
-	},
-	"client16":{
-			spriteName:"client_16_petit",
-			bigSpriteName:"client_16_grand",
-			dialogs:[
-				[ "mecanix_en_pied", "Salut" ],
-				[ "client_16_grand", "Salut! il y a un truc qui marche pas bien avec mon vélo"],
-				[ "mecanix_en_pied", "Tu veux m'expliquer plus en détail?" ],
-				[ "client_16_grand", "Oui, quand je roule surtout à la montée il se passe des trucs bizarres avec les vitesses..." ],
-			],
-			//repair scene
-			outilsSprite:["sprite_demontechaine","sprite_tournevis"],
-			outilsGoals:	[2,2],
-			bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
-			isSexist: false,
-	},
-	"client17":{
-			spriteName:"client_17_petit",
-			bigSpriteName:"client_17_grand",
-					dialogs:[
-				[ "client_17_grand", "Hello"],
-				[ "mecanix_en_pied", "Salut" ],
-				[ "client_17_grand", "ça fait plaisir de voir une femme ici mais il parait qu'il y'a des moments ou c'est pas ouvert à tous le monde... c'est un peu limite quand même" ],
-				[ "mecanix_en_pied", "Je pense que c'est nécessaire, et puis c'est un pratique qui date maintenant et qui se fait pour différents groupes" ],
-				[ "client_17_grand", "Ah bon... je pensais que c'était une nouvelle mode..." ],
-			],
-			//repair scene
-			outilsSprite:["sprite_demontechaine","sprite_tournevis"],
-			outilsGoals:	[2,2],
-			bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
-			isSexist: true,
-	},
-	"client18":{
-		spriteName:"client_18_petit",
-		bigSpriteName:"client_18_grand",
-		dialogs :[
-			["client_18_grand","Salut! merci pour le tournevis ça m'a bien aidé"],
-			["mecanix_en_pied","Hey, pas de soucis! merci de le ramener surtout!  ça a marché comme tu voulais?"],
-			["client_18_grand","J'ai réussi à faire certains trucs, mais y'a des choses qui sont trop compliqués je crois, ça me ferait plaisir d'apprendre à l'occas mais je suis pas toujours à l'aise avec les trucs manuels... tu voudrais bien jeter un oeil ?"],
-		]
-		,
-		//repair scene
-		outilsSprite:["sprite_demontechaine","sprite_tournevis"],
-		outilsGoals:	[2,2],
-		bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
-		isSexist: true,
-	},
-	"client19":{
-			spriteName:"client_19_petit",
-			bigSpriteName:"client_19_grand",
-			dialogs:[
-				[ "mecanix_en_pied", "Hello!" ],
-				[ "client_19_grand", "Salut, je viens changer mes pédales "],
-				[ "mecanix_en_pied", "Yes, ça marche" ],
-				[ "client_19_grand", "Et je voulais dire aussi, avec mes potes on va venir les enlever vos affiches arc-en-ciel si vous les laisser" ],
-				[ "mecanix_en_pied", "..." ],
-				[ "client_19_grand", "..." ],
-			],
-			//repair scene
-			outilsSprite:["sprite_demontechaine","sprite_tournevis"],
-			outilsGoals:	[2,2],
-			bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
-			isSexist: true,
-	},
-	"client20":{
-			spriteName:"client_20_petit",
-			bigSpriteName:"client_20_grand",
-				dialogs:[
-					[ "mecanix_en_pied", "Salut" ],
-					[ "client_20_grand", "Bonjour Madame!" ],
-					[ "mecanix_en_pied", "Euh... je préfère que vous disiez pas Madame" ],
-					[ "client_20_grand", "Rohlalala...on peut plus rien dire" ],
-					[ "mecanix_en_pied", "C'est juste que vous ne me connaissez pas et en plus monsieur, madame c'est très binaire" ],
-					[ "client_20_grand", "Oui bon vous êtes pas un Monsieur nan plus.." ],
-					[ "mecanix_en_pied", "Peut-être bien que si.." ],
-				],
-			//repair scene
-			outilsSprite:["sprite_demontechaine","sprite_tournevis"],
-			outilsGoals:	[2,2],
-			bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
-			isSexist: true,
-	},
-	"client21":{
-			spriteName:"client_21_petit",
-			bigSpriteName:"client_21_grand",
-			dialogs:[
-				[ "mecanix_en_pied", "Hello!" ],
-				[ "client_21_grand", "Coucou, dis j'ai un projet avec un cadre que j'ai récupéré, j'aimerais le repeindre."],
-				[ "client_21_grand", "C'est possible de le faire ici?"],
-				[ "mecanix_en_pied", "C'est pas l'idéal en vrai je fais pas trop de peinture" ],
-				[ "client_21_grand", "Ha yut... bon et meuler des pièces, c'est possible?" ],
-				[ "mecanix_en_pied", "Oui à fond!" ],
-				[ "client_21_grand", "Trop bien !" ],
-			],
-			//repair scene
-			outilsSprite:["sprite_demontechaine","sprite_tournevis"],
-			outilsGoals:	[2,2],
-			bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
-			isSexist: false,
-	},
-	"client22":{
-			spriteName:"client_22_petit",
-			bigSpriteName:"client_22_grand",
-			dialogs:[
-				[ "mecanix_en_pied", "Hello!" ],
-				[ "client_22_grand", "Coucou, dis j'ai un projet avec un cadre que j'ai récupéré, j'aimerais le repeindre."],
-				[ "client_22_grand", "C'est possible de le faire ici?"],
-				[ "mecanix_en_pied", "C'est pas l'idéal en vrai je fais pas trop de peinture" ],
-				[ "client_22_grand", "Ha yut... bon et meuler des pièces, c'est possible?" ],
-				[ "mecanix_en_pied", "Oui à fond!" ],
-				[ "client_22_grand", "Trop bien !" ],
-			],
-			//repair scene
-			outilsSprite:["sprite_demontechaine","sprite_tournevis"],
-			outilsGoals:	[2,2],
-			bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
-			isSexist: false,
-	},
-	"client23":{
-			spriteName:"client_23_petit",
-			bigSpriteName:"client_23_grand",
-			dialogs:[
-				[ "mecanix_en_pied", "Hello!" ],
-				[ "client_23_grand", "Coucou, dis j'ai un projet avec un cadre que j'ai récupéré, j'aimerais le repeindre."],
-				[ "client_23_grand", "C'est possible de le faire ici?"],
-				[ "mecanix_en_pied", "C'est pas l'idéal en vrai je fais pas trop de peinture" ],
-				[ "client_23_grand", "Ha yut... bon et meuler des pièces, c'est possible?" ],
-				[ "mecanix_en_pied", "Oui à fond!" ],
-				[ "client_23_grand", "Trop bien !" ],
-			],
-			//repair scene
-			outilsSprite:["sprite_demontechaine","sprite_tournevis"],
-			outilsGoals:	[2,2],
-			bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
-			isSexist: false,
-	},
-	"client24":{
-			spriteName:"client_24_petit",
-			bigSpriteName:"client_24_grand",
-			dialogs:[
-				[ "mecanix_en_pied", "Hello!" ],
-				[ "client_24_grand", "Coucou, dis j'ai un projet avec un cadre que j'ai récupéré, j'aimerais le repeindre."],
-				[ "client_24_grand", "C'est possible de le faire ici?"],
-				[ "mecanix_en_pied", "C'est pas l'idéal en vrai je fais pas trop de peinture" ],
-				[ "client_24_grand", "Ha yut... bon et meuler des pièces, c'est possible?" ],
-				[ "mecanix_en_pied", "Oui à fond!" ],
-				[ "client_24_grand", "Trop bien !" ],
-			],
-			//repair scene
-			outilsSprite:["sprite_demontechaine","sprite_tournevis"],
-			outilsGoals:	[2,2],
-			bombsSprite:	["Sprite_cliket","Sprite_marteau","Sprite-tool-wrench","sprite_clee6pans","Sprite_demontepneu","sprite_clefmonte","Sprite_fouet","Sprite_clef",],
-			isSexist: false,
-	},
-
+ },
+ "client12":{
+		 spriteName:"client_12_petit",
+		 bigSpriteName:"client_12_grand",
+				 dialogs:[
+			 [ "client_12_grand", "Hello"],
+			 [ "mecanix_en_pied", "Salut" ],
+			 [ "client_12_grand", "ça fait plaisir de voir une femme ici" ],
+			 [ "mecanix_en_pied", "Yessay.. et donc ce vélo ?" ],
+			 [ "client_12_grand", "Voilà. Hé pis vous êtes quand même plus jolie avec le sourire !" ],
+		 ],
+		 isSexist: true,
+ },
+ "client13":{
+		 spriteName:"client_13_petit",
+		 bigSpriteName:"client_13_grand",
+		 dialogs:[
+			 [ "client_13_grand", "Bonjour bonjour! j'aimerais changer de selle, celle-ci a un trou.."],
+			 [ "mecanix_en_pied", "Bonjour, oui ok, j'en ai pas en stock mais je peux en commander une si vous voulez?" ],
+			 [ "client_13_grand", "Ouais... hé ben on dirait que le lobby lgbt est venu refaire votre déco là" ],
+		 ],
+		 isSexist: false,
+ },
+ "client14":{
+		 spriteName:"client_14_petit",
+		 bigSpriteName:"client_14_grand",
+		 dialogs:[
+			 [ "client_14_grand", "Bonjour! j'ai cassé un rayon sur ma roue avant.."],
+			 [ "mecanix_en_pied", "Okay, je vais le changer et dévoiler la roue s'il-y-a besoin" ],
+			 [ "client_14_grand", "Okay mais j'espère que ce sera pas aussi cher que la dernière fois" ],
+		 ],
+		 isSexist: false,
+ },
+ "client15":{
+		 spriteName:"client_15_petit",
+		 bigSpriteName:"client_15_grand",
+		 dialogs:[
+			 [ "mecanix_en_pied", "Bonjour" ],
+			 [ "client_15_grand", "Hello, c'est possible de réparer mon vélo"],
+			 [ "mecanix_en_pied", "Oui bien sûr, il a quoi?" ],
+			 [ "client_15_grand", "Je sais pas, il est tout foutu il faut le réparer" ],
+			 [ "mecanix_en_pied", "Okay je vais regarder" ],
+			 [ "client_15_grand", "Merci, mais il est vraiment vieux et en mauvais état " ],
+			 [ "mecanix_en_pied", "Pas de soucis, tu me le passes?r" ],
+			 [ "client_15_grand", "Oui." ],
+		 ],
+		 isSexist: false,
+ },
+ "client16":{
+		 spriteName:"client_16_petit",
+		 bigSpriteName:"client_16_grand",
+		 dialogs:[
+			 [ "mecanix_en_pied", "Salut" ],
+			 [ "client_16_grand", "Salut! il y a un truc qui marche pas bien avec mon vélo"],
+			 [ "mecanix_en_pied", "Tu veux m'expliquer plus en détail?" ],
+			 [ "client_16_grand", "Oui, quand je roule surtout à la montée il se passe des trucs bizarres avec les vitesses..." ],
+		 ],
+		 isSexist: false,
+ },
+ "client17":{
+		 spriteName:"client_17_petit",
+		 bigSpriteName:"client_17_grand",
+				 dialogs:[
+			 [ "client_17_grand", "Hello"],
+			 [ "mecanix_en_pied", "Salut" ],
+			 [ "client_17_grand", "ça fait plaisir de voir une femme ici mais il parait qu'il y'a des moments ou c'est pas ouvert à tous le monde... c'est un peu limite quand même" ],
+			 [ "mecanix_en_pied", "Je pense que c'est nécessaire, et puis c'est un pratique qui date maintenant et qui se fait pour différents groupes" ],
+			 [ "client_17_grand", "Ah bon... je pensais que c'était une nouvelle mode..." ],
+		 ],
+		 isSexist: true,
+ },
+ "client18":{
+	 spriteName:"client_18_petit",
+	 bigSpriteName:"client_18_grand",
+	 dialogs :[
+		 ["client_18_grand","Salut! merci pour le tournevis ça m'a bien aidé"],
+		 ["mecanix_en_pied","Hey, pas de soucis! merci de le ramener surtout!  ça a marché comme tu voulais?"],
+		 ["client_18_grand","J'ai réussi à faire certains trucs, mais y'a des choses qui sont trop compliqués je crois, ça me ferait plaisir d'apprendre à l'occas mais je suis pas toujours à l'aise avec les trucs manuels... tu voudrais bien jeter un oeil ?"],
+	 ]
+	 ,
+	 isSexist: true,
+ },
+ "client19":{
+		 spriteName:"client_19_petit",
+		 bigSpriteName:"client_19_grand",
+		 dialogs:[
+			 [ "mecanix_en_pied", "Hello!" ],
+			 [ "client_19_grand", "Salut, je viens changer mes pédales "],
+			 [ "mecanix_en_pied", "Yes, ça marche" ],
+			 [ "client_19_grand", "Et je voulais dire aussi, avec mes potes on va venir les enlever vos affiches arc-en-ciel si vous les laisser" ],
+			 [ "mecanix_en_pied", "..." ],
+			 [ "client_19_grand", "..." ],
+		 ],
+		 isSexist: true,
+ },
+ "client20":{
+		 spriteName:"client_20_petit",
+		 bigSpriteName:"client_20_grand",
+			 dialogs:[
+				 [ "mecanix_en_pied", "Salut" ],
+				 [ "client_20_grand", "Bonjour Madame!" ],
+				 [ "mecanix_en_pied", "Euh... je préfère que vous disiez pas Madame" ],
+				 [ "client_20_grand", "Rohlalala...on peut plus rien dire" ],
+				 [ "mecanix_en_pied", "C'est juste que vous ne me connaissez pas et en plus monsieur, madame c'est très binaire" ],
+				 [ "client_20_grand", "Oui bon vous êtes pas un Monsieur nan plus.." ],
+				 [ "mecanix_en_pied", "Peut-être bien que si.." ],
+			 ],
+		 isSexist: true,
+ },
+ "client21":{
+		 spriteName:"client_21_petit",
+		 bigSpriteName:"client_21_grand",
+		 dialogs:[
+			 [ "mecanix_en_pied", "Hello!" ],
+			 [ "client_21_grand", "Coucou, dis j'ai un projet avec un cadre que j'ai récupéré, j'aimerais le repeindre."],
+			 [ "client_21_grand", "C'est possible de le faire ici?"],
+			 [ "mecanix_en_pied", "C'est pas l'idéal en vrai je fais pas trop de peinture" ],
+			 [ "client_21_grand", "Ha yut... bon et meuler des pièces, c'est possible?" ],
+			 [ "mecanix_en_pied", "Oui à fond!" ],
+			 [ "client_21_grand", "Trop bien !" ],
+		 ],
+		 isSexist: false,
+ },
+ "client22":{
+		 spriteName:"client_22_petit",
+		 bigSpriteName:"client_22_grand",
+		 dialogs:[
+			 [ "mecanix_en_pied", "Hello!" ],
+			 [ "client_22_grand", "Coucou, dis j'ai un projet avec un cadre que j'ai récupéré, j'aimerais le repeindre."],
+			 [ "client_22_grand", "C'est possible de le faire ici?"],
+			 [ "mecanix_en_pied", "C'est pas l'idéal en vrai je fais pas trop de peinture" ],
+			 [ "client_22_grand", "Ha yut... bon et meuler des pièces, c'est possible?" ],
+			 [ "mecanix_en_pied", "Oui à fond!" ],
+			 [ "client_22_grand", "Trop bien !" ],
+		 ],
+		 isSexist: false,
+ },
+ "client23":{
+		 spriteName:"client_23_petit",
+		 bigSpriteName:"client_23_grand",
+		 dialogs:[
+			 [ "mecanix_en_pied", "Hello!" ],
+			 [ "client_23_grand", "Coucou, dis j'ai un projet avec un cadre que j'ai récupéré, j'aimerais le repeindre."],
+			 [ "client_23_grand", "C'est possible de le faire ici?"],
+			 [ "mecanix_en_pied", "C'est pas l'idéal en vrai je fais pas trop de peinture" ],
+			 [ "client_23_grand", "Ha yut... bon et meuler des pièces, c'est possible?" ],
+			 [ "mecanix_en_pied", "Oui à fond!" ],
+			 [ "client_23_grand", "Trop bien !" ],
+		 ],
+		 isSexist: false,
+ },
+ "client24":{
+		 spriteName:"client_24_petit",
+		 bigSpriteName:"client_24_grand",
+		 dialogs:[
+			 [ "mecanix_en_pied", "Hello!" ],
+			 [ "client_24_grand", "Coucou, dis j'ai un projet avec un cadre que j'ai récupéré, j'aimerais le repeindre."],
+			 [ "client_24_grand", "C'est possible de le faire ici?"],
+			 [ "mecanix_en_pied", "C'est pas l'idéal en vrai je fais pas trop de peinture" ],
+			 [ "client_24_grand", "Ha yut... bon et meuler des pièces, c'est possible?" ],
+			 [ "mecanix_en_pied", "Oui à fond!" ],
+			 [ "client_24_grand", "Trop bien !" ],
+		 ],
+		 isSexist: false,
+ },
 }
+// ------ Boucle de Gameplay ------- //
+// ------ Start --------------------------------------------------- //
+scene("start",() => {
 
-// INVENTORY
-// state can be : unavailable,available, owned
-let inventory = {
-	"Démonte-pneu":	{
-		spriteName : "Sprite_demontepneu",
-		state: "owned",
-		cost: "10",
-	},
-	"Dérive-chaine":	{
-		spriteName : "sprite_demontechaine",
-		state: "owned",
-		cost: "25",
+	// in case of a restart
+	 totalCoins = 0
+	 totalStars = 0
+	 interactionDechetFlag = false // no interaction with dechetterie perso
+	 dialogFinished = false
+	 veloTag = false // no bikePost yet
+	 posterFlag = false
+	 flyersFlag = false
+	 flyersTaken = false
+	 showClients = true
+	 jourIdx = 1 // game starts at day 1
+	 clientCounter = 1 // no client interaction at start
+	 fightCounter = 0
+	 justifiedFightCounter = 0
+	 repairCounter = 0
+	 fightGoalsList = [4,4,2,2]
+	 outdoorKey = true
+	 coinsAnimValueList = [0] //list for starting bilan journalier
+	 starsAnimValueList = [0]
+	 clientsList = INITIALCLIENTSLIST
 
-	},
-	"Tournevis":	{
-		spriteName : "sprite_tournevis",
-		state: "available",
-		cost: "10",
+		let musicDebut = play("page_debut")
+		add_bordure_map()
+		// Titre
+		const title = add([
+			text("Fix it !", { size: LARGETXTSIZE, font:"joystix" ,width:MAP_WIDTH-64}),
+			scale(1),
+			anchor("center"),
+			pos(center().x,center().y-0.6*(MAP_HEIGHT/2))
+		])
+		// But
+		const but = add([
+			text("Nouvel atelier de mécanique vélo!\n Attention, cet atelier ne supporte aucune remarques sexiste?! \n Survivra-t'il?",
+			{ size: TXTSIZE+2, font:"prstart" , width:MAP_WIDTH-64}),
+			scale(1),
+			anchor("center"),
+			pos(center().x,center().y-0.2*(MAP_HEIGHT/2))
+		])
+		// Instructions
+		const instructions = add([
+			text("Utilise les touches fléchées et la touche retour pour te déplacer et interagir", { size: TXTSIZE+2, font:"prstart",width:MAP_WIDTH -64}),
+			scale(1),
+			anchor("center"),
+			pos(center().x,center().y+0.2*(MAP_HEIGHT/2))
+		])
+		// lancer le jeu
+		onKeyPress("enter", () => {
+			musicDebut.paused = true
+			console.log(clientsList);
+			go("atelier", jourIdx,totalCoins,totalStars,INITIALPOSITION,clientCounter)
+		})
+})
 
-	},
-	"Clé":	{
-		spriteName : "atelier_clee",
-		state: "available",
-		cost: "10",
 
-	},
-	// "Clef ":	{
-	// 	spriteName : "sprite_clefmonte",
-	// 	state: "available",
-	// 	cost: "10",
-	//
-	// },
-	"Stand pour vélo #1":	{
-		spriteName : "velo_sur_pied",
-		state: "available",
-		cost: "30",
+	// INVENTORY
+	// state can be : unavailable,available, owned
+	let inventory = {
+		"Démonte-pneu":	{
+			spriteName : "Sprite_demontepneu",
+			state: "owned",
+			cost: "10",
+		},
+		"Dérive-chaine":	{
+			spriteName : "sprite_demontechaine",
+			state: "owned",
+			cost: "25",
 
-	},
-	"Stand pour vélo #2":	{
-		spriteName : "velo_sur_pied",
-		state: "available",
-		cost: "30",
+		},
+		"Tournevis":	{
+			spriteName : "sprite_tournevis",
+			state: "available",
+			cost: "10",
 
-	},
-	// "Clé métrique de 5mm":	{
-	// 	spriteName : "Sprite_clef",
-	// 	state: "available",
-	// 	cost: "30",
-	//
-	// },
-	// "Double clé de 5mm":	{
-	// 	spriteName : "Sprite-tool-wrench",
-	// 	state: "available",
-	// 	cost: "30",
-	//
-	// },
+		},
+		"Clé":	{
+			spriteName : "atelier_clee",
+			state: "available",
+			cost: "10",
 
-	"Clé à pédale":	{
-		spriteName : "Sprite_clepedale",
-		state: "available",
-		cost: "30",
+		},
+		// "Clef ":	{
+		// 	spriteName : "sprite_clefmonte",
+		// 	state: "available",
+		// 	cost: "10",
+		//
+		// },
+		"Stand pour vélo #1":	{
+			spriteName : "velo_sur_pied",
+			state: "available",
+			cost: "30",
 
-	},
+		},
+		"Stand pour vélo #2":	{
+			spriteName : "velo_sur_pied",
+			state: "available",
+			cost: "30",
 
-	"Clé à cliquet":	{
-		spriteName : "Sprite_cliket",
-		state: "available",
-		cost: "20",
+		},
+		// "Clé métrique de 5mm":	{
+		// 	spriteName : "Sprite_clef",
+		// 	state: "available",
+		// 	cost: "30",
+		//
+		// },
+		// "Double clé de 5mm":	{
+		// 	spriteName : "Sprite-tool-wrench",
+		// 	state: "available",
+		// 	cost: "30",
+		//
+		// },
 
-	},
-	"Pince":	{
-		spriteName : "sprite_pince",
-		state: "unavailable",
-		cost: "10",
+		"Clé à pédale":	{
+			spriteName : "Sprite_clepedale",
+			state: "available",
+			cost: "30",
 
-	},
-	"Sprite_marteau":	{
-		spriteName : "Sprite_marteau",
-		state: "unavailable",
-		cost: "25",
+		},
 
-	},
-	"Fouet à chaine":	{
-		spriteName : "Sprite_fouet",
-		state: "unavailable",
-		cost: "60",
+		"Clé à cliquet":	{
+			spriteName : "Sprite_cliket",
+			state: "available",
+			cost: "20",
 
-	},
-	"Ensemble de clé":	{
-		spriteName : "sprite_clee6pans",
-		state: "unavailable",
-		cost: "40",
+		},
+		"Pince":	{
+			spriteName : "sprite_pince",
+			state: "unavailable",
+			cost: "10",
 
-	},
-}
+		},
+		"Sprite_marteau":	{
+			spriteName : "Sprite_marteau",
+			state: "unavailable",
+			cost: "25",
 
-// list of initial speed for the repair game
-const speedMin_List = [35,40,60,75]
+		},
+		"Fouet à chaine":	{
+			spriteName : "Sprite_fouet",
+			state: "unavailable",
+			cost: "60",
 
+		},
+		"Ensemble de clé":	{
+			spriteName : "sprite_clee6pans",
+			state: "unavailable",
+			cost: "40",
+
+		},
+	}
+
+	// list of initial speed for the repair game
+	//const speedMin_List = [35,40,60,75]
+
+//end ofscene start
 // --FUNCTIONS-- //
 function addTextOnDialogBox(msg){
 	console.log("In the addTextOnDialogBox function");
@@ -771,7 +724,7 @@ function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,t
 	let textBox = add([
 		sprite("dialogbox"),//, width: width() - 230
 		anchor("center"),
-		pos(center().x,BOTTOM),
+		pos(center().x-8,BOTTOM),
 		"textBox"
 	])
 	//initialization
@@ -783,11 +736,11 @@ function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,t
 	let txt = add([
 		text("", { size:  TXTSIZE,  width: txtWidth }),//, width: width() - 230
 		anchor("center"),
-		pos(center().x,BOTTOM),
+		pos(center().x-8,BOTTOM),
 		color(MYPURPLE),
 	])
 	// Update the on screen sprite & text
-	function updateDialog() {
+	function updateDialog(txtBox) {
 		const [ char, dialog ] = dialogInteraction1[curDialog]
 		console.log(dialog);
 		// Use a new sprite component to replace the old one
@@ -795,10 +748,17 @@ function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,t
 		// Update the dialog text
 		// mettre le texte lettre apres lettre
 		txt.text = dialog
+		txt.pos.x = center().x -8+ (curDialog%2)*15
+		txtBox.pos.x = center().x-8 + (curDialog%2)*15
+		if(curDialog%2==0){
+			txt.color=MYPURPLE
+		}else {
+			txt.color = MYBLUE
+		}
 	}
 	//initialization
 	let curDialog = 0
-	updateDialog()
+	updateDialog(textBox)
 	let dialogAction = onKeyPress("enter", () => {
 		// Cycle through the dialogs
 		curDialog = (curDialog + 1) % dialogInteraction1.length
@@ -937,12 +897,11 @@ function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,t
 			})
 			})
 	}else{
-		updateDialog()
+		updateDialog(textBox)
 	}
 	})
 })
 }
-
 // Status bar
 function addStatusBar(jourIdx,totalCoins,totalStars){
 
@@ -968,7 +927,6 @@ function addStatusBar(jourIdx,totalCoins,totalStars){
 		])
 
 	}
-
 function player_movement(player,speed){
 		// onKeyDown() registers an event that runs every frame as long as user is holding a certain key
 		onKeyDown("left", () => {
@@ -992,7 +950,7 @@ function player_movement(player,speed){
 			player.move(0, speed)
 		})
 	}
-	function launchDialog(interactionDialog,dialogFinished){
+function launchDialog(interactionDialog,dialogFinished){
 
 			// add dialog box
 			let textBox = add([
@@ -1402,43 +1360,11 @@ if(posterFlag==true){
 
 return levelAtelier
 	}
-// ------ Boucle de Gameplay ------- //
-// ------ Start --------------------------------------------------- //
-scene("start", (jourIdx,totalCoins,totalStars) => {
-		let musicDebut = play("page_debut")
-		add_bordure_map()
-		// Titre
-		const title = add([
-			text("Fix it !", { size: LARGETXTSIZE, font:"joystix" ,width:MAP_WIDTH-64}),
-			scale(1),
-			anchor("center"),
-			pos(center().x,center().y-0.6*(MAP_HEIGHT/2))
-		])
 
-		// But
-		const but = add([
-			text("Nouvel atelier de mécanique vélo!\n Attention, cet atelier ne supporte aucune remarques sexiste?! \n Survivra-t'il?",
-			{ size: TXTSIZE+2, font:"prstart" , width:MAP_WIDTH-64}),
-			scale(1),
-			anchor("center"),
-			pos(center().x,center().y-0.2*(MAP_HEIGHT/2))
-		])
-		// Instructions
-		const instructions = add([
-			text("Utilise les touches fléchées et la touche retour pour te déplacer et interagir", { size: TXTSIZE+2, font:"prstart",width:MAP_WIDTH -64}),
-			scale(1),
-			anchor("center"),
-			pos(center().x,center().y+0.2*(MAP_HEIGHT/2))
-		])
-
-		onKeyPress("enter", () => {
-			musicDebut.paused = true
-			go("atelier", jourIdx,totalCoins,totalStars,INITIALPOSITION,clientCounter)
-		})
-	})
 	// ------ Boucle de Gameplay ----  //
 	// ------ Scene d'ouverture ----------------------------------------------- //
 scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=> {
+
 	let music = play("page_debut")
 		add_atelier_map()
 		// collision Box size
@@ -1617,27 +1543,29 @@ if (jourIdx==5){
 							})
 
 						}
+
 						// if there is no client anymore then the game is "finished"
-						if (lLength==0){
-							player.onCollide("clientEntrance", () => {
-								let textBox = add([
-								sprite("dialogbox"),//, width: width() - 230
-								anchor("center"),
-								pos(center().x,BOTTOM),
-								"clientMessage"
-							])
-							let txt = add([
-								text("Les prochains clients\n viendront dans la prochaine démo! \ To be continued...", { size:  TXTSIZE }),//, width: width() - 230
-								anchor("center"),
-								pos(center().x,BOTTOM),
-								color(MYPURPLE),
-								"clientMessage"
-							])
-						})
-						}
+						// if (lLength==0){
+						// 	player.onCollide("clientEntrance", () => {
+						// 		let textBox = add([
+						// 		sprite("dialogbox"),//, width: width() - 230
+						// 		anchor("center"),
+						// 		pos(center().x,BOTTOM),
+						// 		"clientMessage"
+						// 	])
+						// 	let txt = add([
+						// 		text("Les prochains clients\n viendront dans la prochaine démo! \ To be continued...", { size:  TXTSIZE }),//, width: width() - 230
+						// 		anchor("center"),
+						// 		pos(center().x,BOTTOM),
+						// 		color(MYPURPLE),
+						// 		"clientMessage"
+						// 	])
+						// })
+						// }
 					}
 				}
-
+				//if there isn't any client yet, its because the PJ has to do smth
+				affichageOnCollision(player,"clientEntrance","Je pourrais aller faire un tour, il n'y a pas encore de clients")//player,colObjTag,colMsg
 				// PORTAL from atelier to other scenes
 				if (outdoorKey == true){
 				player.onCollide("outsideDoorDroite", () => {
@@ -2849,8 +2777,13 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 	 }else{
 		 //  Choice and correspondant anim have been done next client or end of day carton
 		 // delete previous client
-		 delete clientsList[clientKey]
-
+		 //delete clientsList[clientKey]
+		 clientsList =  Object.keys(clientsList).filter(key => key != clientKey).reduce((acc, key) => {
+        acc[key] = clientsList[key];
+        return acc;
+    }, {});
+		 console.log("The filtered list");
+		 console.log(clientsList);
 		 if (clientCounter == 6){
 
 			 go("Carton_Journalier",clientKey,jourIdx,totalCoins,totalStars, 10,10,1)
@@ -3015,7 +2948,7 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 			// GAMEOVER BURNOUT
 			add([text("Je suis riche mais epuiséex...\nC'est le burnout..",
 				{ size: TXTSIZE,width:TXTWIDTH, font:"joystix"}),scale(1),color(MYPURPLE),anchor("center"),pos(center().x,BOTTOMTEXT)])
-			wait(4,()=>go("Burnout"))
+			wait(2.5,()=>go("Burnout"))
 break;
 			case 5 :
 			// GAMEOVER BANKRUPT
@@ -3081,9 +3014,10 @@ break;
 				["m","Salut! désolée c'est fini pour aujourd'hui, il faut revenir demain..."],
 				["pnj","oui, oui je venais pas pour réparer mon vélo..."],
 				["m","heu ok, tu viens pour quoi alors?"],
-				[" pnj","heu... ha oui! haha pardon. je viens te filer la clée que j'ai oublié de rendre quand j'ai arrêté de bosser ici. je suis un peu tête en l'air des fois."],
+				["pnj","heu... ha oui! haha pardon. je viens te filer la clée que j'ai oublié de rendre quand j'ai arrêté de bosser ici. je suis un peu tête en l'air des fois."],
 				["m","ah! merci"],
-				["pnj","de rien, allé à la proch ciao ciao! heu, la sortie c'est par là hein."]
+				["pnj","de rien, allé à la proch ciao ciao"]
+				 //heu, la sortie c'est par là hein."]
 			]
 
 			// try with function
@@ -3334,11 +3268,11 @@ scene("Burnout", (jourIdx,totalCoins,totalStars) => {
 
 	// Recommencez le jeu
 	add([
-				text("(recharge la page pour recommencer le jeu)", { size: TXTSIZE }),
+				text("(appuie sur espace pour recommencer le jeu)", { size: TXTSIZE }),
 				scale(1),anchor("center"),pos(center().x,BOTTOM+5),])
 
-	onKeyPress(() => {
-				    quit()
+	onKeyPress("space",() => {
+				    go("start")
 				})
 })
 
@@ -3346,7 +3280,7 @@ function start() {
 		// Start with the "game" scene, with initial parameters
 	//go("atelier", 5, 85,0/*totalCoins*/,50,INITIALPOSITION)
 //go("interactionJour1",1,totalCoins,totalStars,INITIALPOSITION)
-go("start",jourIdx,totalCoins,totalStars/*force*/,INITIALPOSITION)
+go("start")
 //go("outside",2,30,30,INITIALPOSITION)
 	//go("interactionJour1", (1,0,40,20,INITIALPOSITION))//go("clientDialog",1,75,100/*totalCoins*/,50/*force*/)
  //justifiedFightCounter=4
