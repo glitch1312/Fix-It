@@ -137,11 +137,14 @@ loadFont("joystix","assets/fonts/joystix.otf")
 let totalCoins = 0
 let totalStars = 0
 let interactionDechetFlag = false // no interaction with dechetterie perso
+let flyerDechetFlag = false
+let helpDechetFlag = false
 let dialogFinished = false
 let veloTag = false // no bikePost yet
 let posterFlag = false
 let flyersFlag = false
 let flyersTaken = false
+let deriveChaineGained = false
 let showClients = true
 let jourIdx = 1 // game starts at day 1
 let clientCounter = 1 // no client interaction at start
@@ -149,9 +152,12 @@ let fightCounter = 0
 let justifiedFightCounter = 0
 let repairCounter = 0
 let fightGoalsList = [4,4,2,2]
-let outdoorKey = true
+let outdoorKey = false
 let coinsAnimValueList = [0] //list for starting bilan journalier
 let starsAnimValueList = [0]
+//audio
+let music = play("page_debut")
+music.paused = true
 
 const BOTTOM = 3/4*256
 const TXTSIZE = 8
@@ -159,7 +165,7 @@ const TXTWIDTH = 150
 const LARGETXTSIZE = 24
 const MEDIUMTXTSIZE = 16
 const PERSOSCALE = 1.4
-const INITIALPOSITION = {x:center().x,y:center().y_40}//position in atelier at start, and at any return from other scenes
+const INITIALPOSITION = {x:center().x+20,y:center().y+40}//position in atelier at start, and at any return from other scenes
 const CLIENTLINEPOSITION =  {x:center().x,y:center().y+30}
 //palette
 const MYPINK = rgb(222, 135,146)
@@ -175,12 +181,12 @@ let INITIALCLIENTSLIST = {
 		 spriteName:"client_1_petit",
 		 bigSpriteName:"client_1_grand",
 		 dialogs:[
-			 [ "client_1_grand", "Bonjour" ],
+			 [ "client_1_grand", "Bonjour!" ],
 			 [ "mecanix_en_pied", "Bonjour, comment je peux vous aider ?"],
-			 [ "client_1_grand", "Je dois changer les cables des freins." ],
-			 [ "mecanix_en_pied", "d'accords, vous voulez me donner votre vélo?" ],
-			 [ "client_1_grand", "je le donnerai quand le mécano aura le temps de s'en occuper direct, j'en ai besoin, vous me donner le rendez-vous?" ],
-			 [ "mecanix_en_pied", "mais c'est moi la mécano..." ],
+			 [ "client_1_grand", "Je dois changer les câbles des freins." ],
+			 [ "mecanix_en_pied", "D'accord, vous voulez me donner votre vélo?" ],
+			 [ "client_1_grand", "Je le donnerai quand le mécano aura le temps de s'en occuper direct, j'en ai besoin, vous me donner le rendez-vous?" ],
+			 [ "mecanix_en_pied", "Mais c'est moi la mécano..." ],
 		 ],
 		 isSexist: true,
  },
@@ -188,11 +194,12 @@ let INITIALCLIENTSLIST = {
 		 spriteName:"client_2_petit",
 		 bigSpriteName:"client_2_grand",
 		 dialogs:[
-			 [ "client_2_grand", "Salut, j'ai un problème avec mon vélo" ],
-			 [ "mecanix_en_pied", "Okay!\n Je vois que ta roue est voilée"],
-			 [ "client_2_grand", "Non je pense plutôt que c'est un truc au niveau de la chaine" ],
-			 [ "mecanix_en_pied", "C'est sur que ta roue est voilée. Elle touche le frein de façon irregulière." ],
-			 [ "client_2_grand", "Attends, je vais te montrer, quand on fait tourner le pédalier, ça entraine la chaine tu vois ?"]
+			 [ "client_2_grand", "Salut, y'a quelque chose qui va pas avec mon vélo." ],
+			 [ "mecanix_en_pied", "Okay! Je vois que ta roue est voilée."],
+			 [ "client_2_grand", "Non je pense plutôt que c'est un truc au niveau de la chaine." ],
+			 [ "mecanix_en_pied", "C'est sûr que ta roue est voilée. Elle touche le frein de façon irregulière." ],
+			 [ "client_2_grand", "Attends, je vais te montrer, quand on fait tourner les pédales, ça fais tourner la chaîne tu vois?"],
+			 [ "mecanix_en_pied", "Oui, je comprends assez bien la mécanique..." ],
 		 ],
 		 isSexist: true,
 
@@ -202,10 +209,10 @@ let INITIALCLIENTSLIST = {
 		 bigSpriteName:"client_3_grand",
 		 dialogs:[
 			 [ "mecanix_en_pied", "Bonjour, dites-moi tout!" ],
-			 [ "client_3_grand", "Je veux changer les plaquettes des mes freins à disques"],
+			 [ "client_3_grand", "Je veux changer les plaquettes des mes freins à disques."],
 			 [ "mecanix_en_pied", "Bonne idée, elles sont usées?" ],
-			 [ "client_3_grand", "Nan mais ça couine...alors j'aimerais bien les changer" ],
-			 [ "mecanix_en_pied", "D'accord! On peut aussi essayer de nettoyer le tout d'abord"]
+			 [ "client_3_grand", "Nan mais ça couine...alors j'aimerais bien les changer." ],
+			 [ "mecanix_en_pied", "D'accord, je te propose quand même d'essayer de les nettoyer d'abord."]
 		 ],
 		 isSexist: false,
 
@@ -214,12 +221,13 @@ let INITIALCLIENTSLIST = {
 		 spriteName:"client_4_petit",
 		 bigSpriteName:"client_4_grand",
 		 dialogs:[
-			 [ "mecanix_en_pied", "Salut, qu'est-ce qui se passe?" ],
-			 [ "client_4_grand", "Je cherche le patron, j'ai un problème avec mon vélo"],
-			 [ "mecanix_en_pied", "Je peux vous répondre,dites-moi tout! " ],
+			 [ "mecanix_en_pied", "Salut, qu'est-ce qu'il se passe?" ],
+			 [ "client_4_grand", "Je cherche le patron, j'ai un problème avec mon vélo."],
+			 [ "mecanix_en_pied", "Je peux vous répondre, dites-moi tout!" ],
 			 [ "client_4_grand", "Ah, vous êtes mécanicienne?" ],
-			 [ "mecanix_en_pied", "oui"],
+			 [ "mecanix_en_pied", "Oui."],
 			 [ "client_4_grand", "C'est surprenant! Bravo!" ],
+			 [ "mecanix_en_pied", "Merci..."],
 		 ],
 		 isSexist: true,
 
@@ -228,9 +236,9 @@ let INITIALCLIENTSLIST = {
 		 spriteName:"client_5_petit",
 		 bigSpriteName:"client_5_grand",
 		 dialogs:[
-			 [ "client_5_grand", "Bonjour, est ce que c'est possible de changer mon pneu ?"],
-			 [ "mecanix_en_pied", "heu oui, mais je sais pas trop les réf parce que c'est pas comme les vélos" ],
-			 [ "client_5_grand", "aucun soucis, j'ai pris du matos avec et j'ai une roue de rechange, je vais t'expliquer..." ],
+			 [ "client_5_grand", "Bonjour, est-ce que c'est possible de changer mon pneu?"],
+			 [ "mecanix_en_pied", "Heu oui, mais je sais pas trop les réf parce que c'est pas comme les vélos." ],
+			 [ "client_5_grand", "Aucun soucis, j'ai pris du matos avec et j'ai une roue de rechange, je vais t'expliquer..." ],
 		 ],
 		 isSexist: false,
 
@@ -239,8 +247,8 @@ let INITIALCLIENTSLIST = {
 		 spriteName:"client_6_petit",
 		 bigSpriteName:"client_6_grand",
 		 dialogs:[
-			 [ "client_6_grand", "Bonjour Comment ça va aujourd'hui ? Je vous amène mon vélo pour un check général de printemps héhé..."],
-			 [ "mecanix_en_pied", "Bonjour, Biensur je peux m'en occuper vous voulez me le donner?" ],
+			 [ "client_6_grand", "Bonjour, comment ça va aujourd'hui? Je vous amène mon vélo pour un check général de printemps héhé..."],
+			 [ "mecanix_en_pied", "Bonjour, parfait je peux m'en occuper vous voulez me le donner?" ],
 			 [ "client_6_grand", "Attendez je vais vous le porter il est un peu lourd..." ],
 		 ],
 		 isSexist: true,
@@ -250,10 +258,10 @@ let INITIALCLIENTSLIST = {
 		 spriteName:"client_7_petit",
 		 bigSpriteName:"client_7_grand",
 		 dialogs:[
-			 [ "mecanix_en_pied", "Bonjour" ],
+			 [ "mecanix_en_pied", "Bonjour." ],
 			 [ "client_7_grand", "J'aurais besoin d'un petit service, vous pourriez faire ca?"],
-			 [ "mecanix_en_pied", "Oui, bien sûr" ],
-			 [ "client_7_grand", "Parfait" ],
+			 [ "mecanix_en_pied", "Oui, bien sûr." ],
+			 [ "client_7_grand", "Parfait!" ],
 		 ],
 		 isSexist: false,
 
@@ -263,8 +271,9 @@ let INITIALCLIENTSLIST = {
 		 bigSpriteName:"client_8_grand",
 		 dialogs:[
 			 [ "client_8_grand", "Salut, il est où le mecano?"],
-			 [ "mecanix_en_pied", "C'est moi..." ],
-			 [ "client_8_grand", "ah. tu sais changer la guidoline?" ],
+			 [ "mecanix_en_pied", "C'est moi." ],
+			 [ "client_8_grand", "Ah. Tu sais changer la guidoline?" ],
+			  [ "mecanix_en_pied", "Oui oui..." ],
 		 ],
 		 isSexist: true,
 
@@ -273,12 +282,12 @@ let INITIALCLIENTSLIST = {
 		 spriteName:"client_9_petit",
 		 bigSpriteName:"client_9_grand",
 		 dialogs:[
-			 [ "client_9_grand", " Salut beauté, ça va ?"],
-			 [ "mecanix_en_pied", "mouais, il a quoi ton vélo?" ],
-			 [ "mecanix_en_pied", "je vois déjà que ton guidon est désaxé..." ],
-			 [ "client_9_grand", "ha ok. ça fait longtemps que tu travailles ici ?" ],
-			 [ "mecanix_en_pied", "c'est mon premier jour." ],
-			 [ "client_9_grand",  "tu finis à quelle heure je t'offre un verre !" ],
+			 [ "client_9_grand", "Salut beauté, ça va?"],
+			 [ "mecanix_en_pied", "Mouais... il a quoi ton vélo? Je vois déjà que ton guidon est désaxé." ],
+			 [ "client_9_grand", "Ha ok. Ça fait longtemps que tu travailles ici?" ],
+			 [ "mecanix_en_pied", "C'est mon deuxième jour." ],
+			 [ "client_9_grand",  "Tu finis à quelle heure je t'offre un verre!" ],
+			 [ "mecanix_en_pied", "..." ],
 		 ],
 		 isSexist: true,
 
@@ -287,23 +296,23 @@ let INITIALCLIENTSLIST = {
 		 spriteName:"client_10_petit",
 		 bigSpriteName:"client_10_grand",
 		 dialogs:[
-			 [ "mecanix_en_pied", "Bonjour" ],
-			 [ "client_10_grand", "Bonjour! j'ai cassé mon dérailleurs"],
-			 [ "mecanix_en_pied", "Dac, on peut le remplacer avec de l'occasion ou en commander un" ],
-			 [ "client_10_grand", "D'occas si possible ça serait parfait" ],
+			 [ "mecanix_en_pied", "Bonjour!" ],
+			 [ "client_10_grand", "Bonjour! J'ai cassé mon dérailleur."],
+			 [ "mecanix_en_pied", "Dac, on peut le remplacer avec de l'occasion ou en commander un." ],
+			 [ "client_10_grand", "D'occas si possible, ça serait parfait." ],
 		 ],
 		 isSexist: false,
 
  },
  "client11":{
-		 spriteName:"client_6_petit",
-		 bigSpriteName:"client_6_grand",
+		 spriteName:"client_11_petit",
+		 bigSpriteName:"client_11_grand",
 		 dialogs:[
 			 [ "mecanix_en_pied", "Salut, qu'est-ce qui se passe?" ],
-			 [ "client_6_grand", " Salut, mon vélo freine plus"],
-			 [ "mecanix_en_pied", "oké je vais checker ça" ],
-			 [ "client_6_grand", "Est ce que stan est là ? je préfère que ça soit lui qui le fasse" ],
-			 [ "mecanix_en_pied", "il est pas là..."],
+			 [ "client_11_grand", "Salut, mon vélo freine plus."],
+			 [ "mecanix_en_pied", "Oké je vais checker ça." ],
+			 [ "client_11_grand", "Est ce que stan est là? Je préfère que ça soit lui qui le fasse." ],
+			 [ "mecanix_en_pied", "Il est pas là..."],
 		 ],
 		 isSexist: true,
 
@@ -312,11 +321,11 @@ let INITIALCLIENTSLIST = {
 		 spriteName:"client_12_petit",
 		 bigSpriteName:"client_12_grand",
 				 dialogs:[
-			 [ "client_12_grand", "Hello"],
-			 [ "mecanix_en_pied", "Salut" ],
-			 [ "client_12_grand", "ça fait plaisir de voir une femme ici" ],
-			 [ "mecanix_en_pied", "Yessay.. et donc ce vélo ?" ],
-			 [ "client_12_grand", "Voilà. Hé pis vous êtes quand même plus jolie avec le sourire !" ],
+			 [ "client_12_grand", "Hello."],
+			 [ "mecanix_en_pied", "Salut." ],
+			 [ "client_12_grand", "Ça fait plaisir de voir une femme ici!" ],
+			 [ "mecanix_en_pied", "Yessay... et donc ce vélo?" ],
+			 [ "client_12_grand", "Le voilà. Hé pis vous êtes quand même plus jolie avec le sourire!" ],
 		 ],
 		 isSexist: true,
  },
@@ -324,19 +333,19 @@ let INITIALCLIENTSLIST = {
 		 spriteName:"client_13_petit",
 		 bigSpriteName:"client_13_grand",
 		 dialogs:[
-			 [ "client_13_grand", "Bonjour bonjour! j'aimerais changer de selle, celle-ci a un trou.."],
+			 [ "client_13_grand", "Bonjour. Vous vendez des selles? Celle-ci a un trou..."],
 			 [ "mecanix_en_pied", "Bonjour, oui ok, j'en ai pas en stock mais je peux en commander une si vous voulez?" ],
-			 [ "client_13_grand", "Ouais... hé ben on dirait que le lobby lgbt est venu refaire votre déco là" ],
+			 [ "client_13_grand", "Ouais bof... Hé pis ben on dirait que le lobby LGBTQIA+ est venu refaire votre déco là." ],
 		 ],
-		 isSexist: false,
+		 isSexist: true,
  },
  "client14":{
 		 spriteName:"client_14_petit",
 		 bigSpriteName:"client_14_grand",
 		 dialogs:[
-			 [ "client_14_grand", "Bonjour! j'ai cassé un rayon sur ma roue avant.."],
-			 [ "mecanix_en_pied", "Okay, je vais le changer et dévoiler la roue s'il-y-a besoin" ],
-			 [ "client_14_grand", "Okay mais j'espère que ce sera pas aussi cher que la dernière fois" ],
+			 [ "client_14_grand", "Bonjour! J'ai cassé un rayon sur ma roue avant..."],
+			 [ "mecanix_en_pied", "Okay, je vais le changer et dévoiler la roue s'il-y-a besoin." ],
+			 [ "client_14_grand", "Okay mais j'espère que ce sera pas aussi cher que la dernière fois!" ],
 		 ],
 		 isSexist: false,
  },
@@ -344,12 +353,12 @@ let INITIALCLIENTSLIST = {
 		 spriteName:"client_15_petit",
 		 bigSpriteName:"client_15_grand",
 		 dialogs:[
-			 [ "mecanix_en_pied", "Bonjour" ],
-			 [ "client_15_grand", "Hello, c'est possible de réparer mon vélo"],
+			 [ "mecanix_en_pied", "Bonjour bonjour!" ],
+			 [ "client_15_grand", "Hello, c'est possible de réparer mon vélo?"],
 			 [ "mecanix_en_pied", "Oui bien sûr, il a quoi?" ],
-			 [ "client_15_grand", "Je sais pas, il est tout foutu il faut le réparer" ],
-			 [ "mecanix_en_pied", "Okay je vais regarder" ],
-			 [ "client_15_grand", "Merci, mais il est vraiment vieux et en mauvais état " ],
+			 [ "client_15_grand", "Je sais pas, il est tout foutu il faut le réparer." ],
+			 [ "mecanix_en_pied", "Okay je vais regarder." ],
+			 [ "client_15_grand", "Merci, mais il est vraiment vieux et en mauvais état..." ],
 			 [ "mecanix_en_pied", "Pas de soucis, tu me le passes?r" ],
 			 [ "client_15_grand", "Oui." ],
 		 ],
@@ -359,10 +368,11 @@ let INITIALCLIENTSLIST = {
 		 spriteName:"client_16_petit",
 		 bigSpriteName:"client_16_grand",
 		 dialogs:[
-			 [ "mecanix_en_pied", "Salut" ],
-			 [ "client_16_grand", "Salut! il y a un truc qui marche pas bien avec mon vélo"],
-			 [ "mecanix_en_pied", "Tu veux m'expliquer plus en détail?" ],
+			 [ "mecanix_en_pied", "Salut." ],
+			 [ "client_16_grand", "Salut! Il y a un truc qui marche pas bien avec mon vélo"],
+			 [ "mecanix_en_pied", "Tu veux m'expliquer plus en détails?" ],
 			 [ "client_16_grand", "Oui, quand je roule surtout à la montée il se passe des trucs bizarres avec les vitesses..." ],
+			 [ "mecanix_en_pied", "C'est sûrement la chaine, je peux m'en charger." ],
 		 ],
 		 isSexist: false,
  },
@@ -370,10 +380,10 @@ let INITIALCLIENTSLIST = {
 		 spriteName:"client_17_petit",
 		 bigSpriteName:"client_17_grand",
 				 dialogs:[
-			 [ "client_17_grand", "Hello"],
-			 [ "mecanix_en_pied", "Salut" ],
-			 [ "client_17_grand", "ça fait plaisir de voir une femme ici mais il parait qu'il y'a des moments ou c'est pas ouvert à tous le monde... c'est un peu limite quand même" ],
-			 [ "mecanix_en_pied", "Je pense que c'est nécessaire, et puis c'est un pratique qui date maintenant et qui se fait pour différents groupes" ],
+			 [ "client_17_grand", "Hello."],
+			 [ "mecanix_en_pied", "Salut!" ],
+			 [ "client_17_grand", "Ça fait plaisir de voir une femme ici mais il parait qu'il y'a des moments ou c'est pas ouvert à tous le monde... c'est un peu limite quand même." ],
+			 [ "mecanix_en_pied", "Je pense que c'est nécessaire, et puis se réunir entre personnes qui vivent des trucs similaires c'est une pratique qui se fait depuis longtemps." ],
 			 [ "client_17_grand", "Ah bon... je pensais que c'était une nouvelle mode..." ],
 		 ],
 		 isSexist: true,
@@ -382,21 +392,21 @@ let INITIALCLIENTSLIST = {
 	 spriteName:"client_18_petit",
 	 bigSpriteName:"client_18_grand",
 	 dialogs :[
-		 ["client_18_grand","Salut! merci pour le tournevis ça m'a bien aidé"],
-		 ["mecanix_en_pied","Hey, pas de soucis! merci de le ramener surtout!  ça a marché comme tu voulais?"],
-		 ["client_18_grand","J'ai réussi à faire certains trucs, mais y'a des choses qui sont trop compliqués je crois, ça me ferait plaisir d'apprendre à l'occas mais je suis pas toujours à l'aise avec les trucs manuels... tu voudrais bien jeter un oeil ?"],
+		 ["client_18_grand","Salut! Merci pour le tournevis ça m'a bien aidé."],
+		 ["mecanix_en_pied","Hey, pas de soucis! Merci de le ramener surtout! Ça a marché comme tu voulais?"],
+		 ["client_18_grand","J'ai réussi à faire certains trucs, mais y'a des choses qui sont trop compliquées je crois, ça me ferait plaisir d'apprendre à l'occas mais je suis pas toujours à l'aise avec les trucs manuels... tu voudrais bien jeter un oeil ?"],
 	 ]
 	 ,
-	 isSexist: true,
+	 isSexist: false,
  },
  "client19":{
 		 spriteName:"client_19_petit",
 		 bigSpriteName:"client_19_grand",
 		 dialogs:[
 			 [ "mecanix_en_pied", "Hello!" ],
-			 [ "client_19_grand", "Salut, je viens changer mes pédales "],
-			 [ "mecanix_en_pied", "Yes, ça marche" ],
-			 [ "client_19_grand", "Et je voulais dire aussi, avec mes potes on va venir les enlever vos affiches arc-en-ciel si vous les laisser" ],
+			 [ "client_19_grand", "Salut, je viens changer mes pédales."],
+			 [ "mecanix_en_pied", "Yes, ça marche." ],
+			 [ "client_19_grand", "Et je voulais dire aussi, avec mes potes on va venir les enlever vos affiches arc-en-ciel si vous les laisser." ],
 			 [ "mecanix_en_pied", "..." ],
 			 [ "client_19_grand", "..." ],
 		 ],
@@ -408,11 +418,11 @@ let INITIALCLIENTSLIST = {
 			 dialogs:[
 				 [ "mecanix_en_pied", "Salut" ],
 				 [ "client_20_grand", "Bonjour Madame!" ],
-				 [ "mecanix_en_pied", "Euh... je préfère que vous disiez pas Madame" ],
-				 [ "client_20_grand", "Rohlalala...on peut plus rien dire" ],
-				 [ "mecanix_en_pied", "C'est juste que vous ne me connaissez pas et en plus monsieur, madame c'est très binaire" ],
+				 [ "mecanix_en_pied", "Euh... je préfère que vous disiez pas Madame." ],
+				 [ "client_20_grand", "Rohlalala...on peut plus rien dire." ],
+				 [ "mecanix_en_pied", "C'est juste que vous ne me connaissez pas et en plus monsieur, madame c'est très binaire." ],
 				 [ "client_20_grand", "Oui bon vous êtes pas un Monsieur nan plus.." ],
-				 [ "mecanix_en_pied", "Peut-être bien que si.." ],
+				 [ "mecanix_en_pied", "Peut-être que je suis ni l'un ni l'autre..." ],
 			 ],
 		 isSexist: true,
  },
@@ -424,9 +434,9 @@ let INITIALCLIENTSLIST = {
 			 [ "client_21_grand", "Coucou, dis j'ai un projet avec un cadre que j'ai récupéré, j'aimerais le repeindre."],
 			 [ "client_21_grand", "C'est possible de le faire ici?"],
 			 [ "mecanix_en_pied", "C'est pas l'idéal en vrai je fais pas trop de peinture" ],
-			 [ "client_21_grand", "Ha yut... bon et meuler des pièces, c'est possible?" ],
+			 [ "client_21_grand", "Ha zut... bon et meuler des pièces, c'est possible?" ],
 			 [ "mecanix_en_pied", "Oui à fond!" ],
-			 [ "client_21_grand", "Trop bien !" ],
+			 [ "client_21_grand", "Trop bien!" ],
 		 ],
 		 isSexist: false,
  },
@@ -438,9 +448,9 @@ let INITIALCLIENTSLIST = {
 			 [ "client_22_grand", "Coucou, dis j'ai un projet avec un cadre que j'ai récupéré, j'aimerais le repeindre."],
 			 [ "client_22_grand", "C'est possible de le faire ici?"],
 			 [ "mecanix_en_pied", "C'est pas l'idéal en vrai je fais pas trop de peinture" ],
-			 [ "client_22_grand", "Ha yut... bon et meuler des pièces, c'est possible?" ],
+			 [ "client_22_grand", "Ha zut... bon et meuler des pièces, c'est possible?" ],
 			 [ "mecanix_en_pied", "Oui à fond!" ],
-			 [ "client_22_grand", "Trop bien !" ],
+			 [ "client_22_grand", "Trop bien!" ],
 		 ],
 		 isSexist: false,
  },
@@ -452,9 +462,9 @@ let INITIALCLIENTSLIST = {
 			 [ "client_23_grand", "Coucou, dis j'ai un projet avec un cadre que j'ai récupéré, j'aimerais le repeindre."],
 			 [ "client_23_grand", "C'est possible de le faire ici?"],
 			 [ "mecanix_en_pied", "C'est pas l'idéal en vrai je fais pas trop de peinture" ],
-			 [ "client_23_grand", "Ha yut... bon et meuler des pièces, c'est possible?" ],
+			 [ "client_23_grand", "Ha zut... bon et meuler des pièces, c'est possible?" ],
 			 [ "mecanix_en_pied", "Oui à fond!" ],
-			 [ "client_23_grand", "Trop bien !" ],
+			 [ "client_23_grand", "Trop bien!" ],
 		 ],
 		 isSexist: false,
  },
@@ -466,9 +476,9 @@ let INITIALCLIENTSLIST = {
 			 [ "client_24_grand", "Coucou, dis j'ai un projet avec un cadre que j'ai récupéré, j'aimerais le repeindre."],
 			 [ "client_24_grand", "C'est possible de le faire ici?"],
 			 [ "mecanix_en_pied", "C'est pas l'idéal en vrai je fais pas trop de peinture" ],
-			 [ "client_24_grand", "Ha yut... bon et meuler des pièces, c'est possible?" ],
+			 [ "client_24_grand", "Ha zut... bon et meuler des pièces, c'est possible?" ],
 			 [ "mecanix_en_pied", "Oui à fond!" ],
-			 [ "client_24_grand", "Trop bien !" ],
+			 [ "client_24_grand", "Trop bien!" ],
 		 ],
 		 isSexist: false,
  },
@@ -481,6 +491,8 @@ scene("start",() => {
 	 totalCoins = 0
 	 totalStars = 0
 	 interactionDechetFlag = false // no interaction with dechetterie perso
+	 flyerDechetFlag = false
+	 helpDechetFlag = false
 	 dialogFinished = false
 	 veloTag = false // no bikePost yet
 	 posterFlag = false
@@ -493,12 +505,12 @@ scene("start",() => {
 	 justifiedFightCounter = 0
 	 repairCounter = 0
 	 fightGoalsList = [4,4,2,2]
-	 outdoorKey = true
+	 outdoorKey = false
 	 coinsAnimValueList = [0] //list for starting bilan journalier
 	 starsAnimValueList = [0]
 	 clientsList = INITIALCLIENTSLIST
 
-		let musicDebut = play("page_debut")
+
 		add_bordure_map()
 		// Titre
 		const title = add([
@@ -524,7 +536,7 @@ scene("start",() => {
 		])
 		// lancer le jeu
 		onKeyPress("enter", () => {
-			musicDebut.paused = true
+
 			console.log(clientsList);
 			go("atelier", jourIdx,totalCoins,totalStars,INITIALPOSITION,clientCounter)
 		})
@@ -541,7 +553,7 @@ scene("start",() => {
 		},
 		"Dérive-chaine":	{
 			spriteName : "sprite_demontechaine",
-			state: "owned",
+			state: "available",
 			cost: "25",
 
 		},
@@ -874,6 +886,7 @@ function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,t
     				area(),
 						fadeIn(1.2),
 						opacity(1),
+						music.paused = true
 					])
 					wait(0.8,()=>{
 						add([
@@ -950,7 +963,7 @@ function player_movement(player,speed){
 			player.move(0, speed)
 		})
 	}
-function launchDialog(interactionDialog,dialogFinished){
+function launchDialog(interactionDialog){
 
 			// add dialog box
 			let textBox = add([
@@ -975,6 +988,14 @@ function launchDialog(interactionDialog,dialogFinished){
 			function updateDialog() {
 			const [ char, dialog ] = interactionDialog[curDialog]
 			txt.text = dialog
+			// indicate who is talking
+			txt.pos.x = center().x+6 -(curDialog%2)*15
+			textBox.pos.x = center().x+6 - (curDialog%2)*15
+			if(curDialog%2==0){
+				txt.color= MYPINK
+			}else {
+				txt.color = MYBLUE
+			}
 			}
 			//initialization with first sentence text
 			updateDialog()
@@ -987,9 +1008,36 @@ function launchDialog(interactionDialog,dialogFinished){
 			dialogAction.paused = true
 			destroy(textBox)
 			destroy(txt)
+			console.log(jourIdx);
+			//console.log(interactionDechetFlag);
 			// flog of the dialog is modified is open now
-			dialogFinished = true
-			console.log("dialogFinished is "+dialogFinished);
+			if (jourIdx==2 && interactionDechetFlag==false){
+				interactionDechetFlag = true
+			// day two : bike posts gained at the dechetterie
+					play("audio_reussite") //indicate that an object has been gained
+					add([
+						sprite("velo_sur_pied"),
+						scale(1),
+						area(),
+						pos(center().x+3*16-8,MAP_HEIGHT/2-5*16),//close to perso dechet position
+						anchor("center"),
+						outline(4),
+						move(UP,100),
+					])
+					// add in the inventory
+					inventory["Stand pour vélo #1"].state = "owned"
+					inventory["Stand pour vélo #2"].state = "owned"
+
+			showClients = true// now clients will show up
+			veloTag =true // now you have the bikePost
+			}
+			if (jourIdx==4 && flyerDechetFlag == false){
+				flyerDechetFlag = true
+				play("audio_reussite") //indicate that an action has been successfully executed
+			}
+			if (jourIdx==5 && helpDechetFlag == false){
+				helpDechetFlag = true
+			}
 			}else{
 			updateDialog()
 		}
@@ -1357,16 +1405,133 @@ if(posterFlag==true){
 			])
 		}
 
-
+		// DAY 5
+		if (jourIdx==5){
+			// add armoire cassee
+			console.log("in the armoire kc")
+			let armoireKc = add([
+				sprite("atelier_armoire_kc"),
+				area(),
+				body({isStatic:true}),
+				anchor("center"),
+				pos(center().x-(4*16),3.5*16),
+				"armoireKc"
+			])
+			// replace pied de velo with broken ones
+				destroyAll("pied_velos")
+				const velo_sur_pied_1_kc = add([
+					sprite("atelier_velo_sur_pied_kc"),
+					scale(1),
+					anchor("center"),
+					pos(center().x-(6*16),8*16),
+					area({ shape: new Polygon([vec2(-12,15),vec2(-12,-7), vec2(12,-7),vec2(12,15)]) }),
+					body({isStatic:true}),
+					"pied_velos_kc"
+				])
+				const velo_sur_pied_2_kc = add([
+					sprite("atelier_velo_sur_pied_kc"),
+					scale(1),
+					anchor("center"),
+					pos(center().x+2*16,MAP_HEIGHT-2*16),
+					area({ shape: new Polygon([vec2(-12,15),vec2(-12,-7), vec2(12,-7),vec2(12,15)]) }),
+					body({isStatic:true}),
+					"pied_velos_kc"
+				])
+		}
 return levelAtelier
 	}
+function add_atelier_collisions(player){
+	// add collision// add velo sur provided Collision
+	if (veloTag==true){
+			player.onCollide("pied_velos",()=>{
+			let textBox = add([
+			sprite("dialogbox"),//, width: width() - 230
+			anchor("center"),
+			pos(center().x,BOTTOM),
+		])
+		let txt = add([
+			text("Incroyable! Quelles trouvailles on fait a la dechet!", { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
+			anchor("center"),
+			pos(center().x,BOTTOM),
+			color(MYPURPLE),
+		])
+		onKeyPress(()=>{
+			destroy(txt),
+			destroy(textBox)
+		})
+		})}
+	// add poster collision
+	if(posterFlag==true){
+		player.onCollide("affiche", () => {
+			let textBox = add([
+				sprite("atelier_poster_grand"),//, width: width() - 230
+				// 	text("Complète ton inventaire pour\n un TURFU RADIEUX!", { size:  TXTSIZE }),//, width: width() - 230
+				anchor("center"),
+				pos(center().x,center().y-10),
+				"afficheMessage"
+			])
+			onKeyPress(()=>{destroyAll("afficheMessage")})
+		})	}
+		//check for first collision with poster
+	let firstCollisionDone = false
+	// add flyers collision
+	if(flyersFlag==true){
+			player.onCollide("flyers", () => {
+			let poster2 = add([
+					sprite("atelier_poster2_grand"),//, width: width() - 230
+					// 	text("Complète ton inventaire pour\n un TURFU RADIEUX!", { size:  TXTSIZE }),//, width: width() - 230
+					anchor("center"),
+					pos(center().x,center().y-10),
+					"afficheMessage2"
+					])
+		if(firstCollisionDone){
+				console.log("in the first collision done");
 
+					let distributeInstruction = add([
+						text("(appuie sur espace pour prendre les flyers avec toi) ", {font: "prstart", size:TXTSIZE, width:TXTWIDTH}),
+						anchor("center"),
+						color(MYPURPLE),
+						pos(center().x+16, MAP_HEIGHT/2+3*16),
+						"distributeInstruction"
+						])
+					onKeyPress("space",()=>{
+						destroyAll("distributeInstruction")
+						destroyAll("flyers")
+						pensee.paused = true
+						play("audio_reussite")
+						flyersTaken = true
+						flyersFlag = false //no more flyers on the table for the rest of the game
+						})
+				}
+			onKeyPress(()=>{
+					destroyAll("afficheMessage2")
+					destroyAll("distributeInstruction")
+				})
+			})
+			let pensee = player.onCollideEnd("flyers", () => {
+				addTextOnDialogBox("Mmmh.. je m'étais dit que je les distribuerai, peut-être que je devrais faire ca avant que les clients arrivent.")
+				firstCollisionDone = true
+				})
+		}
+	// collision
+	if (jourIdx==5){
+	affichageOnCollision(player,"armoireKc","Oh mince...La porte de l'armoire est toute défoncée. Quel zbeul...")
+	affichageOnCollision(player,"pied_velos_kc","Argh mes jolis stands... Je vais avoir besoin d'aide.")
+	}
+
+	player.onCollide("etabli", () => {
+		let saved_position = player.pos
+		// This collision shows the state of the inventory.
+		go("inventaire", jourIdx, totalCoins, totalStars,saved_position,clientCounter)
+	})
+	}
 	// ------ Boucle de Gameplay ----  //
 	// ------ Scene d'ouverture ----------------------------------------------- //
 scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=> {
 
-	let music = play("page_debut")
+		if(clientCounter == 1){music.paused = false}
 		add_atelier_map()
+
 		// collision Box size
 		const colBox = 5
 		const player = add([
@@ -1382,116 +1547,13 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 			scale(PERSOSCALE),
 			"player"
 			])
-			// animate the player
+		// animate the player
 		//player.play("walk_right")
 		//player.flipX = true
 		const SPEED = 80;
 		player_movement(player,SPEED)
+		add_atelier_collisions(player)
 
-		// add collision// add velo sur provided Collision
-		if (veloTag==true){
-				player.onCollide("pied_velos",()=>{
-				let textBox = add([
-				sprite("dialogbox"),//, width: width() - 230
-				anchor("center"),
-				pos(center().x,BOTTOM),
-			])
-			let txt = add([
-				text("Incroyable! Quelles trouvailles on fait a la dechet!", { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
-				anchor("center"),
-				pos(center().x,BOTTOM),
-				color(MYPURPLE),
-			])
-			onKeyPress(()=>{
-				destroy(txt),
-				destroy(textBox)
-			})
-			})}
-		// add poster collision
-		if(posterFlag==true){
-			player.onCollide("affiche", () => {
-				let textBox = add([
-					sprite("atelier_poster_grand"),//, width: width() - 230
-					// 	text("Complète ton inventaire pour\n un TURFU RADIEUX!", { size:  TXTSIZE }),//, width: width() - 230
-					anchor("center"),
-					pos(center().x,center().y-10),
-					"afficheMessage"
-				])
-				onKeyPress(()=>{destroyAll("afficheMessage")})
-			})	}
-			//check for first collision with poster
-			let firstCollisionDone = false
-			// add flyers collision
-			if(flyersFlag==true){
-				player.onCollide("flyers", () => {
-				let poster2 = add([
-						sprite("atelier_poster2_grand"),//, width: width() - 230
-						// 	text("Complète ton inventaire pour\n un TURFU RADIEUX!", { size:  TXTSIZE }),//, width: width() - 230
-						anchor("center"),
-						pos(center().x,center().y-10),
-						"afficheMessage2"
-						])
-			if(firstCollisionDone){
-					console.log("in the first collision done");
-
-						let distributeInstruction = add([
-							text("(appuie sur espace pour prendre les flyers avec toi) ", {font: "prstart", size:TXTSIZE, width:TXTWIDTH}),
-							anchor("center"),
-							color(MYPURPLE),
-							pos(center().x+16, MAP_HEIGHT/2+3*16),
-							"distributeInstruction"
-							])
-						onKeyPress("space",()=>{
-							destroyAll("distributeInstruction")
-							destroyAll("flyers")
-							pensee.paused = true
-							play("audio_reussite")
-							flyersTaken = true
-							flyersFlag = false //no more flyers on the table for the rest of the game
-							})
-					}
-				onKeyPress(()=>{
-						destroyAll("afficheMessage2")
-					  destroyAll("distributeInstruction")
-					})
-				})
-				let pensee = player.onCollideEnd("flyers", () => {
-	  			addTextOnDialogBox("Mmmh.. je m'étais dit que je les distribuerai, peut-être que je devrais faire ca avant que les clients arrivent.")
-					firstCollisionDone = true
-					})
-			}
-//DAY 5
-// add armoire cassee
-if (jourIdx==5){
-	console.log("in the armoire kc")
-	let armoireKc = add([
-		sprite("atelier_armoire_kc"),
-		anchor("center"),
-		pos(center().x-(4*16),3.5*16)
-	])
-}
-	// replace pied de velo with broken ones
-if (jourIdx==5){
-	destroyAll("velo_sur_pied")
-	const velo_sur_pied_1_kc = add([
-		sprite("atelier_velo_sur_pied_kc"),
-		scale(1),
-		anchor("center"),
-		pos(center().x-(6*16),8*16),
-		area(),
-		body({isStatic:true}),
-		"pied_velos_kc"
-	])
-	const velo_sur_pied_2_kc = add([
-		sprite("atelier_velo_sur_pied_kc"),
-		scale(1),
-		anchor("center"),
-		pos(center().x+2*16,MAP_HEIGHT-2*16),
-		area(),
-		body({isStatic:true}),
-		"pied_velos_kc"
-	])
-}
 				//status
 				addStatusBar(jourIdx,totalCoins,totalStars)
 				// add the mecanix// Add player game object
@@ -1538,7 +1600,7 @@ if (jourIdx==5){
 							player.onCollide(Object.keys(clientsList)[i]/*client key*/, () => {
 								//play("portal")
 								// If there's a next level, origin() to the same scene but load the next level
-								music.paused = true
+
 								go("clientDialog",Object.keys(clientsList)[i], jourIdx, totalCoins,totalStars)
 							})
 
@@ -1565,7 +1627,9 @@ if (jourIdx==5){
 					}
 				}
 				//if there isn't any client yet, its because the PJ has to do smth
-				affichageOnCollision(player,"clientEntrance","Je pourrais aller faire un tour, il n'y a pas encore de clients")//player,colObjTag,colMsg
+				if (showClients==false){
+					affichageOnCollision(player,"clientEntrance","Je pourrais aller faire un tour, il n'y a pas encore de clients")//player,colObjTag,colMsg
+				}
 				// PORTAL from atelier to other scenes
 				if (outdoorKey == true){
 				player.onCollide("outsideDoorDroite", () => {
@@ -1582,16 +1646,116 @@ if (jourIdx==5){
 				if (outdoorKey == false){
 					affichageOnCollision(player,"outsideDoorDroite","Tu n'as pas la clé pour ouvrir cette porte...")
 				}
-				player.onCollide("etabli", () => {
-					let saved_position = player.pos
-					music.paused = true
-					// This collision shows the state of the inventory.
-					go("inventaire", jourIdx, totalCoins, totalStars,saved_position,clientCounter)
-				})
+
 
 
 			})
 
+scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>{
+		let music = play("page_debut")
+		// MAP and ITEMS
+		add_atelier_map()
+		// PLAYER
+		const colBox = 5
+		const player = add([
+			sprite("mecanix"),
+			// center() returns the center point vec2(width() / 2, height() / 2)
+			anchor("center"),
+			//console.log(saved_position),
+			pos(saved_position.x,saved_position.y),//the default position is in front of the workshop
+			area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
+			//area(),
+			body(),
+			// scalePerso
+			scale(PERSOSCALE),
+			"player"
+			])
+		// animate the player
+		//player.play("walk_right")
+		//player.flipX = true
+		const SPEED = 80;
+		player_movement(player,SPEED)
+		// COLLISIONS
+		add_atelier_collisions(player)
+		//status
+		addStatusBar(jourIdx,totalCoins,totalStars)
+		// INITIALIZATION of FLAGS
+		let finalInt0 = false
+		let finalInt1 = false
+		let finalInt2 = false
+		let finalInt3 = false
+		let finalInt4 = false
+
+		// ADD PERSOS
+		let louise = add([
+			sprite("perso_dechett_1",{anim:"walk_right"}),
+			anchor("center"),
+			pos(center().x+1*16,MAP_HEIGHT/2+5*16),// the modified position from before
+			area(),
+			body({isStatic:true}),
+			scale(PERSOSCALE),
+			"louise",
+		])
+		let flinta1 = add([
+			sprite("perso_flinta_1",{anim:"walk_right"}),
+			anchor("center"),
+			pos(center().x-3.5*16,MAP_HEIGHT/2-(2.5*16)),// the modified position from before
+			area(),
+			body({isStatic:true}),
+			scale(PERSOSCALE),
+			"flinta1",
+		])
+		let flinta2 = add([
+			sprite("perso_flinta_2",{anim:"walk_right"}),
+			anchor("center"),
+			pos(center().x-6*16,MAP_HEIGHT/2+3*16),// the modified position from before
+			area(),
+			body({isStatic:true}),
+			scale(PERSOSCALE),
+			"flinta2",
+		])
+		let flinta3 = add([
+			sprite("perso_flinta_3",{anim:"walk_right"}),
+			anchor("center"),
+			pos(center().x-6.5*16,MAP_HEIGHT/2+4*16),// the modified position from before
+			area(),
+			body({isStatic:true}),
+			scale(PERSOSCALE),
+			"flinta3",
+		])
+		//ADD INTERACTION WITH PERSO
+		let louiseInteraction = player.onCollide("louise", () => {
+			addTextOnDialogBox("Je vais m'occuper des stands de vélos!")
+			finalInt0 = true
+			})
+		let flinta1Interaction = player.onCollide("flinta1", () => {
+				addTextOnDialogBox("Je me suis lancé dans réparer l'armoire, on n'y verra plus rien, tkt!")
+				finalInt1 = true
+			})
+	let flinta2Interaction = player.onCollide("flinta2", () => {
+					addTextOnDialogBox("Je t'ai amené un dérive-chaine pour te remercier de l'atelier de la dernière fois!")
+					if (deriveChaineGained==false){
+					play("audio_reussite") //indicate that an object has been gained
+					add([
+						sprite("sprite_demontechaine"),
+						scale(1),
+						area(),
+						pos(player.pos),
+						anchor("center"),
+						outline(4),
+						move(UP,100),
+					])
+					// now the object is owned in the INVENTORY
+					inventory["Dérive-chaine"].state ="owned"
+				}
+					finalInt2 = true
+				})
+	let flinta3Interaction = player.onCollide("flinta3", () => {
+					addTextOnDialogBox("J'ai entendu dire qu'il y avait besoin d'aide, je peux pas porter de trucs alors j'ai amener des biscuits!")
+					finalInt3 = true
+				})
+
+	})
 // ------ Boucle de Gameplay ------- //
 // ------ Dialogue avec le client --------------------------------------------------- //
 scene("clientDialog", (clientKey,jourIdx,totalCoins,totalStars) => {
@@ -1773,22 +1937,21 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 						sprite("scene_out_tile_coinHG"),
 						area(),
 						body({isStatic:true}),
-
 					],
 					"k": () => [
 						sprite("scene_out_tile_bordhaut"),
 						area(),
-								body({isStatic:true}),
+						body({isStatic:true}),
 					],
 					"B": () => [
 						sprite("scene_out_tile_coinHD"),
 						area(),
-								body({isStatic:true}),
+						body({isStatic:true}),
 					],
-
 					"h": () => [
 						sprite("scene_out_tile_BG1"),
 						area(),
+						body({isStatic:true}),
 					],
 					"y": () => [
 						sprite("scene_out_tile_BG3"),
@@ -1797,6 +1960,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 					"H": () => [
 						sprite("scene_out_tile_BG2"),
 						area(),
+							body({isStatic:true}),
 					],
 					"D": () => [
 						sprite("scene_out_tile_BG2"),
@@ -1806,11 +1970,12 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 					"G": () => [
 						sprite("scene_out_tile_bordgauche"),
 						area(),
-								body({isStatic:true}),
+						body({isStatic:true}),
 					],
 					"m": () => [
 						sprite("scene_out_tile_mur"),
 						area(),
+							//body({isStatic:true}),
 					],
 					"d": () => [
 						sprite("scene_out_tile_borddroite"),
@@ -1862,26 +2027,26 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 					],
 					"W": () => [
 						sprite("scene_out_tile_chemincoinBD"),
-						area(),
+					//	area(),
 					],
 					"w": () => [
 						sprite("scene_out_tile_chemincoinBG"),
-						area(),
+					//	area(),
 					],
 					"p": () => [
 						sprite("scene_out_tile_chemincoinHD"),
-						area(),
+					//	area(),
 
 					],
 					"z": () => [
 						sprite("scene_out_tile_coinbasgauche"),
 						area(),
-								body({isStatic:true}),
+						body({isStatic:true}),
 					],
 					"Z": () => [
 						sprite("scene_out_tile_bordbas"),
 						area(),
-								body({isStatic:true}),
+						body({isStatic:true}),
 					],
 					"X": () => [
 						sprite("scene_out_tile_coinBD"),
@@ -1903,17 +2068,17 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			// add status bar
 			addStatusBar(jourIdx,totalCoins,totalStars)
 		// add the mecanix// Add player game object
-			const colBox =5
+		const colBox =5
 		//ITEMSconst player =
 
 		const dechetterie = add([
-			sprite("dechett"),
+			sprite("exte_scudo"),
 			// center() returns the center point vec2(width() / 2, height() / 2)
 			anchor("center"),
-			pos(center().x+5*16,65),// the modified position from before
-			area(),
+			pos(center().x+4.75*16,65),// the modified position from before
+			area({ shape: new Polygon([vec2(-17,-22),vec2(-17,15), vec2(23,15),vec2(23,-22)]) }),
 			body({isStatic:true}),
-
+			scale(1.3)
 		])
 		// const contenairSprite = add([
 		// 	sprite("contenair",{anim:"idle_close"}),
@@ -1924,11 +2089,39 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 		// 	body({isStatic:true}),
 		// 	"contenair",
 		// ])
+		let banc = add([
+			sprite("exte_banc"),
+			// center() returns the center point vec2(width() / 2, height() / 2)
+			anchor("center"),
+			pos(center().x-5*16,MAP_HEIGHT/2-3.7*16),// the modified position from before
+			area(),
+			body({isStatic:true}),
+			scale(1.3)
+		])
+		let exteMaki = add([
+			sprite("exte_maki",{anim:"walk_right"}),
+			// center() returns the center point vec2(width() / 2, height() / 2)
+			anchor("center"),
+			pos(center().x-4.5*16,MAP_HEIGHT/2-3.7*16),
+			area(),
+			body({isStatic:true}),
+			scale(1.3)
+		])
+		let exteSirius = add([
+			sprite("exte_sirius",{anim:"walk_right"}),
+			// center() returns the center point vec2(width() / 2, height() / 2)
+			anchor("center"),
+			pos(center().x+5*16,MAP_HEIGHT/2+3*16),
+			area(),
+			body({isStatic:true}),
+			scale(0.8)
+		])
+
 		let arbre1 = add([
 			sprite("arbre"),
 			// center() returns the center point vec2(width() / 2, height() / 2)
 			anchor("center"),
-			pos(center().x-32,center().y),// the modified position from before
+			pos(center().x-16*3,center().y),// the modified position from before
 			area(),
 			body({isStatic:true}),
 		])
@@ -1936,7 +2129,23 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			sprite("arbre"),
 			// center() returns the center point vec2(width() / 2, height() / 2)
 			anchor("center"),
-			pos(center().x-36,center().y+32),// the modified position from before
+			pos(center().x-16*4.5,center().y+2*16),// the modified position from before
+			area(),
+			body({isStatic:true}),
+		])
+		let arbre3 = add([
+			sprite("arbre"),
+			// center() returns the center point vec2(width() / 2, height() / 2)
+			anchor("center"),
+			pos(center().x-16*5.5,center().y+1.5*16),// the modified position from before
+			area(),
+			body({isStatic:true}),
+		])
+		let arbre4 = add([
+			sprite("arbre"),
+			// center() returns the center point vec2(width() / 2, height() / 2)
+			anchor("center"),
+			pos(center().x-16*6.5,center().y+2.5*16),// the modified position from before
 			area(),
 			body({isStatic:true}),
 		])
@@ -1949,11 +2158,12 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
 			body(),
 			// pas de isStatic
-			scale(PERSOSCALE)
+			scale(PERSOSCALE),
+			"player"
 		])
 		// animate the player
 		//player.play("roule")
-		const SPEED = 100;
+		const SPEED = 80;
 		player_movement(player,SPEED)
 		// Perso dechetterie
 		const persoDechett = add([
@@ -1970,17 +2180,18 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 
 		// DECHETERRIE DIALOG
 		let dechettDialog1 = [
-			["PNJ","Hé toi ! qu'est ce que tu fais là ?"],
-			["M"," Hé salut! C'est quoi cet endroit ?"],
-			["PNJ"," C'est la dechetterie, tu connais pas ? t'es pas d'ici ?"],
-			["M"," non, je viens de commencer de taffer à l'atelier de vélo pas loin d'ici"],
-			["PNJ", "Ha ouais et ça va ? je connaissais la personne d'avant, iel était sympa mais je crois que c'était pas toujours évident avec les clients."],
-			["M", "ha ouais je vois... je me fais pas mal expliquer mon taf par des types c'est un peu chiant."],
-			["PNJ","je comprends, ça m'arrive ici aussi des fois. Ha aujourd'hui quelqu'un a amené des pieds de vélo même pas pété, tu veux les prendre ?"],
-			["M", "Grave! merci. bon j'y retourne... à bientôt !"]
+			["PNJ","Hé toi! Qu'est-ce que tu fais là?"],
+			["M","Hé salut! C'est quoi cet endroit?"],
+			["PNJ","C'est la déchetterie, tu connais pas? T'es pas d'ici?"],
+			["M","Non, je viens de commencer de taffer à l'atelier de vélo pas loin d'ici."],
+			["PNJ", "Ha ouais et ça va? Je connaissais la personne d'avant, iel était sympa mais je crois que c'était pas toujours évident avec les clients."],
+			["M", "Ha ouais je vois...Je me fais pas mal expliquer mon taf par des types c'est un peu chiant."],
+			["PNJ","Je comprends, ça m'arrive ici aussi des fois. Ha aujourd'hui quelqu'un a amené des pieds de vélo même pas pété, tu veux les prendre?"],
+			["M", "Grave! Merci. bon j'y retourne... à bientôt!"]
 			]
 		let dechettDialog2 = [
-				["M"," Hé salut! Comment tu vas ?"],
+				["PNJ","Hé toi, te revoilà!"],
+				["M","Hé salut! Comment tu vas ?"],
 				["PNJ","Pas mal, c'est une journée tranquille. Et toi?"],
 				["M","Un peu fatiguée du taf, mais y'a des personnes sympas qui sont passée.x.s hier c'était cool!"],
 				["PNJ", "Avec le temps t'auras probablement plus de copaine.x.s que de relou.e.x.s!"],
@@ -1989,99 +2200,68 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 				["M", "Bah y'a tout écrit dessus,tiens!"],
 				["PNJ","Top, je vais les faire tourner c'est important"],
 				]
+		// Atelier vandaliser
+		let dechettDialog3 = [
+				["PNJ","Hé encore toi!"],
+				["M","Coucou..."],
+				["PNJ","Ca va? Tu fais une tête bizarre..."],
+				["M","Nan c'est nul.. Y'a des gens qui ont cassés des trucs au magasin, j'ai l'impression qu'iels sont pas fan de l'esprit queer du truc."],
+				["PNJ", "Oh merde...Allez je viens avec toi on va réparer tout ca!"],
+				["M", "Oui j'allais te demander si tu voulais bien me filer un coup de main?"],
+				["PNJ","Grave! On sait tout réparer de toute facon nan?! Hihi"],
+				["M", "Oh cool, ca me fait plaisir d'entendre ca. On se retrouve la bas?"],
+				["PNJ","Oui, je ferme la déchett et j'arrive. A toute!"],
+				]
 
 		// Interaction with the personnage dechetterie
 		player.onCollide("perso_dechett_1",()=>{
 			player_movement(player,0)//stop the movement for the dialog time
 			//After the first interaction
 			if(interactionDechetFlag == true){
+
 				//The day 4 with flyers
-				if(flyersTaken == true){
+				if(flyersTaken == true && flyerDechetFlag == false){
 					// the dialog is about giving the flyersFlag
 					launchDialog(dechettDialog2)
+					console.log("The value of flyerDechetFlag is"+flyerDechetFlag)
 					showClients = true //now clients will show up
-				}else{//Normal days
-				// add dialog box
-				let textBox = add([
-					sprite("dialogbox"),//, width: width() - 230
+				}else{
+					if(jourIdx==5 && helpDechetFlag == false){
+						console.log(helpDechetFlag);
+						launchDialog(dechettDialog3)
+						showClients = true //now clients will show up
+					}else{
+					//Normal days
+					// add dialog box
+					let textBox = add([
+						sprite("dialogbox"),//, width: width() - 230
+						anchor("center"),
+						pos(center().x,BOTTOM),
+						"textBox"
+						])
+					// container for text in dialog box
+					const txtWidth = 150; // Ideal Width
+					const txtMargins = 15;
+					let txt = add([
+					text("Hé resalut! Si t'as besoin de quelque chose, tu sais où me trouver Haha Je bouge jamais d'ici!", { size:  TXTSIZE,  width: txtWidth }),//, width: width() - 230
 					anchor("center"),
-					pos(center().x,BOTTOM),
-					"textBox"
+					pos(center().x+8,BOTTOM),
+					color(MYPINK),//color Louise
 					])
-				// container for text in dialog box
-				const txtWidth = 150; // Ideal Width
-				const txtMargins = 15;
-				let txt = add([
-				text("Hé resalut! si t'as besoin de quelque chose, tu sais où me trouver haha je bouge jamais d'ici !", { size:  TXTSIZE,  width: txtWidth }),//, width: width() - 230
-				anchor("center"),
-				pos(center().x,BOTTOM),
-				color(MYPURPLE),
-				])
-				onKeyPress(()=>{
-					destroy(txt),
-					destroy(textBox)
-					})
+					if(jourIdx==5 && helpDechetFlag==true){
+						txt.text = "Allez vas-y, j'arrive bientôt!"
+					}
+					onKeyPress(()=>{
+						destroy(txt),
+						destroy(textBox)
+						})
 				}
+				}
+
 			}else{
 				//interaction happened
-				dialogFinished = launchDialog(dechettDialog1,dialogFinished)
-
-				console.log("dialogFinished is"+dialogFinished)
-				// day two : bike posts gained at the dechetterie
-					if (jourIdx==2){
-						play("audio_reussite") //indicate that an object has been gained
-						add([
-							sprite("velo_sur_pied"),
-							scale(1),
-							area(),
-							pos(player.pos),
-							anchor("center"),
-							outline(4),
-							move(UP,100),
-						])
-						// add in the inventory
-						inventory["Stand pour vélo #1"].state = "owned"
-						inventory["Stand pour vélo #2"].state = "owned"
-
-					}
-				showClients = true// now clients will show up
-				veloTag =true // now you have the bikePost
-			// 	let leftWin = onKeyPress("left",()=>{
-			// 		musicOutside.paused=true
-			// 		play("audio_reussite")
-			// 		musicOutside.paused=false
-			// 		leftWin.paused =true
-			// 		rightWin.paused =true
-			// 		upWin.paused =true
-			// 		downWin.paused =true
-			// 		})
-			// let rightWin = onKeyPress("right",()=>{
-			// 	musicOutside.paused=true
-			// 	play("audio_reussite")
-			// 	musicOutside.paused=false
-			// 	leftWin.paused =true
-			// 	rightWin.paused =true
-			// 	upWin.paused =true
-			// 	downWin.paused =true
-			// })
-			// let upWin = onKeyPress("up",()=>{
-			// 	musicOutside.paused=true
-			// 	play("audio_reussite")
-			// 	musicOutside.paused=false
-			// 	leftWin.paused =true
-			// 	rightWin.paused =true
-			// 	upWin.paused =true
-			// 	downWin.paused =true
-			// })
-			// let downWin = onKeyPress("down",()=>{
-			// 	musicOutside.paused=true
-			// 	play("audio_reussite")
-			// 	musicOutside.paused=false
-			// 	leftWin.paused =true
-			// 	rightWin.paused =true
-			// 	upWin.paused =true
-			// 	downWin.paused =true
-			// })
+				launchDialog(dechettDialog1)
+				console.log("The value of intearctionFlagDechet is"+interactionDechetFlag)
 		}
 		})
 
@@ -2092,7 +2272,12 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			let modified_pos = ({x:center().x+BORDERNOCOLLISION,y:player.pos.y})//keep the height and modify the x, leaving on the right means arriving on left side
 			// If there's a next level, origin() to the same scene but load the next level
 			musicOutside.paused=true
+			music.paused = false
+			if(jourIdx==5 && helpDechetFlag == true){
+			go("jourFinal", jourIdx, totalCoins,totalStars,modified_pos,clientCounter)
+			}else{
 			go("atelier", jourIdx, totalCoins,totalStars,modified_pos,clientCounter)
+		}
 		})
 
 
@@ -3010,19 +3195,19 @@ break;
 			addStatusBar(jourIdx,totalCoins,totalStars)
 
 			let dialogInteraction1 = [
-				["pnj","Hé salut"],
-				["m","Salut! désolée c'est fini pour aujourd'hui, il faut revenir demain..."],
-				["pnj","oui, oui je venais pas pour réparer mon vélo..."],
-				["m","heu ok, tu viens pour quoi alors?"],
-				["pnj","heu... ha oui! haha pardon. je viens te filer la clée que j'ai oublié de rendre quand j'ai arrêté de bosser ici. je suis un peu tête en l'air des fois."],
-				["m","ah! merci"],
-				["pnj","de rien, allé à la proch ciao ciao"]
+				["pnj","Hé salut!"],
+				["m","Salut! Désolée c'est fini pour aujourd'hui, il faut revenir demain..."],
+				["pnj","Oui, oui je venais pas pour réparer mon vélo..."],
+				["m","Heu ok, tu viens pour quoi alors?"],
+				["pnj","Heu... ha oui! Haha pardon. Je viens te filer la clée que j'ai oublié de rendre quand j'ai arrêté de bosser ici. Je suis un peu tête en l'air des fois."],
+				["m","Ah! merci!"],
+				["pnj","De rien, allé à la proch ciao ciao..."]
 				 //heu, la sortie c'est par là hein."]
 			]
 
 			// try with function
 			interactionJour(1,levelAtelier,justifiedFightCounter,totalCoins,totalStars,
-				{x:center().x-2*16,y:center().y-(3*16)},"perso_interaction_1",{x:16*5,y:16*7},dialogInteraction1,{x:16*1.5,y:16*11},false,1)
+				{x:center().x-2*16,y:center().y-(2*16)},"perso_interaction_1",{x:16*5,y:16*7},dialogInteraction1,{x:16*1.5,y:16*11},false,1)
 				// without function
 				// 		// add the mecanix// Add player game object
 				// 		const colBox = 3
@@ -3158,17 +3343,17 @@ break;
 		addStatusBar(jourIdx,totalCoins,totalStars)
 
 		let dialogInteraction2 =[
-			["PNJ","Hello ! je suis en train de faire le tour du quartier et je me demandais si je pouvais poser une affiche ici?"],
+			["PNJ","Hello! Je suis en train de faire le tour du quartier et je me demandais si je pouvais poser une affiche ici?"],
 			["M","Salut, oui ok tu peux la mettre sur le mur du fond."],
 			["PNJ","Merci! c'est stylé que tu bosses ici!"],
-			["PNJ","ha et t'es dac de me prêter un tournevis plat?"],
-			["M","oui pas de soucis, voilà"],
-			["PNJ","merci à bientôt!"],
+			["PNJ","Ha et t'es dac de me prêter un tournevis plat?"],
+			["M","Oui pas de soucis, voilà."],
+			["PNJ","Merci à bientôt!"],
 		]
 
 		// try with function
 		interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,totalStars,
-			{x:center().x-44,y:center().y-(3*16)},"perso_interaction_2",{x:16*4,y:16*7},dialogInteraction2,{x:16*2,y:16*5},true,1)
+			{x:center().x-44,y:center().y-(2*16)},"perso_interaction_2",{x:16*4,y:16*7},dialogInteraction2,{x:16*2,y:16*5},true,1)
 		})
 	scene("interactionJour3", (jourIdx,totalCoins,totalStars,position) => {
 		levelAtelier = add_atelier_map()
@@ -3180,17 +3365,17 @@ break;
 			[
 	        ["PNJ","Hey salut!"],
 	        ["M","Salut, c'est fermé pour aujourd'hui..."],
-	        ["PNJ","Oui justement,je suis venue de demander quelque chose, je fais partie d'un collectif qui s'appelle velociraptix tu as déjà entendu parler?"],
-	         ["M","ha oui ça me dit quelque chose, vous faites des ateliers non?"],
-	          ["PNJ","oui, et il y en avait un ce soir, mais il y a eu un imprévu et on se demandais si on pouvait le faire ici..."],
-	        ["M","Comment ça? vous voulez pas venir la journée plutôt?"],
-	        ["PNJ","En fait on fait des ateliers mixité choisie sans mec cisgenre..."],
-	        ["M","Ha oui ok, je vois! c'est une trop bonne idée, c'est vrai que c'est pas toujours évident de se faire prendre les outils des mains et se faire toujours tout expliquer...haha, je connais ça... Vous êtes bienvenux!"],
-	        ["PNJ","merci c'est trop sympa !"],
+	        ["PNJ","Oui justement,je suis venue de demander quelque chose, je fais partie d'un collectif qui s'appelle Vélacyraptix tu as déjà entendu parler?"],
+	        ["M","Ha oui ça me dit quelque chose, vous faites des ateliers non?"],
+	        ["PNJ","Oui, et il y en avait un ce soir, mais il y a eu un imprévu et on se demandais si on pouvait le faire ici..."],
+	        ["M","Comment ça? Vous voulez pas venir la journée plutôt?"],
+	        ["PNJ","En fait on fait des ateliers en mixité choisie sans mec cisgenre..."],
+	        ["M","Ha oui ok, je vois! C'est une trop bonne idée, c'est vrai que c'est pas toujours évident de se faire prendre les outils des mains et se faire toujours tout expliquer...haha, je connais ça... Vous êtes bienvenux!"],
+	        ["PNJ","Merci c'est trop sympa!"],
 	        ["M","HA! Si vous voyez la personne habillée en dino dites lui que vous faites ça, elle vient de partir et elle disait qu'elle voulait apprendre à mieux bricoler!"],
-	        ["PNJ","bonne idée ! ha oui et tu serais dac qu'on te laisse des flyers et d'en donner aux gens que tu connais?"],
-	         ["M","biensur! bon je vais y aller je vous laisse les clées remettez les dans la boite à clé"],
-	        ["PNJ","ça marche, bonne soirée ! allez les gentes vous pouvez venir !"]
+	        ["PNJ","Bonne idée ! Ha oui et tu serais dac qu'on te laisse des flyers et d'en donner aux gens que tu connais?"],
+	         ["M","Biensur! bon je vais y aller je vous laisse les clées remettez les dans la boite à clé"],
+	        ["PNJ","Ca marche, bonne soirée ! Allez les gentes vous pouvez venir !"]
 	        ]
 
 			// [
@@ -3206,7 +3391,7 @@ break;
 
 			// try with function
 			interactionJour(3,levelAtelier,justifiedFightCounter,totalCoins,totalStars,
-				{x:center().x-2*16,y:center().y-(3*16)}/*player postiion*/,"perso_interaction_3",{x:16*5,y:16*7},dialogInteraction3,{x:16*5,y:16*9},true,0)})
+				{x:center().x-2*16,y:center().y-(2*16)}/*player postiion*/,"perso_interaction_3",{x:16*5,y:16*7},dialogInteraction3,{x:16*5,y:16*9},true,0)})
 scene("interactionJour4", (jourIdx,totalCoins,totalStars,position) => {
 	levelAtelier = add_atelier_map()
 		//status
@@ -3214,16 +3399,16 @@ scene("interactionJour4", (jourIdx,totalCoins,totalStars,position) => {
 
 
 		let dialogInteraction4 = [
-				["pnj","Hey, j'ai entendu qu'ici tous le mondes est pas le bienvenu... "],
-				["m","T'entends quoi par la? "],
-				["pnj","Bah que c'est un peu extreme d'exclure des gars, en plus il parait qu'on se ramasse des claques si on dit des trucs qui vous plaisent pas"],
-				["m","Ah oui! "],
-				["pnj","Bref faites gaffe  a vous ..."],
+				["pnj","Hey, j'ai entendu qu'ici tous le monde n'est pas le bienvenu... "],
+				["m","T'entends quoi par là? "],
+				["pnj","Bah que c'est un peu extrême d'exclure des gars, en plus il parait qu'on se ramasse des claques si on dit des trucs qui vous plaisent pas."],
+				["m","Ah oui!"],
+				["pnj","Bref faites gaffe à vous..."],
 				]
 
 		// try with function
 		interactionJour(4,levelAtelier,justifiedFightCounter,totalCoins,totalStars,
-			{x:center().x-2*16,y:center().y-(3*16)}/*player postiion*/,"perso_interaction_4",{x:16*5,y:16*7},dialogInteraction4,{x:16*1.5,y:16*11},true,1)})
+			{x:center().x-2*16,y:center().y-(2*16)}/*player postiion*/,"perso_interaction_4",{x:16*5,y:16*7},dialogInteraction4,{x:16*1.5,y:16*11},true,1)})
 
 
 // ADD GAME OVER SCENE
@@ -3278,11 +3463,12 @@ scene("Burnout", (jourIdx,totalCoins,totalStars) => {
 
 function start() {
 		// Start with the "game" scene, with initial parameters
-	//go("atelier", 5, 85,0/*totalCoins*/,50,INITIALPOSITION)
+//go("atelier", 5, 85,0/*totalCoins*/,INITIALPOSITION)
 //go("interactionJour1",1,totalCoins,totalStars,INITIALPOSITION)
 go("start")
-//go("outside",2,30,30,INITIALPOSITION)
-	//go("interactionJour1", (1,0,40,20,INITIALPOSITION))//go("clientDialog",1,75,100/*totalCoins*/,50/*force*/)
+//go("jourFinal",5,100,100,INITIALPOSITION)
+//go("outside",5,30,30,INITIALPOSITION)
+//	go("interactionJour1", (1,0,40,20,INITIALPOSITION))//go("clientDialog",1,75,100/*totalCoins*/,50/*force*/)
  //justifiedFightCounter=4
  //go("Carton_Journalier","client1",1,30,30,10,10,1)
 	}
