@@ -26,6 +26,7 @@ loadAseprite("choix_reparer", "images/choix_reparer.png", "images/choix_reparer.
 loadAseprite("atelier_rave", "images/atelier_rave.png", "images/atelier_rave.json")
 loadAseprite("exte_banc", "images/atelier_rave.png", "images/atelier_rave.json")
 loadAseprite("nuit_Z","images/nuit_Z.png","images/nuit_Z.json")
+loadAseprite("mecanix_chat","images/mecanix_chat.png","images/mecanix_chat.json")
 // clients
 for (var i = 1; i <=24; i++) {
 	loadAseprite("client_"+i+"_petit","images/client_"+i+"_petit.png", "images/client_"+i+"_petit.json") //punk
