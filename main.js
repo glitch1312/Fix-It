@@ -85,6 +85,7 @@ loadSprite("atelier_clee","images/atelier_clee.png")
 loadSprite("atelier_poster2_grand","images/atelier_poster2_grand.png")
 loadSprite("exte_banc","images/exte_banc.png")
 loadSprite("exte_scudo","images/exte_scudo.png")
+loadSprite("velo_sur_pied_vide","images/atelier_velo_sur_pied_vide1.png")
 
 
 
@@ -134,6 +135,12 @@ loadFont("prstart","assets/fonts/pixel.ttf")
 loadFont("joystix","assets/fonts/joystix.otf")
 // ------INITIALIZATION-------//
 // --CONSTANTS-- //
+//audio
+let musicFond = play("page_debut", {
+    volume: 0.8,
+    loop: true
+})
+musicFond.paused = true
 let totalCoins = 0
 let totalStars = 0
 let interactionDechetFlag = false // no interaction with dechetterie perso
@@ -155,9 +162,8 @@ let fightGoalsList = [4,4,2,2]
 let outdoorKey = false
 let coinsAnimValueList = [0] //list for starting bilan journalier
 let starsAnimValueList = [0]
-//audio
-let music = play("page_debut")
-music.paused = true
+
+
 const MAP_WIDTH = 256
 const MAP_HEIGHT = 256
 const BOTTOM = 3/4*256
@@ -569,13 +575,13 @@ scene("start",() => {
 		//
 		// },
 		"Stand pour vélo #1":	{
-			spriteName : "velo_sur_pied",
+			spriteName : "velo_sur_pied_vide",
 			state: "available",
 			cost: "30",
 
 		},
 		"Stand pour vélo #2":	{
-			spriteName : "velo_sur_pied",
+			spriteName : "velo_sur_pied_vide",
 			state: "available",
 			cost: "30",
 
@@ -753,7 +759,7 @@ function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,t
 	// Update the on screen sprite & text
 	function updateDialog(txtBox) {
 		const [ char, dialog ] = dialogInteraction1[curDialog]
-		console.log(dialog);
+		//console.log(dialog);
 		// Use a new sprite component to replace the old one
 		//avatar.use(sprite(char))
 		// Update the dialog text
@@ -773,7 +779,7 @@ function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,t
 	let dialogAction = onKeyPress("enter", () => {
 		// Cycle through the dialogs
 		curDialog = (curDialog + 1) % dialogInteraction1.length
-		console.log(curDialog);
+		//console.log(curDialog);
 		if (curDialog==0){
 			// dialog finished, options to choose
 			dialogAction.paused = true
@@ -808,7 +814,7 @@ function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,t
 
 				console.log("Before the fade\n le jour "+jourIdx+"\n le justifiedFightCounter "+justifiedFightCounter+"\n la thune c'est "+totalCoins+"\n les stars "+totalStars)
 				perso.onTargetReached(()=>{
-					console.log("Target reached")
+					//console.log("Target reached")
 					dialogAction.paused =true
 
 					// day two
@@ -870,13 +876,13 @@ function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,t
 					flyersFlag = true
 					}
 					if(jourIdx==3){
-						console.log("wea rea in the waiting time");
+						//console.log("wea rea in the waiting time");
 						waitTime= 3.3 // to wait to reach target
 						}else {
 						waitTime = 0.3
 						}
 				wait(waitTime,()=>{
-						console.log("Wait time is"+waitTime);
+						//console.log("Wait time is"+waitTime);
 						let fadeOut = add([
 						pos(center().x, MAP_HEIGHT/2),
 						anchor("center"),
@@ -885,7 +891,7 @@ function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,t
     				area(),
 						fadeIn(1.2),
 						opacity(1),
-						music.paused = true
+						musicFond.paused = true
 					])
 					wait(0.8,()=>{
 						add([
@@ -894,6 +900,9 @@ function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,t
 							pos(center().x, MAP_HEIGHT/2)
 						])
 					})
+					console.log("avant le call du reset");
+					console.log("totalCoins c'est "+totalCoins);
+					console.log("totalStars c'est "+ totalStars);
 					//to the next day
 					let newjourIdx = resetDayVariables(totalCoins,totalStars)
 					// day 2 is an exception as it will show clients without any interactions
@@ -1015,7 +1024,7 @@ function launchDialog(interactionDialog){
 			// day two : bike posts gained at the dechetterie
 					play("audio_reussite") //indicate that an object has been gained
 					add([
-						sprite("velo_sur_pied"),
+						sprite("velo_sur_pied_vide"),
 						scale(1),
 						area(),
 						pos(center().x+3*16-8,MAP_HEIGHT/2-5*16),//close to perso dechet position
@@ -1532,8 +1541,8 @@ function add_atelier_collisions(player){
 	// ------ Boucle de Gameplay ----  //
 	// ------ Scene d'ouverture ----------------------------------------------- //
 scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=> {
-
-		if(clientCounter == 1){music.paused = false}
+	console.log("totalCoins is "+totalCoins);
+		if(clientCounter == 1){musicFond.paused = false}
 		add_atelier_map()
 
 		// collision Box size
@@ -1591,7 +1600,7 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 				// show 6 clients at a time
 				// ADD ERROR
 				let lLength = 0
-				console.log("just before the loop, the clientCounter is:"+clientCounter);
+				//console.log("just before the loop, the clientCounter is:"+clientCounter);
 				if (showClients==true){
 					for (let i = 0; i <= (6-clientCounter); i++) {
 						if (clientsList.hasOwnProperty(Object.keys(clientsList)[i])){
@@ -1642,7 +1651,7 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 					let modified_pos = ({x:center().x-BORDERNOCOLLISION,y:player.pos.y})//keep the height and modify the x, leaving on the right means arriving on left side
 					//play("portal")
 					// If there's a next level, origin() to the same scene but load the next level
-					music.paused = true
+					musicFond.paused = true
 					go("outside", jourIdx, totalCoins,totalStars, modified_pos )
 				})
 				}
@@ -1660,21 +1669,7 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 		// MAP and ITEMS
 		console.log("This is the final day"+jourIdx);
 		let levelAtelier = add_atelier_map()
-		// PLAYER
-		const colBox = 5
-		const player = add([
-			sprite("mecanix"),
-			// center() returns the center point vec2(width() / 2, height() / 2)
-			anchor("center"),
-			//console.log(saved_position),
-			pos(saved_position.x,saved_position.y),//the default position is in front of the workshop
-			area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
-			//area(),
-			body(),
-			// scalePerso
-			scale(PERSOSCALE),
-			"player"
-			])
+
 		// animate the player
 		//player.play("walk_right")
 		//player.flipX = true
@@ -1690,6 +1685,7 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 		let finalInt2 = false
 		let finalInt3 = false
 		let finalInt4 = false
+		let allieInt = false
 
 		// ADD PERSOS
 		let louise = add([
@@ -1713,7 +1709,7 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 		let flinta2 = add([
 			sprite("perso_flinta_2",{anim:"walk_right"}),
 			anchor("center"),
-			pos(center().x-4.5*16,MAP_HEIGHT/2-2*16),// the modified position from before
+			pos(center().x-5*16,MAP_HEIGHT/2-2*16),// the modified position from before
 			area(),
 			body({isStatic:true}),
 			scale(PERSOSCALE),
@@ -1729,11 +1725,45 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 			agent({ speed: 80, allowDiagonals: true }),
 			"flinta3",
 		])
+		// PLAYER
+			const colBox = 5
+			const player = add([
+				sprite("mecanix"),
+				// center() returns the center point vec2(width() / 2, height() / 2)
+				anchor("center"),
+				//console.log(saved_position),
+				pos(saved_position.x,saved_position.y),//the default position is in front of the workshop
+				area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
+				//area(),
+				body(),
+				// scalePerso
+				scale(PERSOSCALE),
+				"player"
+				])
 		//ADD INTERACTION WITH PERSO
 		player.onCollide("louise", () => {
 			if(finalInt0==false){
 				addTextOnDialogBox("Je vais m'occuper des stands de vélos!"),
-				destroyAll("velo_sur_pied_1_kc"),
+				wait(0.4,()=>{
+					destroyAll("pied_velos_kc")})
+					const velo_sur_pied_1_kc = add([
+						sprite("atelier_velo_sur_pied_kc"),
+						scale(1),
+						anchor("center"),
+						pos(center().x-(6*16),8*16),
+						area({ shape: new Polygon([vec2(-12,15),vec2(-12,-7), vec2(12,-7),vec2(12,15)]) }),
+						body({isStatic:true}),
+						"pied_velos_kc"
+					])
+					const velo_sur_pied_2_kc = add([
+						sprite("atelier_velo_sur_pied_kc"),
+						scale(1),
+						anchor("center"),
+						pos(center().x+2*16,MAP_HEIGHT-2*16),
+						area({ shape: new Polygon([vec2(-12,15),vec2(-12,-7), vec2(12,-7),vec2(12,15)]) }),
+						body({isStatic:true}),
+						"pied_velos_kc"
+					])
 				finalInt0=true
 			}else{
 				addTextOnDialogBox("C'est réparé!")
@@ -1743,7 +1773,7 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 		player.onCollide("flinta1", () => {
  			if(finalInt1	==false){
 				addTextOnDialogBox("Je me suis lancé dans réparer l'armoire, on n'y verra plus rien, tkt!")
- 				destroyAll("armoireKc"),
+ 				wait(0.4,()=>{destroyAll("armoireKc")}),
  				finalInt1=true
  			}else{
  				addTextOnDialogBox("C'est tout bon!")
@@ -1767,8 +1797,7 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 				// now the object is owned in the INVENTORY
 				inventory["Dérive-chaine"].state ="owned"
 			}
-
-				finalInt2=true
+			finalInt2=true
 			}else{
 				addTextOnDialogBox("Encore trop merci de nous avoir permis d'utiliser ton magasin pour l'atelier!")
 			}
@@ -1786,27 +1815,32 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
  		})
 
 		//player.onCollideEnd("flinta3",()=>{flinta3.setTarget(vec2(center().x-2.5*16,MAP_HEIGHT/2+2*16))})
+		flinta3bis.onTargetReached(()=>{
+				let allie = add([
+				sprite("client_6_petit",{anim:"walk_right"}),
+				anchor("center"),
+				pos(center().x-6.5*16,MAP_HEIGHT/2+4*16),// the modified position from before
+				area(),
+				body({isStatic:true}),
+				scale(PERSOSCALE),
+				"allie"
+			])
+
+			player.onCollide("allie", () => {
+					addTextOnDialogBox("J'ai bien compris que vous arriviez à tout réparer, mais je me suis dit que ce serait encore plus sympa avec des boissons! ")
+					allieInt = true
+			})
+		})
 
 		 onUpdate(()=>{
-				if(finalInt0==true && finalInt1==true && finalInt2 == true && finalInt3==true){
-				//add lst character
-				let allie = add([
-					sprite("client_6_petit",{anim:"walk_right"}),
-					anchor("center"),
-					pos(center().x-6.5*16,MAP_HEIGHT/2+4*16),// the modified position from before
-					area(),
-					body({isStatic:true}),
-					scale(PERSOSCALE),
-					"allie"
-				])
-				player.onCollide("allie", () => {
-						addTextOnDialogBox("J'ai bien compris que vous arriviez à tout réparer, mais je me suis dit que ce serait encore plus sympa avec des boissons! ")
+			 console.log("in the update");
+				if(finalInt0==true && finalInt1 == true && finalInt2 == true && finalInt3 == true && allieInt==true){
+					wait(1.5,()=>{go("partyWin")})
+				}
+					else{
+			}
 			})
-				player.onCollideEnd("allie", () => {
-					go("partyWin")})
-	}
- })
-})
+		})
 // ------ Boucle de Gameplay ------- //
 // ------ Dialogue avec le client --------------------------------------------------- //
 scene("clientDialog", (clientKey,jourIdx,totalCoins,totalStars) => {
@@ -1952,7 +1986,7 @@ scene("clientDialog", (clientKey,jourIdx,totalCoins,totalStars) => {
 
 // ---- Monde exterieur -----//
 scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
-			let musicOutside = play("exte")
+			let musicOutside = play("exte",{loop:true})
 			// at start of the outside scene the contenair is closed
 			//let ouvertTag=false
 
@@ -2323,7 +2357,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			let modified_pos = ({x:center().x+BORDERNOCOLLISION,y:player.pos.y})//keep the height and modify the x, leaving on the right means arriving on left side
 			// If there's a next level, origin() to the same scene but load the next level
 			musicOutside.paused=true
-			music.paused = false
+			musicFond.paused = false
 			if(jourIdx==5 && helpDechetFlag == true){
 			go("jourFinal", jourIdx, totalCoins,totalStars,modified_pos,clientCounter)
 			}else{
@@ -3018,8 +3052,8 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
         acc[key] = clientsList[key];
         return acc;
     }, {});
-		 console.log("The filtered list");
-		 console.log(clientsList);
+		 //console.log("The filtered list");
+		 //console.log(clientsList);
 		 if (clientCounter == 6){
 
 			 go("Carton_Journalier",clientKey,jourIdx,totalCoins,totalStars, 10,10,1)
@@ -3034,7 +3068,7 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 			 })
 }) // click replace by keyboard
 
-scene("bonus",()=>{
+scene("bonus",(jourIdx,totalCoins,totalStars)=>{
 	if (jourIdx==1){
 			add_bordure_map()
 			let bulleFond = add([
@@ -3158,7 +3192,7 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 				let bravo = add([text("Wouahhh j'ai viré tous les sexistes!",
 				{ size: TXTSIZE, width:TXTWIDTH, font:"joystix"}),color(MYPURPLE),scale(1),anchor("center"),pos(center().x,BOTTOMTEXT)])
 				// object gained
-				onKeyPress("enter",()=>{go("bonus")})
+				onKeyPress("enter",()=>{go("bonus",jourIdx,totalCoins,totalStars)})
 
 			break;
 			// BASIC
@@ -3395,7 +3429,7 @@ break;
 				// 				console.log("Before the fade\n le jour "+jourIdx+"\n le justifiedFightCounter "+justifiedFightCounter+"\n la thune c'est "+totalCoins+"\n les stars "+totalStars)
 				// 				perso.onTargetReached(()=>{
 				// 					dialogAction.paused =true
-				// 					let fadeOut = add([
+				// 					let fadeOut = add([d
 				// 						pos(center().x, MAP_HEIGHT/2-30),
 				// 						anchor("center"),
 				// 						color(BLACK),
@@ -3426,9 +3460,10 @@ break;
 		addStatusBar(jourIdx,totalCoins,totalStars)
 
 		let dialogInteraction2 =[
+			["M","Coucou!"],
 			["PNJ","Hello! Je suis en train de faire le tour du quartier et je me demandais si je pouvais poser une affiche ici?"],
-			["M","Salut, oui ok tu peux la mettre sur le mur du fond."],
-			["PNJ","Merci! c'est stylé que tu bosses ici!"],
+			["M","Oui ok tu peux la mettre sur le mur du fond."],
+			["PNJ","Merci! C'est stylé que tu bosses ici!"],
 			["PNJ","Ha et t'es dac de me prêter un tournevis plat?"],
 			["M","Oui pas de soucis, voilà."],
 			["PNJ","Merci à bientôt!"],
@@ -3494,6 +3529,7 @@ scene("interactionJour4", (jourIdx,totalCoins,totalStars,position) => {
 
 	// ADD GAME OVER SCENE
 	scene("partyWin", (jourIdx,totalCoins,totalStars) => {
+		musicFond.paused = true
 		play("audio_fete")
 		add_atelier_map()
 		// add party mood
@@ -3575,8 +3611,8 @@ function start() {
 		// Start with the "game" scene, with initial parameters
 //go("atelier", 5, 85,0/*totalCoins*/,INITIALPOSITION)
 //go("interactionJour1",1,totalCoins,totalStars,INITIALPOSITION)
-go("start")
-//go("jourFinal",5,100,100,INITIALPOSITION)
+//go("start")
+go("jourFinal",5,100,100,INITIALPOSITION)
 //go("outside",5,30,30,INITIALPOSITION)
 //	go("interactionJour1", (1,0,40,20,INITIALPOSITION))//go("clientDialog",1,75,100/*totalCoins*/,50/*force*/)
  //justifiedFightCounter=4
