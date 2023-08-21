@@ -1670,13 +1670,7 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 		console.log("This is the final day"+jourIdx);
 		let levelAtelier = add_atelier_map()
 
-		// animate the player
-		//player.play("walk_right")
-		//player.flipX = true
-		const SPEED = 80;
-		player_movement(player,SPEED)
-		// COLLISIONS
-		add_atelier_collisions(player)
+
 		//status
 		addStatusBar(jourIdx,totalCoins,totalStars)
 		// INITIALIZATION of FLAGS
@@ -1740,6 +1734,13 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 				scale(PERSOSCALE),
 				"player"
 				])
+				// animate the player
+				//player.play("walk_right")
+				//player.flipX = true
+				const SPEED = 80;
+				player_movement(player,SPEED)
+				// COLLISIONS
+				add_atelier_collisions(player)
 		//ADD INTERACTION WITH PERSO
 		player.onCollide("louise", () => {
 			if(finalInt0==false){
@@ -3611,8 +3612,8 @@ function start() {
 		// Start with the "game" scene, with initial parameters
 //go("atelier", 5, 85,0/*totalCoins*/,INITIALPOSITION)
 //go("interactionJour1",1,totalCoins,totalStars,INITIALPOSITION)
-//go("start")
-go("jourFinal",5,100,100,INITIALPOSITION)
+go("start")
+//go("jourFinal",5,100,100,INITIALPOSITION)
 //go("outside",5,30,30,INITIALPOSITION)
 //	go("interactionJour1", (1,0,40,20,INITIALPOSITION))//go("clientDialog",1,75,100/*totalCoins*/,50/*force*/)
  //justifiedFightCounter=4
