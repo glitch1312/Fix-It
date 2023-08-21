@@ -66,7 +66,7 @@ loadSpriteAtlas("images/sorties.png", "images/sorties.json")
 loadSprite("atelier_mur_fond","images/atelier_mur_fond.png")
 loadSprite("dialogbox","images/talk_boite.png")
 loadSprite("wrench","images/Sprite-tool-wrench.png")
-loadSprite("demontepneu","images/Sprite_demontepneu.png")
+loadAseprite("demontepneu","images/demonte_pneu.png","images/demonte_pneu.json")
 loadSprite("clef","images/Sprite_clef.png")
 loadSprite("clepedale","images/Sprite_clepedale.png")
 loadSprite("rider_en_pied","images/Sprite-characterenpied.png")
@@ -405,11 +405,11 @@ let INITIALCLIENTSLIST = {
 		 spriteName:"client_19_petit",
 		 bigSpriteName:"client_19_grand",
 		 dialogs:[
-	 [ "client_17_grand", "Hello."],
+	 [ "client_19_grand", "Hello."],
 	 [ "mecanix_en_pied", "Salut!" ],
-	 [ "client_17_grand", "Ça fait plaisir de voir une femme ici mais il parait qu'il y'a des moments ou c'est pas ouvert à tous le monde... c'est un peu limite quand même." ],
+	 [ "client_19_grand", "Ça fait plaisir de voir une femme ici mais il parait qu'il y'a des moments ou c'est pas ouvert à tous le monde... c'est un peu limite quand même." ],
 	 [ "mecanix_en_pied", "Je pense que c'est nécessaire, et puis se réunir entre personnes qui vivent des trucs similaires c'est une pratique qui se fait depuis longtemps." ],
-	 [ "client_17_grand", "Ah bon... je pensais que c'était une nouvelle mode..." ],
+	 [ "client_19_grand", "Ah bon... je pensais que c'était une nouvelle mode..." ],
 	],
 		 isSexist: true,
  },
@@ -446,11 +446,11 @@ let INITIALCLIENTSLIST = {
 		 bigSpriteName:"client_22_grand",
 		 	 dialogs:[
 		 		 [ "mecanix_en_pied", "Hello!" ],
-		 		 [ "client_19_grand", "Salut, je viens changer mes pédales."],
+		 		 [ "client_22_grand", "Salut, je viens changer mes pédales."],
 		 		 [ "mecanix_en_pied", "Yes, ça marche." ],
-		 		 [ "client_19_grand", "Je voulais vous demander vous faites aussi des ateliers qu'entre gars? " ],
+		 		 [ "client_22_grand", "Je voulais vous demander vous faites aussi des ateliers qu'entre gars? " ],
 		 		 [ "mecanix_en_pied", "..." ],
-		 		 [ "client_19_grand", "..." ],
+		 		 [ "client_22_grand", "..." ],
 		 	 ],
 		 isSexist: true,
  },
@@ -544,11 +544,11 @@ scene("start",() => {
 	// INVENTORY
 	// state can be : unavailable,available, owned
 	let inventory = {
-		// "Démonte-pneu":	{
-		// 	spriteName : "Sprite_demontepneu",
-		// 	state: "owned",
-		// 	cost: "10",
-		// },
+		"Démonte-pneu":	{
+			spriteName : "Sprite_demontepneu",
+			state: "available",
+			cost: "10",
+		},
 
 		// "Tournevis":	{
 		// 	spriteName : "sprite_tournevis",
@@ -694,7 +694,7 @@ function resetDayVariables(totalCoins,totalStars){
 			fightCounter = 0
 			justifiedFightCounter = 0
 			jourIdx = jourIdx +1 // next day
-			console.log("in the reset function the dayis " +jourIdx)
+			console.log("in the reset function the day is " +jourIdx)
 			return jourIdx;
 		}
 
@@ -1351,21 +1351,25 @@ function add_atelier_map(){
 				anchor("center"),
 				pos(center().x,5*16),
 				area(),
-				body({isStatic:true})
+				body({isStatic:true}),
+				"velorouge"
 			])
 		  const velo_rouge_2 = add([
 				sprite("velo_rouge"),
 				scale(1),
 				anchor("center"),
 				pos(center().x+6*16,7.75*16),
-				area(),body({isStatic:true})])
+				area(),body({isStatic:true}),
+					"velorouge"
+			])
 			const velo_rouge_3 = add([
 					sprite("velo_rouge"),
 					scale(1),
 					anchor("center"),
 					pos(center().x+6*16,8.5*16),
 					area(),
-				body({isStatic:true})
+				body({isStatic:true}),
+				"velorouge"
 			])
 			const velo_rouge_4 = add([
 					sprite("velo_rouge"),
@@ -1373,7 +1377,8 @@ function add_atelier_map(){
 					anchor("center"),
 					pos(center().x+6*16,9.25*16),
 					area(),
-					body({isStatic:true})
+					body({isStatic:true}),
+					"velorouge"
 				])
 // add velo sur pied items, on day 5 we have the broken version
 if(veloTag==true){
@@ -1653,7 +1658,8 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>{
 		let music = play("page_debut")
 		// MAP and ITEMS
-		add_atelier_map()
+		console.log("This is the final day"+jourIdx);
+		let levelAtelier = add_atelier_map()
 		// PLAYER
 		const colBox = 5
 		const player = add([
@@ -1707,54 +1713,100 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 		let flinta2 = add([
 			sprite("perso_flinta_2",{anim:"walk_right"}),
 			anchor("center"),
-			pos(center().x-6*16,MAP_HEIGHT/2+3*16),// the modified position from before
+			pos(center().x-4.5*16,MAP_HEIGHT/2-2*16),// the modified position from before
 			area(),
 			body({isStatic:true}),
 			scale(PERSOSCALE),
 			"flinta2",
 		])
-		let flinta3 = add([
+		let flinta3bis = levelAtelier.spawn([
 			sprite("perso_flinta_3",{anim:"walk_right"}),
 			anchor("center"),
-			pos(center().x-6.5*16,MAP_HEIGHT/2+4*16),// the modified position from before
+			pos(center().x-8*16,MAP_HEIGHT/2+4*16),// the modified position from before
 			area(),
 			body({isStatic:true}),
 			scale(PERSOSCALE),
+			agent({ speed: 80, allowDiagonals: true }),
 			"flinta3",
 		])
 		//ADD INTERACTION WITH PERSO
-		let louiseInteraction = player.onCollide("louise", () => {
-			addTextOnDialogBox("Je vais m'occuper des stands de vélos!")
-			finalInt0 = true
-			})
-		let flinta1Interaction = player.onCollide("flinta1", () => {
-				addTextOnDialogBox("Je me suis lancé dans réparer l'armoire, on n'y verra plus rien, tkt!")
-				finalInt1 = true
-			})
-	let flinta2Interaction = player.onCollide("flinta2", () => {
-					addTextOnDialogBox("Je t'ai amené un dérive-chaine pour te remercier de l'atelier de la dernière fois!")
-					if (deriveChaineGained==false){
-					play("audio_reussite") //indicate that an object has been gained
-					add([
-						sprite("sprite_demontechaine"),
-						scale(1),
-						area(),
-						pos(player.pos),
-						anchor("center"),
-						outline(4),
-						move(UP,100),
-					])
-					// now the object is owned in the INVENTORY
-					inventory["Dérive-chaine"].state ="owned"
-				}
-					finalInt2 = true
-				})
-	let flinta3Interaction = player.onCollide("flinta3", () => {
-					addTextOnDialogBox("J'ai entendu dire qu'il y avait besoin d'aide, je peux pas porter de trucs alors j'ai amener des biscuits!")
-					finalInt3 = true
-				})
+		player.onCollide("louise", () => {
+			if(finalInt0==false){
+				addTextOnDialogBox("Je vais m'occuper des stands de vélos!"),
+				destroyAll("velo_sur_pied_1_kc"),
+				finalInt0=true
+			}else{
+				addTextOnDialogBox("C'est réparé!")
+			}
+		})
 
-	})
+		player.onCollide("flinta1", () => {
+ 			if(finalInt1	==false){
+				addTextOnDialogBox("Je me suis lancé dans réparer l'armoire, on n'y verra plus rien, tkt!")
+ 				destroyAll("armoireKc"),
+ 				finalInt1=true
+ 			}else{
+ 				addTextOnDialogBox("C'est tout bon!")
+ 			}
+ 		})
+
+		player.onCollide("flinta2", () => {
+			if(finalInt2==false){
+				addTextOnDialogBox("Je t'ai amené un dérive-chaine pour te remercier de l'atelier de la dernière fois!")
+				if (deriveChaineGained==false){
+				play("audio_reussite") //indicate that an object has been gained
+				add([
+					sprite("sprite_demontechaine"),
+					scale(1),
+					area(),
+					pos(player.pos),
+					anchor("center"),
+					outline(4),
+					move(UP,100),
+				])
+				// now the object is owned in the INVENTORY
+				inventory["Dérive-chaine"].state ="owned"
+			}
+
+				finalInt2=true
+			}else{
+				addTextOnDialogBox("Encore trop merci de nous avoir permis d'utiliser ton magasin pour l'atelier!")
+			}
+		})
+
+		player.onCollide("flinta3", () => {
+ 			if(finalInt3==false){
+				addTextOnDialogBox("J'ai entendu dire qu'il y avait besoin d'aide, je peux pas porter de trucs alors j'ai amener des biscuits!")
+ 				destroyAll("armoireKc"),
+ 				finalInt3=true
+				flinta3bis.setTarget(vec2(11*16,10.5*16))
+ 			}else{
+ 				addTextOnDialogBox("Je vais mettre les biscuits  sur la table")
+ 			}
+ 		})
+
+		//player.onCollideEnd("flinta3",()=>{flinta3.setTarget(vec2(center().x-2.5*16,MAP_HEIGHT/2+2*16))})
+
+		 onUpdate(()=>{
+				if(finalInt0==true && finalInt1==true && finalInt2 == true && finalInt3==true){
+				//add lst character
+				let allie = add([
+					sprite("client_6_petit",{anim:"walk_right"}),
+					anchor("center"),
+					pos(center().x-6.5*16,MAP_HEIGHT/2+4*16),// the modified position from before
+					area(),
+					body({isStatic:true}),
+					scale(PERSOSCALE),
+					"allie"
+				])
+				player.onCollide("allie", () => {
+						addTextOnDialogBox("J'ai bien compris que vous arriviez à tout réparer, mais je me suis dit que ce serait encore plus sympa avec des boissons! ")
+			})
+				player.onCollideEnd("allie", () => {
+					go("partyWin")})
+	}
+ })
+})
 // ------ Boucle de Gameplay ------- //
 // ------ Dialogue avec le client --------------------------------------------------- //
 scene("clientDialog", (clientKey,jourIdx,totalCoins,totalStars) => {
@@ -2203,7 +2255,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 		let dechettDialog3 = [
 				["PNJ","Hé encore toi!"],
 				["M","Coucou..."],
-				["PNJ","Ca va? Tu fais une tête bizarre..."],
+				["PNJ","Ça va? Tu fais une tête bizarre..."],
 				["M","Nan c'est nul.. Y'a des gens qui ont cassés des trucs au magasin, j'ai l'impression qu'iels sont pas fan de l'esprit queer du truc."],
 				["PNJ", "Oh merde...Allez je viens avec toi on va réparer tout ca!"],
 				["M", "Oui j'allais te demander si tu voulais bien me filer un coup de main?"],
@@ -2910,7 +2962,7 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 					 "textBox"
 				 ])
 				 add([
-				text("Bim!",{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
+				text("Bien fait!",{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
 				anchor("center"),
 				pos(center().x,BOTTOM),
 				color(MYPURPLE)
@@ -2982,6 +3034,49 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 			 })
 }) // click replace by keyboard
 
+scene("bonus",()=>{
+	if (jourIdx==1){
+			add_bordure_map()
+			let bulleFond = add([
+			 sprite("carton_bulle"),//, width: width() - 230
+			 anchor("center"),
+			 scale(1),
+			 pos(center().x-10,BOTTOM-25),
+		 ])
+			play("audio_reussite") //indicate that an object has been gained
+			//change text
+		  add([
+				text("J'ai gagné un démonte-pneu",{ size: TXTSIZE, width:TXTWIDTH, font:"joystix"}),
+				color(MYPURPLE),scale(1),anchor("center"),pos(center().x,BOTTOM-35)
+			])
+			add([
+				sprite("demontepneu",{anim:"shine"}),
+				scale(1),
+				area(),
+				pos(center().x,MAP_HEIGHT/2-4*16),
+				anchor("center"),
+				outline(4),
+			])
+			inventory["Démonte-pneu"].state = "owned"
+			//instruction
+			let instruction = add([
+					text("(appuie sur enter pour retourner à l'atelier)", { size: TXTSIZE }),
+					scale(1),anchor("center"),pos(center().x,BOTTOM+10),])
+			 onKeyPress("enter", () => {
+							if(jourIdx==1){go("interactionJour1", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
+							if(jourIdx==2){go("interactionJour2", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
+							if(jourIdx==3){go("interactionJour3", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
+							if(jourIdx==4){go("interactionJour4", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
+						})
+		}else{
+			onKeyPress("enter", () => {
+						 if(jourIdx==1){go("interactionJour1", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
+						 if(jourIdx==2){go("interactionJour2", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
+						 if(jourIdx==3){go("interactionJour3", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
+						 if(jourIdx==4){go("interactionJour4", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
+					 })
+		}
+})
 scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercentIncrease,clientelePercentIncrease,isIncreaseTrue) => {
 		add_bordure_map()
 		play("carton")
@@ -2998,14 +3093,17 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 		const bilanTxt = add([
 			text("BILAN DU JOUR\n--------------\n"+repairCounter+" REPARATIONS\n"+fightCounter+" CLAQUES\n--------------\n6 CLIENTS", {font: "prstart", size:TXTSIZEBILAN}),color(MYPURPLE),
 			pos(center().x-70, MAP_HEIGHT/4-20),
+			"bilan"
 		])
 		let coinsAnim = add([
 			text("$ : ", {font: "prstart", size:TXTSIZEBILAN}),color(MYPURPLE),
 			pos(center().x+45,  (MAP_HEIGHT/4)),
+			"bilan"
 		])
 		let starsAnim = add([
 			text("* : ", {font: "prstart", size:TXTSIZEBILAN}),color(MYPURPLE),
 			pos(center().x+45,  (MAP_HEIGHT/4)+14),
+			"bilan"
 		])
 
 		// compare the obtained statistics (fights and repairs) with the ideal situation
@@ -3020,19 +3118,19 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 			if(justifiedFightCounter == fightGoalsList[jourIdx-1] && fightCounter == fightGoalsList[jourIdx-1]){
 				caseNumber = 0
 			}
-			if(fightCounter == fightGoalsList[jourIdx-1]+1 || justifiedFightCounter == fightGoalsList[jourIdx-1]-1){
-				caseNumber = 1
-			}
+			// if( ){
+			// 	caseNumber = 1
+			// }
 			// you fighted 2 times too much but hit all the ones you should ahve hit
-			if(fightCounter == fightGoalsList[jourIdx-1]+2 && justifiedFightCounter == fightGoalsList[jourIdx-1]){
+			if(fightCounter == fightGoalsList[jourIdx-1]+1 && justifiedFightCounter == fightGoalsList[jourIdx-1]){
 				caseNumber = 3
 			}
 			// you fighted two times not enough when you should have fighted
-			if(justifiedFightCounter == fightGoalsList[jourIdx-1]-2){
+			if(justifiedFightCounter == fightGoalsList[jourIdx-1]-2 || justifiedFightCounter == fightGoalsList[jourIdx-1]-1){
 				caseNumber = 2
 			}
 			// you fighted more than two times too much but hit all the ones you should have hit
-			if(fightCounter > fightGoalsList[jourIdx-1]+2 && justifiedFightCounter == fightGoalsList[jourIdx-1]){
+			if(fightCounter >= fightGoalsList[jourIdx-1]+2 && justifiedFightCounter == fightGoalsList[jourIdx-1]){
 				caseNumber = 5
 			}
 			if(justifiedFightCounter < fightGoalsList[jourIdx-1]-2){
@@ -3051,25 +3149,16 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 				anchor("center"),
 				scale(1),
 				pos(center().x-10,BOTTOM-25),
-				"textBox"
 			])
 			switch(caseNumber){
 
 			// BONUS
 			case 0 :
-			// message
-				add([text("Wouahhh je m'en sort trop bien, j'ai viré tous les sexistes1",
+
+				let bravo = add([text("Wouahhh j'ai viré tous les sexistes!",
 				{ size: TXTSIZE, width:TXTWIDTH, font:"joystix"}),color(MYPURPLE),scale(1),anchor("center"),pos(center().x,BOTTOMTEXT)])
-			// instruction
-				 add([
-						text("(appuie sur enter pour retourner à l'atelier)", { size: TXTSIZE }),
-						scale(1),anchor("center"),pos(center().x,BOTTOM+10),])
-						onKeyPress("enter", () => {
-							if(jourIdx==1){go("interactionJour1", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
-							if(jourIdx==2){go("interactionJour2", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
-							if(jourIdx==3){go("interactionJour3", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
-							if(jourIdx==4){go("interactionJour4", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
-						})
+				// object gained
+				onKeyPress("enter",()=>{go("bonus")})
 
 			break;
 			// BASIC
@@ -3085,14 +3174,11 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 								if(jourIdx==2){go("interactionJour2", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
 								if(jourIdx==3){go("interactionJour3", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
 								if(jourIdx==4){go("interactionJour4", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
-
-
-
 							})
 				break;
 			case 2 :
 			// BASIC with Burnout WARNING:=
-			add([text("Je suis épuiséex... Ca me fatigue ces remarques sexistes...",
+			add([text("Je suis épuiséex... Ça me fatigue ces remarques sexistes...",
 				{ size: TXTSIZE,width:TXTWIDTH, font:"joystix"}),color(MYPURPLE),scale(1),anchor("center"),pos(center().x,BOTTOMTEXT)])
 				// instruction
 					 add([
@@ -3110,7 +3196,7 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 							break;
 			case 3 :
 			// BASIC with Bankrupt WARNING:
-				add([text("Ca va être pire dur de payer le loyer mais qu'est-ce que je kiffe foutre des claques!",
+				add([text("Ça va être dur de payer le loyer...",
 					{ size: TXTSIZE, width:TXTWIDTH,font:"joystix"}),color(MYPURPLE),scale(1),anchor("center"),pos(center().x,BOTTOMTEXT)])
 					// instruction
 						 add([
@@ -3128,15 +3214,15 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 				break;
 			case 4 :
 			// GAMEOVER BURNOUT
-			add([text("Je suis totalement epuiséex par le sexisme...\nJe peux plus travailler je vais fermer.",
+			add([text("Je suis totalement epuiséex par le sexisme...\nJe ne peux plus travailler.",
 				{ size: TXTSIZE,width:TXTWIDTH, font:"joystix"}),scale(1),color(MYPURPLE),anchor("center"),pos(center().x,BOTTOMTEXT)])
-			wait(2.5,()=>go("Burnout"))
+			wait(4.5,()=>go("Burnout"))
 break;
 			case 5 :
 			// GAMEOVER BANKRUPT
-			add([text("Impossible de payer le loyer...tantpis je me suis bien amuséex et c'est la fête!]",
-				{ size: TXTSIZE, font:"joystix"}),scale(1),anchor("center"),color(MYPURPLE),pos(center().x,BOTTOMTEXT)])
-		  wait(7,()=>go("Bankrupt"))
+			add([text("Impossible de payer le loyer...tant pis je me suis bien amuséex et c'est la fête!",
+				{ size: TXTSIZE, font:"joystix", width:TXTWIDTH}),scale(1),anchor("center"),color(MYPURPLE),pos(center().x,BOTTOMTEXT)])
+		  wait(4.5,()=>go("Bankrupt"))
 			break;
 		}
 }
@@ -3357,7 +3443,6 @@ break;
 			//status
 			addStatusBar(jourIdx,totalCoins,totalStars)
 
-
 			let dialogInteraction3 =
 			[
 	        ["PNJ","Hey salut!"],
@@ -3407,45 +3492,73 @@ scene("interactionJour4", (jourIdx,totalCoins,totalStars,position) => {
 		interactionJour(4,levelAtelier,justifiedFightCounter,totalCoins,totalStars,
 			{x:center().x-2*16,y:MAP_HEIGHT/2-(2*16)}/*player postiion*/,"perso_interaction_4",{x:16*5,y:16*7},dialogInteraction4,{x:16*1.5,y:16*11},true,1)})
 
+	// ADD GAME OVER SCENE
+	scene("partyWin", (jourIdx,totalCoins,totalStars) => {
+		play("audio_fete")
+		add_atelier_map()
+		// add party mood
+		const raveParty = add([
+			sprite("atelier_rave",{anim:"idle"}),
+			anchor("center"),
+			scale(1),
+			pos(center().x,MAP_HEIGHT/2),
+		])
+		// Titre
+		const title = add([
+			text("T'AS GAGNE!\n ", { size: LARGETXTSIZE, font:"joystix" }),
+			scale(1),
+			anchor("center"),
+			pos(center().x,MAP_HEIGHT/2-16)
+		])
 
+		// Recommencez le jeu
+		add([
+			text("(appuie sur espace pour recommencer le jeu)", { size: TXTSIZE }),
+					scale(1),anchor("center"),pos(center().x,BOTTOM+5),])
+
+					onKeyPress("space",() => {
+								    go("start")
+								})
+	})
 // ADD GAME OVER SCENE
 scene("Bankrupt", (jourIdx,totalCoins,totalStars) => {
 	play("audio_fete")
-	add_bordure_map()
+	add_atelier_map()
 	// add party mood
 	const raveParty = add([
 		sprite("atelier_rave",{anim:"idle"}),
 		anchor("center"),
 		scale(1),
-		pos(center().x-10,BOTTOM-25),
+		pos(center().x,MAP_HEIGHT/2),
 	])
 	// Titre
 	const title = add([
 		text("GAME OVER!\n ", { size: LARGETXTSIZE, font:"joystix" }),
 		scale(1),
 		anchor("center"),
-		pos(center().x,MAP_HEIGHT/2-0.6*(MAP_HEIGHT/2))
+		pos(center().x,MAP_HEIGHT/2-16)
 	])
 
 	// Recommencez le jeu
 	add([
-				text("(recharge la page pour recommencer le jeu)", { size: TXTSIZE }),
+		text("(appuie sur espace pour recommencer le jeu)", { size: TXTSIZE }),
 				scale(1),anchor("center"),pos(center().x,BOTTOM+5),])
 
-	onKeyPress(() => {
-			  				    quit()
-			  				})
+				onKeyPress("space",() => {
+							    go("start")
+							})
 })
 
 scene("Burnout", (jourIdx,totalCoins,totalStars) => {
 	play("audio_burnout")
 	add_atelier_map()
+	destroyAll("velorouge")
 	// Titre
 	const title = add([
 		text("GAME OVER!\n ", { size: LARGETXTSIZE, font:"joystix" }),
 		scale(1),
 		anchor("center"),
-		pos(center().x,MAP_HEIGHT/2-0.3*(MAP_HEIGHT/2))
+		pos(center().x,MAP_HEIGHT/2-16)
 	])
 
 	// Recommencez le jeu
@@ -3462,11 +3575,12 @@ function start() {
 		// Start with the "game" scene, with initial parameters
 //go("atelier", 5, 85,0/*totalCoins*/,INITIALPOSITION)
 //go("interactionJour1",1,totalCoins,totalStars,INITIALPOSITION)
-go("start")
+//go("start")
 //go("jourFinal",5,100,100,INITIALPOSITION)
 //go("outside",5,30,30,INITIALPOSITION)
 //	go("interactionJour1", (1,0,40,20,INITIALPOSITION))//go("clientDialog",1,75,100/*totalCoins*/,50/*force*/)
  //justifiedFightCounter=4
  //go("Carton_Journalier","client1",1,30,30,10,10,1)
+ //go("bonus")
 	}
 start()
