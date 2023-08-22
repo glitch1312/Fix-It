@@ -33,6 +33,7 @@ loadAseprite("start_fond", "images/start_fond.png", "images/start_fond.json")
 loadAseprite("nuit_Z","images/nuit_Z.png","images/nuit_Z.json")
 loadAseprite("mecanix_chat","images/mecanix_chat.png","images/mecanix_chat.json")
 loadAseprite("bonus_chips","images/bonus_chips.png","images/bonus_chips.json")
+loadAseprite("bonus_boites","images/bonus_boites.png","images/bonus_boite.json")
 
 
 // clients
@@ -153,6 +154,7 @@ let musicFond = play("page_debut", {
     loop: true
 })
 musicFond.paused = true
+
 let totalCoins = 0
 let totalStars = 0
 let interactionDechetFlag = false // no interaction with dechetterie perso
@@ -167,6 +169,7 @@ let croquettesFlag= false
 let croquettesGivenFlag = false
 let chipsFlag = false
 let chipsGivenFlag = false
+let boiteOutilsFlag = false
 let deriveChaineGained = false
 let showClients = true
 let jumpToHitFlag = false
@@ -599,6 +602,11 @@ scene("start",() => {
 			state: "available",
 			cost: "10",
 		},
+		"Boîte à outils":	{
+			spriteName : "bonus_boites",
+			state: "available",
+			cost: "10",
+		},
 		// "Tournevis":	{
 		// 	spriteName : "sprite_tournevis",
 		// 	state: "available",
@@ -782,14 +790,7 @@ function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,t
 	const colBox = 3
 	let mecanixSprite = "mecanix"
 	if (croquettesGivenFlag == true ){mecanixSprite = "mecanix_chat"}
-	const player = add([
-		sprite(mecanixSprite,{anim:"idle"}),
-		anchor("center"),
-		pos(playerPosition.x,playerPosition.y),
-		area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
-		body(),
-		scale(PERSOSCALE)
-	])
+
 	player.flipX = true
 	// Add the other pers
 	const perso = levelAtelier.spawn([
@@ -802,6 +803,14 @@ function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,t
 		agent({ speed: 80, allowDiagonals: true }),
 			],
 	1,1)
+	const player = add([
+		sprite(mecanixSprite,{anim:"idle"}),
+		anchor("center"),
+		pos(playerPosition.x,playerPosition.y),
+		area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
+		body(),
+		scale(PERSOSCALE)
+	])
 	let aller = wait(0.5,()=>{perso.setTarget(vec2(
 			target1.x,//Math.floor((center().x+45) / TILE_WIDTH) * TILE_WIDTH + TILE_WIDTH / 2,
 			target1.y//Math.floor((MAP_HEIGHT/2-65)  / TILE_HEIGHT) * TILE_HEIGHT + TILE_HEIGHT / 2,
@@ -1574,6 +1583,12 @@ function add_atelier_items(){
 					pos(center().x-(6.5*16),MAP_HEIGHT/2-(5.5*16))
 				])
 			}
+	if(boiteOutilsFlag==true){
+		let boiteAOutils = add([
+			sprite("bonus_boites"),
+			pos(center().x-(6.5*16),MAP_HEIGHT/2+(5.5*16))
+		])
+	}
 	}
 function add_atelier_collisions(player,totalCoins,totalStars){
 	// add collision// add velo sur provided Collision
@@ -1626,7 +1641,7 @@ function add_atelier_collisions(player,totalCoins,totalStars){
 						text("(appuie sur espace pour prendre les flyers) ", {font: "prstart", size:TXTSIZE, width:TXTWIDTH}),
 						anchor("center"),
 						color(MYPURPLE),
-						pos(center().x+16, MAP_HEIGHT/2+3.5*16),
+						pos(center().x+16, MAP_HEIGHT/2+4.5*16),
 						"distributeInstruction"
 						])
 					onKeyPress("space",()=>{
@@ -2385,7 +2400,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			body({isStatic:true}),
 			scale(1.3)
 		])
-
+		if(croquettesGivenFlag == false ){
 		let exteMaki = add([
 			sprite("exte_maki",{anim:"walk_right"}),
 			// center() returns the center point vec2(width() / 2, height() / 2)
@@ -2396,6 +2411,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			scale(1),
 			"chatMaki"
 		])
+	}
 		let exteSirius = add([
 			sprite("exte_sirius",{anim:"walk_right"}),
 			// center() returns the center point vec2(width() / 2, height() / 2)
@@ -2485,6 +2501,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			"perso_exte"
 		])
 		let dialogChips = [
+			["p","Hey!"],
 			["m","Salut! Je peux m'asseoir avec toi?"],
 			["p","Oui, mais seulement si tu partages tes chips avec moi.. et les pigeons haha"],
 			["m","Allez okay!"],
@@ -2495,7 +2512,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			["p","Hahah tu me fait bien rire. Si jamais mon trick c'est d'appuyer sur espace pour direct les later."],
 			["m","Ohh trop merci! Je vais essayer."]
 		]
-	
+
 		// collision avec le perso exte
 		player.onCollide("perso_exte",()=>{
 			if(chipsFlag == true){
@@ -3550,13 +3567,14 @@ scene("bonus",(jourIdx,totalCoins,totalStars)=>{
 			case 3:
 			// add text, sprite and update inventory
 			addBonus("J'ai gagné des chips!","bonus_chips","Chips")
-			chipsFlag = true //flag to modify the collision with the cat
+			chipsFlag = true //flag to modify the collision with the pers exte
 			onKeyPress("enter", () => {
 							goInteraction(jourIdx,totalCoins,totalStars)
 					 })
 			break;
 			case 4:
-			addBonus("J'ai gagné des croquettes pour chat encore  ","croquettes","Croquettes")
+			addBonus("J'ai gagné une boîte à outils!","bonus_boites","Boîte à outils")
+			boiteOutilsFlag = true
 			onKeyPress("enter", () => {
 							goInteraction(jourIdx,totalCoins,totalStars)
 					 })
@@ -3981,10 +3999,11 @@ scene("interactionJour4", (jourIdx,totalCoins,totalStars,position) => {
 	// ADD GAME OVER SCENE
 	scene("partyWin", (jourIdx,totalCoins,totalStars) => {
 		musicFond.paused = true
-
 		play("audio_fete")
 		add_atelier_map()
 		add_atelier_items()
+		destroyAll("pied_velos_kc")
+
 		//add persos
 		let louise = add([
 			sprite("perso_dechett_1",{anim:"walk_right"}),
