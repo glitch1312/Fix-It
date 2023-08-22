@@ -1,0 +1,186 @@
+{ "frames": [
+   {
+    "filename": "mecanix_chat 0.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 16 },
+    "sourceSize": { "w": 32, "h": 16 },
+    "duration": 200
+   },
+   {
+    "filename": "mecanix_chat 1.aseprite",
+    "frame": { "x": 32, "y": 0, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 16 },
+    "sourceSize": { "w": 32, "h": 16 },
+    "duration": 200
+   },
+   {
+    "filename": "mecanix_chat 2.aseprite",
+    "frame": { "x": 64, "y": 0, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 16 },
+    "sourceSize": { "w": 32, "h": 16 },
+    "duration": 200
+   },
+   {
+    "filename": "mecanix_chat 3.aseprite",
+    "frame": { "x": 96, "y": 0, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 16 },
+    "sourceSize": { "w": 32, "h": 16 },
+    "duration": 200
+   },
+   {
+    "filename": "mecanix_chat 4.aseprite",
+    "frame": { "x": 128, "y": 0, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 16 },
+    "sourceSize": { "w": 32, "h": 16 },
+    "duration": 200
+   },
+   {
+    "filename": "mecanix_chat 5.aseprite",
+    "frame": { "x": 160, "y": 0, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 16 },
+    "sourceSize": { "w": 32, "h": 16 },
+    "duration": 200
+   },
+   {
+    "filename": "mecanix_chat 6.aseprite",
+    "frame": { "x": 192, "y": 0, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 16 },
+    "sourceSize": { "w": 32, "h": 16 },
+    "duration": 200
+   },
+   {
+    "filename": "mecanix_chat 7.aseprite",
+    "frame": { "x": 224, "y": 0, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 16 },
+    "sourceSize": { "w": 32, "h": 16 },
+    "duration": 200
+   },
+   {
+    "filename": "mecanix_chat 8.aseprite",
+    "frame": { "x": 256, "y": 0, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 16 },
+    "sourceSize": { "w": 32, "h": 16 },
+    "duration": 200
+   },
+   {
+    "filename": "mecanix_chat 9.aseprite",
+    "frame": { "x": 288, "y": 0, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 16 },
+    "sourceSize": { "w": 32, "h": 16 },
+    "duration": 200
+   },
+   {
+    "filename": "mecanix_chat 10.aseprite",
+    "frame": { "x": 320, "y": 0, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 16 },
+    "sourceSize": { "w": 32, "h": 16 },
+    "duration": 200
+   },
+   {
+    "filename": "mecanix_chat 11.aseprite",
+    "frame": { "x": 352, "y": 0, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 16 },
+    "sourceSize": { "w": 32, "h": 16 },
+    "duration": 200
+   },
+   {
+    "filename": "mecanix_chat 12.aseprite",
+    "frame": { "x": 384, "y": 0, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 16 },
+    "sourceSize": { "w": 32, "h": 16 },
+    "duration": 200
+   },
+   {
+    "filename": "mecanix_chat 13.aseprite",
+    "frame": { "x": 416, "y": 0, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 16 },
+    "sourceSize": { "w": 32, "h": 16 },
+    "duration": 200
+   },
+   {
+    "filename": "mecanix_chat 14.aseprite",
+    "frame": { "x": 448, "y": 0, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 16 },
+    "sourceSize": { "w": 32, "h": 16 },
+    "duration": 200
+   },
+   {
+    "filename": "mecanix_chat 15.aseprite",
+    "frame": { "x": 480, "y": 0, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 16 },
+    "sourceSize": { "w": 32, "h": 16 },
+    "duration": 200
+   },
+   {
+    "filename": "mecanix_chat 16.aseprite",
+    "frame": { "x": 512, "y": 0, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 16 },
+    "sourceSize": { "w": 32, "h": 16 },
+    "duration": 200
+   },
+   {
+    "filename": "mecanix_chat 17.aseprite",
+    "frame": { "x": 544, "y": 0, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 16 },
+    "sourceSize": { "w": 32, "h": 16 },
+    "duration": 200
+   }
+ ],
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.2.40-x64",
+  "image": "mecanix_chat.png",
+  "format": "RGBA8888",
+  "size": { "w": 576, "h": 16 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "walk_right", "from": 0, "to": 4, "direction": "forward" },
+   { "name": "idle", "from": 5, "to": 11, "direction": "forward" },
+   { "name": "down", "from": 12, "to": 14, "direction": "forward" },
+   { "name": "up", "from": 15, "to": 17, "direction": "forward" }
+  ],
+  "layers": [
+   { "name": "meca", "opacity": 255, "blendMode": "normal" },
+   { "name": "maki", "opacity": 255, "blendMode": "normal" },
+   { "name": "shadow", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}
