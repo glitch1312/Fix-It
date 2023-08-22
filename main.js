@@ -791,7 +791,7 @@ function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,t
 	let mecanixSprite = "mecanix"
 	if (croquettesGivenFlag == true ){mecanixSprite = "mecanix_chat"}
 
-	player.flipX = true
+
 	// Add the other pers
 	const perso = levelAtelier.spawn([
 		sprite(persoSprite,{anim:"walk_right"}),
@@ -811,6 +811,7 @@ function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,t
 		body(),
 		scale(PERSOSCALE)
 	])
+		player.flipX = true
 	let aller = wait(0.5,()=>{perso.setTarget(vec2(
 			target1.x,//Math.floor((center().x+45) / TILE_WIDTH) * TILE_WIDTH + TILE_WIDTH / 2,
 			target1.y//Math.floor((MAP_HEIGHT/2-65)  / TILE_HEIGHT) * TILE_HEIGHT + TILE_HEIGHT / 2,
