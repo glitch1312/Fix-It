@@ -528,6 +528,11 @@ scene("start",() => {
 	 flyersFlag = false
 	 flyersTaken = false
 	 showClients = true
+	 croquettesFlag= false
+	 croquettesGivenFlag = false
+	 chipsFlag = false
+	 chipsGivenFlag = false
+	 boiteOutilsFlag = false
 	 jourIdx = 1 // game starts at day 1
 	 clientCounter = 1 // no client interaction at start
 	 fightCounter = 0
@@ -1639,7 +1644,7 @@ function add_atelier_collisions(player,totalCoins,totalStars){
 				console.log("in the first collision done");
 
 					let distributeInstruction = add([
-						text("(appuie sur espace pour prendre les flyers) ", {font: "prstart", size:TXTSIZE, width:TXTWIDTH}),
+						text("(\"espace\" pour prendre les flyers) ", {font: "prstart", size:TXTSIZE, width:TXTWIDTH}),
 						anchor("center"),
 						color(MYPURPLE),
 						pos(center().x+16, MAP_HEIGHT/2+4.5*16),
@@ -1978,7 +1983,7 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
  				finalInt3=true
 				flinta3bis.setTarget(vec2(11*16,10.5*16))
  			}else{
- 				addTextOnDialogBox("Je vais mettre les biscuits  sur la table")
+ 				addTextOnDialogBox("Je vais mettre les biscuits sur la table")
  			}
  		})
 		//player.onCollideEnd("flinta3",()=>{flinta3.setTarget(vec2(center().x-2.5*16,MAP_HEIGHT/2+2*16))})
@@ -2001,7 +2006,7 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 		onUpdate(()=>{
 			 console.log("in the update");
 				if(finalInt0==true && finalInt1 == true && finalInt2 == true && finalInt3 == true && allieInt==true){
-					wait(2.5,()=>{
+					wait(3.5,()=>{
 						musicFond.paused = true
 						go("partyWin")})
 				}
@@ -2145,8 +2150,10 @@ scene("clientDialog", (clientKey,jourIdx,totalCoins,totalStars) => {
 			}
 			updateDialog()
 		})
-
-		onKeyPress("shift", () => {
+		if(chipsGivenFlag==true){
+			
+		let spaceAction = onKeyPress("space", () => {
+			spaceAction.paused = true
 			// MAP POUR FAIRE LA BORDURE
 			add_bordure_map_purple()
 			// Character avatar )
@@ -2158,9 +2165,11 @@ scene("clientDialog", (clientKey,jourIdx,totalCoins,totalStars) => {
 			])
 				//jump directly without dialog
 				jumpToHitFlag = true
+
 				jumpToSituation(false/*repairFlag is false because we hit*/,clientKey,jourIdx,totalCoins,totalStars)
 
 		})
+	}
 
 
 		//firt call to initialize on enter
@@ -2546,7 +2555,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 		player_movement(player,SPEED)
 		// Perso dechetterie
 		const persoDechett = add([
-			sprite("perso_dechett_1"),
+			sprite("perso_dechett_1",{anim:"idle"}),
 			// center() returns the center point vec2(width() / 2, height() / 2)
 			anchor("center"),
 			pos(center().x+3*16,MAP_HEIGHT/2-5*16),// the modified position from before
@@ -3022,6 +3031,7 @@ scene("inventaire", (jourIdx,totalCoins,totalStars,saved_position,clientCounter)
 	})
 
 function jumpToSituation (repairFlag,clientKey,jourIdx,totalCoins,totalStars){
+	onKeyPress("space",()=>{})
 	switch(DoSituationTest(repairFlag,clientKey)){
 		case 0:
 		//choix reparer est juste
@@ -3171,6 +3181,7 @@ totalStars = totalStars + 10
  break;
 	}
 	 onKeyPress("enter",() => {
+
 			 //  Choice and correspondant anim have been done next client or end of day carton
 			 // delete previous client
 			 //delete clientsList[clientKey]
