@@ -29,9 +29,12 @@ loadAseprite("atelier_rave", "images/atelier_rave.png", "images/atelier_rave.jso
 loadAseprite("exte_banc_perso", "images/exte_banc_perso.png", "images/exte_banc_perso.json")
 loadAseprite("exte_arbre_anime", "images/exte_arbre_anime.png", "images/exte_arbre_anime.json")
 loadAseprite("start_fond", "images/start_fond.png", "images/start_fond.json")
-
+loadAseprite("start_fond", "images/start_fond.png", "images/start_fond.json")
 loadAseprite("nuit_Z","images/nuit_Z.png","images/nuit_Z.json")
 loadAseprite("mecanix_chat","images/mecanix_chat.png","images/mecanix_chat.json")
+loadAseprite("bonus_chips","images/bonus_chips.png","images/bonus_chips.json")
+
+
 // clients
 for (var i = 1; i <=24; i++) {
 	loadAseprite("client_"+i+"_petit","images/client_"+i+"_petit.png", "images/client_"+i+"_petit.json") //punk
@@ -162,6 +165,8 @@ let flyersFlag = false
 let flyersTaken = false
 let croquettesFlag= false
 let croquettesGivenFlag = false
+let chipsFlag = false
+let chipsGivenFlag = false
 let deriveChaineGained = false
 let showClients = true
 let jumpToHitFlag = false
@@ -192,6 +197,8 @@ const MYBLUE =rgb(52, 172, 186)
 const MYYELLOW = rgb(255,224,126)
 const MYPURPLE = rgb(79,30,69)
 const MYDARKPINK = rgb(238, 106,124)
+const MYDARKBLUE = rgb(99,138,159)
+const MYLIGHTBLUE = rgb(138,162,173)
 
 // LEVELS INITIALIZATION with JSON
 let INITIALCLIENTSLIST = {
@@ -329,7 +336,7 @@ let INITIALCLIENTSLIST = {
 			 [ "mecanix_en_pied", "Salut, qu'est-ce qui se passe?" ],
 			 [ "client_11_grand", "Salut, mon vélo freine plus."],
 			 [ "mecanix_en_pied", "Oké je vais checker ça." ],
-			 [ "client_11_grand", "Est ce que stan est là? Je préfère que ça soit lui qui le fasse." ],
+			 [ "client_11_grand", "Est-ce que stan est là? Je préfère que ça soit lui qui le fasse." ],
 			 [ "mecanix_en_pied", "Il est pas là..."],
 		 ],
 		 isSexist: true,
@@ -468,7 +475,7 @@ let INITIALCLIENTSLIST = {
 		 		 [ "mecanix_en_pied", "Hello!" ],
 		 		 [ "client_22_grand", "Salut, je viens changer mes pédales."],
 		 		 [ "mecanix_en_pied", "Yes, ça marche." ],
-		 		 [ "client_22_grand", "Je voulais vous demander vous faites aussi des ateliers qu'entre gars? " ],
+		 		 [ "client_22_grand", "Je voulais vous demander vous faites aussi des ateliers qu'entre gars?" ],
 		 		 [ "mecanix_en_pied", "..." ],
 		 		 [ "client_22_grand", "..." ],
 		 	 ],
@@ -481,8 +488,8 @@ let INITIALCLIENTSLIST = {
              [ "mecanix_en_pied", "Hello!" ],
              [ "client_23_grand", "Coucou, est-ce que tu peux m'aider j'ai commandé une nouvelle cassette."],
              [ "mecanix_en_pied", "Oui, évidemment."],
-             [ "client_23_grand", "Je sais pas trop comment la changer par contre... "],
-             [ "mecanix_en_pied", "On peut faire ça ensemble"],
+             [ "client_23_grand", "Je sais pas trop comment la changer par contre..."],
+             [ "mecanix_en_pied", "On peut faire ça ensemble."],
              [ "client_23_grand", "Trop cool!" ],
          ]
 ,
@@ -495,9 +502,9 @@ let INITIALCLIENTSLIST = {
             [ "mecanix_en_pied", "Hello!" ],
              [ "client_24_grand", "J'ai mes freins qui freinent plus..."],
              [ "mecanix_en_pied", "Oh je vois, c'est des freins à disques?" ],
-             [ "client_24_grand", "Oui, je pense qu'il faut faire une purge mais j'ai jamais fait ça" ],
-             [ "mecanix_en_pied", "Si tu veux je peux t'apprendre en le faisant avec toi" ],
-             [ "client_24_grand", "oui d'accord" ],
+             [ "client_24_grand", "Oui, je pense qu'il faut faire une purge mais j'ai jamais fait ça." ],
+             [ "mecanix_en_pied", "Si tu veux je peux t'apprendre en le faisant avec toi." ],
+             [ "client_24_grand", "Oui d'accord." ],
          ],
 		 isSexist: false,
  },
@@ -545,7 +552,7 @@ scene("start",() => {
 			scale(1),
 			anchor("center"),
 			pos(center().x+5,MAP_HEIGHT/2-0.6*(MAP_HEIGHT/2)),
-			color(MYPURPLE)
+			color(MYLIGHTBLUE)
 		])
 		// But
 		const but = add([
@@ -554,15 +561,15 @@ scene("start",() => {
 			scale(1),
 			anchor("center"),
 			pos(center().x+5,MAP_HEIGHT/2-0.2*(MAP_HEIGHT/2)),
-		color(MYPURPLE)
+		color(MYLIGHTBLUE)
 		])
 		// Instructions
 		const instructions = add([
-			text("Utilise les touches fléchées  pour te déplacer et la touche retour pour interagir", { size: TXTSIZE+2, font:"prstart",width:MAP_WIDTH -64}),
+			text("se déplacer & interagir", { size: TXTSIZE+2, font:"prstart",width:MAP_WIDTH -64}),
 			scale(1),
 			anchor("center"),
-			pos(center().x,MAP_HEIGHT/2+5.5*16),
-			color(MYPURPLE)
+			pos(center().x+3*16,MAP_HEIGHT/2+5.5*16),
+			color(MYDARKBLUE)
 		])
 		// lancer le jeu
 		onKeyPress("enter", () => {
@@ -586,6 +593,11 @@ scene("start",() => {
 			state: "available",
 			cost: "10",
 
+		},
+		"Chips":	{
+			spriteName : "bonus_chips",
+			state: "available",
+			cost: "10",
 		},
 		// "Tournevis":	{
 		// 	spriteName : "sprite_tournevis",
@@ -686,9 +698,9 @@ function DoSituationTest(repairFlag,clientKey){
 	if(repairFlag==false && clientsList[clientKey].isSexist==true){return 2}
 	if(repairFlag==false && clientsList[clientKey].isSexist==false){return 3}
 }
-function addBonus(text,spriteName,inventoryKeyName){//change text
+function addBonus(textBonus,spriteName,inventoryKeyName){//change text
 			add([
-				text(text,{ size: TXTSIZE, width:TXTWIDTH, font:"joystix"}),
+				text(textBonus,{ size: TXTSIZE, width:TXTWIDTH, font:"joystix"}),
 				color(MYPURPLE),scale(1),anchor("center"),pos(center().x,BOTTOM-35)
 				])
 			add([
@@ -1031,6 +1043,53 @@ function player_movement(player,speed){
 			player.move(0, speed)
 		})
 	}
+function justDialog(interactionDialog){
+			// add dialog box
+			let textBox = add([
+			sprite("dialogbox"),//, width: width() - 230
+			anchor("center"),
+			pos(center().x,BOTTOM),
+			"textBox"
+			])
+			// container for text in dialog box
+			const txtWidth = 150; // Ideal Width
+			const txtMargins = 15;
+			let txt = add([
+			text("", { size:  TXTSIZE,  width: txtWidth }),//, width: width() - 230
+			anchor("center"),
+			pos(center().x,BOTTOM),
+			color(MYPURPLE),
+			])
+			//initialization
+			let initDialog = interactionDialog.length
+			let levelDialog = interactionDialog
+			let curDialog = 0
+			function updateDialog() {
+			const [ char, dialog ] = interactionDialog[curDialog]
+			txt.text = dialog
+			// indicate who is talking
+			if(curDialog%2==0){
+				txt.color= MYDARKPINK
+			}else {
+				txt.color = MYBLUE
+			}
+			}
+			//initialization with first sentence text
+			updateDialog()
+
+		 	let	dialogAction = onKeyPress("enter", () => {
+		// Cycle through the dialogs
+		curDialog = (curDialog + 1) % interactionDialog.length
+		if (curDialog==0){
+			// dialog finished, options to choose
+			dialogAction.paused = true
+			destroy(textBox)
+			destroy(txt)
+				}else{
+			updateDialog()
+		}
+	})
+}
 function launchDialog(interactionDialog){
 
 			// add dialog box
@@ -1516,7 +1575,7 @@ function add_atelier_items(){
 				])
 			}
 	}
-function add_atelier_collisions(player){
+function add_atelier_collisions(player,totalCoins,totalStars){
 	// add collision// add velo sur provided Collision
 	if (veloTag==true){
 			player.onCollide("pied_velos",()=>{
@@ -1564,10 +1623,10 @@ function add_atelier_collisions(player){
 				console.log("in the first collision done");
 
 					let distributeInstruction = add([
-						text("(appuie sur espace pour prendre les flyers avec toi) ", {font: "prstart", size:TXTSIZE, width:TXTWIDTH}),
+						text("(appuie sur espace pour prendre les flyers) ", {font: "prstart", size:TXTSIZE, width:TXTWIDTH}),
 						anchor("center"),
 						color(MYPURPLE),
-						pos(center().x+16, MAP_HEIGHT/2+3*16),
+						pos(center().x+16, MAP_HEIGHT/2+3.5*16),
 						"distributeInstruction"
 						])
 					onKeyPress("space",()=>{
@@ -1598,6 +1657,8 @@ function add_atelier_collisions(player){
 	player.onCollide("etabli", () => {
 		let saved_position = player.pos
 		// This collision shows the state of the inventory.
+		console.log("Before go inventaire ");
+		console.log("totalCoins is "+totalCoins);
 		go("inventaire", jourIdx, totalCoins, totalStars,saved_position,clientCounter)
 	})
 	}
@@ -1630,7 +1691,7 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 		//player.flipX = true
 		const SPEED = 60;
 		player_movement(player,SPEED)
-		add_atelier_collisions(player)
+		add_atelier_collisions(player,totalCoins,totalStars)
 
 				//status
 				addStatusBar(jourIdx,totalCoins,totalStars)
@@ -1832,7 +1893,7 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 			const SPEED = 80;
 			player_movement(player,SPEED)
 			// COLLISIONS
-			add_atelier_collisions(player)
+			add_atelier_collisions(player,totalCoins,totalStars)
 		//ADD INTERACTION WITH PERSO
 		player.onCollide("louise", () => {
 			if(finalInt0==false){
@@ -2103,19 +2164,19 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			const bordurebordure = addLevel([
 				 "KkkkBhHKkkkkkkkB",
 				 "GmmmdHhGmmmmmmmd",
-				 "GfFVrkkRffFfVVfd",
-				 "GFfVmmmmVcqqFffd",
-				 "GFVffFFVVQVVFffd",
-				 "GFcqqqqqqWfffVFd",
-				 "GFQfFVQFFFFFfVVd",
-				 "GFQFFFQFFFFVfVVd",
-				 "GFQFFFQFFFFffVVd",
-				 "GFQFFFwqqqpFVVfd",
-				 "GfffFFFVfVQvFvFd",
-				 "GfffFFFVfVwqqpFd",
-				 "NfffFFFVfVfvFQFd",
+				 "GfaVrkkRffFfVFfd",
+				 "GFfVmmmmVcqqJffd",
+				 "GFaafVFVVQVVFffd",
+				 "GFcqqqqqqWffaVFd",
+				 "GFQfaVFQFaFFfaVd",
+				 "GFQvFaFQvFFVfVVd",
+				 "GFLvvFFQFFFafVVd",
+				 "GFaaFFFwqqqqqpfd",
+				 "GfffaFFVfVFvFQFd",
+				 "GfffFvFVfVFaFQFd",
+				 "NfffvaFVfVfvFQFd",
 				 "DqqqqqqqqqqqqWFd",
-				 "SfffFFFVfVfvFvFd",
+				 "SfffvFFVfVfvFvFd",
 				 "zZZZZZZZZZZZZZZX",
 			],{
 				// define the size of each block
@@ -2125,16 +2186,16 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 				pos:vec2(center().x - (MAP_WIDTH/2), 0),
 				// assign to each symbol a sprite
 				tiles: {
-					// "J": () => [
-					// 	sprite("tile_exte_chemin_fin_horizontal"),
-					// 	area(),
-					// 	body({isStatic:true}),
-					// ],
-					// "L": () => [
-					// 	sprite("tile_exte_chemin_fin_verticall"),
-					// 	area(),
-					// 	body({isStatic:true}),
-					// ],
+					"J": () => [
+						sprite("tile_exte_chemin_fin_horizontal"),
+						area(),
+						body({isStatic:true}),
+					],
+					"L": () => [
+						sprite("tile_exte_chemin_fin_verticall"),
+						area(),
+						body({isStatic:true}),
+					],
 					"K": () => [
 						sprite("scene_out_tile_coinHG"),
 						area(),
@@ -2223,6 +2284,10 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 						sprite("scene_out_tile_cheminhorizontal"),
 						area(),
 					],
+					"a": () => [
+						sprite("scene_out_tile_herbefleur"),
+						area(),
+					],
 					"Q": () => [
 						sprite("scene_out_tile_cheminvertical"),
 						area(),
@@ -2267,8 +2332,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 					],
 					}
 				})
-			// add status bar
-			addStatusBar(jourIdx,totalCoins,totalStars)
+
 		// add the mecanix// Add player game object
 		const colBox =5
 		//ITEMSconst player =
@@ -2291,16 +2355,37 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 		// 	body({isStatic:true}),
 		// 	"contenair",
 		// ])
-
-		let banc_perso = add([
-			sprite("exte_banc_perso"),
+		const player = add([
+			sprite("mecanix_velo"),
 			// center() returns the center point vec2(width() / 2, height() / 2)
 			anchor("center"),
-			pos(center().x-5*16,MAP_HEIGHT/2+3.7*16),// the modified position from before
+			pos(position.x,position.y),// the modified position from before
+			area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
+			body(),
+			// pas de isStatic
+			scale(PERSOSCALE),
+			"player"
+		])
+
+		let banc1 = add([
+			sprite("exte_banc"),
+			// center() returns the center point vec2(width() / 2, height() / 2)
+			anchor("center"),
+			pos(center().x+4.2*16,MAP_HEIGHT/2+6),// the modified position from before
 			area(),
 			body({isStatic:true}),
-			scale(1)
+			scale(1.3)
 		])
+		let banc2 = add([
+			sprite("exte_banc"),
+			// center() returns the center point vec2(width() / 2, height() / 2)
+			anchor("center"),
+			pos(center().x-6,MAP_HEIGHT/2-4*16+6),// the modified position from before
+			area(),
+			body({isStatic:true}),
+			scale(1.3)
+		])
+
 		let exteMaki = add([
 			sprite("exte_maki",{anim:"walk_right"}),
 			// center() returns the center point vec2(width() / 2, height() / 2)
@@ -2318,7 +2403,8 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			pos(center().x+5*16,MAP_HEIGHT/2+3*16),
 			area(),
 			body({isStatic:true}),
-			scale(1)
+			scale(1),
+			"chien"
 		])
 
 
@@ -2327,14 +2413,14 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			// center() returns the center point vec2(width() / 2, height() / 2)
 			anchor("center"),
 			pos(center().x-16*3,MAP_HEIGHT/2),// the modified position from before
-			area(),
+			area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
 			body({isStatic:true}),
 		])
 		let arbre2 = add([
 			sprite("arbre"),
 			// center() returns the center point vec2(width() / 2, height() / 2)
 			anchor("center"),
-			pos(center().x-16*4.5,MAP_HEIGHT/2+2*16),// the modified position from before
+			pos(center().x-16*2.5,MAP_HEIGHT/2+2*16),// the modified position from before
 			area(),
 			body({isStatic:true}),
 		])
@@ -2342,41 +2428,99 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			sprite("exte_arbre_anime",{anim:"shine"}),
 			// center() returns the center point vec2(width() / 2, height() / 2)
 			anchor("center"),
-			pos(center().x-16*5.5,MAP_HEIGHT/2+1.5*16),// the modified position from before
+			pos(center().x-16*4.5,MAP_HEIGHT/2+1*16),// the modified position from before
 			area(),
 			body({isStatic:true}),
 		])
+
 		let arbre4 = add([
 			sprite("arbre"),
 			// center() returns the center point vec2(width() / 2, height() / 2)
 			anchor("center"),
-			pos(center().x-16*6.5,MAP_HEIGHT/2+2.5*16),// the modified position from before
+			pos(center().x-16*5.5,MAP_HEIGHT/2+2.5*16),// the modified position from before
 			area(),
 			body({isStatic:true}),
 		])
-
-		const player = add([
-			sprite("mecanix_velo"),
+		let arbre5 = add([
+			sprite("exte_arbre_anime",{anim:"shine"}),
 			// center() returns the center point vec2(width() / 2, height() / 2)
 			anchor("center"),
-			pos(position.x,position.y),// the modified position from before
+			pos(center().x+16*2,MAP_HEIGHT/2+5.7*16),// the modified position from before
 			area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
-			body(),
-			// pas de isStatic
-			scale(PERSOSCALE),
-			"player"
+			body({isStatic:true}),
+		])
+		let arbre6 = add([
+			sprite("exte_arbre_anime",{anim:"shine"}),
+			// center() returns the center point vec2(width() / 2, height() / 2)
+			anchor("center"),
+			pos(center().x+16*0.8,MAP_HEIGHT/2+5.7*16),// the modified position from before
+			area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
+			body({isStatic:true}),
+		])
+		let arbre7 = add([
+			sprite("exte_arbre_anime",{anim:"shine"}),
+			// center() returns the center point vec2(width() / 2, height() / 2)
+			anchor("center"),
+			pos(center().x+16*5.5,MAP_HEIGHT/2-8),// the modified position from before
+			area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
+			body({isStatic:true}),
+		])
+		let arbre8 = add([
+			sprite("exte_arbre_anime",{anim:"shine"}),
+			// center() returns the center point vec2(width() / 2, height() / 2)
+			anchor("center"),
+			pos(center().x-16*5.5,MAP_HEIGHT/2-6*16),// the modified position from before
+			area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
+			body({isStatic:true}),
 		])
 
-
+		let banc_perso = add([
+			sprite("exte_banc_perso",{anim:"idle"}),
+			// center() returns the center point vec2(width() / 2, height() / 2)
+			anchor("center"),
+			pos(center().x-4*16,MAP_HEIGHT/2+3.3*16),// the modified position from before
+			area(),
+			body({isStatic:true}),
+			scale(1.3),
+			"perso_exte"
+		])
+		let dialogChips = [
+			["m","Salut! Je peux m'asseoir avec toi?"],
+			["p","Oui, mais seulement si tu partages tes chips avec moi.. et les pigeons haha"],
+			["m","Allez okay!"],
+			["p","Comment c'est alors de gérer ce magasin?"],
+			["m","C'est cool! J'adore faire des réparations!"],
+			["p","Ah yes! Et les clients?"],
+			["m","Une petite claque pour ceux qui exagerent."],
+			["p","Hahah tu me fait bien rire. Si jamais mon trick c'est d'appuyer sur espace pour direct les later."],
+			["m","Ohh trop merci! Je vais essayer."]
+		]
+	
+		// collision avec le perso exte
+		player.onCollide("perso_exte",()=>{
+			if(chipsFlag == true){
+				justDialog(dialogChips)
+				chipsGivenFlag = true
+				chipsFlag=false
+			}else {
+				addTextOnDialogBox("Amuse-toi bien!")
+			}
+		})
 		// collision avec le chat
 		player.onCollide("chatMaki",()=>{
 			if(croquettesFlag == true){
 				addTextOnDialogBox("Tiens des croquettes pour toi!")
 				player.sprite = "mecanix_chat"
 				croquettesGivenFlag = true
+				croquettesFlag = false
 			}else {
 				addTextOnDialogBox("Miaowww...")
+
 			}
+		})
+		// collision avec le chat
+		player.onCollide("chien",()=>{
+				addTextOnDialogBox("Attention tes doigts!")
 		})
 		// animate the player
 		//player.play("roule")
@@ -2394,7 +2538,8 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			"perso_dechett_1"
 		])
 		persoDechett.flipX = true
-
+	// add status bar
+		addStatusBar(jourIdx,totalCoins,totalStars)
 		// DECHETERRIE DIALOG
 		let dechettDialog1 = [
 			["PNJ","Hé toi! Qu'est-ce que tu fais là?"],
@@ -2847,7 +2992,9 @@ scene("inventaire", (jourIdx,totalCoins,totalStars,saved_position,clientCounter)
 			 shiftX = +8  //coming from right shifting on right
 		}
 		let mod_saved_position = saved_position.add(vec2(shiftX,+8)) // backward half a tile to avoid coliding again
-
+		console.log("In the inventaire");
+		console.log("Total coins is : "+totalCoins);
+		console.log("Total stars is : "+totalStars);
 		// ADD INITIAL MESSAGE
 	//	addTextOnDialogBox("Si je trouve tous les outils manquants, mon atelier sera le plus classe!")
 		// LEAVE SCENE
@@ -3402,13 +3549,14 @@ scene("bonus",(jourIdx,totalCoins,totalStars)=>{
 
 			case 3:
 			// add text, sprite and update inventory
-			addBonus("J'ai gagné des croquettes pour chate encore  ","croquettes","Croquettes")
+			addBonus("J'ai gagné des chips!","bonus_chips","Chips")
+			chipsFlag = true //flag to modify the collision with the cat
 			onKeyPress("enter", () => {
 							goInteraction(jourIdx,totalCoins,totalStars)
 					 })
 			break;
 			case 4:
-			addBonus("J'ai gagné des croquettes pour chate encore  ","croquettes","Croquettes")
+			addBonus("J'ai gagné des croquettes pour chat encore  ","croquettes","Croquettes")
 			onKeyPress("enter", () => {
 							goInteraction(jourIdx,totalCoins,totalStars)
 					 })
@@ -3962,7 +4110,7 @@ scene("Burnout", (jourIdx,totalCoins,totalStars) => {
 function start() {
 		// Start with the "game" scene, with initial parameters
 //go("atelier", 5, 85,0/*totalCoins*/,INITIALPOSITION)
-//go("interactionJour1",1,totalCoins,totalStars,INITIALPOSITION)
+//go("interactionJour3",3,totalCoins,totalStars,INITIALPOSITION)
 //go("jourFinal",5,100,100,INITIALPOSITION,2)
 //go("outside",5,30,30,INITIALPOSITION)
 //	go("interactionJour1", (1,0,40,20,INITIALPOSITION))//go("clientDialog",1,75,100/*totalCoins*/,50/*force*/)
