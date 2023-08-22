@@ -106,6 +106,69 @@
     "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
     "sourceSize": { "w": 16, "h": 16 },
     "duration": 250
+   },
+   {
+    "filename": "perso_dechett_1 12.aseprite",
+    "frame": { "x": 192, "y": 0, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 250
+   },
+   {
+    "filename": "perso_dechett_1 13.aseprite",
+    "frame": { "x": 208, "y": 0, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 250
+   },
+   {
+    "filename": "perso_dechett_1 14.aseprite",
+    "frame": { "x": 224, "y": 0, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 250
+   },
+   {
+    "filename": "perso_dechett_1 15.aseprite",
+    "frame": { "x": 240, "y": 0, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 250
+   },
+   {
+    "filename": "perso_dechett_1 16.aseprite",
+    "frame": { "x": 256, "y": 0, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 250
+   },
+   {
+    "filename": "perso_dechett_1 17.aseprite",
+    "frame": { "x": 272, "y": 0, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 250
+   },
+   {
+    "filename": "perso_dechett_1 18.aseprite",
+    "frame": { "x": 288, "y": 0, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 250
    }
  ],
  "meta": {
@@ -113,14 +176,14 @@
   "version": "1.2.40-x64",
   "image": "perso_dechett_1.png",
   "format": "RGBA8888",
-  "size": { "w": 192, "h": 16 },
+  "size": { "w": 304, "h": 16 },
   "scale": "1",
   "frameTags": [
    { "name": "walk_right", "from": 0, "to": 3, "direction": "forward" },
-   { "name": "idle", "from": 4, "to": 4, "direction": "forward" },
-   { "name": "idlesdown", "from": 5, "to": 5, "direction": "forward" },
-   { "name": "down", "from": 6, "to": 8, "direction": "forward" },
-   { "name": "up", "from": 9, "to": 11, "direction": "forward" }
+   { "name": "idle", "from": 4, "to": 11, "direction": "forward" },
+   { "name": "idlesdown", "from": 12, "to": 12, "direction": "forward" },
+   { "name": "down", "from": 13, "to": 15, "direction": "forward" },
+   { "name": "up", "from": 16, "to": 18, "direction": "forward" }
   ],
   "layers": [
    { "name": "character", "opacity": 255, "blendMode": "normal" },
