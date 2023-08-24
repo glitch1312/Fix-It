@@ -48,12 +48,10 @@
   ],
   "layers": [
    { "name": "Layer 1", "opacity": 255, "blendMode": "normal" },
-   { "name": "rayon soleil", "opacity": 255, "blendMode": "normal" },
-   { "name": "Layer 4", "opacity": 255, "blendMode": "normal" },
    { "name": "route", "opacity": 255, "blendMode": "normal" },
-   { "name": "velo2", "opacity": 255, "blendMode": "normal" },
    { "name": "texte sm", "opacity": 255, "blendMode": "normal" },
    { "name": "boite haut", "opacity": 255, "blendMode": "normal" },
+   { "name": "Flattened", "opacity": 255, "blendMode": "normal" },
    { "name": "velo", "opacity": 255, "blendMode": "normal" }
   ],
   "slices": [
