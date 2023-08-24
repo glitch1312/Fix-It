@@ -1,5 +1,7 @@
 <!--- Le README de votre Github doit documenter le contexte de votre développement en mentionnant, dans l’ordre suivant
 une brève description (en français ou en anglais) de votre rendu et de ses fonctionnalités --->
+(Best played in Brave browser)
+
 ## Fix It! 
 <img width="768" alt="image" src="https://github.com/glitch1312/Fix-It/assets/96738339/fd947a11-68b2-48e4-8a66-aac71b826d6a">
 
