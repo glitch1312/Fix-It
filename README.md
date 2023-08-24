@@ -5,8 +5,7 @@ une brève description (en français ou en anglais) de votre rendu et de ses fon
 ## Fix It! 
 <img width="768" alt="image" src="https://github.com/glitch1312/Fix-It/assets/96738339/fd947a11-68b2-48e4-8a66-aac71b826d6a">
 
-Fix it Tiny pixel est un petit jeu en pixel 2D écrit en Kaboom.js sur le sexisme ordinaire dans les ateliers. Il s'agit d'un jeu sur la réparation de vélos et la lutte contre le patriarcat ! Vous incarnez un personnage queer qui ouvre un atelier de réparation de vélos. Les clients viennent à l'atelier pour réparer leurs vélos. Parfois, ils font des remarques sexistes, parfois non... Vous devez décider quoi faire à chaque fois. Vous pouvez soit RÉPARER les vélos des clients, gagner de l'*argent* et acheter des outils, soit les frapper et gagner de la *force*. Plus vous devenez fort.e.x, plus vous trouvez d'outils à l'extérieur. Cependant, au milieu de tout cela, vous devez faire les bons choix, au risque de faire faillite et de fermez l'atelier si vous perdez trop de *clients*... 
-
+Fix it Tiny pixel est un petit jeu en pixel 2D écrit en Kaboom.js sur le sexisme ordinaire dans les ateliers. Il s'agit d'un jeu sur la réparation de vélos et la lutte contre le patriarcat ! Vous incarnez un personnage queer qui ouvre un atelier de réparation de vélos. Les clients viennent à l'atelier pour réparer leurs vélos. Parfois, ils font des remarques sexistes, parfois non... Vous devez décider quoi faire à chaque fois. 
 <!---#au moins une capture illustrant votre travail ; attention, pour la VR, un GIF est requis --->
 <img width="769" alt="image" src="https://github.com/glitch1312/Fix-It/assets/96738339/0e8c0f8e-4185-4067-9944-f2bb65f8cec2">
 
@@ -15,7 +14,7 @@ Fix it Tiny pixel est un petit jeu en pixel 2D écrit en Kaboom.js sur le sexism
 Pour lancer le jeu en mode local : télécharger l'entier du répertoire. Lancer un serveur web local (exemple avec python3 :  python3 -m http.server) permettant de télécharger des fichiers locaux. Ouvrir son navigateur sur le port 8080 (http://127.0.0.1:8080/).
 Les librairies python avec le module http est nécessaire pour run le serveur local.
 
-Pour jouer en ligne : https://glitch-1312.itch.io/fix-it (Attention certain bugs sont présents sur la version en ligne)
+Pour jouer en ligne : https://glitch-1312.itch.io/fix-it
 <!---les éventuels modules, librairies ou scripts intégrés ou nécessaires au bon fonctionnement de votre rendu --->
 
 <!---les éventuels copyrights, informations de licence, et autres références de vos sources et ressources y compris en matière de code récupéré --->
