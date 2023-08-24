@@ -61,8 +61,8 @@ loadAseprite("atelier_velo_sur_pied_kc","images/atelier_velo_sur_pied_kc.png","i
 loadAseprite("exte_maki","images/exte_maki.png","images/exte_maki.json")
 loadAseprite("exte_sirius","images/exte_sirius.png","images/exte_sirius.json")
 loadAseprite("croquettes","images/croquettes.png","images/croquettes.json")
-//loadAseprite("atelier_mur_fond","images/atelier_mur_fond.png","images/atelier_mur_fond.json")
-loadSprite("atelier_mur_fond","images/atelier_mur_fond.png")
+loadAseprite("atelier_mur_fond","images/atelier_mur_fond.png","images/atelier_mur_fond.json")
+//loadSprite("atelier_mur_fond","images/atelier_mur_fond.png")
 
 
 // SPRITE ATLA
@@ -1523,7 +1523,7 @@ function add_atelier_items(){
 	}
 	//mur du murFond
 	const murFond = add([
-		sprite("atelier_mur_fond"),
+		sprite("atelier_mur_fond",{anim:"idle"}),
 		anchor("center"),
 		pos(center().x,56)
 	])
@@ -1532,7 +1532,7 @@ function add_atelier_items(){
 		sprite("velo_rouge"),
 		scale(1),
 		anchor("center"),
-		pos(center().x,5*16),
+		pos(center().x,5.5*16),
 		area(),
 		body({isStatic:true}),
 		"velorouge"
