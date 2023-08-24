@@ -439,7 +439,7 @@ let INITIALCLIENTSLIST = {
 [ "client_19_grand", "Hello."],
      [ "mecanix_en_pied", "Salut!" ],
      [ "client_19_grand", "Ça fait plaisir de voir une femme travailler ici, moi je trouve ça super ! Mais il paraît qu'il y'a des moments où c'est pas ouvert à tout le monde... c'est un peu limite quand même non?" ],
-     [ "mecanix_en_pied", "Je pense que c'est nécessaire, et puis se réunir entre personnes qui vivent des trucs similaires c'est une pratique qui se fait depuis longtemps." ],
+     [ "mecanix_en_pied", "Je pense que c'est nécessaire, et puis se réunir entre personnes qui vivent des trucs similaires c'est un truc qui se fait depuis longtemps." ],
      [ "client_19_grand", "Mais c'est un peu une mode le féminisme, moi je suis plutôt humaniste... tout le monde est égal quoi..." ],
           [ "client_19_grand", "Bref, je viens pour mon vélo en fait hein, hahaha! c'est possible de régler les vitesses?" ],
     ],
@@ -1594,7 +1594,10 @@ function add_atelier_items(){
 	if(boiteOutilsFlag==true){
 		let boiteAOutils = add([
 			sprite("bonus_boites"),
-			pos(center().x-(6.5*16),MAP_HEIGHT/2+(5.5*16))
+			pos(center().x-(6.5*16),MAP_HEIGHT/2+(5.5*16)),
+			area(),
+			body({isStatic:true}),
+
 		])
 	}
 	}
@@ -1608,7 +1611,7 @@ function add_atelier_collisions(player,totalCoins,totalStars){
 			pos(center().x,BOTTOM),
 		])
 		let txt = add([
-			text("Incroyable! Quelles trouvailles j'ai fait à la dechet!", { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
+			text("Incroyable! Quelle trouvaille j'ai fait à la dechet!", { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
 			anchor("center"),
 			pos(center().x,BOTTOM),
 			color(MYBLUE),
@@ -2010,7 +2013,7 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 		onUpdate(()=>{
 			 console.log("in the update");
 				if(finalInt0==true && finalInt1 == true && finalInt2 == true && finalInt3 == true && allieInt==true){
-					wait(3.5,()=>{
+					wait(5.5,()=>{
 						musicFond.paused = true
 						go("partyWin")})
 				}
@@ -2560,7 +2563,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 		})
 		// collision avec le chat
 		player.onCollide("chien",()=>{
-				addTextOnDialogBox("Attention tes doigts!")
+				addTextOnDialogBox("Wouaf! Je suis chou nan?!")
 		})
 		// animate the player
 		//player.play("roule")
@@ -2577,8 +2580,8 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			["M","Non, je viens de commencer de taffer à l'atelier de vélo pas loin d'ici."],
 			["PNJ", "Ha ouais et ça va? Je connaissais la personne d'avant, iel était sympa mais je crois que c'était pas toujours évident avec les clients."],
 			["M", "Ha ouais je vois...Je me fais pas mal expliquer mon taf par des types c'est un peu chiant."],
-			["PNJ","Je comprends, ça m'arrive ici aussi des fois. Ha aujourd'hui quelqu'un a amené des pieds de vélo en bon état, tu veux les prendre?"],
-			["M", "Grave! Merci. bon j'y retourne... à bientôt!"]
+			["PNJ","Je comprends, ça m'arrive ici aussi des fois. Ha aujourd'hui quelqu'un a amené des stands pour vélo en bon état, tu veux les prendre?"],
+			["M", "Grave! Merci. Bon j'y retourne... à bientôt!"]
 			]
 		let dechettDialog2 = [
 				["PNJ","Hé toi, te revoilà!"],
@@ -2589,7 +2592,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 				["M", "Ouais t'as raison. Aussi je passais par la parce que j'ai des flyers pour la manif contre les violences policieres."],
 				["PNJ","Oh merci, j'en ai entendu parler mais j'ai pas les détails."],
 				["M", "Bah y'a tout écrit dessus,tiens!"],
-				["PNJ","Top, je vais les faire tourner c'est important"],
+				["PNJ","Top, je vais les faire tourner c'est important."],
 				]
 		// Atelier vandaliser
 		let dechettDialog3 = [
@@ -2940,7 +2943,7 @@ scene("inventaire", (jourIdx,totalCoins,totalStars,saved_position,clientCounter)
 				// 	}
 
 					//achatList.push(key+":\n"+"Cet outil coûte "+inventory[key].cost+"$\n"+possAchat)
-			achatList.push(key+":\n"+"Tu n'as pas encore cet objet")
+			achatList.push(key+":\n"+"Tu n'as pas encore cet objet.")
 
 			}
 			// OWNED TOOLS
@@ -2979,7 +2982,7 @@ scene("inventaire", (jourIdx,totalCoins,totalStars,saved_position,clientCounter)
 		])
 		// create the achat texte
 		const achatTexte = add([
-			text("Démonte-pneu:\nTu as déjà cet outil!",{size:TXTSIZE}),
+			text("Démonte-pneu:\nTu n'as pas encore cet objet.",{size:TXTSIZE}),
 			pos(center().x-(MAP_WIDTH/8),BOTTOM-(MAP_WIDTH/15))
 		])
 		//move the selector and modify the achat texte
@@ -3674,7 +3677,7 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 			case 0 :
 
 				let bravo = add([text("Wouahhh j'ai viré tous les sexistes!",
-				{ size: TXTSIZE, width:TXTWIDTH, font:"joystix"}),color(MYPURPLE),scale(1),anchor("center"),pos(center().x,BOTTOMTEXT)])
+				{ size: TXTSIZE, width:TXTWIDTH,align:"center",font:"joystix"}),color(MYBLUE),scale(1),anchor("center"),pos(center().x,BOTTOMTEXT)])
 				// object gained
 				onKeyPress("enter",()=>{go("bonus",jourIdx,totalCoins,totalStars)})
 
@@ -4085,13 +4088,14 @@ scene("interactionJour4", (jourIdx,totalCoins,totalStars,position) => {
 					scale(1),anchor("center"),pos(center().x,BOTTOM+5),])
 
 					onKeyPress("space",() => {
+							musicFond.paused= true
 								    go("start")
 								})
 	})
 // ADD GAME OVER SCENE
 scene("Bankrupt", (jourIdx,totalCoins,totalStars) => {
 	musicFond.paused = true
-	play("audio_fete")
+	let musicFete = play("audio_fete")
 	add_atelier_map()
 	// add party mood
 	const raveParty = add([
@@ -4114,13 +4118,14 @@ scene("Bankrupt", (jourIdx,totalCoins,totalStars) => {
 				scale(1),anchor("center"),pos(center().x,BOTTOM+5),])
 
 				onKeyPress("space",() => {
+					musicFete.paused = true
 							    go("start")
 							})
 })
 
 scene("Burnout", (jourIdx,totalCoins,totalStars) => {
 	musicFond.paused = true
-	play("audio_burnout")
+	let musicBurnout = play("audio_burnout")
 	add_atelier_map()
 	destroyAll("velorouge")
 	// Titre
@@ -4137,6 +4142,7 @@ scene("Burnout", (jourIdx,totalCoins,totalStars) => {
 				scale(1),anchor("center"),pos(center().x,BOTTOM+5),])
 
 	onKeyPress("space",() => {
+						musicBurnout.paused = true
 				    go("start")
 				})
 })
