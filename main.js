@@ -1525,14 +1525,14 @@ function add_atelier_items(){
 	const murFond = add([
 		sprite("atelier_mur_fond",{anim:"idle"}),
 		anchor("center"),
-		pos(center().x,56)
+		pos(center().x,48)
 	])
 	//velos
 	const velo_rouge_1 = add([
 		sprite("velo_rouge"),
 		scale(1),
 		anchor("center"),
-		pos(center().x,5.5*16),
+		pos(center().x,5*16),
 		area(),
 		body({isStatic:true}),
 		"velorouge"
