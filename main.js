@@ -1901,8 +1901,10 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 		])
 	// PLAYER
 		const colBox = 5
+		let mecanixSprite = "mecanix"
+		if (croquettesGivenFlag == true ){mecanixSprite = "mecanix_chat"}
 		const player = add([
-			sprite("mecanix"),
+			sprite(mecanixSprite),
 			// center() returns the center point vec2(width() / 2, height() / 2)
 			anchor("center"),
 			//console.log(saved_position),
@@ -3031,7 +3033,12 @@ scene("inventaire", (jourIdx,totalCoins,totalStars,saved_position,clientCounter)
 	//	addTextOnDialogBox("Si je trouve tous les outils manquants, mon atelier sera le plus classe!")
 		// LEAVE SCENE
 		onKeyPress("escape", () => {
-			go("atelier",jourIdx,totalCoins,totalStars,mod_saved_position,clientCounter)})
+			if(jourIdx==5 && helpDechetFlag == true){
+			go("jourFinal", jourIdx, totalCoins,totalStars,mod_saved_position,clientCounter)}
+			else{
+			go("atelier",jourIdx,totalCoins,totalStars,mod_saved_position,clientCounter)}
+		}
+		)
 
 	})
 
