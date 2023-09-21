@@ -156,7 +156,7 @@ let musicFond = play("page_debut", {
     loop: true
 })
 musicFond.paused = true
-
+let interrupt = false
 let totalCoins = 0
 let totalStars = 0
 let interactionDechetFlag = false // no interaction with dechetterie perso
@@ -204,6 +204,9 @@ const MYPURPLE = rgb(79,30,69)
 const MYDARKPINK = rgb(238, 106,124)
 const MYDARKBLUE = rgb(99,138,159)
 const MYLIGHTBLUE = rgb(138,162,173)
+
+//GLOBAL
+
 
 // LEVELS INITIALIZATION with JSON
 let INITIALCLIENTSLIST = {
@@ -1037,6 +1040,7 @@ function addStatusBar(jourIdx,totalCoins,totalStars){
 		])
 
 	}
+//GLOBAL
 function player_movement(player,speed){
 		// onKeyDown() registers an event that runs every frame as long as user is holding a certain key
 		onKeyDown("left", () => {
@@ -1045,6 +1049,7 @@ function player_movement(player,speed){
 			player.move(-speed, 0)
 			player.flipX = true
 		})
+
 		onKeyDown("right", () => {
 			player.play("walk_right")
 			player.move(speed, 0)
@@ -1059,6 +1064,7 @@ function player_movement(player,speed){
 			player.play("down")
 			player.move(0, speed)
 		})
+
 	}
 function justDialog(interactionDialog){
 			// add dialog box
@@ -1108,7 +1114,6 @@ function justDialog(interactionDialog){
 	})
 }
 function launchDialog(interactionDialog){
-
 			// add dialog box
 			let textBox = add([
 			sprite("dialogbox"),//, width: width() - 230
@@ -1152,6 +1157,7 @@ function launchDialog(interactionDialog){
 			dialogAction.paused = true
 			destroy(textBox)
 			destroy(txt)
+			interrupt = false
 			console.log(jourIdx);
 			//console.log(interactionDechetFlag);
 			// flog of the dialog is modified is open now
@@ -1188,10 +1194,10 @@ function launchDialog(interactionDialog){
 	})
 
 	// if anything is touched before the end of the dialog
-	onKeyPress("down",()=>{destroy(txt),destroy(textBox)})
-	onKeyPress("up",()=>{destroy(txt),destroy(textBox)})
-	onKeyPress("left",()=>{destroy(txt),destroy(textBox)})
-	onKeyPress("right",()=>{destroy(txt),destroy(textBox)})
+	// onKeyPress("down",()=>{destroy(txt),destroy(textBox)})
+	// onKeyPress("up",()=>{destroy(txt),destroy(textBox)})
+	// onKeyPress("left",()=>{destroy(txt),destroy(textBox)})
+	// onKeyPress("right",()=>{destroy(txt),destroy(textBox)})
 	return dialogFinished
 
 }
@@ -2188,6 +2194,7 @@ scene("clientDialog", (clientKey,jourIdx,totalCoins,totalStars) => {
 
 // ---- Monde exterieur -----//
 scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
+
 			let musicOutside = play("exte",{loop:true})
 			// at start of the outside scene the contenair is closed
 			//let ouvertTag=false
@@ -2569,8 +2576,33 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 		})
 		// animate the player
 		//player.play("roule")
-		const SPEED = 60;
-		player_movement(player,SPEED)
+		const speed = 60;
+		//player_movement(player,SPEED)
+		// movement
+		onUpdate(() => {
+		if (isKeyDown("left") && interrupt == false) {
+			player.play("walk_right")
+			player.move(-speed, 0)
+			player.flipX = true
+		}})
+		onUpdate(() => {
+		if (isKeyDown("right")&& interrupt == false) {
+			player.play("walk_right")
+			player.move(speed, 0)
+			player.flipX = false
+		}})
+		onUpdate(() => {
+		if (isKeyDown("up")&& interrupt == false) {
+			player.play("up")
+			player.move(0, -speed)
+			player.flipX = true
+		}})
+		onUpdate(() => {
+		if (isKeyDown("down")&& interrupt == false) {
+			player.play("down")
+			player.move(0, speed)
+			player.flipX = false
+		}})
 
 	// add status bar
 		addStatusBar(jourIdx,totalCoins,totalStars)
@@ -2609,9 +2641,14 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 				["PNJ","Oui, je ferme la déchett et j'arrive. A toute!"],
 				]
 
+
 		// Interaction with the personnage dechetterie
 		player.onCollide("perso_dechett_1",()=>{
-			player_movement(player,0)//stop the movement for the dialog time
+			interrupt = true
+			//leftMove.paused=true//stop the movement for the dialog time
+			onKeyPress(()=>{})//nothing happen if you press anything
+			//console.log(leftMove);
+			console.log("player movement is supposed to be zero");
 			//After the first interaction
 			if(interactionDechetFlag == true){
 
@@ -2648,6 +2685,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 						txt.text = "Allez vas-y, j'arrive bientôt!"
 					}
 					onKeyPress(()=>{
+						interrupt = false
 						destroy(txt),
 						destroy(textBox)
 						})
