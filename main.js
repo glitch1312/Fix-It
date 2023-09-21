@@ -596,6 +596,24 @@ scene("start",() => {
 	// INVENTORY
 	// state can be : unavailable,available, owned
 	let inventory = {
+		"Clé":	{
+			spriteName : "atelier_clee",
+			state: "available",
+			cost: "10",
+
+		},
+		"Stand pour vélo #1":	{
+			spriteName : "velo_sur_pied_vide",
+			state: "available",
+			cost: "30",
+
+		},
+		"Stand pour vélo #2":	{
+			spriteName : "velo_sur_pied_vide",
+			state: "available",
+			cost: "30",
+
+		},
 		"Démonte-pneu":	{
 			spriteName : "Sprite_demontepneu",
 			state: "available",
@@ -623,30 +641,14 @@ scene("start",() => {
 		// 	cost: "10",
 		//
 		// },
-		"Clé":	{
-			spriteName : "atelier_clee",
-			state: "available",
-			cost: "10",
 
-		},
 		// "Clef ":	{
 		// 	spriteName : "sprite_clefmonte",
 		// 	state: "available",
 		// 	cost: "10",
 		//
 		// },
-		"Stand pour vélo #1":	{
-			spriteName : "velo_sur_pied_vide",
-			state: "available",
-			cost: "30",
 
-		},
-		"Stand pour vélo #2":	{
-			spriteName : "velo_sur_pied_vide",
-			state: "available",
-			cost: "30",
-
-		},
 		"Dérive-chaine":	{
 			spriteName : "sprite_demontechaine",
 			state: "available",
@@ -2931,6 +2933,13 @@ scene("inventaire", (jourIdx,totalCoins,totalStars,saved_position,clientCounter)
 				}
 			})
 
+		// add sprite note
+		let note = add([
+	 		 sprite("inventaire_note"),//, width: width() - 230
+	 		 anchor("center"),
+			 scale(0.8),
+	 		 pos(center().x+8*8,9*8),
+	 	 ])
 		// add INSTRUCTIONS sur le fond
 		const return_instruction = add([
 			text("( appuie sur esc pour retour à l'atelier) ", {font: "prstart", size:TXTSIZE, width:TXTWIDTH}),
@@ -2953,8 +2962,9 @@ scene("inventaire", (jourIdx,totalCoins,totalStars,saved_position,clientCounter)
 			const shiftX = 34
 			const shiftY = 45
 			const textCostSize = TXTSIZE -2
-			posX = center().x-(MAP_WIDTH/2)+(((i)%6)*shiftX)+40
-			posY = 50+(Math.floor(i/6)*shiftY)
+			const column = 4
+			posX = center().x-(MAP_WIDTH/2)+(((i)%column)*shiftX)+40
+			posY = 50+(Math.floor(i/column)*shiftY)
 			// AVAILABLE TOOLS
 			// show the tool with half opacity if it is available
 			if (inventory[key].state == "available"){
@@ -3026,17 +3036,48 @@ scene("inventaire", (jourIdx,totalCoins,totalStars,saved_position,clientCounter)
 			pos(center().x-(MAP_WIDTH/8),BOTTOM-(MAP_WIDTH/15))
 		])
 		//move the selector and modify the achat texte
-		let selectorIndex = 1
+		let selectorIndex = 0
 		onKeyPress("right", () => {
+			selectorIndex= (selectorIndex+1)%length
 			// use position where a tool has been saved and put it in position list
 			selector.pos.x =positionList[selectorIndex][0]
 			selector.pos.y =positionList[selectorIndex][1]
 			// use achat texte list
 			achatTexte.text = achatList[selectorIndex]
-			selectorIndex++
-			selectorIndex = selectorIndex%length
 			play("selector")
 	})
+	onKeyPress("left", () => {
+		console.log(selectorIndex);
+		selectorIndex = (selectorIndex-1+length)%length
+		// use position where a tool has been saved and put it in position list
+		selector.pos.x =positionList[selectorIndex][0]
+		selector.pos.y =positionList[selectorIndex][1]
+		// use achat texte list
+		achatTexte.text = achatList[selectorIndex]
+		play("selector")
+})
+
+onKeyPress("up", () => {
+	console.log(selectorIndex);
+	selectorIndex = (selectorIndex+4+length)%length
+	// use position where a tool has been saved and put it in position list
+	selector.pos.x =positionList[selectorIndex][0]
+	selector.pos.y =positionList[selectorIndex][1]
+	// use achat texte list
+	achatTexte.text = achatList[selectorIndex]
+	play("selector")
+})
+onKeyPress("down", () => {
+	console.log(selectorIndex);
+	selectorIndex = (selectorIndex-4+length)%length
+	// use position where a tool has been saved and put it in position list
+	selector.pos.x =positionList[selectorIndex][0]
+	selector.pos.y =positionList[selectorIndex][1]
+	// use achat texte list
+	achatTexte.text = achatList[selectorIndex]
+	play("selector")
+})
+
 		// Old version
 		// buy the tools you can buy
 		// const achat = onKeyPress("enter", () => {
@@ -4202,6 +4243,7 @@ function start() {
  //justifiedFightCounter=4
  //go("Carton_Journalier","client1",1,30,30,10,10,1)
  //go("bonus",2)
+//	go("inventaire", 1, 10, 10,INITIALPOSITION,0)
  go("start")
 	}
 start()
