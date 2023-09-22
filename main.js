@@ -1108,6 +1108,7 @@ function justDialog(interactionDialog){
 		if (curDialog==0){
 			// dialog finished, options to choose
 			dialogAction.paused = true
+			interrupt = false
 			destroy(textBox)
 			destroy(txt)
 				}else{
@@ -2553,6 +2554,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 		// collision avec le perso exte
 		player.onCollide("perso_exte",()=>{
 			if(chipsFlag == true){
+				interrupt = true
 				justDialog(dialogChips)
 				chipsGivenFlag = true
 				chipsFlag=false
@@ -2647,10 +2649,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 		// Interaction with the personnage dechetterie
 		player.onCollide("perso_dechett_1",()=>{
 			interrupt = true
-			//leftMove.paused=true//stop the movement for the dialog time
-			onKeyPress(()=>{})//nothing happen if you press anything
-			//console.log(leftMove);
-			console.log("player movement is supposed to be zero");
+
 			//After the first interaction
 			if(interactionDechetFlag == true){
 
