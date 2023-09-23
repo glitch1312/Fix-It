@@ -94,6 +94,7 @@ loadSprite("atelier_poster","images/poster.png")
 loadSprite("atelier_poster_grand","images/atelier_poster_grand.png")
 loadSprite("atelier_bibliotheque","images/atelier_bibliotheque.png")
 loadSprite("atelier_cover","images/atelier_cover.png")
+loadSprite("atelier_cafe","images/atelier_cafe.png")
 
 loadSprite("atelier_armoire_kc","images/atelier_armoire_kc.png")
 loadSprite("atelier_clee","images/atelier_clee.png")
@@ -1539,15 +1540,25 @@ function add_atelier_items(){
 		scale(0.5),
 		anchor("center"),
 		area(),
-		pos(center().x+26,MAP_HEIGHT/2+20),
+		pos(center().x+24,MAP_HEIGHT/2+20),
 		"bibliotheque"
+	])
+	// atelier_cafe
+	const cafe = add([
+		sprite("atelier_cafe"),
+		scale(0.05),
+		anchor("center"),
+		area(),
+		pos(center().x,MAP_HEIGHT/2),
+		"cafe"
 	])
 	//mur du murFond
 	const murFond = add([
 		sprite("atelier_mur_fond",{anim:"idle"}),
 		anchor("center"),
-		pos(center().x,48)
+		pos(center().x,48),
 	])
+
 	//velos
 	const velo_rouge_1 = add([
 		sprite("velo_rouge"),
@@ -1556,7 +1567,8 @@ function add_atelier_items(){
 		pos(center().x,5*16),
 		area(),
 		body({isStatic:true}),
-		"velorouge"
+		"velorouge",
+			"velorouge1"
 	])
 	const velo_rouge_2 = add([
 		sprite("velo_rouge"),
@@ -1582,7 +1594,8 @@ function add_atelier_items(){
 			pos(center().x+6*16,9.25*16),
 			area(),
 			body({isStatic:true}),
-			"velorouge"
+			"velorouge",
+				"velorouge4"
 		])
 	// add velo sur pied items, on day 5 we have the broken version
 	if(veloTag==true){
@@ -1660,16 +1673,13 @@ function add_atelier_collisions(player,totalCoins,totalStars){
 	// add flyers collision
 	if(flyersFlag==true){
 			player.onCollide("flyers", () => {
-			let poster2 = add([
+				onKeyPress("enter",()=>{
+					let poster2 = add([
 					sprite("atelier_poster2_grand"),//, width: width() - 230
 					// 	text("Complète ton inventaire pour\n un TURFU RADIEUX!", { size:  TXTSIZE }),//, width: width() - 230
 					anchor("center"),
 					pos(center().x,MAP_HEIGHT/2-10),
-					"afficheMessage2"
-					])
-		if(firstCollisionDone){
-				console.log("in the first collision done");
-
+					"afficheMessage2"])
 					let distributeInstruction = add([
 						text("(\"espace\" pour prendre les flyers) ", {font: "prstart", size:TXTSIZE, width:TXTWIDTH}),
 						anchor("center"),
@@ -1678,37 +1688,65 @@ function add_atelier_collisions(player,totalCoins,totalStars){
 						"distributeInstruction"
 						])
 					onKeyPress("space",()=>{
+
 						destroyAll("distributeInstruction")
 						destroyAll("flyers")
-						pensee.paused = true
+
 						play("audio_reussite")
 						flyersTaken = true
 						flyersFlag = false //no more flyers on the table for the rest of the game
 						})
-				}
-			onKeyPress(()=>{
+					onKeyPress(()=>{
 					destroyAll("afficheMessage2")
 					destroyAll("distributeInstruction")
 				})
-			})
-			let pensee = player.onCollideEnd("flyers", () => {
-				addTextOnDialogBox("Mmmh.. je m'étais dit que je les distribuerai, peut-être que je devrais faire ca avant que les clients arrivent.")
-				firstCollisionDone = true
 				})
+			})
 		}
+
 	// collision
 	if (jourIdx==5){
 	affichageOnCollision(player,"armoireKc","Oh mince...La porte de l'armoire est toute défoncée. Quel zbeul...")
 	affichageOnCollision(player,"pied_velos_kc","Argh mes jolis stands... Je vais avoir besoin d'aide.")
 	}
+	//
+	if (jourIdx==1){
+	affichageOnCollision(player,"velorouge4","Maintenant que je les ai réparés, ces trois jolis vélos de courses sont prêt à rouler!")
+	affichageOnCollision(player,"velorouge1","Oups, mon vélo est vraiment dans un état lamentable, et dire que je suis mécaniciennex...")
+
+
+	player.onCollide("cafe",()=>{
+	let textBox = add([
+	sprite("dialogbox"),//, width: width() - 230
+	anchor("center"),
+	pos(center().x,BOTTOM),
+])
+let txt = add([
+	text("Je suis prêtex pour ce premier jour!", { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
+	anchor("center"),
+	pos(center().x,BOTTOM),
+	color(MYPURPLE),
+])
+onKeyPress(()=>{
+	destroy(txt),
+	destroy(textBox)})
+	// showClients = true
+	// player.pos.x = INITIALPOSITION.x
+	// player.pos.y = INITIALPOSITION.y
+})
+
+	}
+
 
 	player.onCollide("etabli", () => {
+		//const enterInventaire = onKeyPress("enter",()=>{
 		let saved_position = player.pos
 		// This collision shows the state of the inventory.
-		console.log("Before go inventaire ");
-		console.log("totalCoins is "+totalCoins);
+		//enterInventaire.paused=true
 		go("inventaire", jourIdx, totalCoins, totalStars,saved_position,clientCounter)
-	})
+		})
+	//	enterInventaire.paused = false
+
 //bibliothque content
 
 let titleList = ["Les mecs lourds ou le paternalisme lubrique","M'explique pas la vie mec !",]
@@ -1720,57 +1758,59 @@ let coverTextList=["Avec des yeux comme ça, je ne peux rien vous refuser, votre
 ]
 
 	player.onCollide("bibliotheque", () => {
-		let i  = 0
-		let cover = add([
-			sprite("atelier_cover"),//, width: width() - 230
-			// 	text("Complète ton inventaire pour\n un TURFU RADIEUX!", { size:  TXTSIZE }),//, width: width() - 230
-			anchor("center"),
-			pos(center().x,MAP_HEIGHT/2-10),
-			"cover"
-		])
-		let coverTitle = add([
-			text(titleList[i], { size:  MEDIUMTXTSIZE,width:TXTWIDTH }),//, width: width() - 230
-			anchor("center"),
-			pos(center().x,MAP_HEIGHT/2-10*8),
-			color(MYPURPLE),
-			"cover"
-		])
-		let coverAuthor = add([
-			text(authorList[i], { size:  MEDIUMTXTSIZE,width: TXTWIDTH,align:"right" }),//, width: width() - 230
-			anchor("center"),
-			pos(center().x,MAP_HEIGHT/2-6.5*8),
-			color(MYBLUE),
-			"cover"
-		])
-		let coverText = add([
-			text(coverTextList[i], { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
-			anchor("center"),
-			pos(center().x,MAP_HEIGHT/2+16),
-			color(MYPURPLE),
-			"cover"
-		])
-		let arrows = add([
-			text("<--      -->", { size:  TXTSIZE,width:TXTWIDTH,align:"center" }),//, width: width() - 230
-			anchor("center"),
-			pos(center().x,MAP_HEIGHT/2+9.5 *8),
-			color(MYBLUE),
-			"cover"
-		])
-			let length = coverTextList.length
-		onKeyPress("right",()=>{
-			i = (i+1)%length
-			coverText.text = coverTextList[i]
-			coverTitle.text = titleList[i]
-			coverAuthor.text = authorList[i]})
+		interrupt=true
 
-		onKeyPress("left",()=>{
-			i =((i-1)+length)%length
-			coverText.text = coverTextList[i]
-			coverTitle.text = titleList[i]
-			coverAuthor.text = authorList[i]})
-
-		onKeyPress("enter",()=>{destroyAll("cover")})
-		onKeyPress("esc",()=>{destroyAll("cover")})
+				let i  = 0
+				let cover = add([
+					sprite("atelier_cover"),//, width: width() - 230
+					// 	text("Complète ton inventaire pour\n un TURFU RADIEUX!", { size:  TXTSIZE }),//, width: width() - 230
+					anchor("center"),
+					pos(center().x,MAP_HEIGHT/2-10),
+					"cover"
+				])
+				let coverTitle = add([
+					text(titleList[i], { size:  MEDIUMTXTSIZE,width:TXTWIDTH }),//, width: width() - 230
+					anchor("center"),
+					pos(center().x,MAP_HEIGHT/2-10*8),
+					color(MYPURPLE),
+					"cover"
+				])
+				let coverAuthor = add([
+					text(authorList[i], { size:  MEDIUMTXTSIZE,width: TXTWIDTH,align:"right" }),//, width: width() - 230
+					anchor("center"),
+					pos(center().x,MAP_HEIGHT/2-6.5*8),
+					color(MYBLUE),
+					"cover"
+				])
+				let coverText = add([
+					text(coverTextList[i], { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
+					anchor("center"),
+					pos(center().x,MAP_HEIGHT/2+16),
+					color(MYPURPLE),
+					"cover"
+				])
+				let arrows = add([
+					text("<--      -->", { size:  TXTSIZE,width:TXTWIDTH,align:"center" }),//, width: width() - 230
+					anchor("center"),
+					pos(center().x,MAP_HEIGHT/2+9.5 *8),
+					color(MYBLUE),
+					"cover"
+				])
+					let length = coverTextList.length
+				onKeyPress("right",()=>{
+					i = (i+1)%length
+					coverText.text = coverTextList[i]
+					coverTitle.text = titleList[i]
+					coverAuthor.text = authorList[i]})
+				onKeyPress("left",()=>{
+					i =((i-1)+length)%length
+					coverText.text = coverTextList[i]
+					coverTitle.text = titleList[i]
+					coverAuthor.text = authorList[i]})
+			//	onKeyPress("enter",()=>{destroyAll("cover")})
+				onKeyPress("escape",()=>{
+					interrupt = false
+					destroyAll("cover")})
 
 	})
 	}
@@ -1791,8 +1831,9 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 			anchor("center"),
 			//console.log(saved_position),
 			pos(saved_position.x,saved_position.y),//the default position is in front of the workshop
-			area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
+			area({shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)])}),
 			//area(),
+
 			body(),
 			// scalePerso
 			scale(PERSOSCALE),
@@ -1801,8 +1842,43 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 		// animate the player
 		//player.play("walk_right")
 		//player.flipX = true
-		const SPEED = 60;
-		player_movement(player,SPEED)
+		const speed = 60;
+		//player_movement(player,SPEED)
+		// movement
+		let offset = 1
+		onUpdate(() => {
+		if (isKeyDown("left") && interrupt == false) {
+			player.play("walk_right")
+			player.area.offset.x = -offset
+			player.area.offset.y = 0
+
+			player.move(-speed, 0)
+			player.flipX = true
+		}})
+		onUpdate(() => {
+		if (isKeyDown("right")&& interrupt == false) {
+			player.play("walk_right")
+			player.area.offset.x = offset
+			player.area.offset.y = 0
+			player.move(speed, 0)
+			player.flipX = false
+		}})
+		onUpdate(() => {
+		if (isKeyDown("up")&& interrupt == false) {
+			player.play("up")
+			player.area.offset.x = 0
+			player.area.offset.y = -offset
+			player.move(0, -speed)
+			player.flipX = true
+		}})
+		onUpdate(() => {
+		if (isKeyDown("down")&& interrupt == false) {
+			player.play("down")
+			player.area.offset.x = 0
+			player.area.offset.y = offset
+			player.move(0, speed)
+			player.flipX = false
+		}})
 		add_atelier_collisions(player,totalCoins,totalStars)
 
 				//status
@@ -1878,8 +1954,11 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 					}
 				}
 				//if there isn't any client yet, its because the PJ has to do smth
-				if (showClients==false){
+				if (showClients==false & jourIdx != 1 ){
 					affichageOnCollision(player,"clientEntrance","Je pourrais aller faire un tour, il n'y a pas encore de clients")//player,colObjTag,colMsg
+					if (flyersTaken == true){
+						affichageOnCollision(player,"clientEntrance","Mmmh.. je m'étais dit que je les distribuerai, peut-être que je devrais faire a avant que les clients arrivent.")//player,colObjTag,colMsg
+					}
 				}
 				// PORTAL from atelier to other scenes
 				if (outdoorKey == true){
@@ -1895,7 +1974,7 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 				}
 				// explanation message for the closed door
 				if (outdoorKey == false){
-					affichageOnCollision(player,"outsideDoorDroite","Tu n'as pas la clé pour ouvrir cette porte...")
+					affichageOnCollision(player,"outsideDoorDroite","Je n'ai pas la clé pour ouvrir cette porte...")
 				}
 
 
@@ -2735,6 +2814,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 					launchDialog(dechettDialog2)
 					console.log("The value of flyerDechetFlag is"+flyerDechetFlag)
 					showClients = true //now clients will show up
+					flyersTaken = false // the message with the client door shoud be againt the iniitla one
 				}else{
 					if(jourIdx==5 && helpDechetFlag == false){
 						console.log(helpDechetFlag);
