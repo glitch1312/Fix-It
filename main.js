@@ -92,6 +92,9 @@ loadSprite("carton_bilan","images/bilan_resume.png")
 loadSprite("choix_bulle","images/choix_bulle.png")
 loadSprite("atelier_poster","images/poster.png")
 loadSprite("atelier_poster_grand","images/atelier_poster_grand.png")
+loadSprite("atelier_bibliotheque","images/atelier_bibliotheque.png")
+loadSprite("atelier_cover","images/atelier_cover.png")
+
 loadSprite("atelier_armoire_kc","images/atelier_armoire_kc.png")
 loadSprite("atelier_clee","images/atelier_clee.png")
 loadSprite("atelier_poster2_grand","images/atelier_poster2_grand.png")
@@ -1530,6 +1533,15 @@ function add_atelier_items(){
 		"flyers"
 	])
 	}
+	// bibliotheque
+	const bibliotheque = add([
+		sprite("atelier_bibliotheque"),
+		scale(0.5),
+		anchor("center"),
+		area(),
+		pos(center().x+26,MAP_HEIGHT/2+20),
+		"bibliotheque"
+	])
 	//mur du murFond
 	const murFond = add([
 		sprite("atelier_mur_fond",{anim:"idle"}),
@@ -1696,6 +1708,70 @@ function add_atelier_collisions(player,totalCoins,totalStars){
 		console.log("Before go inventaire ");
 		console.log("totalCoins is "+totalCoins);
 		go("inventaire", jourIdx, totalCoins, totalStars,saved_position,clientCounter)
+	})
+//bibliothque content
+
+let titleList = ["Les mecs lourds ou le paternalisme lubrique","M'explique pas la vie mec !",]
+let authorList = ["Natacha Henry","Rokhaya Diallo & Blachette",]
+let coverTextList=["Avec des yeux comme ça, je ne peux rien vous refuser, votre téléphone, il est sur le menu ? ,vous êtes mariée ? c'est pas grave, je suis pas jaloux. . Entre la drague et le harcèlement sexuel,il existe chez certains hommes une façon plus ou moins vulgaire et équivoque de s'en prendre aux femmes, en particulier dans le monde du travail... En une phrase ou deux, ils sexualisent la relation et mettent leur interlocutrice en position d'infériorité. Du regard appuyé au commentaire déplacé en passant par la remarque ,limite,"
+//, Natacha Henry décrit et analyse ce comportement qu'elle baptise ,paternalisme lubrique, et qui ponctue le quotidien des femmes."
+,"Sous forme de saynètes humoristiques, cet ouvrage aborde les concepts de mansplaining, quand l’homme explique à une femme comment s’exprimer et comment penser de manière condescendante, de manterrupting, quand un homme coupe systématiquement la parole à une femme qui tente de s’exprimer, le manspreading quand l’homme prend ses aises dans les lieux publics notamment dans les transports en communs.Ces comportements masculins sont la résultante d’un patriarcat ordinaire."
+// Il est temps pour les femmes de prendre leur véritable place dans la Cité, d’exprimer leurs valeurs, leurs pensées et de faire valoir leurs domaines de compétences. Bref, de refuser les manifestations du patriarcat !"
+]
+
+	player.onCollide("bibliotheque", () => {
+		let i  = 0
+		let cover = add([
+			sprite("atelier_cover"),//, width: width() - 230
+			// 	text("Complète ton inventaire pour\n un TURFU RADIEUX!", { size:  TXTSIZE }),//, width: width() - 230
+			anchor("center"),
+			pos(center().x,MAP_HEIGHT/2-10),
+			"cover"
+		])
+		let coverTitle = add([
+			text(titleList[i], { size:  MEDIUMTXTSIZE,width:TXTWIDTH }),//, width: width() - 230
+			anchor("center"),
+			pos(center().x,MAP_HEIGHT/2-10*8),
+			color(MYPURPLE),
+			"cover"
+		])
+		let coverAuthor = add([
+			text(authorList[i], { size:  MEDIUMTXTSIZE,width: TXTWIDTH,align:"right" }),//, width: width() - 230
+			anchor("center"),
+			pos(center().x,MAP_HEIGHT/2-6.5*8),
+			color(MYBLUE),
+			"cover"
+		])
+		let coverText = add([
+			text(coverTextList[i], { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
+			anchor("center"),
+			pos(center().x,MAP_HEIGHT/2+16),
+			color(MYPURPLE),
+			"cover"
+		])
+		let arrows = add([
+			text("<--      -->", { size:  TXTSIZE,width:TXTWIDTH,align:"center" }),//, width: width() - 230
+			anchor("center"),
+			pos(center().x,MAP_HEIGHT/2+9.5 *8),
+			color(MYBLUE),
+			"cover"
+		])
+			let length = coverTextList.length
+		onKeyPress("right",()=>{
+			i = (i+1)%length
+			coverText.text = coverTextList[i]
+			coverTitle.text = titleList[i]
+			coverAuthor.text = authorList[i]})
+
+		onKeyPress("left",()=>{
+			i =((i-1)+length)%length
+			coverText.text = coverTextList[i]
+			coverTitle.text = titleList[i]
+			coverAuthor.text = authorList[i]})
+
+		onKeyPress("enter",()=>{destroyAll("cover")})
+		onKeyPress("esc",()=>{destroyAll("cover")})
+
 	})
 	}
 	// ------ Boucle de Gameplay ----  //
