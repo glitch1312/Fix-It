@@ -34,6 +34,7 @@ loadAseprite("nuit_Z","images/nuit_Z.png","images/nuit_Z.json")
 loadAseprite("mecanix_chat","images/mecanix_chat.png","images/mecanix_chat.json")
 loadAseprite("bonus_chips","images/bonus_chips.png","images/bonus_chips.json")
 loadAseprite("bonus_boites","images/bonus_boites.png","images/bonus_boite.json")
+loadAseprite("atelier_etabli_biblio","images/atelier_etabli_biblio.png","images/atelier_etabli_biblio.json")
 
 
 // clients
@@ -62,6 +63,7 @@ loadAseprite("exte_maki","images/exte_maki.png","images/exte_maki.json")
 loadAseprite("exte_sirius","images/exte_sirius.png","images/exte_sirius.json")
 loadAseprite("croquettes","images/croquettes.png","images/croquettes.json")
 loadAseprite("atelier_mur_fond","images/atelier_mur_fond.png","images/atelier_mur_fond.json")
+loadAseprite("atelier_tasse_cafe","images/atelier_tasse_cafe.png","images/atelier_tasse_cafe.json")
 //loadSprite("atelier_mur_fond","images/atelier_mur_fond.png")
 
 
@@ -85,16 +87,17 @@ loadSprite("rider_en_pied","images/Sprite-characterenpied.png")
 loadSprite("inventaire_note","images/sprite_inventaire_note.png")
 loadSprite("mecanix_en_pied","images/Sprite_maincharacter_enpied.png")
 loadSprite("velo_rouge","images/Sprite-velorouge.png")
-loadSprite("arbre","images/Sprite_arbre.png")
+loadSprite("exte_arbre","images/exte_arbre.png")
 loadSprite("dechett","images/Sprite_dechett.png")
 loadSprite("carton_bulle","images/bulle.png")
 loadSprite("carton_bilan","images/bilan_resume.png")
 loadSprite("choix_bulle","images/choix_bulle.png")
 loadSprite("atelier_poster","images/poster.png")
+loadSprite("atelier_velo_bleu","images/atelier_velo_bleu.png")
 loadSprite("atelier_poster_grand","images/atelier_poster_grand.png")
 loadSprite("atelier_bibliotheque","images/atelier_bibliotheque.png")
 loadSprite("atelier_cover","images/atelier_cover.png")
-loadSprite("atelier_cafe","images/atelier_cafe.png")
+
 
 loadSprite("atelier_armoire_kc","images/atelier_armoire_kc.png")
 loadSprite("atelier_clee","images/atelier_clee.png")
@@ -102,6 +105,7 @@ loadSprite("atelier_poster2_grand","images/atelier_poster2_grand.png")
 loadSprite("exte_banc","images/exte_banc.png")
 loadSprite("exte_scudo","images/exte_scudo.png")
 loadSprite("velo_sur_pied_vide","images/atelier_velo_sur_pied_vide1.png")
+loadSprite("inventaire_velo_sur_pied_vide","images/inventaire_velo_sur_pied_vide1.png")
 loadSprite("tile_exte_chemin_fin_horizontal","images/tile_exte_chemin_fin_horizontal.png")
 loadSprite("tile_exte_chemin_fin_verticall","images/tile_exte_chemin_fin_verticall.png")
 
@@ -171,7 +175,7 @@ let veloTag = false // no bikePost yet
 let posterFlag = false
 let flyersFlag = false
 let flyersTaken = false
-let croquettesFlag= false
+let croquettesFlag= true
 let croquettesGivenFlag = false
 let chipsFlag = false
 let chipsGivenFlag = false
@@ -296,7 +300,7 @@ let INITIALCLIENTSLIST = {
 		 bigSpriteName:"client_7_grand",
 		 dialogs:[
 			 [ "mecanix_en_pied", "Bonjour." ],
-			 [ "client_7_grand", "J'aurais besoin d'un petit service, vous pourriez faire ca?"],
+			 [ "client_7_grand", "J'aurais besoin d'une nouvelle chambre à air, j'ai crevé, vous pourriez faire ca?"],
 			 [ "mecanix_en_pied", "Oui, bien sûr." ],
 			 [ "client_7_grand", "Parfait!" ],
 		 ],
@@ -383,7 +387,7 @@ let INITIALCLIENTSLIST = {
 		 bigSpriteName:"client_14_grand",
 		 dialogs:[
 			 [ "client_14_grand", "Bonjour! J'ai cassé un rayon sur ma roue avant..."],
-			 [ "mecanix_en_pied", "Okay, je vais le changer et dévoiler la roue s'il-y-a besoin." ],
+			 [ "mecanix_en_pied", "Okay, je vais le changer et dévoiler la roue s'il y'a besoin." ],
 			 [ "client_14_grand", "Okay mais j'espère que ce sera pas aussi cher que la dernière fois!" ],
 		 ],
 		 isSexist: false,
@@ -419,12 +423,13 @@ let INITIALCLIENTSLIST = {
 		 spriteName:"client_17_petit",
 		 bigSpriteName:"client_17_grand",
 				 dialogs: [
-             [ "client_17_grand", "Hello."],
-             [ "mecanix_en_pied", "Salut!" ],
-             [ "client_17_grand", "C'est très politique comme déco quand même." ],
-             [ "mecanix_en_pied", "Je pense que c'est nécessaire." ],
-             [ "client_17_grand", "Ah bon... je pensais que c'était une nouvelle mode..." ],
-              [ "client_17_grand", "C'est possible de changer mes câbles de freins?" ],
+             [ "client_17_grand", "Bonjour, je suis déjà venue ici il y a longtemps."],
+             [ "mecanix_en_pied", "Ah super!" ],
+             [ "client_17_grand", "Par contre maintenant c'est très politique comme déco d'atelier quand même." ],
+             [ "mecanix_en_pied", "Oui, c'est fait exprès." ],
+             [ "client_17_grand", "Oh je sais pas ce que j'en pense de cette nouvelle mode..." ],
+              [ "client_17_grand", "Mais c'est possible de réparer mon pneu crevé?" ],
+							[ "mecanix_en_pied", "Oui!" ],
          ],
 		 isSexist: true,
  },
@@ -434,10 +439,11 @@ let INITIALCLIENTSLIST = {
 	 dialogs :[
 		 ["client_18_grand","Salut! Merci pour le tournevis ça m'a bien aidé."],
 		 ["mecanix_en_pied","Hey, pas de soucis! Merci de le ramener surtout! Ça a marché comme tu voulais?"],
-		 ["client_18_grand","J'ai réussi à faire certains trucs, mais y'a des choses qui sont trop compliquées je crois, ça me ferait plaisir d'apprendre à l'occas mais je suis pas toujours à l'aise avec les trucs manuels... tu voudrais bien jeter un oeil ?"],
+		 ["client_18_grand","J'ai réussi à faire certains trucs, mais y'a des choses qui sont trop compliquées je crois..."],
+		 ["client_18_grand","Ça me ferait plaisir d'apprendre à l'occas mais je suis pas toujours à l'aise avec les trucs manuels..."],
+		 ["mecanix_en_pied","Oui je comprends."],
+		 ["client_18_grand","Tu voudrais bien jeter un oeil ?"],
 	 ]
-	 ,
-	 isSexist: false,
  },
  "client19":{
 		 spriteName:"client_19_petit",
@@ -445,8 +451,9 @@ let INITIALCLIENTSLIST = {
 		 dialogs: [
 [ "client_19_grand", "Hello."],
      [ "mecanix_en_pied", "Salut!" ],
-     [ "client_19_grand", "Ça fait plaisir de voir une femme travailler ici, moi je trouve ça super ! Mais il paraît qu'il y'a des moments où c'est pas ouvert à tout le monde... c'est un peu limite quand même non?" ],
-     [ "mecanix_en_pied", "Je pense que c'est nécessaire, et puis se réunir entre personnes qui vivent des trucs similaires c'est un truc qui se fait depuis longtemps." ],
+     [ "client_19_grand", "Ça fait plaisir de voir une femme travailler ici, moi je trouve ça super !" ],
+		  [ "client_19_grand", "Mais il paraît qu'il y'a des moments où c'est pas ouvert à tout le monde... c'est un peu limite quand même non?" ],
+     [ "mecanix_en_pied", "Je pense que c'est utile, et puis se réunir entre personnes qui vivent des trucs similaires c'est un truc qui se fait depuis longtemps." ],
      [ "client_19_grand", "Mais c'est un peu une mode le féminisme, moi je suis plutôt humaniste... tout le monde est égal quoi..." ],
           [ "client_19_grand", "Bref, je viens pour mon vélo en fait hein, hahaha! c'est possible de régler les vitesses?" ],
     ],
@@ -498,10 +505,11 @@ let INITIALCLIENTSLIST = {
 		 bigSpriteName:"client_23_grand",
 		 dialogs:[
              [ "mecanix_en_pied", "Hello!" ],
-             [ "client_23_grand", "Coucou, est-ce que tu peux m'aider j'ai commandé une nouvelle cassette."],
-             [ "mecanix_en_pied", "Oui, évidemment."],
-             [ "client_23_grand", "Je sais pas trop comment la changer par contre..."],
-             [ "mecanix_en_pied", "On peut faire ça ensemble."],
+             [ "client_23_grand", "Coucou, est-ce que tu peux m'aider ?"],
+             [ "mecanix_en_pied", "Oui, dis-moi."],
+						 [ "client_23_grand", "On m'a conseillé de commander une nouvelle casssette à l'atelier avec les Vélacyraptix."],
+						 	[ "client_23_grand","Mais je sais pas trop comment la changer par contre..."],
+            [ "mecanix_en_pied", "On peut faire ça ensemble."],
              [ "client_23_grand", "Trop cool!" ],
          ]
 ,
@@ -515,7 +523,8 @@ let INITIALCLIENTSLIST = {
              [ "client_24_grand", "J'ai mes freins qui freinent plus..."],
              [ "mecanix_en_pied", "Oh je vois, c'est des freins à disques?" ],
              [ "client_24_grand", "Oui, je pense qu'il faut faire une purge mais j'ai jamais fait ça." ],
-             [ "mecanix_en_pied", "Si tu veux je peux t'apprendre en le faisant avec toi." ],
+						 [ "client_24_grand", "J'avais bien envie d'essayer, et les drapeaux arc-en-ciel m'ont convaincu, hihi." ],
+             [ "mecanix_en_pied", "Oh super! Si tu veux je peux t'apprendre en le faisant avec toi." ],
              [ "client_24_grand", "Oui d'accord." ],
          ],
 		 isSexist: false,
@@ -607,13 +616,13 @@ scene("start",() => {
 
 		},
 		"Stand pour vélo #1":	{
-			spriteName : "velo_sur_pied_vide",
+			spriteName : "inventaire_velo_sur_pied_vide",
 			state: "available",
 			cost: "30",
 
 		},
 		"Stand pour vélo #2":	{
-			spriteName : "velo_sur_pied_vide",
+			spriteName : "inventaire_velo_sur_pied_vide",
 			state: "available",
 			cost: "30",
 
@@ -773,7 +782,7 @@ function affichageOnCollision(player,colObjTag,colMsg){
 		text(colMsg, { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
 		anchor("center"),
 		pos(center().x,BOTTOM),
-		color(MYPURPLE),
+		color(MYBLUE),
 	])
 	onKeyPress(()=>{
 		destroy(txt),
@@ -819,6 +828,7 @@ function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,t
 		agent({ speed: 80, allowDiagonals: true }),
 			],
 	1,1)
+	perso.play("walk_right",{speed:5})
 	const player = add([
 		sprite(mecanixSprite,{anim:"idle"}),
 		anchor("center"),
@@ -827,6 +837,7 @@ function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,t
 		body(),
 		scale(PERSOSCALE)
 	])
+	player.play("walk_right",{speed:5})
 		player.flipX = true
 	let aller = wait(0.5,()=>{perso.setTarget(vec2(
 			target1.x,//Math.floor((center().x+45) / TILE_WIDTH) * TILE_WIDTH + TILE_WIDTH / 2,
@@ -934,6 +945,7 @@ function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,t
 							body(),
 							scale(PERSOSCALE),
 							agent({ speed: 80, allowDiagonals: true }),],1,1)
+							flinta1.play("walk_right",{speed:5})
 
 						const flinta2 = levelAtelier.spawn([
 								sprite("perso_flinta_2",{anim:"walk_right"}),
@@ -943,7 +955,7 @@ function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,t
 								body(),
 								scale(PERSOSCALE),
 								agent({ speed: 80, allowDiagonals: true }),],1,1)
-
+									flinta2.play("walk_right",{speed:5})
 								const flinta3 = levelAtelier.spawn([
 									sprite("perso_flinta_3",{anim:"walk_right"}),
 									anchor("center"),
@@ -952,6 +964,7 @@ function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,t
 									body(),
 									scale(PERSOSCALE),
 									agent({ speed: 80, allowDiagonals: true }),],1,1)
+									flinta3.play("walk_right",{speed:5})
 
 									const flinta4 = levelAtelier.spawn([
 										sprite("perso_flinta_4",{anim:"walk_right"}),
@@ -961,7 +974,7 @@ function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,t
 										body(),
 										scale(PERSOSCALE),
 										agent({ speed: 80, allowDiagonals: true }),],1,1)
-
+										flinta4.play("walk_right",{speed:5})
 						wait(0.5,()=>{
 						flinta1.setTarget(vec2(7*16,11*16))
 						flinta2.setTarget(vec2(8*16,12*16))
@@ -1512,6 +1525,9 @@ function add_atelier_items(){
 		area(),
 		body({isStatic:true})
 		])
+
+
+
 	}else {
 		console.log("In the loop with flyers");
 		const table = add([
@@ -1535,21 +1551,30 @@ function add_atelier_items(){
 	])
 	}
 	// bibliotheque
-	const bibliotheque = add([
-		sprite("atelier_bibliotheque"),
-		scale(0.5),
-		anchor("center"),
-		area(),
-		pos(center().x+24,MAP_HEIGHT/2+20),
+	// const bibliotheque = add([
+	// 	sprite("atelier_bibliotheque"),
+	// 	scale(0.5),
+	// 	anchor("center"),
+	// 	area(),
+	// 	pos(center().x+24,MAP_HEIGHT/2+20),
+	// 	"bibliotheque"
+	// ])
+	const biblio = add([
+	sprite("atelier_etabli_biblio",{anim:"idle"}),
+	scale(1),
+	anchor("center"),
+	pos(center().x,MAP_HEIGHT/2+16),
+	area({ shape: new Polygon([vec2(5,-10),vec2(5,16), vec2(33,16),vec2(33,-10)]) }),
+	body({isStatic:true}),
 		"bibliotheque"
 	])
 	// atelier_cafe
 	const cafe = add([
-		sprite("atelier_cafe"),
-		scale(0.05),
+		sprite("atelier_tasse_cafe",{anim:"idle"}),
+		scale(1),
 		anchor("center"),
-		area(),
-		pos(center().x,MAP_HEIGHT/2),
+		area({ shape: new Polygon([vec2(5,0),vec2(5,10), vec2(-5,10),vec2(-5,0)]) }),
+		pos(center().x-8,MAP_HEIGHT/2-2),
 		"cafe"
 	])
 	//mur du murFond
@@ -1561,7 +1586,7 @@ function add_atelier_items(){
 
 	//velos
 	const velo_rouge_1 = add([
-		sprite("velo_rouge"),
+		sprite("atelier_velo_bleu"),
 		scale(1),
 		anchor("center"),
 		pos(center().x,5*16),
@@ -1597,6 +1622,7 @@ function add_atelier_items(){
 			"velorouge",
 				"velorouge4"
 		])
+	let colBox = 16
 	// add velo sur pied items, on day 5 we have the broken version
 	if(veloTag==true){
 		const velo_sur_pied_1 = add([
@@ -1604,7 +1630,7 @@ function add_atelier_items(){
 			scale(1),
 			anchor("center"),
 			pos(center().x-(6*16),8*16),
-			area(),
+			area({shape: new Polygon([vec2(-colBox,-colBox),vec2(-colBox,colBox), vec2(0,colBox),vec2(0,-colBox)])}),
 			body({isStatic:true}),
 			"pied_velos"
 		])
@@ -1613,7 +1639,7 @@ function add_atelier_items(){
 			scale(1),
 			anchor("center"),
 			pos(center().x+2*16,MAP_HEIGHT-2*16),
-			area(),
+			area({shape: new Polygon([vec2(-colBox,-colBox),vec2(-colBox,colBox), vec2(0,colBox),vec2(0,-colBox)])}),
 			body({isStatic:true}),
 			"pied_velos"
 		])
@@ -1627,8 +1653,10 @@ function add_atelier_items(){
 			}
 	if(boiteOutilsFlag==true){
 		let boiteAOutils = add([
-			sprite("bonus_boites"),
-			pos(center().x-(6.5*16),MAP_HEIGHT/2+(5.5*16)),
+			sprite("bonus_boites",{anim:"shine"}),
+			//pos(center().x-(6.5*16),MAP_HEIGHT/2+(5.5*16)),
+			pos(center().x-(1.4*16),MAP_HEIGHT/2-(5.2*16)),
+			scale(0.8),
 			area(),
 			body({isStatic:true}),
 
@@ -1637,7 +1665,7 @@ function add_atelier_items(){
 	}
 function add_atelier_collisions(player,totalCoins,totalStars){
 	// add collision// add velo sur provided Collision
-	if (veloTag==true){
+	if (veloTag==true && helpDechetFlag == false){
 			player.onCollide("pied_velos",()=>{
 			let textBox = add([
 			sprite("dialogbox"),//, width: width() - 230
@@ -1673,7 +1701,7 @@ function add_atelier_collisions(player,totalCoins,totalStars){
 	// add flyers collision
 	if(flyersFlag==true){
 			player.onCollide("flyers", () => {
-				onKeyPress("enter",()=>{
+
 					let poster2 = add([
 					sprite("atelier_poster2_grand"),//, width: width() - 230
 					// 	text("Complète ton inventaire pour\n un TURFU RADIEUX!", { size:  TXTSIZE }),//, width: width() - 230
@@ -1701,11 +1729,11 @@ function add_atelier_collisions(player,totalCoins,totalStars){
 					destroyAll("distributeInstruction")
 				})
 				})
-			})
+
 		}
 
 	// collision
-	if (jourIdx==5){
+	if (jourIdx==5 && helpDechetFlag == false ){
 	affichageOnCollision(player,"armoireKc","Oh mince...La porte de l'armoire est toute défoncée. Quel zbeul...")
 	affichageOnCollision(player,"pied_velos_kc","Argh mes jolis stands... Je vais avoir besoin d'aide.")
 	}
@@ -1725,7 +1753,7 @@ let txt = add([
 	text("Je suis prêtex pour ce premier jour!", { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
 	anchor("center"),
 	pos(center().x,BOTTOM),
-	color(MYPURPLE),
+	color(MYBLUE),
 ])
 onKeyPress(()=>{
 	destroy(txt),
@@ -1796,6 +1824,14 @@ let coverTextList=["Avec des yeux comme ça, je ne peux rien vous refuser, votre
 					color(MYBLUE),
 					"cover"
 				])
+				// add INSTRUCTIONS sur le fond
+				const return_instruction = add([
+					text("(esc pour retour à l'atelier) ", {font: "prstart",align:"center" , size:TXTSIZE, width:TXTWIDTH}),
+					anchor("center"),
+					pos(center().x,MAP_HEIGHT/2+10 *8),
+					color(MYBLUE),
+					"cover"
+				])
 					let length = coverTextList.length
 				onKeyPress("right",()=>{
 					i = (i+1)%length
@@ -1824,7 +1860,11 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 		// collision Box size
 		const colBox = 5
 		let mecanixSprite = "mecanix"
-		if (croquettesGivenFlag == true ){mecanixSprite = "mecanix_chat"}
+		let mecanixOffset = 0
+		if (croquettesGivenFlag == true ){
+			mecanixSprite = "mecanix_chat"
+			mecanixOffset = 15
+		}
 		const player = add([
 			sprite(mecanixSprite),
 			// center() returns the center point vec2(width() / 2, height() / 2)
@@ -1839,17 +1879,28 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 			scale(PERSOSCALE),
 			"player"
 			])
+
 		// animate the player
 		//player.play("walk_right")
 		//player.flipX = true
 		const speed = 60;
 		//player_movement(player,SPEED)
 		// movement
-		let offset = 1
+		let offsetX = 1
+		let offsetXUp = 0
+		let offsetY = 1
+		let offsetXDown = 0
+		//if with cat the offset has to be different
+		if (croquettesGivenFlag == true ){
+		offsetX = 8
+		offsetY = 0
+		offsetXUp = -6
+		offsetXDown = 6
+	}
 		onUpdate(() => {
 		if (isKeyDown("left") && interrupt == false) {
-			player.play("walk_right")
-			player.area.offset.x = -offset
+			player.play("walk_right",{ speed: 5 })
+			player.area.offset.x = -offsetX
 			player.area.offset.y = 0
 
 			player.move(-speed, 0)
@@ -1857,25 +1908,25 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 		}})
 		onUpdate(() => {
 		if (isKeyDown("right")&& interrupt == false) {
-			player.play("walk_right")
-			player.area.offset.x = offset
+			player.play("walk_right",{ speed: 5 })
+			player.area.offset.x = offsetX
 			player.area.offset.y = 0
 			player.move(speed, 0)
 			player.flipX = false
 		}})
 		onUpdate(() => {
 		if (isKeyDown("up")&& interrupt == false) {
-			player.play("up")
-			player.area.offset.x = 0
-			player.area.offset.y = -offset
+			player.play("up",{ speed: 5 })
+			player.area.offset.x = offsetXUp
+			player.area.offset.y = -offsetY
 			player.move(0, -speed)
 			player.flipX = true
 		}})
 		onUpdate(() => {
 		if (isKeyDown("down")&& interrupt == false) {
-			player.play("down")
-			player.area.offset.x = 0
-			player.area.offset.y = offset
+			player.play("down",{ speed: 5 })
+			player.area.offset.x = offsetXDown
+			player.area.offset.y = offsetY
 			player.move(0, speed)
 			player.flipX = false
 		}})
@@ -1895,19 +1946,19 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 				function addClientInLine(clientkey,index,tag){
 
 					const clientLine = add([
-						sprite(clientkey.spriteName,{anim:"walk_right",speed:3}),
+						sprite(clientkey.spriteName,{anim:"idle"}),
 						// center() returns the center point vec2(width() / 2, height() / 2)
 						anchor("center"),
 						//console.log(saved_position),
 						pos(FIRST_CLIENTLINE.x+index*SHIFT_CLIENTLINE.x,FIRST_CLIENTLINE.y+index*SHIFT_CLIENTLINE.y),//the default position is in front of the workshop
-						area({ shape: new Polygon([vec2(-colBox,-colBox+20),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+20)]) }),
+						area({ shape: new Polygon([vec2(-colBox,-colBox+18),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+18)]) }),
 						body(),
 						// pas de isStatic
 						scale(PERSOSCALE),
 						"client", //necessary tag for collision
 						tag,
 					])
-
+					clientLine.play("walk_right",{ speed: 5 })
 				}
 
 				// CREATE THE CLIENT LINE from a JSON
@@ -2035,6 +2086,8 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 			scale(PERSOSCALE),
 			"louise",
 		])
+		louise.play("walk_right",{speed:5})
+
 		let flinta1 = add([
 			sprite("perso_flinta_1",{anim:"walk_right"}),
 			anchor("center"),
@@ -2044,6 +2097,8 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 			scale(PERSOSCALE),
 			"flinta1",
 		])
+		flinta1.play("walk_right",{speed:5})
+
 		let flinta2 = add([
 			sprite("perso_flinta_2",{anim:"walk_right"}),
 			anchor("center"),
@@ -2053,6 +2108,8 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 			scale(PERSOSCALE),
 			"flinta2",
 		])
+		flinta2.play("walk_right",{speed:5})
+
 		let flinta3bis = levelAtelier.spawn([
 			sprite("perso_flinta_3",{anim:"walk_right"}),
 			anchor("center"),
@@ -2063,6 +2120,8 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 			agent({ speed: 80, allowDiagonals: true }),
 			"flinta3",
 		])
+		flinta3bis.play("walk_right",{speed:5})
+
 	// PLAYER
 		const colBox = 5
 		let mecanixSprite = "mecanix"
@@ -2081,7 +2140,8 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 			"player"
 			])
 			// animate the player
-			//player.play("walk_right")
+			player.play("walk_right",{speed:5})
+
 			//player.flipX = true
 			const SPEED = 80;
 			player_movement(player,SPEED)
@@ -2154,7 +2214,7 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
  			if(finalInt3==false){
 				addTextOnDialogBox("J'ai entendu dire qu'il y avait besoin d'aide, je peux pas porter de trucs alors j'ai amené des biscuits!")
  				finalInt3=true
-				flinta3bis.setTarget(vec2(11*16,10.5*16))
+				wait(0.8,()=>{flinta3bis.setTarget(vec2(11*16,10.5*16))})
  			}else{
  				addTextOnDialogBox("Je vais mettre les biscuits sur la table")
  			}
@@ -2651,7 +2711,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			body({isStatic:true}),
 		])
 		let arbre2 = add([
-			sprite("arbre"),
+			sprite("exte_arbre"),
 			// center() returns the center point vec2(width() / 2, height() / 2)
 			anchor("center"),
 			pos(center().x-16*2.5,MAP_HEIGHT/2+2*16),// the modified position from before
@@ -2667,7 +2727,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			body({isStatic:true}),
 		])
 		let arbre4 = add([
-			sprite("arbre"),
+			sprite("exte_arbre"),
 			// center() returns the center point vec2(width() / 2, height() / 2)
 			anchor("center"),
 			pos(center().x-16*5.5,MAP_HEIGHT/2+2.5*16),// the modified position from before
@@ -2720,7 +2780,23 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 		// collision avec le chat
 		player.onCollide("chatMaki",()=>{
 			if(croquettesFlag == true){
-				addTextOnDialogBox("Tiens des croquettes pour toi!")
+				interrupt = true
+				let textBox = add([
+					sprite("dialogbox"),//, width: width() - 230
+					anchor("center"),
+					pos(center().x,BOTTOM),
+				])
+				let txt = add([
+					text("Tiens des croquettes pour toi!", { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
+					anchor("center"),
+					pos(center().x,BOTTOM),
+					color(MYPURPLE),
+				])
+				onKeyPress("enter",()=>{
+					interrupt = false
+					destroy(txt),
+					destroy(textBox)})
+
 				player.sprite = "mecanix_chat"
 				croquettesGivenFlag = true
 				croquettesFlag = false
@@ -3097,7 +3173,7 @@ scene("inventaire", (jourIdx,totalCoins,totalStars,saved_position,clientCounter)
 	 	 ])
 		// add INSTRUCTIONS sur le fond
 		const return_instruction = add([
-			text("( appuie sur esc pour retour à l'atelier) ", {font: "prstart", size:TXTSIZE, width:TXTWIDTH}),
+			text("(esc pour retour à l'atelier) ", {font: "prstart", size:TXTSIZE, width:TXTWIDTH}),
 			anchor("center"),
 			pos(center().x+36, BOTTOM+40),
 		])
@@ -3170,7 +3246,7 @@ scene("inventaire", (jourIdx,totalCoins,totalStars,saved_position,clientCounter)
 				// 	anchor("center"),
 				// 	pos(posX,posY+20), // the % takes into account how many tools per line we want
 				// ])
-				positionList.push(Array(posX,posY+5))
+				positionList.push(Array(posX,posY))
 				achatList.push(key+":\n"+"Tu as déjà cet objet!")
 			}
 			i++
@@ -3179,11 +3255,11 @@ scene("inventaire", (jourIdx,totalCoins,totalStars,saved_position,clientCounter)
 
 		// create the selector
 		const selector = add([
-			rect(24,44),
+			rect(24,34),
 			anchor("center"),
 			color(1,1,1),
 			opacity(0.05),
-			pos(center().x-5.5*16,55)
+			pos(center().x-5.5*16,50)
 		])
 		// create the achat texte
 		const achatTexte = add([
@@ -3196,7 +3272,7 @@ scene("inventaire", (jourIdx,totalCoins,totalStars,saved_position,clientCounter)
 			selectorIndex= (selectorIndex+1)%length
 			// use position where a tool has been saved and put it in position list
 			selector.pos.x =positionList[selectorIndex][0]
-			selector.pos.y =positionList[selectorIndex][1]
+			selector.pos.y =positionList[selectorIndex][1]-5
 			// use achat texte list
 			achatTexte.text = achatList[selectorIndex]
 			play("selector")
@@ -3206,7 +3282,7 @@ scene("inventaire", (jourIdx,totalCoins,totalStars,saved_position,clientCounter)
 		selectorIndex = (selectorIndex-1+length)%length
 		// use position where a tool has been saved and put it in position list
 		selector.pos.x =positionList[selectorIndex][0]
-		selector.pos.y =positionList[selectorIndex][1]
+		selector.pos.y =positionList[selectorIndex][1]-5
 		// use achat texte list
 		achatTexte.text = achatList[selectorIndex]
 		play("selector")
@@ -3217,7 +3293,7 @@ onKeyPress("up", () => {
 	selectorIndex = (selectorIndex+4+length)%length
 	// use position where a tool has been saved and put it in position list
 	selector.pos.x =positionList[selectorIndex][0]
-	selector.pos.y =positionList[selectorIndex][1]
+	selector.pos.y =positionList[selectorIndex][1]-5
 	// use achat texte list
 	achatTexte.text = achatList[selectorIndex]
 	play("selector")
@@ -3227,7 +3303,7 @@ onKeyPress("down", () => {
 	selectorIndex = (selectorIndex-4+length)%length
 	// use position where a tool has been saved and put it in position list
 	selector.pos.x =positionList[selectorIndex][0]
-	selector.pos.y =positionList[selectorIndex][1]
+	selector.pos.y =positionList[selectorIndex][1]-5
 	// use achat texte list
 	achatTexte.text = achatList[selectorIndex]
 	play("selector")
@@ -3858,12 +3934,12 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 			"bilan"
 		])
 		let coinsAnim = add([
-			text("$ : ", {font: "prstart", size:TXTSIZEBILAN}),color(MYPURPLE),
+			text("$ : 0", {font: "prstart", size:TXTSIZEBILAN}),color(MYPURPLE),
 			pos(center().x+45,  (MAP_HEIGHT/4)),
 			"bilan"
 		])
 		let starsAnim = add([
-			text("* : ", {font: "prstart", size:TXTSIZEBILAN}),color(MYPURPLE),
+			text("* : 0", {font: "prstart", size:TXTSIZEBILAN}),color(MYPURPLE),
 			pos(center().x+45,  (MAP_HEIGHT/4)+14),
 			"bilan"
 		])
@@ -3926,7 +4002,7 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 			// BASIC
 			case 1 :
 			add([text("J'ai fait du bon travail.",
-				{ size: TXTSIZE,width:TXTWIDTH, font:"joystix"}),color(MYPURPLE),scale(1),anchor("center"),pos(center().x,BOTTOMTEXT)])
+				{ size: TXTSIZE,width:TXTWIDTH, font:"joystix"}),color(MYBLUE),scale(1),anchor("center"),pos(center().x,BOTTOMTEXT)])
 			// instruction
 				// add([
 				// 			text("(appuie sur enter pour retourner à l'atelier)", { size: TXTSIZE }),
@@ -4044,7 +4120,7 @@ break;
 				["pnj","Oui, oui je venais pas pour réparer mon vélo..."],
 				["m","Heu ok, tu viens pour quoi alors?"],
 				["pnj","Heu... ha oui! Haha pardon. Je viens te filer la clé que j'ai oublié de rendre quand j'ai arrêté de bosser ici. Je suis un peu tête en l'air des fois."],
-				["m","Ah! merci!"],
+				["m","Ah! Merci!"],
 				["pnj","De rien, allé à la proch ciao ciao..."]
 				 //heu, la sortie c'est par là hein."]
 			]
@@ -4318,6 +4394,12 @@ scene("interactionJour4", (jourIdx,totalCoins,totalStars,position) => {
 		// Titre
 		const title = add([
 			text("BRAVO!\n ", { size: LARGETXTSIZE, font:"joystix" }),
+			scale(1),
+			anchor("center"),
+			pos(center().x,MAP_HEIGHT/2-16)
+		])
+		const bravoContent = add([
+			text("Tu as réussi à faire tourner l'atelier pendant une semaine sans t'épuiser ni faire faillite!\nT'es sacrément badass! ", { size: MEDIUMTXTSIZE,width: TXTWIDTH, font:"joystix" }),
 			scale(1),
 			anchor("center"),
 			pos(center().x,MAP_HEIGHT/2-16)
