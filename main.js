@@ -20,7 +20,9 @@ loadAseprite("coins_symbol","images/Sprite_scene_jeu_piece.png","images/Sprite_s
 loadAseprite("contenair","images/Sprite_out_contenair.png","images/Sprite_out_contenair.json")
 loadAseprite("velo_sur_pied","images/Sprite_velosurpied.png","images/Sprite_velosurpied.json")
 loadAseprite("etabli_fini","images/Sprite_etabli.png","images/Sprite_etabli.json")
-loadAseprite("mecanix","images/sprite_maincharacter_petit.png","images/sprite_maincharacter_petit.json")
+//loadAseprite("mecanix","images/sprite_maincharacter_petit.png","images/sprite_maincharacter_petit.json")
+
+
 loadAseprite("mecanix_velo","images/Sprite_maincharacter_velo.png","images/Sprite_maincharacter_velo.json")
 loadAseprite("choix_frapper_juste", "images/choix_frapper_juste_8images.png", "images/choix_frapper_juste_8images.json")
 loadAseprite("choix_frapper_v2", "images/choix_frapper_v2.png", "images/choix_frapper_v2.json")
@@ -34,6 +36,14 @@ loadAseprite("nuit_Z","images/nuit_Z.png","images/nuit_Z.json")
 loadAseprite("mecanix_chat","images/mecanix_chat.png","images/mecanix_chat.json")
 loadAseprite("bonus_chips","images/bonus_chips.png","images/bonus_chips.json")
 loadAseprite("bonus_boites","images/bonus_boites.png","images/bonus_boite.json")
+loadAseprite("atelier_etabli_biblio","images/atelier_etabli_biblio.png","images/atelier_etabli_biblio.json")
+loadAseprite("inventaire_deco","images/inventaire_deco.png","images/inventaire_deco.json")
+loadAseprite("atelier_faillite","images/atelier_faillite.png","images/atelier_faillite.json")
+loadSprite("tile_jonction","images/scene_out_tile_cheminhorizontal_jonction.png")
+loadAseprite("atelier_burnout","images/atelier_burnout.png","images/atelier_burnout.json")
+
+loadSprite("atelier_tabouret_livre","images/atelier_tabouret_livre.png")
+loadSprite("atelier_livre_ouvert","images/atelier_livre_ouvert.png")
 
 
 // clients
@@ -51,6 +61,7 @@ loadAseprite("perso_interaction_1","images/perso_interaction_1.png","images/pers
 loadAseprite("perso_interaction_2","images/perso_interaction_2.png","images/perso_interaction_2.json")
 loadAseprite("perso_interaction_3","images/perso_interaction_3.png","images/perso_interaction_3.json")
 loadAseprite("perso_interaction_4","images/perso_interaction_4.png","images/perso_interaction_4.json")
+loadAseprite("interaction_allie","images/intercation_alliee.png","images/intercation_alliee.json")
 
 loadAseprite("perso_flinta_1","images/flinta_1_petit.png","images/flinta_1_petit.json")
 loadAseprite("perso_flinta_2","images/flinta_2_petit.png","images/flinta_2_petit.json")
@@ -62,6 +73,8 @@ loadAseprite("exte_maki","images/exte_maki.png","images/exte_maki.json")
 loadAseprite("exte_sirius","images/exte_sirius.png","images/exte_sirius.json")
 loadAseprite("croquettes","images/croquettes.png","images/croquettes.json")
 loadAseprite("atelier_mur_fond","images/atelier_mur_fond.png","images/atelier_mur_fond.json")
+loadAseprite("atelier_tasse_cafe","images/atelier_tasse_cafe.png","images/atelier_tasse_cafe.json")
+loadAseprite("dialogboxEnter","images/talk_boite_enter.png","images/talk_boite_enter.json")
 //loadSprite("atelier_mur_fond","images/atelier_mur_fond.png")
 
 
@@ -77,6 +90,7 @@ loadSpriteAtlas("images/sorties.png", "images/sorties.json")
 
 // SPRITES
 loadSprite("dialogbox","images/talk_boite.png")
+
 loadSprite("wrench","images/Sprite-tool-wrench.png")
 loadAseprite("demontepneu","images/demonte_pneu.png","images/demonte_pneu.json")
 loadSprite("clef","images/Sprite_clef.png")
@@ -85,15 +99,18 @@ loadSprite("rider_en_pied","images/Sprite-characterenpied.png")
 loadSprite("inventaire_note","images/sprite_inventaire_note.png")
 loadSprite("mecanix_en_pied","images/Sprite_maincharacter_enpied.png")
 loadSprite("velo_rouge","images/Sprite-velorouge.png")
-loadSprite("arbre","images/Sprite_arbre.png")
+loadSprite("exte_arbre","images/exte_arbre.png")
 loadSprite("dechett","images/Sprite_dechett.png")
 loadSprite("carton_bulle","images/bulle.png")
 loadSprite("carton_bilan","images/bilan_resume.png")
 loadSprite("choix_bulle","images/choix_bulle.png")
 loadSprite("atelier_poster","images/poster.png")
+loadSprite("atelier_velo_bleu","images/atelier_velo_bleu.png")
 loadSprite("atelier_poster_grand","images/atelier_poster_grand.png")
 loadSprite("atelier_bibliotheque","images/atelier_bibliotheque.png")
 loadSprite("atelier_cover","images/atelier_cover.png")
+loadSprite("atelier_point_info","images/atelier_point_info.png")
+loadAseprite("gateau","images/atelier_gateau.png","images/atelier_gateau.json")
 
 loadSprite("atelier_armoire_kc","images/atelier_armoire_kc.png")
 loadSprite("atelier_clee","images/atelier_clee.png")
@@ -101,11 +118,45 @@ loadSprite("atelier_poster2_grand","images/atelier_poster2_grand.png")
 loadSprite("exte_banc","images/exte_banc.png")
 loadSprite("exte_scudo","images/exte_scudo.png")
 loadSprite("velo_sur_pied_vide","images/atelier_velo_sur_pied_vide1.png")
+loadSprite("inventaire_velo_sur_pied_vide","images/inventaire_velo_sur_pied_vide1.png")
 loadSprite("tile_exte_chemin_fin_horizontal","images/tile_exte_chemin_fin_horizontal.png")
 loadSprite("tile_exte_chemin_fin_verticall","images/tile_exte_chemin_fin_verticall.png")
 
 
+loadSprite("mecanix","images/sprite_maincharacter_petit.png", {
+	// The image contains 9 frames layed out horizontally, slice it into individual frames
+	sliceX: 12,
+	// 4 animations
+	anims: {
+		"walk_right": {
+			// Starts from frame 0, ends at frame 3
+			from: 0,
+			to: 3,
+			// Frame per second
+			speed: 5,
+			loop: true,
+		},
+		"idle": {
+			from: 4,
+			to: 4,
+			speed: 5,
+			loop: true,
+		},
+		"down": {
+			from: 6,
+			to: 8,
+			speed: 5,
+			loop: true,
+		},
+		"up": {
+			from: 9,
+			to: 11,
+			speed: 5,
+			loop: true,
+		},
 
+	},
+})
 
 
 
@@ -116,29 +167,29 @@ loadSound("audio_burnout", "audio/burnout.mp3");
 loadSound("audio_fete", "audio/fete.mp3");
 loadSound("audio_piece", "audio/piece.mp3");
 loadSound("audio_reussite", "audio/porte.mp3");
-loadSound("action_juste", "audio/reparer_frapper_juste.wav");
-loadSound("audio_reparer", "audio/reparer.wav");
+loadSound("action_juste", "audio/reparer_frapper_juste.mp3");
+loadSound("audio_reparer", "audio/reparer.mp3");
 loadSound("page_debut", "audio/start.mp3");
-//loadSound("hitSound", "audio/bomb_explosion.wav");
-loadSound("hitSound", "audio/audio_frapper.wav");
+//loadSound("hitSound", "audio/bomb_explosion.mp3");
+loadSound("hitSound", "audio/audio_frapper.mp3");
 loadSound("choix_faux","audio/cfaux.mp3")
 
-loadSound("extraBonus", "audio/extra_bonus.wav");
-loadSound("hitInRepair", "audio/retro_click.wav");
-loadSound("unlock", "audio/unlock.wav");
-loadSound("selector", "audio/selector.wav");
-loadSound("retro_click", "audio/retro_click.wav");
-loadSound("repair_sucess", "audio/repair_sucess.wav");
-loadSound("porte", "audio/porte.wav");
-loadSound("ouinouin", "audio/ouinouin.wav");
-loadSound("frappez", "audio/frappez.wav");
-loadSound("fond", "audio/fond.wav");
-loadSound("carton", "audio/carton.wav");
-loadSound("carton2", "audio/carton2.wav");
+loadSound("extraBonus", "audio/extra_bonus.mp3");
+loadSound("hitInRepair", "audio/retro_click.mp3");
+loadSound("unlock", "audio/unlock.mp3");
+loadSound("selector", "audio/selector.mp3");
+loadSound("retro_click", "audio/retro_click.mp3");
+loadSound("repair_sucess", "audio/repair_sucess.mp3");
+loadSound("porte", "audio/porte.mp3");
+loadSound("ouinouin", "audio/ouinouin.mp3");
+loadSound("frappez", "audio/frappez.mp3");
+loadSound("fond", "audio/fond.mp3");
+loadSound("carton", "audio/carton.mp3");
+loadSound("carton2", "audio/carton2.mp3");
 // downloaded from https://mixkit.co/free-sound-effects/game/
 loadSound("minijeu", "audio/minijeu.mp3");
 loadSound("exte", "audio/exte.mp3");
-
+loadSound("pagetourne", "audio/page_qui_tourne.mp3");//https://lasonotheque.org
 // FONTS
 //joystix, prstart pour action
 // alphbeta pour texte courant
@@ -170,7 +221,7 @@ let veloTag = false // no bikePost yet
 let posterFlag = false
 let flyersFlag = false
 let flyersTaken = false
-let croquettesFlag= false
+let croquettesFlag= true
 let croquettesGivenFlag = false
 let chipsFlag = false
 let chipsGivenFlag = false
@@ -295,7 +346,7 @@ let INITIALCLIENTSLIST = {
 		 bigSpriteName:"client_7_grand",
 		 dialogs:[
 			 [ "mecanix_en_pied", "Bonjour." ],
-			 [ "client_7_grand", "J'aurais besoin d'un petit service, vous pourriez faire ca?"],
+			 [ "client_7_grand", "J'aurais besoin d'une nouvelle chambre à air, j'ai crevé, vous pourriez faire ca?"],
 			 [ "mecanix_en_pied", "Oui, bien sûr." ],
 			 [ "client_7_grand", "Parfait!" ],
 		 ],
@@ -382,7 +433,7 @@ let INITIALCLIENTSLIST = {
 		 bigSpriteName:"client_14_grand",
 		 dialogs:[
 			 [ "client_14_grand", "Bonjour! J'ai cassé un rayon sur ma roue avant..."],
-			 [ "mecanix_en_pied", "Okay, je vais le changer et dévoiler la roue s'il-y-a besoin." ],
+			 [ "mecanix_en_pied", "Okay, je vais le changer et dévoiler la roue s'il y'a besoin." ],
 			 [ "client_14_grand", "Okay mais j'espère que ce sera pas aussi cher que la dernière fois!" ],
 		 ],
 		 isSexist: false,
@@ -418,12 +469,13 @@ let INITIALCLIENTSLIST = {
 		 spriteName:"client_17_petit",
 		 bigSpriteName:"client_17_grand",
 				 dialogs: [
-             [ "client_17_grand", "Hello."],
-             [ "mecanix_en_pied", "Salut!" ],
-             [ "client_17_grand", "C'est très politique comme déco quand même." ],
-             [ "mecanix_en_pied", "Je pense que c'est nécessaire." ],
-             [ "client_17_grand", "Ah bon... je pensais que c'était une nouvelle mode..." ],
-              [ "client_17_grand", "C'est possible de changer mes câbles de freins?" ],
+             [ "client_17_grand", "Bonjour, je suis déjà venue ici il y a longtemps."],
+             [ "mecanix_en_pied", "Ah super!" ],
+             [ "client_17_grand", "Par contre maintenant c'est très politique comme déco d'atelier quand même." ],
+             [ "mecanix_en_pied", "Oui, c'est fait exprès." ],
+             [ "client_17_grand", "Oh je sais pas ce que j'en pense de cette nouvelle mode..." ],
+              [ "client_17_grand", "Mais c'est possible de réparer mon pneu crevé?" ],
+							[ "mecanix_en_pied", "Oui!" ],
          ],
 		 isSexist: true,
  },
@@ -433,10 +485,12 @@ let INITIALCLIENTSLIST = {
 	 dialogs :[
 		 ["client_18_grand","Salut! Merci pour le tournevis ça m'a bien aidé."],
 		 ["mecanix_en_pied","Hey, pas de soucis! Merci de le ramener surtout! Ça a marché comme tu voulais?"],
-		 ["client_18_grand","J'ai réussi à faire certains trucs, mais y'a des choses qui sont trop compliquées je crois, ça me ferait plaisir d'apprendre à l'occas mais je suis pas toujours à l'aise avec les trucs manuels... tu voudrais bien jeter un oeil ?"],
-	 ]
-	 ,
-	 isSexist: false,
+		 ["client_18_grand","J'ai réussi à faire certains trucs, mais y'a des choses qui sont trop compliquées je crois..."],
+		 ["client_18_grand","Ça me ferait plaisir d'apprendre à l'occas mais je suis pas toujours à l'aise avec les trucs manuels..."],
+		 ["mecanix_en_pied","Oui je comprends."],
+		 ["client_18_grand","Tu voudrais bien jeter un oeil ?"],
+	 ],
+		isSexist: false,
  },
  "client19":{
 		 spriteName:"client_19_petit",
@@ -444,8 +498,9 @@ let INITIALCLIENTSLIST = {
 		 dialogs: [
 [ "client_19_grand", "Hello."],
      [ "mecanix_en_pied", "Salut!" ],
-     [ "client_19_grand", "Ça fait plaisir de voir une femme travailler ici, moi je trouve ça super ! Mais il paraît qu'il y'a des moments où c'est pas ouvert à tout le monde... c'est un peu limite quand même non?" ],
-     [ "mecanix_en_pied", "Je pense que c'est nécessaire, et puis se réunir entre personnes qui vivent des trucs similaires c'est un truc qui se fait depuis longtemps." ],
+     [ "client_19_grand", "Ça fait plaisir de voir une femme travailler ici, moi je trouve ça super !" ],
+		  [ "client_19_grand", "Mais il paraît qu'il y'a des moments où c'est pas ouvert à tout le monde... c'est un peu limite quand même non?" ],
+     [ "mecanix_en_pied", "Je pense que c'est utile, et puis se réunir entre personnes qui vivent des trucs similaires c'est un truc qui se fait depuis longtemps." ],
      [ "client_19_grand", "Mais c'est un peu une mode le féminisme, moi je suis plutôt humaniste... tout le monde est égal quoi..." ],
           [ "client_19_grand", "Bref, je viens pour mon vélo en fait hein, hahaha! c'est possible de régler les vitesses?" ],
     ],
@@ -497,10 +552,11 @@ let INITIALCLIENTSLIST = {
 		 bigSpriteName:"client_23_grand",
 		 dialogs:[
              [ "mecanix_en_pied", "Hello!" ],
-             [ "client_23_grand", "Coucou, est-ce que tu peux m'aider j'ai commandé une nouvelle cassette."],
-             [ "mecanix_en_pied", "Oui, évidemment."],
-             [ "client_23_grand", "Je sais pas trop comment la changer par contre..."],
-             [ "mecanix_en_pied", "On peut faire ça ensemble."],
+             [ "client_23_grand", "Coucou, est-ce que tu peux m'aider ?"],
+             [ "mecanix_en_pied", "Oui, dis-moi."],
+						 [ "client_23_grand", "On m'a conseillé de commander une nouvelle cassette à l'atelier avec les Vélacyraptix."],
+						 	[ "client_23_grand","Mais je sais pas trop comment la changer par contre..."],
+            [ "mecanix_en_pied", "On peut faire ça ensemble."],
              [ "client_23_grand", "Trop cool!" ],
          ]
 ,
@@ -514,7 +570,8 @@ let INITIALCLIENTSLIST = {
              [ "client_24_grand", "J'ai mes freins qui freinent plus..."],
              [ "mecanix_en_pied", "Oh je vois, c'est des freins à disques?" ],
              [ "client_24_grand", "Oui, je pense qu'il faut faire une purge mais j'ai jamais fait ça." ],
-             [ "mecanix_en_pied", "Si tu veux je peux t'apprendre en le faisant avec toi." ],
+						 [ "client_24_grand", "J'avais bien envie d'essayer, et les drapeaux arc-en-ciel m'ont convaincu, hihi." ],
+             [ "mecanix_en_pied", "Oh super! Si tu veux je peux t'apprendre en le faisant avec toi." ],
              [ "client_24_grand", "Oui d'accord." ],
          ],
 		 isSexist: false,
@@ -523,6 +580,8 @@ let INITIALCLIENTSLIST = {
 // ------ Boucle de Gameplay ------- //
 // ------ Start --------------------------------------------------- //
 scene("start",() => {
+
+
 
 	// in case of a restart
 	 totalCoins = 0
@@ -606,13 +665,13 @@ scene("start",() => {
 
 		},
 		"Stand pour vélo #1":	{
-			spriteName : "velo_sur_pied_vide",
+			spriteName : "inventaire_velo_sur_pied_vide",
 			state: "available",
 			cost: "30",
 
 		},
 		"Stand pour vélo #2":	{
-			spriteName : "velo_sur_pied_vide",
+			spriteName : "inventaire_velo_sur_pied_vide",
 			state: "available",
 			cost: "30",
 
@@ -723,7 +782,7 @@ function DoSituationTest(repairFlag,clientKey){
 }
 function addBonus(textBonus,spriteName,inventoryKeyName){//change text
 			add([
-				text(textBonus,{ size: TXTSIZE, width:TXTWIDTH, font:"joystix"}),
+				text(textBonus,{ size: TXTSIZE, width:TXTWIDTH, font:"prstart"}),
 				color(MYBLUE),scale(1),anchor("center"),pos(center().x,BOTTOM-35)
 				])
 			add([
@@ -743,7 +802,7 @@ function goInteraction(jourIdx,totalCoins,totalStars){
 	if(jourIdx==4){go("interactionJour4", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
 }
 function addTextOnDialogBox(msg){
-	console.log("In the addTextOnDialogBox function");
+	//console.log("In the addTextOnDialogBox function");
 let textBox = add([
 	sprite("dialogbox"),//, width: width() - 230
 	anchor("center"),
@@ -759,7 +818,23 @@ onKeyPress(()=>{
 	destroy(txt),
 	destroy(textBox)})
 }
-
+function addTextOnDialogBoxEnter(msg){
+	//console.log("In the addTextOnDialogBox function");
+let textBox = add([
+	sprite("dialogboxEnter",{anim:"idle"}),//, width: width() - 230
+	anchor("center"),
+	pos(center().x,BOTTOM),
+])
+let txt = add([
+	text(msg, { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
+	anchor("center"),
+	pos(center().x,BOTTOM),
+	color(MYPURPLE),
+])
+onKeyPress(()=>{
+	destroy(txt),
+	destroy(textBox)})
+}
 // Add messages on collision with an object
 function affichageOnCollision(player,colObjTag,colMsg){
 		player.onCollide(colObjTag,()=>{
@@ -772,7 +847,7 @@ function affichageOnCollision(player,colObjTag,colMsg){
 		text(colMsg, { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
 		anchor("center"),
 		pos(center().x,BOTTOM),
-		color(MYPURPLE),
+		color(MYBLUE),
 	])
 	onKeyPress(()=>{
 		destroy(txt),
@@ -818,6 +893,7 @@ function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,t
 		agent({ speed: 80, allowDiagonals: true }),
 			],
 	1,1)
+	perso.play("walk_right",{speed:5})
 	const player = add([
 		sprite(mecanixSprite,{anim:"idle"}),
 		anchor("center"),
@@ -826,6 +902,7 @@ function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,t
 		body(),
 		scale(PERSOSCALE)
 	])
+	player.play("walk_right",{speed:5})
 		player.flipX = true
 	let aller = wait(0.5,()=>{perso.setTarget(vec2(
 			target1.x,//Math.floor((center().x+45) / TILE_WIDTH) * TILE_WIDTH + TILE_WIDTH / 2,
@@ -836,7 +913,7 @@ function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,t
 	let dialogInteraction1 = dialogInteractionList
 	// add dialog box
 	let textBox = add([
-		sprite("dialogbox"),//, width: width() - 230
+		sprite("dialogboxEnter",{anim:"idle"}),//, width: width() - 230
 		anchor("center"),
 		pos(center().x-8,BOTTOM),
 		"textBox"
@@ -933,6 +1010,7 @@ function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,t
 							body(),
 							scale(PERSOSCALE),
 							agent({ speed: 80, allowDiagonals: true }),],1,1)
+							flinta1.play("walk_right",{speed:5})
 
 						const flinta2 = levelAtelier.spawn([
 								sprite("perso_flinta_2",{anim:"walk_right"}),
@@ -942,7 +1020,7 @@ function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,t
 								body(),
 								scale(PERSOSCALE),
 								agent({ speed: 80, allowDiagonals: true }),],1,1)
-
+									flinta2.play("walk_right",{speed:5})
 								const flinta3 = levelAtelier.spawn([
 									sprite("perso_flinta_3",{anim:"walk_right"}),
 									anchor("center"),
@@ -951,6 +1029,7 @@ function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,t
 									body(),
 									scale(PERSOSCALE),
 									agent({ speed: 80, allowDiagonals: true }),],1,1)
+									flinta3.play("walk_right",{speed:5})
 
 									const flinta4 = levelAtelier.spawn([
 										sprite("perso_flinta_4",{anim:"walk_right"}),
@@ -960,7 +1039,7 @@ function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,t
 										body(),
 										scale(PERSOSCALE),
 										agent({ speed: 80, allowDiagonals: true }),],1,1)
-
+										flinta4.play("walk_right",{speed:5})
 						wait(0.5,()=>{
 						flinta1.setTarget(vec2(7*16,11*16))
 						flinta2.setTarget(vec2(8*16,12*16))
@@ -976,8 +1055,12 @@ function interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,t
 						//console.log("wea rea in the waiting time");
 						waitTime= 3.3 // to wait to reach target
 						}else {
-						waitTime = 0.3
+							if(jourIdx==2){
+								waitTime = 1
+							}else{
+								waitTime = 0.3}
 						}
+
 				wait(waitTime,()=>{
 						//console.log("Wait time is"+waitTime);
 						let fadeOut = add([
@@ -1074,7 +1157,7 @@ function player_movement(player,speed){
 function justDialog(interactionDialog){
 			// add dialog box
 			let textBox = add([
-			sprite("dialogbox"),//, width: width() - 230
+			sprite("dialogboxEnter"),//, width: width() - 230
 			anchor("center"),
 			pos(center().x,BOTTOM),
 			"textBox"
@@ -1119,10 +1202,33 @@ function justDialog(interactionDialog){
 		}
 	})
 }
+// function Coloring
+function coloring(object){
+	// time constant with multiplcation for faster effect
+	const t = time()*5
+	if (Math.floor(t)%2==0){
+		//initial color
+		object.color = rgb(222, 135,146)
+	}else{
+		//final color
+		object.color = rgb(52, 172, 186)
+	}
+}
+function coloring2(object){
+	// time constant with multiplcation for faster effect
+	const t = time()*1
+	if (Math.floor(t)%2==0){
+		//initial color
+		object.color = MYBLUE
+	}else{
+		//final color
+		object.color = rgb(0, 0, 0)
+	}
+}
 function launchDialog(interactionDialog){
 			// add dialog box
 			let textBox = add([
-			sprite("dialogbox"),//, width: width() - 230
+			sprite("dialogboxEnter"),//, width: width() - 230
 			anchor("center"),
 			pos(center().x,BOTTOM),
 			"textBox"
@@ -1214,20 +1320,20 @@ function add_bordure_map(){
 	const bordurebordure = addLevel([
 
 		 "KbbbbbbbbbbbbbbN",
+		 "G--=------u----L",
+		 "G-----=--=---uuL",
+		 "G---=----------L",
+		 "G--------------L",
+		 "G----------u---L",
 		 "G--------------L",
 		 "G--------------L",
 		 "G--------------L",
+		 "G---u----------L",
 		 "G--------------L",
-		 "G--------------L",
-		 "G--------------L",
-		 "G--------------L",
-		 "G--------------L",
-		 "G--------------L",
-		 "G--------------L",
-		 "G--------------L",
-		 "G--------------L",
-		 "G--------------L",
-		 "G--------------L",
+		 "G-----=-----=--L",
+		 "G---=-----u---=L",
+		 "G-----u----=-u-L",
+		 "G----==--------L",
 		 "QvvvvvvvvvvvvvvP",
 	],{
 		// define the size of each block
@@ -1276,6 +1382,14 @@ function add_bordure_map(){
 				area(),
 				body({isStatic:true}),
 
+			],
+			"u": () => [
+				sprite("tile_inventaire_mur"),
+				outline(40, 40),
+			],
+			"=": () => [
+				sprite("tile_inventaire_mur2"),
+				outline(40, 40),
 			],
 			"P": () => [
 				sprite("talk_BG_tiles",{anim: "talk_bg_coinDB"}),
@@ -1511,6 +1625,9 @@ function add_atelier_items(){
 		area(),
 		body({isStatic:true})
 		])
+
+
+
 	}else {
 		console.log("In the loop with flyers");
 		const table = add([
@@ -1528,35 +1645,68 @@ function add_atelier_items(){
 		scale(1),
 		anchor("center"),
 		pos(center().x,MAP_HEIGHT/2+16),
-		area({ shape: new Polygon([vec2(-25,-17),vec2(-25,10), vec2(-5,10),vec2(-5,-17)]) }),
+		area({ shape: new Polygon([vec2(-36,-19),vec2(-36,0), vec2(-5,0),vec2(-5,-19)]) }),
 		body({isStatic:true}),
 		"flyers"
 	])
 	}
-	// bibliotheque
+	//bibliotheque
 	const bibliotheque = add([
-		sprite("atelier_bibliotheque"),
-		scale(0.5),
+		sprite("atelier_etabli_biblio",{anim:"idle"}),
+		scale(1),
 		anchor("center"),
 		area(),
-		pos(center().x+26,MAP_HEIGHT/2+20),
+		pos(center().x-1,MAP_HEIGHT/2+16),
+
+	])
+	const biblio = add([
+	sprite("atelier_tabouret_livre"),
+	scale(1),
+	anchor("center"),
+	pos(center().x-11*8,MAP_HEIGHT/2+8.5*12),
+	area({ shape: new Polygon([vec2(-5,-5),vec2(-5,5), vec2(5,5),vec2(5,-5)])}),
+	body({isStatic:true}),
 		"bibliotheque"
 	])
+
+	// // atelier_point_info
+	// const point_info = add([
+	// 	sprite("atelier_point_info"),
+	// 	scale(1),
+	// 	anchor("center"),
+	// 	area(),
+	// 	body({isStatic:true}),
+	// 	"bibliotheque",
+	// 	pos(center().x-11*8,MAP_HEIGHT/2+8*12),
+	// ])
+	// atelier_cafe
+	const cafe = add([
+		sprite("atelier_tasse_cafe",{anim:"idle"}),
+		scale(1),
+		anchor("center"),
+		area({ shape: new Polygon([vec2(5,0),vec2(5,10), vec2(-5,10),vec2(-5,0)]) }),
+		pos(center().x-8,MAP_HEIGHT/2-1),
+		"cafe"
+	])
+
+
 	//mur du murFond
 	const murFond = add([
 		sprite("atelier_mur_fond",{anim:"idle"}),
 		anchor("center"),
-		pos(center().x,48)
+		pos(center().x,48),
 	])
+
 	//velos
 	const velo_rouge_1 = add([
-		sprite("velo_rouge"),
+		sprite("atelier_velo_bleu"),
 		scale(1),
 		anchor("center"),
 		pos(center().x,5*16),
 		area(),
 		body({isStatic:true}),
-		"velorouge"
+		"velorouge",
+			"velorouge1"
 	])
 	const velo_rouge_2 = add([
 		sprite("velo_rouge"),
@@ -1582,8 +1732,10 @@ function add_atelier_items(){
 			pos(center().x+6*16,9.25*16),
 			area(),
 			body({isStatic:true}),
-			"velorouge"
+			"velorouge",
+				"velorouge4"
 		])
+	let colBox = 16
 	// add velo sur pied items, on day 5 we have the broken version
 	if(veloTag==true){
 		const velo_sur_pied_1 = add([
@@ -1591,7 +1743,7 @@ function add_atelier_items(){
 			scale(1),
 			anchor("center"),
 			pos(center().x-(6*16),8*16),
-			area(),
+			area({shape: new Polygon([vec2(-colBox,-colBox),vec2(-colBox,colBox), vec2(0,colBox),vec2(0,-colBox)])}),
 			body({isStatic:true}),
 			"pied_velos"
 		])
@@ -1600,7 +1752,7 @@ function add_atelier_items(){
 			scale(1),
 			anchor("center"),
 			pos(center().x+2*16,MAP_HEIGHT-2*16),
-			area(),
+			area({shape: new Polygon([vec2(-colBox,-colBox),vec2(-colBox,colBox), vec2(0,colBox),vec2(0,-colBox)])}),
 			body({isStatic:true}),
 			"pied_velos"
 		])
@@ -1614,8 +1766,10 @@ function add_atelier_items(){
 			}
 	if(boiteOutilsFlag==true){
 		let boiteAOutils = add([
-			sprite("bonus_boites"),
-			pos(center().x-(6.5*16),MAP_HEIGHT/2+(5.5*16)),
+			sprite("bonus_boites",{anim:"shine"}),
+			//pos(center().x-(6.5*16),MAP_HEIGHT/2+(5.5*16)),
+			pos(center().x-(1.4*16),MAP_HEIGHT/2-(5.2*16)),
+			scale(0.8),
 			area(),
 			body({isStatic:true}),
 
@@ -1624,7 +1778,7 @@ function add_atelier_items(){
 	}
 function add_atelier_collisions(player,totalCoins,totalStars){
 	// add collision// add velo sur provided Collision
-	if (veloTag==true){
+	if (veloTag==true && helpDechetFlag == false){
 			player.onCollide("pied_velos",()=>{
 			let textBox = add([
 			sprite("dialogbox"),//, width: width() - 230
@@ -1660,117 +1814,167 @@ function add_atelier_collisions(player,totalCoins,totalStars){
 	// add flyers collision
 	if(flyersFlag==true){
 			player.onCollide("flyers", () => {
-			let poster2 = add([
+
+					let poster2 = add([
 					sprite("atelier_poster2_grand"),//, width: width() - 230
 					// 	text("Complète ton inventaire pour\n un TURFU RADIEUX!", { size:  TXTSIZE }),//, width: width() - 230
 					anchor("center"),
 					pos(center().x,MAP_HEIGHT/2-10),
-					"afficheMessage2"
-					])
-		if(firstCollisionDone){
-				console.log("in the first collision done");
-
+					"afficheMessage2"])
 					let distributeInstruction = add([
-						text("(\"espace\" pour prendre les flyers) ", {font: "prstart", size:TXTSIZE, width:TXTWIDTH}),
+						text("(espace pour prendre les flyers) ", {font: "prstart", size:TXTSIZE, width:TXTWIDTH}),
 						anchor("center"),
 						color(MYPURPLE),
 						pos(center().x+16, MAP_HEIGHT/2+4.5*16),
 						"distributeInstruction"
 						])
+					let coloringOnUpdate = onUpdate(()=>{coloring2(distributeInstruction)})
 					onKeyPress("space",()=>{
+						coloringOnUpdate.paused = true
 						destroyAll("distributeInstruction")
 						destroyAll("flyers")
-						pensee.paused = true
+
 						play("audio_reussite")
 						flyersTaken = true
 						flyersFlag = false //no more flyers on the table for the rest of the game
 						})
-				}
-			onKeyPress(()=>{
+					onKeyPress(()=>{
 					destroyAll("afficheMessage2")
 					destroyAll("distributeInstruction")
 				})
-			})
-			let pensee = player.onCollideEnd("flyers", () => {
-				addTextOnDialogBox("Mmmh.. je m'étais dit que je les distribuerai, peut-être que je devrais faire ca avant que les clients arrivent.")
-				firstCollisionDone = true
 				})
+
 		}
+
 	// collision
-	if (jourIdx==5){
+	if (jourIdx==5 && helpDechetFlag == false ){
 	affichageOnCollision(player,"armoireKc","Oh mince...La porte de l'armoire est toute défoncée. Quel zbeul...")
 	affichageOnCollision(player,"pied_velos_kc","Argh mes jolis stands... Je vais avoir besoin d'aide.")
 	}
+	//
+	if (jourIdx==1){
+	affichageOnCollision(player,"velorouge4","Maintenant que je les ai réparés, ces trois jolis vélos de courses sont prêt à rouler!")
+	affichageOnCollision(player,"velorouge1","Oups, mon vélo est vraiment dans un état lamentable, et dire que je suis mécaniciennex...")
+
+
+	player.onCollide("cafe",()=>{
+	let textBox = add([
+	sprite("dialogbox"),//, width: width() - 230
+	anchor("center"),
+	pos(center().x,BOTTOM),
+])
+let txt = add([
+	text("Je suis prêtex pour ce premier jour!", { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
+	anchor("center"),
+	pos(center().x,BOTTOM),
+	color(MYBLUE),
+])
+onKeyPress(()=>{
+	destroy(txt),
+	destroy(textBox)})
+	// showClients = true
+	// player.pos.x = INITIALPOSITION.x
+	// player.pos.y = INITIALPOSITION.y
+})
+
+	}
+
 
 	player.onCollide("etabli", () => {
+		//const enterInventaire = onKeyPress("enter",()=>{
 		let saved_position = player.pos
 		// This collision shows the state of the inventory.
-		console.log("Before go inventaire ");
-		console.log("totalCoins is "+totalCoins);
-		go("inventaire", jourIdx, totalCoins, totalStars,saved_position,clientCounter)
+		//enterInventaire.paused=true
+		if (jourIdx!=5){go("inventaire", jourIdx, totalCoins, totalStars,saved_position,clientCounter)}
 	})
+
+	//	enterInventaire.paused = false
+
 //bibliothque content
 
-let titleList = ["Les mecs lourds ou le paternalisme lubrique","M'explique pas la vie mec !",]
-let authorList = ["Natacha Henry","Rokhaya Diallo & Blachette",]
-let coverTextList=["Avec des yeux comme ça, je ne peux rien vous refuser, votre téléphone, il est sur le menu ? ,vous êtes mariée ? c'est pas grave, je suis pas jaloux. . Entre la drague et le harcèlement sexuel,il existe chez certains hommes une façon plus ou moins vulgaire et équivoque de s'en prendre aux femmes, en particulier dans le monde du travail... En une phrase ou deux, ils sexualisent la relation et mettent leur interlocutrice en position d'infériorité. Du regard appuyé au commentaire déplacé en passant par la remarque ,limite,"
-//, Natacha Henry décrit et analyse ce comportement qu'elle baptise ,paternalisme lubrique, et qui ponctue le quotidien des femmes."
-,"Sous forme de saynètes humoristiques, cet ouvrage aborde les concepts de mansplaining, quand l’homme explique à une femme comment s’exprimer et comment penser de manière condescendante, de manterrupting, quand un homme coupe systématiquement la parole à une femme qui tente de s’exprimer, le manspreading quand l’homme prend ses aises dans les lieux publics notamment dans les transports en communs.Ces comportements masculins sont la résultante d’un patriarcat ordinaire."
-// Il est temps pour les femmes de prendre leur véritable place dans la Cité, d’exprimer leurs valeurs, leurs pensées et de faire valoir leurs domaines de compétences. Bref, de refuser les manifestations du patriarcat !"
-]
+	let titleList = ["\"Guide de language inclusif\"","\"M'explique pas la vie mec !\"","\"Les mecs lourds ou le paternalisme lubrique\"", "\"Une histoire de genres\"","\"Détransition, désistance et désinformation : Un guide pour comprendre le débat sur les enfants trans\"","\"La crise de la masculinité - Autopsie d'un mythe tenace\"" ]
+let authorList = ["Amnesty International","Rokhaya Diallo & Blachette","Natacha Henry","Lexie","Julia Serano","Francis Dupuis-Déri"]
+let coverTextList=["\"La langue joue un rôle dans la construction et la perpétuation de discriminations et de stéréotypes qui touchent autant les femmes que d’autres minorités (personnes LGBTQIA+, personnes racisées, personnes en situation de handicap etc..). Adopter une communication inclusive, c’est améliorer la représentation de la société, en accordant une visibilité égalitaire et respectueuse à l’ensemble de ses membres. Par exemple, joueureusex est un accord inclusif non-binaire.\"",
+	"\"Sous forme de saynètes humoristiques, cet ouvrage aborde les concepts de mansplaining, quand l’homme explique à une femme comment s’exprimer et comment penser de manière condescendante, de manterrupting, quand un homme coupe systématiquement la parole à une femme qui tente de s’exprimer, le manspreading quand l’homme prend ses aises dans les lieux publics notamment dans les transports en communs. Ces comportements masculins sont la résultante d’un patriarcat ordinaire.\"",
+	"\"Avec des yeux comme ça, je ne peux rien vous refuser\",\"vous êtes mariée ? c'est pas grave, je suis pas jaloux.\" Entre la drague et le harcèlement sexuel, il existe chez certains hommes une façon plus ou moins vulgaire et équivoque de s'en prendre aux femmes, en particulier dans le monde du travail... En une phrase ou deux, ils sexualisent la relation et mettent leur interlocutrice en position d'infériorité. Natacha Henry décrit et analyse ce comportement.\"",
+// qu'elle baptise ,paternalisme lubrique, et qui ponctue le quotidien des femmes."
+"\"A l'heure où les questions de genre et d'identité sont de plus en plus présentes dans l'espace public, voici un guide qui déconstruit tous les préjugés, les abus de langage, les non-sens liés aux transidentités, afin de mieux comprendre celles-ci et de leur donner les armes pour s'émanciper. [...] Ce livre engagé est une vraie boussole pour les personnes trans, [...] mais aussi pour les personnes cisgenres, concernées ou non, car c'est sa propre place dans la société et le traitement des différences qu'il s'agit de questionner.\"",
+"\"Cette brochure s’adresse à toustes celleux qui trouvent le débat autours des enjeux trans et des détransitions difficile à suivre et qui ne savent pas quoi en penser. Et pour cause ! Ces derniers temps, ce thème apparait de plus en plus souvent dans le débat public, mais pas porté par n’importe qui et n’importe où.\"",
+"Une crise de la masculinité, dit-on, sévit dans nos sociétés trop féminisées. Dans ce livre, Francis Dupuis-Déri propose une étonnante enquête sur ce discours de la \"crise de la masculinité\", dont il retrace l'histoire longue [...]. Il se demande finalement quelle est la signification politique de cette rhétorique, qui a pour effet de susciter la pitié envers les hommes, de justifier les violences masculines contre les femmes et de discréditer le projet de l'égalité entre les sexes."]
 
 	player.onCollide("bibliotheque", () => {
-		let i  = 0
-		let cover = add([
-			sprite("atelier_cover"),//, width: width() - 230
-			// 	text("Complète ton inventaire pour\n un TURFU RADIEUX!", { size:  TXTSIZE }),//, width: width() - 230
-			anchor("center"),
-			pos(center().x,MAP_HEIGHT/2-10),
-			"cover"
-		])
-		let coverTitle = add([
-			text(titleList[i], { size:  MEDIUMTXTSIZE,width:TXTWIDTH }),//, width: width() - 230
-			anchor("center"),
-			pos(center().x,MAP_HEIGHT/2-10*8),
-			color(MYPURPLE),
-			"cover"
-		])
-		let coverAuthor = add([
-			text(authorList[i], { size:  MEDIUMTXTSIZE,width: TXTWIDTH,align:"right" }),//, width: width() - 230
-			anchor("center"),
-			pos(center().x,MAP_HEIGHT/2-6.5*8),
-			color(MYBLUE),
-			"cover"
-		])
-		let coverText = add([
-			text(coverTextList[i], { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
-			anchor("center"),
-			pos(center().x,MAP_HEIGHT/2+16),
-			color(MYPURPLE),
-			"cover"
-		])
-		let arrows = add([
-			text("<--      -->", { size:  TXTSIZE,width:TXTWIDTH,align:"center" }),//, width: width() - 230
-			anchor("center"),
-			pos(center().x,MAP_HEIGHT/2+9.5 *8),
-			color(MYBLUE),
-			"cover"
-		])
-			let length = coverTextList.length
-		onKeyPress("right",()=>{
-			i = (i+1)%length
-			coverText.text = coverTextList[i]
-			coverTitle.text = titleList[i]
-			coverAuthor.text = authorList[i]})
+		interrupt=true
 
-		onKeyPress("left",()=>{
-			i =((i-1)+length)%length
-			coverText.text = coverTextList[i]
-			coverTitle.text = titleList[i]
-			coverAuthor.text = authorList[i]})
+				let i  = 0
+				let spacing =0
 
-		onKeyPress("enter",()=>{destroyAll("cover")})
-		onKeyPress("esc",()=>{destroyAll("cover")})
+				let cover = add([
+					sprite("atelier_livre_ouvert"),//, width: width() - 230
+					// 	text("Complète ton inventaire pour\n un TURFU RADIEUX!", { size:  TXTSIZE }),//, width: width() - 230
+					anchor("center"),
+					pos(center().x,MAP_HEIGHT/2-10),
+					"cover"
+				])
+				let coverTitle = add([
+					text(titleList[i], { size:  MEDIUMTXTSIZE-4,width:TXTWIDTH -16}),//, width: width() - 230
+					anchor("center"),
+					pos(center().x,MAP_HEIGHT/2-10*8),
+					color(MYPURPLE),
+					"cover"
+				])
+				let coverAuthor = add([
+					text(authorList[i], { size:  TXTSIZE,width: TXTWIDTH-16,align:"right" }),//, width: width() - 230
+					anchor("left"),
+					pos(center().x-9*8,MAP_HEIGHT/2-7*8),
+					color(MYBLUE),
+					"cover"
+				])
+				let coverText = add([
+					text(coverTextList[i], { size:  TXTSIZE,width:TXTWIDTH-16}),//, width: width() - 230
+					anchor("center"),
+					pos(center().x,MAP_HEIGHT/2+10),
+					color(MYPURPLE),
+					"cover"
+				])
+
+
+					let length = coverTextList.length
+				let pageTourneRight = onKeyPress("right",()=>{
+					if (i==3){
+						coverTitle.pos.y =	MAP_HEIGHT/2-10*8 +15
+						coverAuthor.pos.y =	MAP_HEIGHT/2-7*8 +35
+						coverText.pos.y =	MAP_HEIGHT/2+10 +15
+					}else{
+						coverTitle.pos.y =	MAP_HEIGHT/2-10*8
+						coverAuthor.pos.y =	MAP_HEIGHT/2-7*8
+						coverText.pos.y =	MAP_HEIGHT/2+10
+					}
+					play("pagetourne")
+					i = (i+1)%length
+					coverText.text = coverTextList[i]
+					coverTitle.text = titleList[i]
+					coverAuthor.text = authorList[i]})
+					let pageTourneLeft = onKeyPress("left",()=>{
+					if (i==5){
+						coverTitle.pos.y =	MAP_HEIGHT/2-10*8 +15
+						coverAuthor.pos.y =	MAP_HEIGHT/2-7*8 +35
+						coverText.pos.y =	MAP_HEIGHT/2+10 +15
+					}else{
+						coverTitle.pos.y =	MAP_HEIGHT/2-10*8
+						coverAuthor.pos.y =	MAP_HEIGHT/2-7*8
+						coverText.pos.y =	MAP_HEIGHT/2+10
+					}
+						play("pagetourne")
+					i =((i-1)+length)%length
+					coverText.text = coverTextList[i]
+					coverTitle.text = titleList[i]
+					coverAuthor.text = authorList[i]})
+			//	onKeyPress("enter",()=>{destroyAll("cover")})
+				onKeyPress("escape",()=>{
+					interrupt = false
+					pageTourneLeft.paused = true
+					pageTourneRight.paused = true
+					destroyAll("cover")})
 
 	})
 	}
@@ -1784,25 +1988,90 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 		// collision Box size
 		const colBox = 5
 		let mecanixSprite = "mecanix"
-		if (croquettesGivenFlag == true ){mecanixSprite = "mecanix_chat"}
+		let mecanixOffset = 0
+		if (croquettesGivenFlag == true ){
+			mecanixSprite = "mecanix_chat"
+			mecanixOffset = 15
+		}
+
 		const player = add([
 			sprite(mecanixSprite),
 			// center() returns the center point vec2(width() / 2, height() / 2)
 			anchor("center"),
 			//console.log(saved_position),
 			pos(saved_position.x,saved_position.y),//the default position is in front of the workshop
-			area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
-			//area(),
+			area({shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)])}),
 			body(),
 			// scalePerso
 			scale(PERSOSCALE),
 			"player"
 			])
+		player.play("idle")
 		// animate the player
 		//player.play("walk_right")
 		//player.flipX = true
 		const SPEED = 60;
-		player_movement(player,SPEED)
+		//player_movement(player,SPEED)
+		// movement
+		let offsetX = 1
+		let offsetXUp = 0
+		let offsetY = 1
+		let offsetXDown = 0
+		//if with cat the offset has to be different
+		if (croquettesGivenFlag == true ){
+		offsetX = 8
+		offsetY = 0
+		offsetXUp = 6
+		offsetXDown = 6
+	}
+
+		onUpdate(() => {
+			if (isKeyDown("left") && interrupt == false) {
+				player.move(-SPEED, 0)
+				player.flipX = true
+				// .play() will reset to the first frame of the anim, so we want to make sure it only runs when the current animation is not "run"
+				if (player.curAnim() !== "walk_right") {
+					player.play("walk_right")
+				}
+				player.area.offset.x = -offsetX
+				player.area.offset.y = 0
+			}
+		})
+		onUpdate(() => {
+			if (isKeyDown("right") && interrupt == false) {
+				player.move(SPEED, 0)
+				player.flipX = false
+				if (player.curAnim() !== "walk_right") {
+					player.play("walk_right")
+				}
+				player.area.offset.x = offsetX
+				player.area.offset.y = 0
+			}
+		})
+		onUpdate(() => {
+			if (isKeyDown("down") && interrupt == false) {
+				player.move(0, SPEED)
+				player.flipX = false
+				if (player.curAnim() !== "down") {
+					player.play("down")
+				}
+							player.area.offset.x = offsetXUp
+							player.area.offset.y = -offsetY
+			}
+		})
+		onUpdate(() => {
+			if (isKeyDown("up") && interrupt == false) {
+
+				player.move(0, -SPEED)
+				player.flipX = false
+				if (player.curAnim() !== "up") {
+					player.play("up")
+				}
+				player.area.offset.x = offsetXDown
+				player.area.offset.y = offsetY
+			 }
+		})
+
 		add_atelier_collisions(player,totalCoins,totalStars)
 
 				//status
@@ -1819,19 +2088,19 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 				function addClientInLine(clientkey,index,tag){
 
 					const clientLine = add([
-						sprite(clientkey.spriteName,{anim:"walk_right",speed:3}),
+						sprite(clientkey.spriteName,{anim:"idle"}),
 						// center() returns the center point vec2(width() / 2, height() / 2)
 						anchor("center"),
 						//console.log(saved_position),
 						pos(FIRST_CLIENTLINE.x+index*SHIFT_CLIENTLINE.x,FIRST_CLIENTLINE.y+index*SHIFT_CLIENTLINE.y),//the default position is in front of the workshop
-						area({ shape: new Polygon([vec2(-colBox,-colBox+20),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+20)]) }),
+						area({ shape: new Polygon([vec2(-colBox,-colBox+18),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+18)]) }),
 						body(),
 						// pas de isStatic
 						scale(PERSOSCALE),
 						"client", //necessary tag for collision
 						tag,
 					])
-
+					clientLine.play("walk_right",{ speed: 5 })
 				}
 
 				// CREATE THE CLIENT LINE from a JSON
@@ -1857,30 +2126,23 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 
 						}
 
-						// if there is no client anymore then the game is "finished"
-						// if (lLength==0){
-						// 	player.onCollide("clientEntrance", () => {
-						// 		let textBox = add([
-						// 		sprite("dialogbox"),//, width: width() - 230
-						// 		anchor("center"),
-						// 		pos(center().x,BOTTOM),
-						// 		"clientMessage"
-						// 	])
-						// 	let txt = add([
-						// 		text("Les prochains clients\n viendront dans la prochaine démo! \ To be continued...", { size:  TXTSIZE }),//, width: width() - 230
-						// 		anchor("center"),
-						// 		pos(center().x,BOTTOM),
-						// 		color(MYPURPLE),
-						// 		"clientMessage"
-						// 	])
-						// })
-						// }
 					}
 				}
+				// message to guide
+
+						if (showClients==false & jourIdx == 2 ){
+							addTextOnDialogBoxEnter("C'est tôt là, je pourrais aller faire un tour avant que les clientexs arrivent.")
+						}
+
+
 				//if there isn't any client yet, its because the PJ has to do smth
-				if (showClients==false){
-					affichageOnCollision(player,"clientEntrance","Je pourrais aller faire un tour, il n'y a pas encore de clients")//player,colObjTag,colMsg
+				if (showClients==false & jourIdx != 1 ){
+					affichageOnCollision(player,"clientEntrance","Je pourrais aller faire un tour, il n'y a pas encore de clientexs")//player,colObjTag,colMsg
+					if (flyersTaken == true){
+						affichageOnCollision(player,"clientEntrance","Mmmh.. je m'étais dit que je les distribuerai, peut-être que je devrais faire a avant que les clientexs arrivent.")//player,colObjTag,colMsg
+					}
 				}
+				let flagWarning = false
 				// PORTAL from atelier to other scenes
 				if (outdoorKey == true){
 				player.onCollide("outsideDoorDroite", () => {
@@ -1890,12 +2152,34 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 					//play("portal")
 					// If there's a next level, origin() to the same scene but load the next level
 					musicFond.paused = true
+					// jour des flyers helpDechetFlag	if (outdoorKey == false){
+						if (flyersTaken ==false & jourIdx ==4 && flagWarning == false){
+									player.onCollide("outsideDoorDroite", () => {
+							//console.log("In the addTextOnDialogBox function");
+						let textBox = add([
+							sprite("dialogboxEnter",{anim:"idle"}),//, width: width() - 230
+							anchor("center"),
+							pos(center().x,BOTTOM),
+						])
+						let txt = add([
+							text("Oups, j'ai l'impression d'avoir oublié un truc...", { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
+							anchor("center"),
+							pos(center().x,BOTTOM),
+							color(MYPURPLE),
+						])
+						onKeyPress("enter",()=>{
+							destroy(txt),
+							destroy(textBox)})
+							flagWarning= true
+						})
+					}else{
 					go("outside", jourIdx, totalCoins,totalStars, modified_pos )
+				}
 				})
 				}
 				// explanation message for the closed door
 				if (outdoorKey == false){
-					affichageOnCollision(player,"outsideDoorDroite","Tu n'as pas la clé pour ouvrir cette porte...")
+					affichageOnCollision(player,"outsideDoorDroite","Je n'ai pas la clé pour ouvrir cette porte...")
 				}
 
 
@@ -1915,6 +2199,7 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 		let finalInt3 = false
 		let finalInt4 = false
 		let allieInt = false
+
 		// add ITEMS
 		const velo_sur_pied_1_kc = add([
 			sprite("atelier_velo_sur_pied_kc"),
@@ -1947,43 +2232,51 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 			pos(center().x-(6.5*16),MAP_HEIGHT/2-(5.5*16))
 		])
 		// ADD PERSOS
+
 		let louise = add([
 			sprite("perso_dechett_1",{anim:"walk_right"}),
 			anchor("center"),
 			pos(center().x+1*16,MAP_HEIGHT/2+5*16),// the modified position from before
-			area(),
-			body({isStatic:true}),
+	area({ shape: new Polygon([vec2(-5,7),vec2(-5,-6), vec2(5,-6),vec2(5,7)]) }),			body({isStatic:true}),
 			scale(PERSOSCALE),
 			"louise",
 		])
+		louise.play("walk_right",{speed:5})
+
 		let flinta1 = add([
 			sprite("perso_flinta_1",{anim:"walk_right"}),
 			anchor("center"),
-			pos(center().x-3.5*16,MAP_HEIGHT/2-(2.5*16)),// the modified position from before
-			area(),
-			body({isStatic:true}),
+			pos(center().x-3*16,MAP_HEIGHT/2-(3*16)),// the modified position from before
+	area({ shape: new Polygon([vec2(-5,7),vec2(-5,-6), vec2(5,-6),vec2(5,7)]) }),
+				body({isStatic:true}),
 			scale(PERSOSCALE),
 			"flinta1",
 		])
+		flinta1.play("walk_right",{speed:5})
+
 		let flinta2 = add([
 			sprite("perso_flinta_2",{anim:"walk_right"}),
 			anchor("center"),
 			pos(center().x-5*16,MAP_HEIGHT/2-2*16),// the modified position from before
-			area(),
-			body({isStatic:true}),
+	area({ shape: new Polygon([vec2(-5,7),vec2(-5,-6), vec2(5,-6),vec2(5,7)]) }),			body({isStatic:true}),
 			scale(PERSOSCALE),
 			"flinta2",
 		])
+		flinta2.play("walk_right",{speed:5})
+
 		let flinta3bis = levelAtelier.spawn([
 			sprite("perso_flinta_3",{anim:"walk_right"}),
 			anchor("center"),
 			pos(MAP_WIDTH/2-3*16,MAP_HEIGHT/2+4*16),// the modified position from before
-			area(),
+		  //pos(MAP_WIDTH/2+3*16,MAP_HEIGHT/2-2*8),// the modified position from before
+	area({ shape: new Polygon([vec2(-5,7),vec2(-5,-6), vec2(5,-6),vec2(5,7)]) }),
 			body({isStatic:true}),
 			scale(PERSOSCALE),
 			agent({ speed: 80, allowDiagonals: true }),
 			"flinta3",
 		])
+		flinta3bis.play("walk_right",{speed:5})
+
 	// PLAYER
 		const colBox = 5
 		let mecanixSprite = "mecanix"
@@ -2002,16 +2295,74 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 			"player"
 			])
 			// animate the player
-			//player.play("walk_right")
+			player.play("walk_right",{speed:5})
+
 			//player.flipX = true
-			const SPEED = 80;
-			player_movement(player,SPEED)
+			// movement
+			let offsetX = 1
+			let offsetXUp = 0
+			let offsetY = 1
+			let offsetXDown = 0
+			if (croquettesGivenFlag == true ){
+			offsetX = 8
+			offsetY = 0
+			offsetXUp = 6
+			offsetXDown = 6
+		}
+			const SPEED = 50;
+			onUpdate(() => {
+				if (isKeyDown("left") && interrupt == false) {
+					player.move(-SPEED, 0)
+					player.flipX = true
+					// .play() will reset to the first frame of the anim, so we want to make sure it only runs when the current animation is not "run"
+					if (player.curAnim() !== "walk_right") {
+						player.play("walk_right")
+					}
+					player.area.offset.x = -offsetX
+					player.area.offset.y = 0
+				}
+			})
+			onUpdate(() => {
+				if (isKeyDown("right") && interrupt == false) {
+					player.move(SPEED, 0)
+					player.flipX = false
+					if (player.curAnim() !== "walk_right") {
+						player.play("walk_right")
+					}
+					player.area.offset.x = offsetX
+					player.area.offset.y = 0
+				}
+			})
+			onUpdate(() => {
+				if (isKeyDown("down") && interrupt == false) {
+					player.move(0, SPEED)
+					player.flipX = false
+					if (player.curAnim() !== "down") {
+						player.play("down")
+					}
+								player.area.offset.x = offsetXUp
+								player.area.offset.y = -offsetY
+				}
+			})
+			onUpdate(() => {
+				if (isKeyDown("up") && interrupt == false) {
+
+					player.move(0, -SPEED)
+					player.flipX = false
+					if (player.curAnim() !== "up") {
+						player.play("up")
+					}
+					player.area.offset.x = offsetXDown
+					player.area.offset.y = offsetY
+				 }
+			})
 			// COLLISIONS
 			add_atelier_collisions(player,totalCoins,totalStars)
 			destroyAll("trouvailles")
 		//ADD INTERACTION WITH PERSO
 		player.onCollide("louise", () => {
 			if(finalInt0==false){
+
 				addTextOnDialogBox("Je vais m'occuper des stands de vélos!"),
 				wait(1.4,()=>{
 					destroyAll("pied_velos_kc")
@@ -2020,7 +2371,8 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 						scale(1),
 						anchor("center"),
 						pos(center().x-(6*16),8*16),
-						area(),
+						area({shape: new Polygon([vec2(-16,-16),vec2(-16,16), vec2(0,16),vec2(0,-16)])}),
+
 						body({isStatic:true}),
 						"pied_velos"
 					])
@@ -2029,7 +2381,8 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 						scale(1),
 						anchor("center"),
 						pos(center().x+2*16,MAP_HEIGHT-2*16),
-						area(),
+						area({shape: new Polygon([vec2(-16,-16),vec2(-16,16), vec2(0,16),vec2(0,-16)])}),
+
 						body({isStatic:true}),
 						"pied_velos"
 					])
@@ -2054,7 +2407,7 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 				addTextOnDialogBox("Je t'ai amené un dérive-chaine pour te remercier de l'atelier de la dernière fois!")
 				if (deriveChaineGained==false){
 				play("audio_reussite") //indicate that an object has been gained
-				add([
+					wait(1,()=>{add([
 					sprite("sprite_demontechaine"),
 					scale(1),
 					area(),
@@ -2062,7 +2415,7 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 					anchor("center"),
 					outline(4),
 					move(UP,100),
-				])
+				])})
 				// now the object is owned in the INVENTORY
 				inventory["Dérive-chaine"].state ="owned"
 			}
@@ -2073,20 +2426,30 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 		})
 		player.onCollide("flinta3", () => {
  			if(finalInt3==false){
-				addTextOnDialogBox("J'ai entendu dire qu'il y avait besoin d'aide, je peux pas porter de trucs alors j'ai amené des biscuits!")
+				addTextOnDialogBox("J'ai entendu dire qu'il y avait besoin d'aide, je peux pas porter de trucs alors j'ai amené un gâteau!")
  				finalInt3=true
-				flinta3bis.setTarget(vec2(11*16,10.5*16))
+				wait(1,()=>{
+					let gateau = add([
+					sprite("gateau",{anim:"idle"}),
+					anchor("center"),
+					pos(center().x-8,MAP_HEIGHT/2-1),
+				])
+				//flinta3bis.setTarget(vec2(8*16,7*16))
+
+
+
+					flinta3bis.setTarget(vec2(11*16,10.5*16))})
  			}else{
- 				addTextOnDialogBox("Je vais mettre les biscuits sur la table")
+ 				addTextOnDialogBox("Le gateau est sur la table")
  			}
  		})
 		//player.onCollideEnd("flinta3",()=>{flinta3.setTarget(vec2(center().x-2.5*16,MAP_HEIGHT/2+2*16))})
 		flinta3bis.onTargetReached(()=>{
 				let allie = add([
-				sprite("client_6_petit",{anim:"walk_right"}),
+				sprite("interaction_allie",{anim:"walk_right"}),
 				anchor("center"),
 				pos(center().x-6.5*16,MAP_HEIGHT/2+4*16),// the modified position from before
-				area(),
+				area({ shape: new Polygon([vec2(-5,7),vec2(-5,-6), vec2(5,-6),vec2(5,7)]) }),
 				body({isStatic:true}),
 				scale(PERSOSCALE),
 				"allie"
@@ -2223,7 +2586,7 @@ scene("clientDialog", (clientKey,jourIdx,totalCoins,totalStars) => {
 		levelDialog = clientsList[clientKey].dialogs
 
 		let textBox = add([
-			sprite("dialogbox"),//, width: width() - 230
+			sprite("dialogboxEnter",{anim:"idle"}),//, width: width() - 230
 			anchor("center"),
 			pos(center().x,BOTTOM),
 		])
@@ -2287,7 +2650,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 				 "GfaVrkkRffFfVFfd",
 				 "GFfVmmmmVcqqJffd",
 				 "GFaafVFVVQVVFffd",
-				 "GFcqqqqqqWffaVFd",
+				 "GFcqqqqoqWffaVFd",
 				 "GFQfaVFQFaFFfaVd",
 				 "GFQvFaFQvFFVfVVd",
 				 "GFLvvFFQFFFafVVd",
@@ -2306,6 +2669,12 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 				pos:vec2(center().x - (MAP_WIDTH/2), 0),
 				// assign to each symbol a sprite
 				tiles: {
+
+					"o": () => [
+						sprite("tile_jonction"),
+						area(),
+
+					],
 					"J": () => [
 						sprite("tile_exte_chemin_fin_horizontal"),
 						area(),
@@ -2466,16 +2835,6 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			body({isStatic:true}),
 			scale(1.3)
 		])
-		// const contenairSprite = add([
-		// 	sprite("contenair",{anim:"idle_close"}),
-		// 	// center() returns the center point vec2(width() / 2, height() / 2)
-		// 	anchor("center"),
-		// 	pos(center().x+4*16-8,56),// the modified position from before
-		// 	area(),
-		// 	body({isStatic:true}),
-		// 	"contenair",
-		// ])
-
 
 		let banc1 = add([
 			sprite("exte_banc"),
@@ -2536,7 +2895,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			["p","Comment c'est alors de gérer ce magasin?"],
 			["m","C'est cool! J'adore faire des réparations!"],
 			["p","Ah yes! Et les clients?"],
-			["m","Une petite claque pour ceux qui exagèrent."],
+			["m","Une petite claque pour celleux qui exagèrent."],
 			["p","Hahah tu me fait bien rire. Si jamais mon trick c'est d'appuyer sur espace pour direct les later."],
 			["m","Ohh trop merci! Je vais essayer."]
 		]
@@ -2552,6 +2911,22 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			"perso_dechett_1"
 		])
 		persoDechett.flipX = true
+		let arbre2 = add([
+			sprite("exte_arbre"),
+			// center() returns the center point vec2(width() / 2, height() / 2)
+			anchor("center"),
+			pos(center().x-16*2.5,MAP_HEIGHT/2+2*16),// the modified position from before
+			area({ shape: new Polygon([vec2(-17,17),vec2(-17,-10), vec2(10,-10),vec2(10,17)]) }),
+			body({isStatic:true}),
+		])
+		let arbre8 = add([
+			sprite("exte_arbre_anime",{anim:"shine"}),
+			// center() returns the center point vec2(width() / 2, height() / 2)
+			anchor("center"),
+			pos(center().x-16*5.5,MAP_HEIGHT/2-6*16),// the modified position from before
+			area({ shape: new Polygon([vec2(-colBox,14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,14)]) }),
+			body({isStatic:true}),
+		])
 		const player = add([
 			sprite("mecanix_velo"),
 			// center() returns the center point vec2(width() / 2, height() / 2)
@@ -2571,14 +2946,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			area({ shape: new Polygon([vec2(-colBox,30),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,30)]) }),
 			body({isStatic:true}),
 		])
-		let arbre2 = add([
-			sprite("arbre"),
-			// center() returns the center point vec2(width() / 2, height() / 2)
-			anchor("center"),
-			pos(center().x-16*2.5,MAP_HEIGHT/2+2*16),// the modified position from before
-			area({ shape: new Polygon([vec2(-17,14),vec2(-17,-10), vec2(colBox,-10),vec2(colBox,14)]) }),
-			body({isStatic:true}),
-		])
+
 		let arbre3 = add([
 			sprite("exte_arbre_anime",{anim:"shine"}),
 			// center() returns the center point vec2(width() / 2, height() / 2)
@@ -2588,7 +2956,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			body({isStatic:true}),
 		])
 		let arbre4 = add([
-			sprite("arbre"),
+			sprite("exte_arbre"),
 			// center() returns the center point vec2(width() / 2, height() / 2)
 			anchor("center"),
 			pos(center().x-16*5.5,MAP_HEIGHT/2+2.5*16),// the modified position from before
@@ -2619,14 +2987,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			area({ shape: new Polygon([vec2(-colBox,14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,14)]) }),
 			body({isStatic:true}),
 		])
-		let arbre8 = add([
-			sprite("exte_arbre_anime",{anim:"shine"}),
-			// center() returns the center point vec2(width() / 2, height() / 2)
-			anchor("center"),
-			pos(center().x-16*5.5,MAP_HEIGHT/2-6*16),// the modified position from before
-			area({ shape: new Polygon([vec2(-colBox,14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,14)]) }),
-			body({isStatic:true}),
-		])
+
 		// collision avec le perso exte
 		player.onCollide("perso_exte",()=>{
 			if(chipsFlag == true){
@@ -2641,7 +3002,23 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 		// collision avec le chat
 		player.onCollide("chatMaki",()=>{
 			if(croquettesFlag == true){
-				addTextOnDialogBox("Tiens des croquettes pour toi!")
+				interrupt = true
+				let textBox = add([
+					sprite("dialogbox"),//, width: width() - 230
+					anchor("center"),
+					pos(center().x,BOTTOM),
+				])
+				let txt = add([
+					text("Tiens des croquettes pour toi!", { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
+					anchor("center"),
+					pos(center().x,BOTTOM),
+					color(MYPURPLE),
+				])
+				onKeyPress("enter",()=>{
+					interrupt = false
+					destroy(txt),
+					destroy(textBox)})
+
 				player.sprite = "mecanix_chat"
 				croquettesGivenFlag = true
 				croquettesFlag = false
@@ -2661,27 +3038,35 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 		// movement
 		onUpdate(() => {
 		if (isKeyDown("left") && interrupt == false) {
-			player.play("walk_right")
 			player.move(-speed, 0)
 			player.flipX = true
+			if  (player.curAnim() !== "roule") {
+				player.play("roule")
+			}
 		}})
 		onUpdate(() => {
 		if (isKeyDown("right")&& interrupt == false) {
-			player.play("walk_right")
 			player.move(speed, 0)
 			player.flipX = false
+			if  (player.curAnim() !== "roule") {
+				player.play("roule")
+			}
 		}})
 		onUpdate(() => {
 		if (isKeyDown("up")&& interrupt == false) {
-			player.play("up")
 			player.move(0, -speed)
+			if  (player.curAnim() !== "up") {
+				player.play("up")
+			}
 			player.flipX = true
 		}})
 		onUpdate(() => {
 		if (isKeyDown("down")&& interrupt == false) {
-			player.play("down")
 			player.move(0, speed)
 			player.flipX = false
+			if  (player.curAnim() !== "down") {
+				player.play("down")
+			}
 		}})
 
 	// add status bar
@@ -2692,7 +3077,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			["M","Hé salut! C'est quoi cet endroit?"],
 			["PNJ","C'est la déchetterie, tu connais pas? T'es pas d'ici?"],
 			["M","Non, je viens de commencer de taffer à l'atelier de vélo pas loin d'ici."],
-			["PNJ", "Ha ouais et ça va? Je connaissais la personne d'avant, iel était sympa mais je crois que c'était pas toujours évident avec les clients."],
+			["PNJ", "Ha ouais et ça va? Je connaissais la personne d'avant, iel était sympa mais je crois que c'était pas toujours évident avec les clientexs."],
 			["M", "Ha ouais je vois...Je me fais pas mal expliquer mon taf par des types c'est un peu chiant."],
 			["PNJ","Je comprends, ça m'arrive ici aussi des fois. Ha aujourd'hui quelqu'un a amené des stands pour vélo en bon état, tu veux les prendre?"],
 			["M", "Grave! Merci. Bon j'y retourne... à bientôt!"]
@@ -2713,11 +3098,11 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 				["PNJ","Hé encore toi!"],
 				["M","Coucou..."],
 				["PNJ","Ça va? Tu fais une tête bizarre..."],
-				["M","Nan c'est nul.. Y'a des gens qui ont cassé des trucs au magasin, j'ai l'impression qu'iels sont pas fand de l'esprit queer du truc."],
+				["M","Nan c'est nul.. Y'a des gens qui ont cassé des trucs au magasin, j'ai l'impression qu'iels sont pas fan de l'esprit queer du truc."],
 				["PNJ", "Oh merde...Allez je viens avec toi on va réparer tout ca!"],
 				["M", "Oui je venais justement te demander si tu voulais bien me filer un coup de main."],
 				["PNJ","Grave! On sait tout réparer de toute facon nan?! Hihi"],
-				["M", "Oh cool, ca me fait plaisir d'entendre ca. On se retrouve là bas?"],
+				["M", "Oh cool, ca me fait plaisir d'entendre ca. On se retrouve là-bas?"],
 				["PNJ","Oui, je ferme la déchett et j'arrive. A toute!"],
 				]
 
@@ -2735,6 +3120,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 					launchDialog(dechettDialog2)
 					console.log("The value of flyerDechetFlag is"+flyerDechetFlag)
 					showClients = true //now clients will show up
+					flyersTaken = false // the message with the client door shoud be againt the iniitla one
 				}else{
 					if(jourIdx==5 && helpDechetFlag == false){
 						console.log(helpDechetFlag);
@@ -2753,7 +3139,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 					const txtWidth = 150; // Ideal Width
 					const txtMargins = 15;
 					let txt = add([
-					text("Hé resalut! Si t'as besoin de quelque chose, tu sais où me trouver Haha Je bouge jamais d'ici!", { size:  TXTSIZE,  width: txtWidth }),//, width: width() - 230
+					text("Hé resalut! Si t'as besoin de quelque chose, tu sais où me trouver haha. Je bouge jamais d'ici!", { size:  TXTSIZE,  width: txtWidth }),//, width: width() - 230
 					anchor("center"),
 					pos(center().x+8,BOTTOM),
 					color(MYPINK),//color Louise
@@ -3007,17 +3393,16 @@ scene("inventaire", (jourIdx,totalCoins,totalStars,saved_position,clientCounter)
 				]
 				}
 			})
+			// add deco oncluding plante verre and note
+			let deco = add([
+				 sprite("inventaire_deco",{anim:"idle"}),//, width: width() - 230
+				 anchor("center"),
+				 pos(center().x,11.5*8),
+			 ])
 
-		// add sprite note
-		let note = add([
-	 		 sprite("inventaire_note"),//, width: width() - 230
-	 		 anchor("center"),
-			 scale(0.8),
-	 		 pos(center().x+8*8,9*8),
-	 	 ])
 		// add INSTRUCTIONS sur le fond
 		const return_instruction = add([
-			text("( appuie sur esc pour retour à l'atelier) ", {font: "prstart", size:TXTSIZE, width:TXTWIDTH}),
+			text("(esc pour retour à l'atelier) ", {font: "prstart", size:TXTSIZE, width:TXTWIDTH}),
 			anchor("center"),
 			pos(center().x+36, BOTTOM+40),
 		])
@@ -3038,8 +3423,8 @@ scene("inventaire", (jourIdx,totalCoins,totalStars,saved_position,clientCounter)
 			const shiftY = 45
 			const textCostSize = TXTSIZE -2
 			const column = 4
-			posX = center().x-(MAP_WIDTH/2)+(((i)%column)*shiftX)+40
-			posY = 50+(Math.floor(i/column)*shiftY)
+			posX = center().x-(MAP_WIDTH/2)+(((i)%column)*shiftX)+54
+			posY = 54+(Math.floor(i/column)*shiftY)
 			// AVAILABLE TOOLS
 			// show the tool with half opacity if it is available
 			if (inventory[key].state == "available"){
@@ -3090,7 +3475,7 @@ scene("inventaire", (jourIdx,totalCoins,totalStars,saved_position,clientCounter)
 				// 	anchor("center"),
 				// 	pos(posX,posY+20), // the % takes into account how many tools per line we want
 				// ])
-				positionList.push(Array(posX,posY+5))
+				positionList.push(Array(posX,posY))
 				achatList.push(key+":\n"+"Tu as déjà cet objet!")
 			}
 			i++
@@ -3099,11 +3484,11 @@ scene("inventaire", (jourIdx,totalCoins,totalStars,saved_position,clientCounter)
 
 		// create the selector
 		const selector = add([
-			rect(24,44),
+			rect(24,34),
 			anchor("center"),
 			color(1,1,1),
 			opacity(0.05),
-			pos(center().x-5.5*16,55)
+			pos(center().x-4.5*16-1,54)
 		])
 		// create the achat texte
 		const achatTexte = add([
@@ -3116,7 +3501,7 @@ scene("inventaire", (jourIdx,totalCoins,totalStars,saved_position,clientCounter)
 			selectorIndex= (selectorIndex+1)%length
 			// use position where a tool has been saved and put it in position list
 			selector.pos.x =positionList[selectorIndex][0]
-			selector.pos.y =positionList[selectorIndex][1]
+			selector.pos.y =positionList[selectorIndex][1]-5
 			// use achat texte list
 			achatTexte.text = achatList[selectorIndex]
 			play("selector")
@@ -3126,7 +3511,7 @@ scene("inventaire", (jourIdx,totalCoins,totalStars,saved_position,clientCounter)
 		selectorIndex = (selectorIndex-1+length)%length
 		// use position where a tool has been saved and put it in position list
 		selector.pos.x =positionList[selectorIndex][0]
-		selector.pos.y =positionList[selectorIndex][1]
+		selector.pos.y =positionList[selectorIndex][1]-5
 		// use achat texte list
 		achatTexte.text = achatList[selectorIndex]
 		play("selector")
@@ -3137,7 +3522,7 @@ onKeyPress("up", () => {
 	selectorIndex = (selectorIndex+4+length)%length
 	// use position where a tool has been saved and put it in position list
 	selector.pos.x =positionList[selectorIndex][0]
-	selector.pos.y =positionList[selectorIndex][1]
+	selector.pos.y =positionList[selectorIndex][1]-5
 	// use achat texte list
 	achatTexte.text = achatList[selectorIndex]
 	play("selector")
@@ -3147,7 +3532,7 @@ onKeyPress("down", () => {
 	selectorIndex = (selectorIndex-4+length)%length
 	// use position where a tool has been saved and put it in position list
 	selector.pos.x =positionList[selectorIndex][0]
-	selector.pos.y =positionList[selectorIndex][1]
+	selector.pos.y =positionList[selectorIndex][1]-5
 	// use achat texte list
 	achatTexte.text = achatList[selectorIndex]
 	play("selector")
@@ -3312,9 +3697,9 @@ function jumpToSituation (repairFlag,clientKey,jourIdx,totalCoins,totalStars){
 	case 3: // Fight mauvais choix
 	fightCounter++
 	play("hitSound")
-	wait(0.3,()=>play("extraBonus"))
+	//wait(0.3,()=>play("extraBonus"))
 	wait(0.8,()=>play("hitSound"))
-	wait(1.1,()=>play("extraBonus"))
+	//wait(1.1,()=>play("extraBonus"))
 	//wait(1.3,()=>play("ouinouin"))
 
 	add([
@@ -3450,18 +3835,7 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 		add_bordure_map_purple()
 		// status bar
 		addStatusBar(jourIdx,totalCoins,totalStars)
-	// function Coloring
-	function coloring(object){
-		// time constant with multiplcation for faster effect
-		const t = time()*5
-		if (Math.floor(t)%2==0){
-			//initial color
-			object.color = rgb(222, 135,146)
-		}else{
-			//final color
-			object.color = rgb(52, 172, 186)
-		}
-	}
+
 		// handle if the choice has been made or not
 		let choiceFlag = false // choice not made yet
 
@@ -3731,7 +4105,7 @@ scene("bonus",(jourIdx,totalCoins,totalStars)=>{
 			// BONUS
 			case 1 :
 			// add text, sprite and update inventory
-			addBonus("J'ai gagné un démonte-pneu","demontepneu","Démonte-pneu")
+			addBonus("J'ai gagné un démonte-pneu!","demontepneu","Démonte-pneu")
 			onKeyPress("enter", () => {	goInteraction(jourIdx,totalCoins,totalStars) })
 			break;
 
@@ -3768,22 +4142,22 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 			sprite("carton_bilan"),//, width: width() - 230
 			anchor("center"),
 			scale(1),
-			pos(center().x,MAP_HEIGHT/2-55),
+			pos(center().x,MAP_HEIGHT/2-50),
 			"textBox"
 		])
 		// JOUR
 		const bilanTxt = add([
-			text("BILAN DU JOUR\n--------------\n"+repairCounter+" REPARATIONS\n"+fightCounter+" CLAQUES\n--------------\n6 CLIENTS", {font: "prstart", size:TXTSIZEBILAN}),color(MYPURPLE),
+			text("BILAN DU JOUR\n--------------\n"+repairCounter+" REPARATIONS\n"+fightCounter+" CLAQUES\n--------------\n6 CLIENTEXS", {font: "prstart", size:TXTSIZEBILAN}),color(MYPURPLE),
 			pos(center().x-70, MAP_HEIGHT/4-20),
 			"bilan"
 		])
 		let coinsAnim = add([
-			text("$ : ", {font: "prstart", size:TXTSIZEBILAN}),color(MYPURPLE),
+			text("$ : 0", {font: "prstart", size:TXTSIZEBILAN}),color(MYPURPLE),
 			pos(center().x+45,  (MAP_HEIGHT/4)),
 			"bilan"
 		])
 		let starsAnim = add([
-			text("* : ", {font: "prstart", size:TXTSIZEBILAN}),color(MYPURPLE),
+			text("* : 0", {font: "prstart", size:TXTSIZEBILAN}),color(MYPURPLE),
 			pos(center().x+45,  (MAP_HEIGHT/4)+14),
 			"bilan"
 		])
@@ -3824,13 +4198,14 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 		// based on the comparison of stats produce the right follow-up
 		function bilanJournalier(caseNumber,jourIdx){
 			console.log("The case number is"+caseNumber);
-			const BOTTOMTEXT = BOTTOM-35
+			const BOTTOMTEXT = BOTTOM-24
+			const MEDIUMTXTSIZE = 10
 			// FOND BILAN
 			 let bulleFond = add([
 				sprite("carton_bulle"),//, width: width() - 230
 				anchor("center"),
 				scale(1),
-				pos(center().x-10,BOTTOM-25),
+				pos(center().x-10,BOTTOM-15),
 			])
 			switch(caseNumber){
 
@@ -3838,7 +4213,7 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 			case 0 :
 
 				let bravo = add([text("Wouahhh j'ai viré tous les sexistes!",
-				{ size: TXTSIZE, width:TXTWIDTH,align:"center",font:"joystix"}),color(MYBLUE),scale(1),anchor("center"),pos(center().x,BOTTOMTEXT)])
+				{ size: MEDIUMTXTSIZE, width:TXTWIDTH,font:"prstart"}),color(MYBLUE),scale(1),anchor("center"),pos(center().x+3,BOTTOMTEXT)])
 				// object gained
 				onKeyPress("enter",()=>{go("bonus",jourIdx,totalCoins,totalStars)})
 
@@ -3846,7 +4221,7 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 			// BASIC
 			case 1 :
 			add([text("J'ai fait du bon travail.",
-				{ size: TXTSIZE,width:TXTWIDTH, font:"joystix"}),color(MYPURPLE),scale(1),anchor("center"),pos(center().x,BOTTOMTEXT)])
+				{ size: MEDIUMTXTSIZE,width:TXTWIDTH, font:"prstart"}),color(MYBLUE),scale(1),anchor("center"),pos(center().x+3,BOTTOMTEXT)])
 			// instruction
 				// add([
 				// 			text("(appuie sur enter pour retourner à l'atelier)", { size: TXTSIZE }),
@@ -3861,7 +4236,7 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 			case 2 :
 			// BASIC with Burnout WARNING:=
 			add([text("Je suis épuiséex... Ça me fatigue ces remarques sexistes...",
-				{ size: TXTSIZE,width:TXTWIDTH, font:"joystix"}),color(MYBLUE),scale(1),anchor("center"),pos(center().x,BOTTOMTEXT)])
+				{ size: MEDIUMTXTSIZE,width:TXTWIDTH, font:"prstart"}),color(MYBLUE),scale(1),anchor("center"),pos(center().x+3,BOTTOMTEXT)])
 				// instruction
 					 // add([
 						// 	text("(appuie sur enter pour retourner à l'atelier)", { size: TXTSIZE }),
@@ -3879,7 +4254,7 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 			case 3 :
 			// BASIC with Bankrupt WARNING:
 				add([text("Ça va être dur de payer le loyer...",
-					{ size: TXTSIZE, width:TXTWIDTH,font:"joystix"}),color(MYBLUE),scale(1),anchor("center"),pos(center().x,BOTTOMTEXT)])
+					{ size: MEDIUMTXTSIZE, width:TXTWIDTH,font:"prstart"}),color(MYBLUE),scale(1),anchor("center"),pos(center().x+3,BOTTOMTEXT)])
 					// instruction
 						 // add([
 							// 	text("(appuie sur enter pour retourner à l'atelier)", { size: TXTSIZE }),
@@ -3897,13 +4272,13 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 			case 4 :
 			// GAMEOVER BURNOUT
 			add([text("Je suis totalement epuiséex par le sexisme...\nJe ne peux plus travailler.",
-				{ size: TXTSIZE,width:TXTWIDTH, font:"joystix"}),scale(1),color(MYBLUE),anchor("center"),pos(center().x,BOTTOMTEXT)])
+				{ size: MEDIUMTXTSIZE,width:TXTWIDTH, font:"prstart"}),scale(1),color(MYBLUE),anchor("center"),pos(center().x+3,BOTTOMTEXT)])
 			wait(4.5,()=>go("Burnout"))
 break;
 			case 5 :
 			// GAMEOVER BANKRUPT
-			add([text("Impossible de payer le loyer...tant pis je me suis bien amuséex et c'est la fête!",
-				{ size: TXTSIZE, font:"joystix", width:TXTWIDTH}),scale(1),anchor("center"),color(MYBLUE),pos(center().x,BOTTOMTEXT)])
+			add([text("Impossible de payer le loyer...",
+				{ size: MEDIUMTXTSIZE, font:"prstart", width:TXTWIDTH}),scale(1),anchor("center"),color(MYBLUE),pos(center().x+3,BOTTOMTEXT)])
 		  wait(4.5,()=>go("Bankrupt"))
 			break;
 		}
@@ -3964,8 +4339,8 @@ break;
 				["pnj","Oui, oui je venais pas pour réparer mon vélo..."],
 				["m","Heu ok, tu viens pour quoi alors?"],
 				["pnj","Heu... ha oui! Haha pardon. Je viens te filer la clé que j'ai oublié de rendre quand j'ai arrêté de bosser ici. Je suis un peu tête en l'air des fois."],
-				["m","Ah! merci!"],
-				["pnj","De rien, allé à la proch ciao ciao..."]
+				["m","Ah! Merci!"],
+				["pnj","De rien, allez à la proch ciao ciao..."]
 				 //heu, la sortie c'est par là hein."]
 			]
 
@@ -4107,11 +4482,9 @@ break;
 		addStatusBar(jourIdx,totalCoins,totalStars)
 
 		let dialogInteraction2 =[
-			["M","Coucou!"],
 			["PNJ","Hello! Je suis en train de faire le tour du quartier et je me demandais si je pouvais poser une affiche ici?"],
 			["M","Oui ok tu peux la mettre sur le mur du fond."],
-			["PNJ","Merci! C'est stylé que tu bosses ici!"],
-			["PNJ","Ha et t'es dac de me prêter un tournevis plat?"],
+			["PNJ","Merci! C'est stylé que tu bosses ici! Ha et t'es dac de me prêter un tournevis plat?"],
 			["M","Oui pas de soucis, voilà."],
 			["PNJ","Merci à bientôt!"],
 		]
@@ -4129,7 +4502,7 @@ break;
 			[
 	        ["PNJ","Hey salut!"],
 	        ["M","Salut, c'est fermé pour aujourd'hui..."],
-	        ["PNJ","Oui justement,je suis venue de demander quelque chose, je fais partie d'un collectif qui s'appelle Vélacyraptix tu as déjà entendu parler?"],
+	        ["PNJ","Oui justement,je suis venue te demander quelque chose, je fais partie d'un collectif qui s'appelle Vélacyraptix tu as déjà entendu parler?"],
 	        ["M","Ha oui ça me dit quelque chose, vous faites des ateliers non?"],
 	        ["PNJ","Oui, et il y en avait un ce soir, mais il y a eu un imprévu et on se demandait si on pouvait le faire ici..."],
 	        ["M","Comment ça? Vous voulez pas venir la journée plutôt?"],
@@ -4138,8 +4511,8 @@ break;
 	        ["PNJ","Merci c'est trop sympa!"],
 	        ["M","HA! Si vous voyez la personne habillée en dino dites lui que vous faites ça, elle vient de partir et elle disait qu'elle voulait apprendre à mieux bricoler!"],
 	        ["PNJ","Bonne idée ! Ha oui et tu serais dac qu'on te laisse des flyers et d'en donner aux gens que tu connais?"],
-	         ["M","Biensur! bon je vais y aller je vous laisse les clées remettez les dans la boite à clé"],
-	        ["PNJ","Ca marche, bonne soirée ! Allez les gentes vous pouvez venir !"]
+	         ["M","Bien sûr! bon je vais y aller je vous laisse les clées remettez les dans la boite à clé"],
+	        ["PNJ","Ca marche, bonne soirée ! Allez les gentexs vous pouvez venir !"]
 	        ]
 
 			// [
@@ -4177,7 +4550,7 @@ scene("interactionJour4", (jourIdx,totalCoins,totalStars,position) => {
 	// ADD GAME OVER SCENE
 	scene("partyWin", (jourIdx,totalCoins,totalStars) => {
 		musicFond.paused = true
-		play("audio_fete")
+		let audiofete = play("audio_fete")
 		add_atelier_map()
 		add_atelier_items()
 		destroyAll("pied_velos_kc")
@@ -4240,16 +4613,23 @@ scene("interactionJour4", (jourIdx,totalCoins,totalStars,position) => {
 			text("BRAVO!\n ", { size: LARGETXTSIZE, font:"joystix" }),
 			scale(1),
 			anchor("center"),
-			pos(center().x,MAP_HEIGHT/2-16)
+			pos(center().x+5,MAP_HEIGHT/2-16)
+		])
+		const bravoContent = add([
+			text("J'ai réussi à faire tourner l'atelier pendant une semaine sans m'épuiser ni faire faillite!\nJe suis sacrément badass! ", { size: MEDIUMTXTSIZE-4,width: TXTWIDTH+5, font:"prstart" }),
+			scale(1),
+			anchor("center"),
+			pos(center().x+10,MAP_HEIGHT/2+50),
 		])
 
 		// Recommencez le jeu
 		add([
-			text("(appuie sur espace pour recommencer le jeu)", { size: TXTSIZE }),
-					scale(1),anchor("center"),pos(center().x,BOTTOM+5),])
+			text("(espace pour recommencer le jeu)", { size: TXTSIZE }),
+					scale(1),anchor("center"),pos(center().x,BOTTOM+23),])
 
 					onKeyPress("space",() => {
-							musicFond.paused= true
+							audiofete.paused= true
+
 								    go("start")
 								})
 	})
@@ -4260,7 +4640,7 @@ scene("Bankrupt", (jourIdx,totalCoins,totalStars) => {
 	add_atelier_map()
 	// add party mood
 	const raveParty = add([
-		sprite("atelier_rave",{anim:"idle"}),
+		sprite("atelier_faillite",{anim:"idle"}),
 		anchor("center"),
 		scale(1),
 		pos(center().x,MAP_HEIGHT/2),
@@ -4272,11 +4652,19 @@ scene("Bankrupt", (jourIdx,totalCoins,totalStars) => {
 		anchor("center"),
 		pos(center().x,MAP_HEIGHT/2-16)
 	])
+	const bankruptContent = add([
+		text("C'est pas grave je ferais plus attention à qui je frappe la prochaine fois...", { size: MEDIUMTXTSIZE-4,width: TXTWIDTH+5, font:"prstart" }),
+		scale(1),
+		anchor("center"),
+		pos(center().x+10,MAP_HEIGHT/2+50),
+
+	])
+
 
 	// Recommencez le jeu
 	add([
-		text("(appuie sur espace pour recommencer le jeu)", { size: TXTSIZE }),
-				scale(1),anchor("center"),pos(center().x,BOTTOM+5),])
+		text("(espace pour recommencer le jeu)", { size: TXTSIZE }),
+				scale(1),anchor("center"),pos(center().x,BOTTOM+23),])
 
 				onKeyPress("space",() => {
 					musicFete.paused = true
@@ -4289,6 +4677,12 @@ scene("Burnout", (jourIdx,totalCoins,totalStars) => {
 	let musicBurnout = play("audio_burnout")
 	add_atelier_map()
 	destroyAll("velorouge")
+	const burnoutFond = add([
+		sprite("atelier_burnout",{anim:"idle"}),
+		anchor("center"),
+		scale(1),
+		pos(center().x,MAP_HEIGHT/2),
+	])
 	// Titre
 	const title = add([
 		text("GAME OVER!\n ", { size: LARGETXTSIZE, font:"joystix" }),
@@ -4296,29 +4690,118 @@ scene("Burnout", (jourIdx,totalCoins,totalStars) => {
 		anchor("center"),
 		pos(center().x,MAP_HEIGHT/2-16)
 	])
-
+	const burnoutContent = add([
+		text("C'est l'enfer, c'est impossible de travailler dans des conditions pareils.", { size: MEDIUMTXTSIZE-4,width: TXTWIDTH+5, font:"prstart" }),
+		scale(1),
+		anchor("center"),
+		pos(center().x+3,MAP_HEIGHT/2+50),
+	])
 	// Recommencez le jeu
 	add([
-				text("(appuie sur espace pour recommencer le jeu)", { size: TXTSIZE }),
-				scale(1),anchor("center"),pos(center().x,BOTTOM+5),])
+				text("(espace pour recommencer le jeu)", { size: TXTSIZE }),
+				scale(1),anchor("center"),pos(center().x,BOTTOM+23),])
 
 	onKeyPress("space",() => {
 						musicBurnout.paused = true
 				    go("start")
 				})
 })
+scene("test",()=>{
+	/////////
 
+
+
+	// Loading a multi-frame sprite
+	loadSprite("dino", "/images/sprite_maincharacter_petit.png", {
+		// The image contains 9 frames layed out horizontally, slice it into individual frames
+		sliceX: 12,
+		// 4 animations
+		anims: {
+			"idle": {
+				// Starts from frame 0, ends at frame 3
+				from: 0,
+				to: 3,
+				// Frame per second
+				speed: 5,
+				loop: true,
+			},
+			"run": {
+				from: 0,
+				to: 3,
+				speed: 5,
+				loop: true,
+			},
+			// This animation only has 1 frame
+			"jump": 8,
+		},
+	})
+
+	const SPEED = 60
+
+
+
+	// Add our player character
+	const player = add([
+		sprite("dino"),
+		pos(center()),
+		anchor("center"),
+		area(),
+		body(),
+	])
+
+	// .play is provided by sprite() component, it starts playing the specified animation (the animation information of "idle" is defined above in loadSprite)
+	player.play("idle")
+
+
+	// Switch to "idle" or "run" animation when player hits ground
+	player.onGround(() => {
+		if (!isKeyDown("left") && !isKeyDown("right")) {
+			player.play("idle")
+		} else {
+			player.play("run")
+		}
+	})
+
+	player.onAnimEnd((anim) => {
+		if (anim === "idle") {
+			// You can also register an event that runs when certain anim ends
+		}
+	})
+	onKeyDown("left", () => {
+		player.move(-SPEED, 0)
+		player.flipX = true
+		// .play() will reset to the first frame of the anim, so we want to make sure it only runs when the current animation is not "run"
+		if (player.isGrounded() && player.curAnim() !== "run") {
+			player.play("run")
+		}
+	})
+
+	onKeyDown("right", () => {
+		player.move(SPEED, 0)
+		player.flipX = false
+		if (player.isGrounded() && player.curAnim() !== "run") {
+			player.play("run")
+		}
+	})
+
+
+
+
+	/////////
+
+})
+// THE ENDPOINT
 function start() {
-		// Start with the "game" scene, with initial parameters
-//go("atelier", 5, 85,0/*totalCoins*/,INITIALPOSITION)
-//go("interactionJour1",1,totalCoins,totalStars,INITIALPOSITION)
+// Start with the "game" scene, with initial parameters
+//go("atelier", 3, 85,0/*totalCoins*/,INITIALPOSITION)
+//go("interactionJour3",3,totalCoins,totalStars,INITIALPOSITION)
 //go("jourFinal",5,100,100,INITIALPOSITION,2)
 //go("outside",5,30,30,INITIALPOSITION)
-//	go("interactionJour1", (1,0,40,20,INITIALPOSITION))//go("clientDialog",1,75,100/*totalCoins*/,50/*force*/)
- //justifiedFightCounter=4
- //go("Carton_Journalier","client1",1,30,30,10,10,1)
- //go("bonus",2)
+//go("interactionJour3", (2,0,40,20,INITIALPOSITION))//go("clientDialog",1,75,100/*totalCoins*/,50/*force*/)
+//justifiedFightCounter=4
+//go("Carton_Journalier","client1",1,50,30,10,10,1)
+//go("Burnout")
 //	go("inventaire", 1, 10, 10,INITIALPOSITION,0)
- go("start")
+go("start")
 	}
 start()
