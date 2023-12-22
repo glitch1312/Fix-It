@@ -43,6 +43,15 @@
     "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
     "sourceSize": { "w": 16, "h": 16 },
     "duration": 250
+   },
+   {
+    "filename": "client_12_petit 5.aseprite",
+    "frame": { "x": 80, "y": 0, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 250
    }
  ],
  "meta": {
@@ -50,11 +59,11 @@
   "version": "1.2.40-x64",
   "image": "client_12_petit.png",
   "format": "RGBA8888",
-  "size": { "w": 80, "h": 16 },
+  "size": { "w": 96, "h": 16 },
   "scale": "1",
   "frameTags": [
-   { "name": "walk_right", "from": 0, "to": 3, "direction": "forward" },
-   { "name": "idle", "from": 4, "to": 4, "direction": "forward" }
+   { "name": "walk_right", "from": 0, "to": 4, "direction": "forward" },
+   { "name": "idle", "from": 5, "to": 5, "direction": "forward" }
   ],
   "layers": [
    { "name": "character", "opacity": 255, "blendMode": "normal" },

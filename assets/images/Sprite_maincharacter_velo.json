@@ -1,6 +1,6 @@
 { "frames": [
    {
-    "filename": "{maincharacter_velo} 0.aseprite",
+    "filename": "Sprite_maincharacter_velo_new 0.aseprite",
     "frame": { "x": 0, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -9,7 +9,7 @@
     "duration": 200
    },
    {
-    "filename": "{maincharacter_velo} 1.aseprite",
+    "filename": "Sprite_maincharacter_velo_new 1.aseprite",
     "frame": { "x": 16, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -18,7 +18,7 @@
     "duration": 200
    },
    {
-    "filename": "{maincharacter_velo} 2.aseprite",
+    "filename": "Sprite_maincharacter_velo_new 2.aseprite",
     "frame": { "x": 32, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -27,7 +27,7 @@
     "duration": 200
    },
    {
-    "filename": "{maincharacter_velo} 3.aseprite",
+    "filename": "Sprite_maincharacter_velo_new 3.aseprite",
     "frame": { "x": 48, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -36,7 +36,7 @@
     "duration": 200
    },
    {
-    "filename": "{maincharacter_velo} 4.aseprite",
+    "filename": "Sprite_maincharacter_velo_new 4.aseprite",
     "frame": { "x": 64, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -45,7 +45,7 @@
     "duration": 200
    },
    {
-    "filename": "{maincharacter_velo} 5.aseprite",
+    "filename": "Sprite_maincharacter_velo_new 5.aseprite",
     "frame": { "x": 80, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -54,7 +54,7 @@
     "duration": 200
    },
    {
-    "filename": "{maincharacter_velo} 6.aseprite",
+    "filename": "Sprite_maincharacter_velo_new 6.aseprite",
     "frame": { "x": 96, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -63,7 +63,7 @@
     "duration": 200
    },
    {
-    "filename": "{maincharacter_velo} 7.aseprite",
+    "filename": "Sprite_maincharacter_velo_new 7.aseprite",
     "frame": { "x": 112, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -72,7 +72,7 @@
     "duration": 200
    },
    {
-    "filename": "{maincharacter_velo} 8.aseprite",
+    "filename": "Sprite_maincharacter_velo_new 8.aseprite",
     "frame": { "x": 128, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -81,7 +81,7 @@
     "duration": 200
    },
    {
-    "filename": "{maincharacter_velo} 9.aseprite",
+    "filename": "Sprite_maincharacter_velo_new 9.aseprite",
     "frame": { "x": 144, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -90,7 +90,7 @@
     "duration": 200
    },
    {
-    "filename": "{maincharacter_velo} 10.aseprite",
+    "filename": "Sprite_maincharacter_velo_new 10.aseprite",
     "frame": { "x": 160, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -99,7 +99,7 @@
     "duration": 200
    },
    {
-    "filename": "{maincharacter_velo} 11.aseprite",
+    "filename": "Sprite_maincharacter_velo_new 11.aseprite",
     "frame": { "x": 176, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -111,15 +111,20 @@
  "meta": {
   "app": "https://www.aseprite.org/",
   "version": "1.2.40-x64",
-  "image": "Sprite_maincharacter_velo.png",
+  "image": "Sprite_maincharacter_velo_new.png",
   "format": "RGBA8888",
   "size": { "w": 192, "h": 16 },
   "scale": "1",
   "frameTags": [
-   { "name": "walk_right", "from": 0, "to": 3, "direction": "forward" },
+   { "name": "roule", "from": 0, "to": 3, "direction": "forward" },
    { "name": "idle", "from": 4, "to": 4, "direction": "forward" },
    { "name": "down", "from": 5, "to": 7, "direction": "forward" },
    { "name": "up", "from": 8, "to": 11, "direction": "forward" }
+  ],
+  "layers": [
+   { "name": "velofixe", "opacity": 255, "blendMode": "normal" },
+   { "name": "velomouv", "opacity": 255, "blendMode": "normal" },
+   { "name": "perso", "opacity": 255, "blendMode": "normal" }
   ],
   "slices": [
   ]

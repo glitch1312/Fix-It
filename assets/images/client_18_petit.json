@@ -1,6 +1,6 @@
 { "frames": [
    {
-    "filename": "client_11_petit 0.aseprite",
+    "filename": "client_18_petit 0.aseprite",
     "frame": { "x": 0, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -9,7 +9,7 @@
     "duration": 250
    },
    {
-    "filename": "client_11_petit 1.aseprite",
+    "filename": "client_18_petit 1.aseprite",
     "frame": { "x": 16, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -18,7 +18,7 @@
     "duration": 250
    },
    {
-    "filename": "client_11_petit 2.aseprite",
+    "filename": "client_18_petit 2.aseprite",
     "frame": { "x": 32, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -27,7 +27,7 @@
     "duration": 250
    },
    {
-    "filename": "client_11_petit 3.aseprite",
+    "filename": "client_18_petit 3.aseprite",
     "frame": { "x": 48, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -36,7 +36,7 @@
     "duration": 250
    },
    {
-    "filename": "client_11_petit 4.aseprite",
+    "filename": "client_18_petit 4.aseprite",
     "frame": { "x": 64, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,

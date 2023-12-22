@@ -1,0 +1,74 @@
+{ "frames": [
+   {
+    "filename": "inventaire_deco 0.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 176, "h": 112 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 176, "h": 112 },
+    "sourceSize": { "w": 176, "h": 112 },
+    "duration": 200
+   },
+   {
+    "filename": "inventaire_deco 1.aseprite",
+    "frame": { "x": 176, "y": 0, "w": 176, "h": 112 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 176, "h": 112 },
+    "sourceSize": { "w": 176, "h": 112 },
+    "duration": 200
+   },
+   {
+    "filename": "inventaire_deco 2.aseprite",
+    "frame": { "x": 352, "y": 0, "w": 176, "h": 112 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 176, "h": 112 },
+    "sourceSize": { "w": 176, "h": 112 },
+    "duration": 200
+   },
+   {
+    "filename": "inventaire_deco 3.aseprite",
+    "frame": { "x": 528, "y": 0, "w": 176, "h": 112 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 176, "h": 112 },
+    "sourceSize": { "w": 176, "h": 112 },
+    "duration": 200
+   },
+   {
+    "filename": "inventaire_deco 4.aseprite",
+    "frame": { "x": 704, "y": 0, "w": 176, "h": 112 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 176, "h": 112 },
+    "sourceSize": { "w": 176, "h": 112 },
+    "duration": 200
+   },
+   {
+    "filename": "inventaire_deco 5.aseprite",
+    "frame": { "x": 880, "y": 0, "w": 176, "h": 112 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 176, "h": 112 },
+    "sourceSize": { "w": 176, "h": 112 },
+    "duration": 200
+   }
+ ],
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.2.40-x64",
+  "image": "inventaire_deco.png",
+  "format": "RGBA8888",
+  "size": { "w": 1056, "h": 112 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "idle", "from": 0, "to": 5, "direction": "forward" }
+  ],
+  "layers": [
+   { "name": "Layer 1", "opacity": 255, "blendMode": "normal" },
+   { "name": "Layer 1", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}

@@ -1,6 +1,6 @@
 { "frames": [
    {
-    "filename": "client_19_petit 0.aseprite",
+    "filename": "interaction_alliee_petit 0.aseprite",
     "frame": { "x": 0, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -9,7 +9,7 @@
     "duration": 250
    },
    {
-    "filename": "client_19_petit 1.aseprite",
+    "filename": "interaction_alliee_petit 1.aseprite",
     "frame": { "x": 16, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -18,7 +18,7 @@
     "duration": 250
    },
    {
-    "filename": "client_19_petit 2.aseprite",
+    "filename": "interaction_alliee_petit 2.aseprite",
     "frame": { "x": 32, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -27,7 +27,7 @@
     "duration": 250
    },
    {
-    "filename": "client_19_petit 3.aseprite",
+    "filename": "interaction_alliee_petit 3.aseprite",
     "frame": { "x": 48, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -36,17 +36,8 @@
     "duration": 250
    },
    {
-    "filename": "client_19_petit 4.aseprite",
+    "filename": "interaction_alliee_petit 4.aseprite",
     "frame": { "x": 64, "y": 0, "w": 16, "h": 16 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
-    "sourceSize": { "w": 16, "h": 16 },
-    "duration": 250
-   },
-   {
-    "filename": "client_19_petit 5.aseprite",
-    "frame": { "x": 80, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
@@ -57,16 +48,15 @@
  "meta": {
   "app": "https://www.aseprite.org/",
   "version": "1.2.40-x64",
-  "image": "client_19_petit.png",
+  "image": "intercation_alliee.png",
   "format": "RGBA8888",
-  "size": { "w": 96, "h": 16 },
+  "size": { "w": 80, "h": 16 },
   "scale": "1",
   "frameTags": [
-   { "name": "walk_right", "from": 0, "to": 4, "direction": "forward" },
-   { "name": "idle", "from": 5, "to": 5, "direction": "forward" }
+   { "name": "walk_right", "from": 0, "to": 3, "direction": "forward" },
+   { "name": "idle", "from": 4, "to": 4, "direction": "forward" }
   ],
   "layers": [
-   { "name": "character", "opacity": 255, "blendMode": "normal" },
    { "name": "character", "opacity": 255, "blendMode": "normal" },
    { "name": "shadow", "opacity": 255, "blendMode": "normal" }
   ],

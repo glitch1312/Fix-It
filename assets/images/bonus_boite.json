@@ -57,6 +57,7 @@
    { "name": "shine", "from": 1, "to": 4, "direction": "forward" }
   ],
   "layers": [
+   { "name": "Layer 2", "opacity": 255, "blendMode": "normal" },
    { "name": "Layer 1", "opacity": 255, "blendMode": "normal" }
   ],
   "slices": [
