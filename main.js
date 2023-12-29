@@ -4,204 +4,9 @@ kaboom({
 	font: "prstart",
 })
 
-//debug.inspect = true
-
-loadRoot("assets/")
-// Chargement des assets
-// VISUALS
-// all sprites have been created specifically for this game by  ..... under the ... License
-// from Aseprite json
-loadAseprite("talk_BG_tiles", "images/talk_BG_tiles.png", "images/talk_BG_tiles.json")
-
-loadAseprite("Sprite_perso_velo", "images/Sprite_perso_velo.png", "images/Sprite_perso_velo.json")
-loadAseprite("scene_dialogue_punch","images/scene_dialogue_punch.png", "images/scene_dialogue_punch.json")
-loadAseprite("badass_symbol","images/Sprite_scene_jeu_vie.png","images/Sprite_scene_jeu_vie.json")
-loadAseprite("coins_symbol","images/Sprite_scene_jeu_piece.png","images/Sprite_scene_jeu_piece.json")
-loadAseprite("contenair","images/Sprite_out_contenair.png","images/Sprite_out_contenair.json")
-loadAseprite("velo_sur_pied","images/Sprite_velosurpied.png","images/Sprite_velosurpied.json")
-loadAseprite("etabli_fini","images/Sprite_etabli.png","images/Sprite_etabli.json")
-//loadAseprite("mecanix","images/sprite_maincharacter_petit.png","images/sprite_maincharacter_petit.json")
+import * as loadAssets from './load-assets.js';
 
 
-loadAseprite("mecanix_velo","images/Sprite_maincharacter_velo.png","images/Sprite_maincharacter_velo.json")
-loadAseprite("choix_frapper_juste", "images/choix_frapper_juste_8images.png", "images/choix_frapper_juste_8images.json")
-loadAseprite("choix_frapper_v2", "images/choix_frapper_v2.png", "images/choix_frapper_v2.json")
-loadAseprite("choix_reparer", "images/choix_reparer.png", "images/choix_reparer.json")
-loadAseprite("atelier_rave", "images/atelier_rave.png", "images/atelier_rave.json")
-loadAseprite("exte_banc_perso", "images/exte_banc_perso.png", "images/exte_banc_perso.json")
-loadAseprite("exte_arbre_anime", "images/exte_arbre_anime.png", "images/exte_arbre_anime.json")
-loadAseprite("start_fond", "images/start_fond.png", "images/start_fond.json")
-loadAseprite("start_fond", "images/start_fond.png", "images/start_fond.json")
-loadAseprite("nuit_Z","images/nuit_Z.png","images/nuit_Z.json")
-loadAseprite("mecanix_chat","images/mecanix_chat.png","images/mecanix_chat.json")
-loadAseprite("bonus_chips","images/bonus_chips.png","images/bonus_chips.json")
-loadAseprite("bonus_boites","images/bonus_boites.png","images/bonus_boite.json")
-loadAseprite("atelier_etabli_biblio","images/atelier_etabli_biblio.png","images/atelier_etabli_biblio.json")
-loadAseprite("inventaire_deco","images/inventaire_deco.png","images/inventaire_deco.json")
-loadAseprite("atelier_faillite","images/atelier_faillite.png","images/atelier_faillite.json")
-loadSprite("tile_jonction","images/scene_out_tile_cheminhorizontal_jonction.png")
-loadAseprite("atelier_burnout","images/atelier_burnout.png","images/atelier_burnout.json")
-
-loadSprite("atelier_tabouret_livre","images/atelier_tabouret_livre.png")
-loadSprite("atelier_livre_ouvert","images/atelier_livre_ouvert.png")
-
-
-// clients
-for (var i = 1; i <=24; i++) {
-	loadAseprite("client_"+i+"_petit","images/client_"+i+"_petit.png", "images/client_"+i+"_petit.json") //punk
-}
-//clients grand
-for (var i = 1; i <=24; i++) {
-loadSprite("client_"+i+"_grand", "images/client_"+i+"_grand.png")
-}
-
-// perso autres
-loadAseprite("perso_dechett_1","images/perso_dechett_1.png","images/perso_dechett_1.json")
-loadAseprite("perso_interaction_1","images/perso_interaction_1.png","images/perso_interaction_1.json")
-loadAseprite("perso_interaction_2","images/perso_interaction_2.png","images/perso_interaction_2.json")
-loadAseprite("perso_interaction_3","images/perso_interaction_3.png","images/perso_interaction_3.json")
-loadAseprite("perso_interaction_4","images/perso_interaction_4.png","images/perso_interaction_4.json")
-loadAseprite("interaction_allie","images/intercation_alliee.png","images/intercation_alliee.json")
-
-loadAseprite("perso_flinta_1","images/flinta_1_petit.png","images/flinta_1_petit.json")
-loadAseprite("perso_flinta_2","images/flinta_2_petit.png","images/flinta_2_petit.json")
-loadAseprite("perso_flinta_3","images/flinta_3_petit.png","images/flinta_3_petit.json")
-loadAseprite("perso_flinta_4","images/flinta_4_petit.png","images/flinta_4_petit.json")
-loadAseprite("atelier_etabli_flyer","images/atelier_etabli_flyer.png","images/atelier_etabli_flyer.json")
-loadAseprite("atelier_velo_sur_pied_kc","images/atelier_velo_sur_pied_kc.png","images/atelier_velo_sur_pied_kc.json")
-loadAseprite("exte_maki","images/exte_maki.png","images/exte_maki.json")
-loadAseprite("exte_sirius","images/exte_sirius.png","images/exte_sirius.json")
-loadAseprite("croquettes","images/croquettes.png","images/croquettes.json")
-loadAseprite("atelier_mur_fond","images/atelier_mur_fond.png","images/atelier_mur_fond.json")
-loadAseprite("atelier_tasse_cafe","images/atelier_tasse_cafe.png","images/atelier_tasse_cafe.json")
-loadAseprite("dialogboxEnter","images/talk_boite_enter.png","images/talk_boite_enter.json")
-//loadSprite("atelier_mur_fond","images/atelier_mur_fond.png")
-
-
-// SPRITE ATLA
-//Leshy SpriteSheet Tool https://www.leshylabs.com/apps/sstool/ to create the sprite atlas
-loadSpriteAtlas("images/scene_repairfix.png", "images/scene_repairfix.json")
-loadSpriteAtlas("images/scene_repair.png", "images/scene_repair.json")
-loadSpriteAtlas("images/scene_inventaire.png", "images/scene_inventaire.json")
-loadSpriteAtlas("images/sprite_outils.png","images/sprite_outils.json")
-loadSpriteAtlas("images/tiles_outside.png","images/tiles_outside.json")
-loadSpriteAtlas("images/tiles.png", "images/tiles.json")
-loadSpriteAtlas("images/sorties.png", "images/sorties.json")
-
-// SPRITES
-loadSprite("dialogbox","images/talk_boite.png")
-
-loadSprite("wrench","images/Sprite-tool-wrench.png")
-loadAseprite("demontepneu","images/demonte_pneu.png","images/demonte_pneu.json")
-loadSprite("clef","images/Sprite_clef.png")
-loadSprite("clepedale","images/Sprite_clepedale.png")
-loadSprite("rider_en_pied","images/Sprite-characterenpied.png")
-loadSprite("inventaire_note","images/sprite_inventaire_note.png")
-loadSprite("mecanix_en_pied","images/Sprite_maincharacter_enpied.png")
-loadSprite("velo_rouge","images/Sprite-velorouge.png")
-loadSprite("exte_arbre","images/exte_arbre.png")
-loadSprite("dechett","images/Sprite_dechett.png")
-loadSprite("carton_bulle","images/bulle.png")
-loadSprite("carton_bilan","images/bilan_resume.png")
-loadSprite("choix_bulle","images/choix_bulle.png")
-loadSprite("atelier_poster","images/poster.png")
-loadSprite("atelier_velo_bleu","images/atelier_velo_bleu.png")
-loadSprite("atelier_poster_grand","images/atelier_poster_grand.png")
-loadSprite("atelier_bibliotheque","images/atelier_bibliotheque.png")
-loadSprite("atelier_cover","images/atelier_cover.png")
-loadSprite("atelier_point_info","images/atelier_point_info.png")
-loadAseprite("gateau","images/atelier_gateau.png","images/atelier_gateau.json")
-
-loadSprite("atelier_armoire_kc","images/atelier_armoire_kc.png")
-loadSprite("atelier_clee","images/atelier_clee.png")
-loadSprite("atelier_poster2_grand","images/atelier_poster2_grand.png")
-loadSprite("exte_banc","images/exte_banc.png")
-loadSprite("exte_scudo","images/exte_scudo.png")
-loadSprite("velo_sur_pied_vide","images/atelier_velo_sur_pied_vide1.png")
-loadSprite("inventaire_velo_sur_pied_vide","images/inventaire_velo_sur_pied_vide1.png")
-loadSprite("tile_exte_chemin_fin_horizontal","images/tile_exte_chemin_fin_horizontal.png")
-loadSprite("tile_exte_chemin_fin_verticall","images/tile_exte_chemin_fin_verticall.png")
-
-
-loadSprite("mecanix","images/sprite_maincharacter_petit.png", {
-	// The image contains 9 frames layed out horizontally, slice it into individual frames
-	sliceX: 12,
-	// 4 animations
-	anims: {
-		"walk_right": {
-			// Starts from frame 0, ends at frame 3
-			from: 0,
-			to: 3,
-			// Frame per second
-			speed: 5,
-			loop: true,
-		},
-		"idle": {
-			from: 4,
-			to: 4,
-			speed: 5,
-			loop: true,
-		},
-		"down": {
-			from: 6,
-			to: 8,
-			speed: 5,
-			loop: true,
-		},
-		"up": {
-			from: 9,
-			to: 11,
-			speed: 5,
-			loop: true,
-		},
-
-	},
-})
-
-
-
-// AUDIOS
-loadRoot("assets/")
-// downloaded from https://mixkit.co/free-sound-effects/game/ under the Mixkit Sound Effects Free License
-loadSound("audio_burnout", "audio/burnout.mp3");
-loadSound("audio_fete", "audio/fete.mp3");
-loadSound("audio_piece", "audio/piece.mp3");
-loadSound("audio_reussite", "audio/porte.mp3");
-loadSound("action_juste", "audio/reparer_frapper_juste.mp3");
-loadSound("audio_reparer", "audio/reparer.mp3");
-loadSound("page_debut", "audio/start.mp3");
-//loadSound("hitSound", "audio/bomb_explosion.mp3");
-loadSound("hitSound", "audio/audio_frapper.mp3");
-loadSound("choix_faux","audio/cfaux.mp3")
-
-loadSound("extraBonus", "audio/extra_bonus.mp3");
-loadSound("hitInRepair", "audio/retro_click.mp3");
-loadSound("unlock", "audio/unlock.mp3");
-loadSound("selector", "audio/selector.mp3");
-loadSound("retro_click", "audio/retro_click.mp3");
-loadSound("repair_sucess", "audio/repair_sucess.mp3");
-loadSound("porte", "audio/porte.mp3");
-loadSound("ouinouin", "audio/ouinouin.mp3");
-loadSound("frappez", "audio/frappez.mp3");
-loadSound("fond", "audio/fond.mp3");
-loadSound("carton", "audio/carton.mp3");
-loadSound("carton2", "audio/carton2.mp3");
-// downloaded from https://mixkit.co/free-sound-effects/game/
-loadSound("minijeu", "audio/minijeu.mp3");
-loadSound("exte", "audio/exte.mp3");
-loadSound("pagetourne", "audio/page_qui_tourne.mp3");//https://lasonotheque.org
-// FONTS
-//joystix, prstart pour action
-// alphbeta pour texte courant
-// ... pour titre
-// ... joystix pour status (chiffres)
-// coup de <3 pixel
-// retro pour tout prstartK
-//https:www.1001fonts.com/pixel-millennium-font.html#license Pixel Millennium is licensed under the Creative Commons Attribution-NonCommercial-NoDerivs License (CC BY-NC-ND)
-//loadFont("arcade","assets/fonts/joystix.otf")
-loadFont("prstart","assets/fonts/pixel.ttf")
-// downloaded at https://www.1001fonts.com/joystix-font.html under the https://www.1001fonts.com/joystix-font.html#license license
-loadFont("joystix","assets/fonts/joystix.otf")
 // ------INITIALIZATION-------//
 // --CONSTANTS-- //
 //audio
@@ -577,6 +382,14 @@ let INITIALCLIENTSLIST = {
 		 isSexist: false,
  },
 }
+
+function initModules() {
+    // This is necessary as those modules require kaboom to be initialized (global variables)
+    loadAssets.init();
+}
+
+initModules();
+
 // ------ Boucle de Gameplay ------- //
 // ------ Start --------------------------------------------------- //
 scene("start",() => {
@@ -2430,7 +2243,7 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
  				finalInt3=true
 				wait(1,()=>{
 					let gateau = add([
-					sprite("gateau",{anim:"idle"}),
+					sprite("atelier_gateau",{anim:"idle"}),
 					anchor("center"),
 					pos(center().x-8,MAP_HEIGHT/2-1),
 				])
