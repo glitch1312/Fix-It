@@ -1,4 +1,6 @@
-import * as loadAssets from './load-assets.js';
+import * as loadAssets from './js/load-assets.js';
+//import {INITIALCLIENTSLIST} from './js/clients-list-manager.js';
+import {textList,dialogboxList, collisionList, dialogsList, bonusList, references } from './js/text-list-manager.js';
 
 kaboom({
 	background: [ 0,0,0 ],
@@ -16,35 +18,35 @@ let musicFond = play("page_debut", {
     loop: true
 })
 musicFond.paused = true
-let interrupt = false
-let totalCoins = 0
-let totalStars = 0
-let interactionDechetFlag = false // no interaction with dechetterie perso
-let flyerDechetFlag = false
-let helpDechetFlag = false
-let dialogFinished = false
-let veloTag = false // no bikePost yet
-let posterFlag = false
-let flyersFlag = false
-let flyersTaken = false
-let croquettesFlag= true
-let croquettesGivenFlag = false
-let chipsFlag = false
-let chipsGivenFlag = false
-let boiteOutilsFlag = false
-let deriveChaineGained = false
-let showClients = true
-let jumpToHitFlag = false
-let jourIdx = 1 // game starts at day 1
-let clientCounter = 1 // no client interaction at start
-let fightCounter = 0
-let justifiedFightCounter = 0
-let repairCounter = 0
-let fightGoalsList = [4,4,2,2]
-let outdoorKey = false
-let coinsAnimValueList = [0] //list for starting bilan journalier
-let starsAnimValueList = [0]
 
+	let interrupt = false
+	let totalCoins = 0
+	let totalStars = 0
+	let interactionDechetFlag = false // no interaction with dechetterie perso
+	let flyerDechetFlag = false
+	let helpDechetFlag = false
+	let dialogFinished = false
+	let veloTag = false // no bikePost yet
+	let posterFlag = false
+	let flyersFlag = false
+	let flyersTaken = false
+	let croquettesFlag= true
+	let croquettesGivenFlag = false
+	let chipsFlag = false
+	let chipsGivenFlag = false
+	let boiteOutilsFlag = false
+	let deriveChaineGained = false
+	let showClients = true
+	let jumpToHitFlag = false
+	let jourIdx = 1 // game starts at day 1
+	let clientCounter = 1 // no client interaction at start
+	let fightCounter = 0
+	let justifiedFightCounter = 0
+	let repairCounter = 0
+	let fightGoalsList = [4,4,2,2]
+	let outdoorKey = false
+	let coinsAnimValueList = [0] //list for starting bilan journalier
+	let starsAnimValueList = [0]
 
 const MAP_WIDTH = 256
 const MAP_HEIGHT = 256
@@ -64,11 +66,6 @@ const MYPURPLE = rgb(79,30,69)
 const MYDARKPINK = rgb(238, 106,124)
 const MYDARKBLUE = rgb(99,138,159)
 const MYLIGHTBLUE = rgb(138,162,173)
-
-//GLOBAL
-
-
-// LEVELS INITIALIZATION with JSON
 let INITIALCLIENTSLIST = {
  "client1":{
 		 spriteName:"client_1_petit",
@@ -384,6 +381,7 @@ let INITIALCLIENTSLIST = {
  },
 }
 
+let clientsList = INITIALCLIENTSLIST
 function initModules() {
     // This is necessary as those modules require kaboom to be initialized (global variables)
     loadAssets.init();
@@ -445,7 +443,7 @@ scene("start",() => {
 		])
 		// But
 		const but = add([
-			text("Nouvel atelier de mécanique vélo!\nAttention, cet atelier ne supporte aucune remarques sexiste! \nSurvivra-t'il?",
+			text(textList["FR"].soustitre,
 			{ size: TXTSIZE+2, font:"prstart" , width:MAP_WIDTH-64}),
 			scale(1),
 			anchor("center"),
@@ -454,7 +452,7 @@ scene("start",() => {
 		])
 		// Instructions
 		const instructions = add([
-			text("Utilise les touches fléchées pour te déplacer et la toucher enter pour interagir", { size: TXTSIZE+2,align:"center", font:"prstart",width:TXTWIDTH+50}),
+			text(textList["FR"].instructions, { size: TXTSIZE+2,align:"center", font:"prstart",width:TXTWIDTH+50}),
 			scale(1),
 			anchor("center"),
 			pos(center().x,MAP_HEIGHT/2+5.7*16),
@@ -937,7 +935,7 @@ function addStatusBar(jourIdx,totalCoins,totalStars){
 		])
 
 		const jour = add([
-			text("JOUR "+jourIdx+"/5", {font: "prstart", size:TXTSIZE}),
+			text(textList["FR"].jour+jourIdx+"/5", {font: "prstart", size:TXTSIZE}),
 			pos(center().x-(MAP_WIDTH/2)+sBoxmargins, 17),
 		])
 
@@ -1600,7 +1598,7 @@ function add_atelier_collisions(player,totalCoins,totalStars){
 			pos(center().x,BOTTOM),
 		])
 		let txt = add([
-			text("Incroyable! Quelle trouvaille j'ai fait à la dechet!", { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
+			text(textList["FR"].dechett1, { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
 			anchor("center"),
 			pos(center().x,BOTTOM),
 			color(MYBLUE),
@@ -1616,7 +1614,6 @@ function add_atelier_collisions(player,totalCoins,totalStars){
 		player.onCollide("affiche", () => {
 			let textBox = add([
 				sprite("atelier_poster_grand"),//, width: width() - 230
-				// 	text("Complète ton inventaire pour\n un TURFU RADIEUX!", { size:  TXTSIZE }),//, width: width() - 230
 				anchor("center"),
 				pos(center().x,MAP_HEIGHT/2-10),
 				"afficheMessage"
@@ -1631,12 +1628,12 @@ function add_atelier_collisions(player,totalCoins,totalStars){
 
 					let poster2 = add([
 					sprite("atelier_poster2_grand"),//, width: width() - 230
-					// 	text("Complète ton inventaire pour\n un TURFU RADIEUX!", { size:  TXTSIZE }),//, width: width() - 230
+					// 	"Complète ton inventaire pour\n un TURFU RADIEUX!", { size:  TXTSIZE }),//, width: width() - 230
 					anchor("center"),
 					pos(center().x,MAP_HEIGHT/2-10),
 					"afficheMessage2"])
 					let distributeInstruction = add([
-						text("(espace pour prendre les flyers) ", {font: "prstart", size:TXTSIZE, width:TXTWIDTH}),
+						text(textList["FR"].getflyer, {font: "prstart", size:TXTSIZE, width:TXTWIDTH}),
 						anchor("center"),
 						color(MYPURPLE),
 						pos(center().x+16, MAP_HEIGHT/2+4.5*16),
@@ -1662,13 +1659,13 @@ function add_atelier_collisions(player,totalCoins,totalStars){
 
 	// collision
 	if (jourIdx==5 && helpDechetFlag == false ){
-	affichageOnCollision(player,"armoireKc","Oh mince...La porte de l'armoire est toute défoncée. Quel zbeul...")
-	affichageOnCollision(player,"pied_velos_kc","Argh mes jolis stands... Je vais avoir besoin d'aide.")
+	affichageOnCollision(player,"armoireKc",collisionList["FR"].text2)
+	affichageOnCollision(player,"pied_velos_kc",collisionList["FR"].text3)
 	}
 	//
 	if (jourIdx==1){
-	affichageOnCollision(player,"velorouge4","Maintenant que je les ai réparés, ces trois jolis vélos de courses sont prêt à rouler!")
-	affichageOnCollision(player,"velorouge1","Oups, mon vélo est vraiment dans un état lamentable, et dire que je suis mécaniciennex...")
+	affichageOnCollision(player,"velorouge4",collisionList["FR"].text4)
+	affichageOnCollision(player,"velorouge1",collisionList["FR"].text5)
 
 
 	player.onCollide("cafe",()=>{
@@ -1678,7 +1675,7 @@ function add_atelier_collisions(player,totalCoins,totalStars){
 	pos(center().x,BOTTOM),
 ])
 let txt = add([
-	text("Je suis prêtex pour ce premier jour!", { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
+	text(textList["FR"].firstday, { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
 	anchor("center"),
 	pos(center().x,BOTTOM),
 	color(MYBLUE),
@@ -1706,16 +1703,9 @@ onKeyPress(()=>{
 
 //bibliothque content
 
-	let titleList = ["\"Guide de language inclusif\"","\"M'explique pas la vie mec !\"","\"Les mecs lourds ou le paternalisme lubrique\"", "\"Une histoire de genres\"","\"Détransition, désistance et désinformation : Un guide pour comprendre le débat sur les enfants trans\"","\"La crise de la masculinité - Autopsie d'un mythe tenace\"" ]
-let authorList = ["Amnesty International","Rokhaya Diallo & Blachette","Natacha Henry","Lexie","Julia Serano","Francis Dupuis-Déri"]
-let coverTextList=["\"La langue joue un rôle dans la construction et la perpétuation de discriminations et de stéréotypes qui touchent autant les femmes que d’autres minorités (personnes LGBTQIA+, personnes racisées, personnes en situation de handicap etc..). Adopter une communication inclusive, c’est améliorer la représentation de la société, en accordant une visibilité égalitaire et respectueuse à l’ensemble de ses membres. Par exemple, joueureusex est un accord inclusif non-binaire.\"",
-	"\"Sous forme de saynètes humoristiques, cet ouvrage aborde les concepts de mansplaining, quand l’homme explique à une femme comment s’exprimer et comment penser de manière condescendante, de manterrupting, quand un homme coupe systématiquement la parole à une femme qui tente de s’exprimer, le manspreading quand l’homme prend ses aises dans les lieux publics notamment dans les transports en communs. Ces comportements masculins sont la résultante d’un patriarcat ordinaire.\"",
-	"\"Avec des yeux comme ça, je ne peux rien vous refuser\",\"vous êtes mariée ? c'est pas grave, je suis pas jaloux.\" Entre la drague et le harcèlement sexuel, il existe chez certains hommes une façon plus ou moins vulgaire et équivoque de s'en prendre aux femmes, en particulier dans le monde du travail... En une phrase ou deux, ils sexualisent la relation et mettent leur interlocutrice en position d'infériorité. Natacha Henry décrit et analyse ce comportement.\"",
-// qu'elle baptise ,paternalisme lubrique, et qui ponctue le quotidien des femmes."
-"\"A l'heure où les questions de genre et d'identité sont de plus en plus présentes dans l'espace public, voici un guide qui déconstruit tous les préjugés, les abus de langage, les non-sens liés aux transidentités, afin de mieux comprendre celles-ci et de leur donner les armes pour s'émanciper. [...] Ce livre engagé est une vraie boussole pour les personnes trans, [...] mais aussi pour les personnes cisgenres, concernées ou non, car c'est sa propre place dans la société et le traitement des différences qu'il s'agit de questionner.\"",
-"\"Cette brochure s’adresse à toustes celleux qui trouvent le débat autours des enjeux trans et des détransitions difficile à suivre et qui ne savent pas quoi en penser. Et pour cause ! Ces derniers temps, ce thème apparait de plus en plus souvent dans le débat public, mais pas porté par n’importe qui et n’importe où.\"",
-"Une crise de la masculinité, dit-on, sévit dans nos sociétés trop féminisées. Dans ce livre, Francis Dupuis-Déri propose une étonnante enquête sur ce discours de la \"crise de la masculinité\", dont il retrace l'histoire longue [...]. Il se demande finalement quelle est la signification politique de cette rhétorique, qui a pour effet de susciter la pitié envers les hommes, de justifier les violences masculines contre les femmes et de discréditer le projet de l'égalité entre les sexes."]
-
+let titleList = references["FR"].titleList
+let authorList = references["FR"].authorList
+let coverTextList= references["FR"].coverTextList
 	player.onCollide("bibliotheque", () => {
 		interrupt=true
 
@@ -1724,7 +1714,6 @@ let coverTextList=["\"La langue joue un rôle dans la construction et la perpét
 
 				let cover = add([
 					sprite("atelier_livre_ouvert"),//, width: width() - 230
-					// 	text("Complète ton inventaire pour\n un TURFU RADIEUX!", { size:  TXTSIZE }),//, width: width() - 230
 					anchor("center"),
 					pos(center().x,MAP_HEIGHT/2-10),
 					"cover"
@@ -1945,15 +1934,15 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 				// message to guide
 
 						if (showClients==false & jourIdx == 2 ){
-							addTextOnDialogBoxEnter("C'est tôt là, je pourrais aller faire un tour avant que les clientexs arrivent.")
+							addTextOnDialogBoxEnter(dialogboxList["FR"].text1)
 						}
 
 
 				//if there isn't any client yet, its because the PJ has to do smth
 				if (showClients==false & jourIdx != 1 ){
-					affichageOnCollision(player,"clientEntrance","Je pourrais aller faire un tour, il n'y a pas encore de clientexs")//player,colObjTag,colMsg
+					affichageOnCollision(player,"clientEntrance",collisionList["FR"].text6)//player,colObjTag,colMsg
 					if (flyersTaken == true){
-						affichageOnCollision(player,"clientEntrance","Mmmh.. je m'étais dit que je les distribuerai, peut-être que je devrais faire a avant que les clientexs arrivent.")//player,colObjTag,colMsg
+						affichageOnCollision(player,"clientEntrance",collisionList["FR"].text7)//player,colObjTag,colMsg
 					}
 				}
 				let flagWarning = false
@@ -1976,7 +1965,7 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 							pos(center().x,BOTTOM),
 						])
 						let txt = add([
-							text("Oups, j'ai l'impression d'avoir oublié un truc...", { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
+							text(textList["FR"].hint1, { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
 							anchor("center"),
 							pos(center().x,BOTTOM),
 							color(MYPURPLE),
@@ -1993,7 +1982,7 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 				}
 				// explanation message for the closed door
 				if (outdoorKey == false){
-					affichageOnCollision(player,"outsideDoorDroite","Je n'ai pas la clé pour ouvrir cette porte...")
+					affichageOnCollision(player,"outsideDoorDroite",collisionList["FR"].text1)
 				}
 
 
@@ -2177,7 +2166,7 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 		player.onCollide("louise", () => {
 			if(finalInt0==false){
 
-				addTextOnDialogBox("Je vais m'occuper des stands de vélos!"),
+				addTextOnDialogBox(dialogboxList["FR"].text2),
 				wait(1.4,()=>{
 					destroyAll("pied_velos_kc")
 					const velo_sur_pied_1 = add([
@@ -2204,21 +2193,21 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 
 				finalInt0=true
 			}else{
-				addTextOnDialogBox("C'est réparé!")
+				addTextOnDialogBox(dialogboxList["FR"].text3)
 			}
 		})
 		player.onCollide("flinta1", () => {
  			if(finalInt1	==false){
-				addTextOnDialogBox("Je vais réparer l'armoire, on n'y verra plus rien, tkt!")
+				addTextOnDialogBox(dialogboxList["FR"].text4)
  				wait(1.4,()=>{destroyAll("armoireKc")}),
  				finalInt1=true
  			}else{
- 				addTextOnDialogBox("C'est tout bon!")
+ 				addTextOnDialogBox(dialogboxList["FR"].text5)
  			}
  		})
 		player.onCollide("flinta2", () => {
 			if(finalInt2==false){
-				addTextOnDialogBox("Je t'ai amené un dérive-chaine pour te remercier de l'atelier de la dernière fois!")
+				addTextOnDialogBox(dialogboxList["FR"].text6)
 				if (deriveChaineGained==false){
 				play("audio_reussite") //indicate that an object has been gained
 					wait(1,()=>{add([
@@ -2235,12 +2224,12 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 			}
 			finalInt2=true
 			}else{
-				addTextOnDialogBox("Encore trop merci de nous avoir permis d'utiliser ton magasin pour l'atelier!")
+				addTextOnDialogBox(dialogboxList["FR"].text7)
 			}
 		})
 		player.onCollide("flinta3", () => {
  			if(finalInt3==false){
-				addTextOnDialogBox("J'ai entendu dire qu'il y avait besoin d'aide, je peux pas porter de trucs alors j'ai amené un gâteau!")
+				addTextOnDialogBox(dialogboxList["FR"].text8)
  				finalInt3=true
 				wait(1,()=>{
 					let gateau = add([
@@ -2254,7 +2243,7 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 
 					flinta3bis.setTarget(vec2(11*16,10.5*16))})
  			}else{
- 				addTextOnDialogBox("Le gateau est sur la table")
+ 				addTextOnDialogBox(dialogboxList["FR"].text9)
  			}
  		})
 		//player.onCollideEnd("flinta3",()=>{flinta3.setTarget(vec2(center().x-2.5*16,MAP_HEIGHT/2+2*16))})
@@ -2270,7 +2259,7 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 			])
 
 			player.onCollide("allie", () => {
-					addTextOnDialogBox("J'ai bien compris que vous arriviez à tout réparer, mais je me suis dit que ce serait encore plus sympa avec des boissons! ")
+					addTextOnDialogBox(dialogboxList["FR"].text10)
 					allieInt = true
 			})
 		})
@@ -2397,7 +2386,8 @@ scene("clientDialog", (clientKey,jourIdx,totalCoins,totalStars) => {
 		// find the current dialog
 		// retrieve dialogs from JSON
 		let initDialog = clientsList[clientKey].dialogs.length
-		levelDialog = clientsList[clientKey].dialogs
+
+		let levelDialog = clientsList[clientKey].dialogs
 
 		let textBox = add([
 			sprite("dialogboxEnter",{anim:"idle"}),//, width: width() - 230
@@ -2701,6 +2691,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			scale(1.3),
 			"perso_exte"
 		])
+		// dialogsList["FR"].dialogChips
 		let dialogChips = [
 			["p","Hey!"],
 			["m","Salut! Je peux m'asseoir avec toi?"],
@@ -2810,7 +2801,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 				chipsGivenFlag = true
 				chipsFlag=false
 			}else {
-				addTextOnDialogBox("Amuse-toi bien!")
+				addTextOnDialogBox(dialogboxList["FR"].text11)
 			}
 		})
 		// collision avec le chat
@@ -2823,7 +2814,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 					pos(center().x,BOTTOM),
 				])
 				let txt = add([
-					text("Tiens des croquettes pour toi!", { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
+					text(textList["FR"].chat1, { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
 					anchor("center"),
 					pos(center().x,BOTTOM),
 					color(MYPURPLE),
@@ -2843,7 +2834,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 		})
 		// collision avec le chat
 		player.onCollide("chien",()=>{
-				addTextOnDialogBox("Wouaf! Je suis chou nan?!")
+				addTextOnDialogBox(dialogboxList["FR"].text12)
 		})
 		// animate the player
 		//player.play("roule")
@@ -2886,39 +2877,42 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 	// add status bar
 		addStatusBar(jourIdx,totalCoins,totalStars)
 		// DECHETERRIE DIALOG
-		let dechettDialog1 = [
-			["PNJ","Hé toi! Qu'est-ce que tu fais là?"],
-			["M","Hé salut! C'est quoi cet endroit?"],
-			["PNJ","C'est la déchetterie, tu connais pas? T'es pas d'ici?"],
-			["M","Non, je viens de commencer de taffer à l'atelier de vélo pas loin d'ici."],
-			["PNJ", "Ha ouais et ça va? Je connaissais la personne d'avant, iel était sympa mais je crois que c'était pas toujours évident avec les clientexs."],
-			["M", "Ha ouais je vois...Je me fais pas mal expliquer mon taf par des types c'est un peu chiant."],
-			["PNJ","Je comprends, ça m'arrive ici aussi des fois. Ha aujourd'hui quelqu'un a amené des stands pour vélo en bon état, tu veux les prendre?"],
-			["M", "Grave! Merci. Bon j'y retourne... à bientôt!"]
-			]
-		let dechettDialog2 = [
-				["PNJ","Hé toi, te revoilà!"],
-				["M","Hé salut! Comment tu vas ?"],
-				["PNJ","Pas mal, c'est une journée tranquille. Et toi?"],
-				["M","Un peu fatiguée du taf, mais y'a des personnes sympas qui sont passées hier c'était cool!"],
-				["PNJ", "Avec le temps t'auras probablement plus de copainexs que de relouexs!"],
-				["M", "Ouais t'as raison. Aussi je passais par la parce que j'ai des flyers pour la manif contre les violences policieres."],
-				["PNJ","Oh merci, j'en ai entendu parler mais j'ai pas les détails."],
-				["M", "Bah y'a tout écrit dessus,tiens!"],
-				["PNJ","Top, je vais les faire tourner c'est important."],
-				]
+		let dechettDialog1 = dialogsList["FR"].dechettDialog1
+		//  [
+		// 	["PNJ","Hé toi! Qu'est-ce que tu fais là?"],
+		// 	["M","Hé salut! C'est quoi cet endroit?"],
+		// 	["PNJ","C'est la déchetterie, tu connais pas? T'es pas d'ici?"],
+		// 	["M","Non, je viens de commencer de taffer à l'atelier de vélo pas loin d'ici."],
+		// 	["PNJ", "Ha ouais et ça va? Je connaissais la personne d'avant, iel était sympa mais je crois que c'était pas toujours évident avec les clientexs."],
+		// 	["M", "Ha ouais je vois...Je me fais pas mal expliquer mon taf par des types c'est un peu chiant."],
+		// 	["PNJ","Je comprends, ça m'arrive ici aussi des fois. Ha aujourd'hui quelqu'un a amené des stands pour vélo en bon état, tu veux les prendre?"],
+		// 	["M", "Grave! Merci. Bon j'y retourne... à bientôt!"]
+		// 	]
+		let dechettDialog2 = dialogsList["FR"].dechettDialog2
+		// let dechettDialog2 = [
+		// 		["PNJ","Hé toi, te revoilà!"],
+		// 		["M","Hé salut! Comment tu vas ?"],
+		// 		["PNJ","Pas mal, c'est une journée tranquille. Et toi?"],
+		// 		["M","Un peu fatiguée du taf, mais y'a des personnes sympas qui sont passées hier c'était cool!"],
+		// 		["PNJ", "Avec le temps t'auras probablement plus de copainexs que de relouexs!"],
+		// 		["M", "Ouais t'as raison. Aussi je passais par la parce que j'ai des flyers pour la manif contre les violences policieres."],
+		// 		["PNJ","Oh merci, j'en ai entendu parler mais j'ai pas les détails."],
+		// 		["M", "Bah y'a tout écrit dessus,tiens!"],
+		// 		["PNJ","Top, je vais les faire tourner c'est important."],
+		// 		]
 		// Atelier vandaliser
-		let dechettDialog3 = [
-				["PNJ","Hé encore toi!"],
-				["M","Coucou..."],
-				["PNJ","Ça va? Tu fais une tête bizarre..."],
-				["M","Nan c'est nul.. Y'a des gens qui ont cassé des trucs au magasin, j'ai l'impression qu'iels sont pas fan de l'esprit queer du truc."],
-				["PNJ", "Oh merde...Allez je viens avec toi on va réparer tout ca!"],
-				["M", "Oui je venais justement te demander si tu voulais bien me filer un coup de main."],
-				["PNJ","Grave! On sait tout réparer de toute facon nan?! Hihi"],
-				["M", "Oh cool, ca me fait plaisir d'entendre ca. On se retrouve là-bas?"],
-				["PNJ","Oui, je ferme la déchett et j'arrive. A toute!"],
-				]
+		let dechettDialog3 = dialogsList["FR"].dechettDialog3
+		// let dechettDialog3 = [
+		// 		["PNJ","Hé encore toi!"],
+		// 		["M","Coucou..."],
+		// 		["PNJ","Ça va? Tu fais une tête bizarre..."],
+		// 		["M","Nan c'est nul.. Y'a des gens qui ont cassé des trucs au magasin, j'ai l'impression qu'iels sont pas fan de l'esprit queer du truc."],
+		// 		["PNJ", "Oh merde...Allez je viens avec toi on va réparer tout ca!"],
+		// 		["M", "Oui je venais justement te demander si tu voulais bien me filer un coup de main."],
+		// 		["PNJ","Grave! On sait tout réparer de toute facon nan?! Hihi"],
+		// 		["M", "Oh cool, ca me fait plaisir d'entendre ca. On se retrouve là-bas?"],
+		// 		["PNJ","Oui, je ferme la déchett et j'arrive. A toute!"],
+		// 		]
 
 
 		// Interaction with the personnage dechetterie
@@ -2953,7 +2947,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 					const txtWidth = 150; // Ideal Width
 					const txtMargins = 15;
 					let txt = add([
-					text("Hé resalut! Si t'as besoin de quelque chose, tu sais où me trouver haha. Je bouge jamais d'ici!", { size:  TXTSIZE,  width: txtWidth }),//, width: width() - 230
+					text(textList["FR"].dechett2, { size:  TXTSIZE,  width: txtWidth }),//, width: width() - 230
 					anchor("center"),
 					pos(center().x+8,BOTTOM),
 					color(MYPINK),//color Louise
@@ -2992,88 +2986,6 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 		})
 
 
-	// // if any key is pressed then the message are destroyed
-	// const destroyMess = onKeyPress( () => {destroyAll("message")})
-	//Collision
-
-	// player.onCollide("contenair", () => {
-	// 	destroyMess.paused = true
-	// 		const txtWidth = 150;
-	// 	console.log("In the conteanir collision")
-	//  if(totalStars > 35){
-	// 	 let textBox = add([
-	// 		 sprite("dialogbox"),//, width: width() - 230
-	// 		 anchor("center"),
-	// 		 pos(center().x,BOTTOM),
-	// 		 "message"
-	// 	 ])
- //
- //
-	// 	 if (ouvertTag==false){
-	// 	let txt =  add([
-	// 		 text("Oh tu as trouvé un nouvel outil!...", { size:  TXTSIZE,  width: txtWidth }),//, width: width() - 230
-	// 		 anchor("center"),
-	// 		 pos(center().x,BOTTOM),
-	// 		 color(MYPURPLE),
-	// 		  "message"
-	// 	 ])
-	// 	 // change the sprite
-	// 	 contenairSprite.play("opening")
-	// 	// fint the next UNAVAILABLE TOOLS
-	// 	onKeyPress("enter",()=>{
-	// 	for (const key of Object.keys(inventory)) {
-	// 			// AVAILABLE TOOLS
-	// 			if (inventory[key].state == "unavailable"){
-	// 				let textBox = add([
-	// 				sprite("dialogbox"),//, width: width() - 230
-	// 				anchor("center"),
-	// 				pos(center().x,BOTTOM),
-	// 				"message"
-	// 			])
-	// 			let txt = add([
-	// 				text("Tu as maintenant dans ton inventaire:\n"+key, { size:  TXTSIZE,  width: txtWidth }),//, width: width() - 230
-	// 				anchor("center"),
-	// 				pos(center().x,BOTTOM),
-	// 				color(MYPURPLE),
-	// 				"message"
-	// 			])
-	// 			inventory[key].state ="owned"
-	// 			break
-	// 			}
-	// 		}
-	// 		contenairSprite.play("idles_open")
-	// 	 destroyMess.paused = false
-	// 	 ouvertTag = true
-	//  })
-	//  }else{
-	// 	 add([
- // 			 text("Il n'y a plus rien dans ce contenair", { size:  TXTSIZE,  width: txtWidth }),//, width: width() - 230
- // 			 anchor("center"),
- // 			 pos(center().x,BOTTOM),
- // 			 color(MYPURPLE),
- // 			  "message"
- // 		 ])
-	// 	 destroyMess.paused = false
-	//  }
- //
- //
- // }else{
-	//  destroyMess.paused = false
-	//  let textBox = add([
-	// 	 sprite("dialogbox"),//, width: width() - 230
-	// 	 anchor("center"),
-	// 	 pos(center().x,BOTTOM),
-	// 	 "message"
-	//  ])
-	//  add([
-	// 	 text("Tu n'as pas assez de force pour\n t'aventurer dans cette déchetterie", { size:  TXTSIZE,  width: txtWidth }),//, width: width() - 230
-	// 	 anchor("center"),
-	// 	 pos(center().x,BOTTOM),
-	// 	 color(MYPURPLE),
-	// 		"message"
-	//  ])
- // }
-	//  })
 
  })
 
@@ -3216,7 +3128,7 @@ scene("inventaire", (jourIdx,totalCoins,totalStars,saved_position,clientCounter)
 
 		// add INSTRUCTIONS sur le fond
 		const return_instruction = add([
-			text("(esc pour retour à l'atelier) ", {font: "prstart", size:TXTSIZE, width:TXTWIDTH}),
+			text(texteList["FR"].retourInstruction, {font: "prstart", size:TXTSIZE, width:TXTWIDTH}),
 			anchor("center"),
 			pos(center().x+36, BOTTOM+40),
 		])
@@ -3282,13 +3194,6 @@ scene("inventaire", (jourIdx,totalCoins,totalStars,saved_position,clientCounter)
 					opacity(1) // for available opacity is half
 				])
 
-				// price already paid
-				// add([
-				// 	text("",{size:textCostSize}),
-				// 	scale(1),
-				// 	anchor("center"),
-				// 	pos(posX,posY+20), // the % takes into account how many tools per line we want
-				// ])
 				positionList.push(Array(posX,posY))
 				achatList.push(key+":\n"+"Tu as déjà cet objet!")
 			}
@@ -3306,7 +3211,7 @@ scene("inventaire", (jourIdx,totalCoins,totalStars,saved_position,clientCounter)
 		])
 		// create the achat texte
 		const achatTexte = add([
-			text("Démonte-pneu:\nTu n'as pas encore cet objet.",{size:TXTSIZE}),
+			text(textList["FR"].initInventaire,{size:TXTSIZE}),
 			pos(center().x-(MAP_WIDTH/8),BOTTOM-(MAP_WIDTH/15))
 		])
 		//move the selector and modify the achat texte
@@ -3383,7 +3288,6 @@ onKeyPress("down", () => {
 		console.log("Total coins is : "+totalCoins);
 		console.log("Total stars is : "+totalStars);
 		// ADD INITIAL MESSAGE
-	//	addTextOnDialogBox("Si je trouve tous les outils manquants, mon atelier sera le plus classe!")
 		// LEAVE SCENE
 		onKeyPress("escape", () => {
 			if(jourIdx==5 && helpDechetFlag == true){
@@ -3422,7 +3326,7 @@ function jumpToSituation (repairFlag,clientKey,jourIdx,totalCoins,totalStars){
 				 "textBox"
 			 ])
 			 add([
-			text("Bien joué!",{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
+			text(textlist["FR"].actionJuste,{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
 			anchor("center"),
 			pos(center().x+15,BOTTOM),
 			color(MYBLUE)
@@ -3454,7 +3358,7 @@ function jumpToSituation (repairFlag,clientKey,jourIdx,totalCoins,totalStars){
 				 "textBox"
 			 ])
 		//commnet
-		add([text("ça me fatigue..",{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
+		add([text(textList["FR"].choixfaux,{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
 			anchor("center"),
 			pos(center().x,BOTTOM),
 			color(MYPURPLE)
@@ -3498,7 +3402,7 @@ function jumpToSituation (repairFlag,clientKey,jourIdx,totalCoins,totalStars){
 			 "textBox"
 		 ])
 		 add([
-		text("Bien fait!",{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
+		text(textList["FR"].actionJuste2,{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
 		anchor("center"),
 		pos(center().x+15,BOTTOM),
 		color(MYBLUE)
@@ -3533,7 +3437,7 @@ function jumpToSituation (repairFlag,clientKey,jourIdx,totalCoins,totalStars){
 		 "textBox"
 	 ])
 	 add([
-		text("Oups",{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
+		text(textList["FR"].choixfaux2,{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
 		anchor("center"),
 		pos(center().x+30,BOTTOM),
 		color(MYBLUE)
@@ -3662,14 +3566,14 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 		])
 		// buttons
 		const RepairBtn = add([
-				text("Reparez!",{font:"joystix",size:TXTSIZE+6}),
+				text(textList["FR"].choiceR,{font:"joystix",size:TXTSIZE+6}),
 				pos(vec2(center().x,MAP_HEIGHT/2+0.3*(MAP_HEIGHT/2))),
 				area({ cursor: "pointer", }),
 				scale(1),
 				anchor("center"),
 			])
 		const FightBtn = add([
-					text("Frappez!",{font:"joystix",size:TXTSIZE+6}),
+					text(textList["FR"].choiceF,{font:"joystix",size:TXTSIZE+6}),
 					pos(vec2(center().x,MAP_HEIGHT/2+0.5*(MAP_HEIGHT/2))),
 					area({ cursor: "pointer", }),
 					scale(1),
@@ -3688,16 +3592,7 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 			pos(center().x-64,MAP_HEIGHT/2+0.3*(MAP_HEIGHT/2)-tinyShift)
 
 		])
-		//instruction
-		// if (jourIdx == 1){
-		// 	let instruction = add([
-		// 		text("(appuie sur enter pour choisir)", { size: TXTSIZE }),
-		// 		scale(1),
-		// 		opacity(0.7),
-		// 		anchor("center"),
-		// 		pos(center().x,BOTTOM+20),
-		// 	"instruction"])
-		// }
+
 		//option Réparez
 		onKeyPress("up", () => {
 					//move arrow
@@ -3759,7 +3654,7 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 						 "textBox"
 					 ])
 					 add([
-					text("Bien joué!",{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
+					text(textList["FR"].actionJuste,{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
 					anchor("center"),
 					pos(center().x+15,BOTTOM),
 					color(MYBLUE)
@@ -3791,7 +3686,7 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 						 "textBox"
 					 ])
 				//commnet
-				add([text("ça me fatigue..",{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
+				add([text(textList["FR"].choixfaux,{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
 					anchor("center"),
 					pos(center().x,BOTTOM),
 					color(MYBLUE)
@@ -3828,7 +3723,7 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 					 "textBox"
 				 ])
 				 add([
-				text("Bien fait!",{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
+				text(textList["FR"].actionJuste2,{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
 				anchor("center"),
 				pos(center().x+15,BOTTOM),
 				color(MYBLUE)
@@ -3863,7 +3758,7 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 				 "textBox"
 			 ])
 			 add([
-				text("Oups",{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
+				text(textList["FR"].choixfaux2,{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
 				anchor("center"),
 				pos(center().x+30,BOTTOM),
 				color(MYBLUE)
@@ -3910,36 +3805,32 @@ scene("bonus",(jourIdx,totalCoins,totalStars)=>{
 			 pos(center().x-10,BOTTOM-25),
 		 ])
 			play("audio_reussite") //indicate that an object has been gained
-			//instruction
-			// let instruction = add([
-			// 		text("(appuie sur enter pour retourner à l'atelier)", { size: TXTSIZE }),
-			// 		scale(1),anchor("center"),pos(center().x,BOTTOM+10),])
-			// // item based on the day
+
 			switch(jourIdx){
 			// BONUS
 			case 1 :
 			// add text, sprite and update inventory
-			addBonus("J'ai gagné un démonte-pneu!","demontepneu","Démonte-pneu")
+			addBonus(bonusList["FR"].bonus1,"demontepneu","Démonte-pneu")
 			onKeyPress("enter", () => {	goInteraction(jourIdx,totalCoins,totalStars) })
 			break;
 
 			case 2 :
 			// add text, sprite and update inventory
-			addBonus("J'ai gagné des croquettes pour chat!","croquettes","Croquettes")
+			addBonus(bonusList["FR"].bonus2,"croquettes","Croquettes")
 			croquettesFlag = true //flag to modify the collision with the cat
 			onKeyPress("enter", () => {	goInteraction(jourIdx,totalCoins,totalStars) })
 			break;
 
 			case 3:
 			// add text, sprite and update inventory
-			addBonus("J'ai gagné des chips!","bonus_chips","Chips")
+			addBonus(bonusList["FR"].bonus3,"bonus_chips","Chips")
 			chipsFlag = true //flag to modify the collision with the pers exte
 			onKeyPress("enter", () => {
 							goInteraction(jourIdx,totalCoins,totalStars)
 					 })
 			break;
 			case 4:
-			addBonus("J'ai gagné une boîte à outils!","bonus_boites","Boîte à outils")
+			addBonus(bonusList["FR"].bonus4,"bonus_boites","Boîte à outils")
 			boiteOutilsFlag = true
 			onKeyPress("enter", () => {
 							goInteraction(jourIdx,totalCoins,totalStars)
@@ -3961,7 +3852,7 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 		])
 		// JOUR
 		const bilanTxt = add([
-			text("BILAN DU JOUR\n--------------\n"+repairCounter+" REPARATIONS\n"+fightCounter+" CLAQUES\n--------------\n6 CLIENTEXS", {font: "prstart", size:TXTSIZEBILAN}),color(MYPURPLE),
+			text(textList["FR"].bilan+"\n--------------\n"+repairCounter+" "+textList["FR"].repair+"\n"+fightCounter+" "+textList["FR"].claques+"\n--------------\n"+textList["FR"].totalClients, {font: "prstart", size:TXTSIZEBILAN}),color(MYPURPLE),
 			pos(center().x-70, MAP_HEIGHT/4-20),
 			"bilan"
 		])
@@ -4026,7 +3917,7 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 			// BONUS
 			case 0 :
 
-				let bravo = add([text("Wouahhh j'ai viré tous les sexistes!",
+				let bravo = add([text(textList["FR"].reussi,
 				{ size: MEDIUMTXTSIZE, width:TXTWIDTH,font:"prstart"}),color(MYBLUE),scale(1),anchor("center"),pos(center().x+3,BOTTOMTEXT)])
 				// object gained
 				onKeyPress("enter",()=>{go("bonus",jourIdx,totalCoins,totalStars)})
@@ -4034,12 +3925,10 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 			break;
 			// BASIC
 			case 1 :
-			add([text("J'ai fait du bon travail.",
+			add([text(textList["FR"].presquereussi,
 				{ size: MEDIUMTXTSIZE,width:TXTWIDTH, font:"prstart"}),color(MYBLUE),scale(1),anchor("center"),pos(center().x+3,BOTTOMTEXT)])
 			// instruction
-				// add([
-				// 			text("(appuie sur enter pour retourner à l'atelier)", { size: TXTSIZE }),
-				// 			scale(1),anchor("center"),pos(center().x,BOTTOM+10),])
+
 							onKeyPress("enter", () => {
 								if(jourIdx==1){go("interactionJour1", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
 								if(jourIdx==2){go("interactionJour2", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
@@ -4049,12 +3938,10 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 				break;
 			case 2 :
 			// BASIC with Burnout WARNING:=
-			add([text("Je suis épuiséex... Ça me fatigue ces remarques sexistes...",
+			add([text(textList["FR"].warning,
 				{ size: MEDIUMTXTSIZE,width:TXTWIDTH, font:"prstart"}),color(MYBLUE),scale(1),anchor("center"),pos(center().x+3,BOTTOMTEXT)])
 				// instruction
-					 // add([
-						// 	text("(appuie sur enter pour retourner à l'atelier)", { size: TXTSIZE }),
-						// 	scale(1),anchor("center"),pos(center().x,BOTTOM+10),])
+
 							// next
 							onKeyPress("enter", () => {
 								if(jourIdx==1){go("interactionJour1", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
@@ -4067,12 +3954,10 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 							break;
 			case 3 :
 			// BASIC with Bankrupt WARNING:
-				add([text("Ça va être dur de payer le loyer...",
+				add([text(textList["FR"].warningBankrupt,
 					{ size: MEDIUMTXTSIZE, width:TXTWIDTH,font:"prstart"}),color(MYBLUE),scale(1),anchor("center"),pos(center().x+3,BOTTOMTEXT)])
 					// instruction
-						 // add([
-							// 	text("(appuie sur enter pour retourner à l'atelier)", { size: TXTSIZE }),
-							// 	scale(1),anchor("center"),pos(center().x,BOTTOM+10),])
+
 				// next
 				onKeyPress("enter", () => {
 					if(jourIdx==1){go("interactionJour1", jourIdx, totalCoins,totalStars,INITIALPOSITION)}
@@ -4085,13 +3970,13 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 				break;
 			case 4 :
 			// GAMEOVER BURNOUT
-			add([text("Je suis totalement epuiséex par le sexisme...\nJe ne peux plus travailler.",
+			add([text(textList["FR"].burnout,
 				{ size: MEDIUMTXTSIZE,width:TXTWIDTH, font:"prstart"}),scale(1),color(MYBLUE),anchor("center"),pos(center().x+3,BOTTOMTEXT)])
 			wait(4.5,()=>go("Burnout"))
 break;
 			case 5 :
 			// GAMEOVER BANKRUPT
-			add([text("Impossible de payer le loyer...",
+			add([text(textList["FR"].bankrupt,
 				{ size: MEDIUMTXTSIZE, font:"prstart", width:TXTWIDTH}),scale(1),anchor("center"),color(MYBLUE),pos(center().x+3,BOTTOMTEXT)])
 		  wait(4.5,()=>go("Bankrupt"))
 			break;
@@ -4142,220 +4027,45 @@ break;
 
 	scene("interactionJour1", (jourIdx,totalCoins,totalStars,position) => {
 			//function instead of commander
-			levelAtelier = add_atelier_map()
+			let levelAtelier = add_atelier_map()
 
 			//status
 			addStatusBar(jourIdx,totalCoins,totalStars)
-
-			let dialogInteraction1 = [
-				["pnj","Hé salut!"],
-				["m","Salut! Désolée c'est fini pour aujourd'hui, il faut revenir demain..."],
-				["pnj","Oui, oui je venais pas pour réparer mon vélo..."],
-				["m","Heu ok, tu viens pour quoi alors?"],
-				["pnj","Heu... ha oui! Haha pardon. Je viens te filer la clé que j'ai oublié de rendre quand j'ai arrêté de bosser ici. Je suis un peu tête en l'air des fois."],
-				["m","Ah! Merci!"],
-				["pnj","De rien, allez à la proch ciao ciao..."]
-				 //heu, la sortie c'est par là hein."]
-			]
+			let dialogInteraction1 = dialogsList["FR"].dialogInteraction1
 
 			// try with function
 			interactionJour(1,levelAtelier,justifiedFightCounter,totalCoins,totalStars,
 				{x:center().x-1.8*16,y:MAP_HEIGHT/2-(2*16)},"perso_interaction_1",{x:16*5,y:16*7},dialogInteraction1,{x:16*1.5,y:16*11},false,1)
-				// without function
-				// 		// add the mecanix// Add player game object
-				// 		const colBox = 3
-				// 		const player = add([
-				// 			sprite("mecanix",{anim:"idle"}),
-				// 			anchor("center"),
-				// 			pos(center().x-2*16,MAP_HEIGHT/2-(3*16)),//the default position is in front of the workshop
-				// 			area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
-				// 			body(),
-				// 			scale(PERSOSCALE)
-				// 		])
-				// 		player.flipX = true
-				//
-				// 		// Add the other pers
-				// 		const perso = levelAtelier.spawn([
-				// 			sprite("perso_interaction_1",{anim:"walk_right"}),
-				// 			anchor("center"),
-				// 			pos(0,160),//the default position is in front of the workshop
-				// 			area({ shape: new Polygon([vec2(-colBox,-colBox+14),vec2(-colBox,0), vec2(colBox,0),vec2(colBox,-colBox+14)]) }),
-				// 			body(),
-				// 			scale(PERSOSCALE),
-				// 			agent({ speed: 80, allowDiagonals: true }),
-				// 		],1,1)
-				//
-				// 		let aller = onKeyPress("enter",() => {
-				// 			perso.setTarget(vec2(
-				// 				16*5,//Math.floor((center().x+45) / TILE_WIDTH) * TILE_WIDTH + TILE_WIDTH / 2,
-				// 				16*7//Math.floor((MAP_HEIGHT/2-65)  / TILE_HEIGHT) * TILE_HEIGHT + TILE_HEIGHT / 2,
-				// 			))
-				// 		})
-				// 		// let retour = onKeyPress("enter",() => { perso.setTarget(vec2(
-				// 		// 		16*0,//Math.floor((center().x+45) / TILE_WIDTH) * TILE_WIDTH + TILE_WIDTH / 2,
-				// 		// 		16*12//Math.floor((MAP_HEIGHT/2-65)  / TILE_HEIGHT) * TILE_HEIGHT + TILE_HEIGHT / 2,
-				// 		// 	))})
-				// 		// retour.paused
-				//
-				// 	//once the aller is done
-				// let firstTarget= 	perso.onTargetReached(()=>{
-				//
-				// let dialogInteraction1 = [
-				// 			["pnj","Hé salut"],
-				// 		["m","Salut! désolée c'est fini pour aujourd'hui, il faut revenir demain..."],
-				// 		["pnj","oui, oui je venais pas pour réparer mon vélo..."],
-				// 		["m","heu ok, tu viens pour quoi alors?"],
-				// 		[" pnj","heu... ha oui! haha pardon. je viens te filer la clée que j'ai oublié de rendre quand j'ai arrêté de bosser ici. je suis un peu tête en l'air des fois."],
-				// 		["m","ah! merci"],
-				// 		["pnj","de rien, allé à la proch ciao ciao! heu, la sortie c'est par là hein."]
-				// 		]
-				// 			aller.paused =true
-				//
-				// 	// add dialog box
-				// 	let textBox = add([
-				// 		sprite("dialogbox"),//, width: width() - 230
-				// 		anchor("center"),
-				// 		pos(center().x,BOTTOM),
-				// 		"textBox"
-				// 	])
-				// 	//initialization
-				// 	let initDialog = dialogInteraction1.length
-				// 	let levelDialog = dialogInteraction1
-				//
-				// 	// Text bubble
-				// 	const txtWidth = 150; // Ideal Width
-				// 	const txtMargins = 15;
-				// 	let txt = add([
-				// 		text("", { size:  TXTSIZE,  width: txtWidth }),//, width: width() - 230
-				// 		anchor("center"),
-				// 		pos(center().x,BOTTOM),
-				// 		color(MYPURPLE),
-				// 	])
-				// 	// Update the on screen sprite & text
-				// 	function updateDialog() {
-				// 		const [ char, dialog ] = dialogInteraction1[curDialog]
-				// 		console.log(dialog);
-				// 		// Use a new sprite component to replace the old one
-				// 	//	avatar.use(sprite(char))
-				// 		// Update the dialog text
-				// 		// mettre le texte lettre apres lettre
-				// 		txt.text = dialog
-				// 	}
-				// 	//initialization
-				// 	let curDialog = 0
-				// 		updateDialog()
-				// 	let dialogAction = onKeyPress("enter", () => {
-				// 		// Cycle through the dialogs
-				// 		curDialog = (curDialog + 1) % dialogInteraction1.length
-				// 		if (curDialog==0){
-				// 			// dialog finished, options to choose
-				// 			dialogAction.paused = true
-				// 			firstTarget.paused=true
-				// 			play("audio_reussite")
-				// 			destroy(textBox)
-				// 			destroy(txt)
-				// 			onKeyPress("enter",() => {
-				// 				dialogAction.paused = true
-				// 				firstTarget.paused=true
-				// 				perso.flipX=true
-				// 				let retour = perso.setTarget(vec2(
-				// 					16*1,//Math.floor((center().x+45) / TILE_WIDTH) * TILE_WIDTH + TILE_WIDTH / 2,
-				// 					16*11//Math.floor((MAP_HEIGHT/2-65)  / TILE_HEIGHT) * TILE_HEIGHT + TILE_HEIGHT / 2,
-				// 				))
-				// 				console.log("Before the fade\n le jour "+jourIdx+"\n le justifiedFightCounter "+justifiedFightCounter+"\n la thune c'est "+totalCoins+"\n les stars "+totalStars)
-				// 				perso.onTargetReached(()=>{
-				// 					dialogAction.paused =true
-				// 					let fadeOut = add([d
-				// 						pos(center().x, MAP_HEIGHT/2-30),
-				// 						anchor("center"),
-				// 						color(BLACK),
-				//     				rect(256, 256),
-				//     				area(),
-				// 						fadeIn(1),
-				// 						opacity(1),
-				// 					])
-				// 					//to the next day
-				// 					let newjourIdx = resetDayVariables(totalCoins,totalStars)
-				// 					// door is open now
-				// 					outdoorKey = true
-				// 					console.log("apres le reset\n le jour"+newjourIdx+"\n le justifiedFightCounter "+justifiedFightCounter+"\n la thune c'est "+totalCoins+"\n les stars "+totalStars)
-				// 				wait(1,()=>go("atelier",newjourIdx,totalCoins,totalStars,INITIALPOSITION))
-				// 			})
-				// 			}
-				// 		)
-				// 	}else{
-				// 		updateDialog()
-				// 	}
-				// 	})
-				// })
+
 			})
 	scene("interactionJour2", (jourIdx,totalCoins,totalStars,position) => {
 		//function instead of commander
-		levelAtelier = add_atelier_map()
+		let levelAtelier = add_atelier_map()
 		//status
 		addStatusBar(jourIdx,totalCoins,totalStars)
+		let dialogInteraction2 = dialogsList["FR"].dialogInteraction2
 
-		let dialogInteraction2 =[
-			["PNJ","Hello! Je suis en train de faire le tour du quartier et je me demandais si je pouvais poser une affiche ici?"],
-			["M","Oui ok tu peux la mettre sur le mur du fond."],
-			["PNJ","Merci! C'est stylé que tu bosses ici! Ha et t'es dac de me prêter un tournevis plat?"],
-			["M","Oui pas de soucis, voilà."],
-			["PNJ","Merci à bientôt!"],
-		]
 
 		// try with function
 		interactionJour(jourIdx,levelAtelier,justifiedFightCounter,totalCoins,totalStars,
 			{x:center().x-40,y:MAP_HEIGHT/2-(2*16)},"perso_interaction_2",{x:16*4,y:16*7},dialogInteraction2,{x:16*2,y:16*5},true,1)
 		})
 	scene("interactionJour3", (jourIdx,totalCoins,totalStars,position) => {
-		levelAtelier = add_atelier_map()
+		let levelAtelier = add_atelier_map()
 			//status
 			addStatusBar(jourIdx,totalCoins,totalStars)
+			let dialogInteraction3 = dialogsList["FR"].dialogInteraction3
 
-			let dialogInteraction3 =
-			[
-	        ["PNJ","Hey salut!"],
-	        ["M","Salut, c'est fermé pour aujourd'hui..."],
-	        ["PNJ","Oui justement,je suis venue te demander quelque chose, je fais partie d'un collectif qui s'appelle Vélacyraptix tu as déjà entendu parler?"],
-	        ["M","Ha oui ça me dit quelque chose, vous faites des ateliers non?"],
-	        ["PNJ","Oui, et il y en avait un ce soir, mais il y a eu un imprévu et on se demandait si on pouvait le faire ici..."],
-	        ["M","Comment ça? Vous voulez pas venir la journée plutôt?"],
-	        ["PNJ","En fait on fait des ateliers en mixité choisie sans mec cisgenre..."],
-	        ["M","Ha oui ok, je vois! C'est une trop bonne idée, c'est vrai que c'est pas toujours évident de se faire prendre les outils des mains et se faire toujours tout expliquer...haha, je connais ça... Vous êtes bienvenux!"],
-	        ["PNJ","Merci c'est trop sympa!"],
-	        ["M","HA! Si vous voyez la personne habillée en dino dites lui que vous faites ça, elle vient de partir et elle disait qu'elle voulait apprendre à mieux bricoler!"],
-	        ["PNJ","Bonne idée ! Ha oui et tu serais dac qu'on te laisse des flyers et d'en donner aux gens que tu connais?"],
-	         ["M","Bien sûr! bon je vais y aller je vous laisse les clées remettez les dans la boite à clé"],
-	        ["PNJ","Ca marche, bonne soirée ! Allez les gentexs vous pouvez venir !"]
-	        ]
 
-			// [
-			// 		["pnj","Coucou, excuse-moi c'est possible de te poser une question là?"],
-			// 		["m","Oui, dis-moi! "],
-			// 		["pnj","En fait je fais partie d'un collectif qui s'appelle Vélacyraptix... "],
-			// 		["m","Ah oui! J'en ai entendu parler. Vous faites des atelier de mécanique en mixité choisie sans hommes cisgenres nan?! "],
-			// 		["pnj","Oui c'est ca, on propose des moments pour apprendre à réparer et bricoler des vélos sans homme cisgenres. Le but c'est de limiter l'impact du patriarcat un ptit moment quoi..."],
-			// 		["m","C'est cool! C'est quand le prochain? "],
-			// 		["pnj","Et ben justement...on en a un ce soir mais on savait pas trop ou le faire... notre plan pour emprunter des outils est tombe a l'eau..Est-ce qu'on pourrait se mettre ici?"],
-			// 		["m","Oh... euh oui bien sur! Y'a tout ce qui faut et c'est super comme idée"],
-			// 		]
 
 			// try with function
 			interactionJour(3,levelAtelier,justifiedFightCounter,totalCoins,totalStars,
 				{x:center().x-20,y:MAP_HEIGHT/2-(2*16)}/*player postiion*/,"perso_interaction_3",{x:16*5,y:16*7},dialogInteraction3,{x:16*5,y:16*9},true,0)})
 scene("interactionJour4", (jourIdx,totalCoins,totalStars,position) => {
-	levelAtelier = add_atelier_map()
+	let levelAtelier = add_atelier_map()
 		//status
 		addStatusBar(jourIdx,totalCoins,totalStars)
-
-
-		let dialogInteraction4 = [
-				["pnj","Hey, j'ai entendu qu'ici tout le monde n'est pas le bienvenu... "],
-				["m","T'entends quoi par là? "],
-				["pnj","Bah que c'est un peu extrême d'exclure des gars, en plus il parait qu'on se ramasse des claques si on dit des trucs qui vous plaisent pas."],
-				["m","Euh okay..."],
-				["pnj","Bref faites gaffe à vous..."],
-				]
+    let dialogInteraction4 = dialogsList["FR"].dialogInteraction4
 
 		// try with function
 		interactionJour(4,levelAtelier,justifiedFightCounter,totalCoins,totalStars,
@@ -4424,13 +4134,13 @@ scene("interactionJour4", (jourIdx,totalCoins,totalStars,position) => {
 		])
 		// Titre
 		const title = add([
-			text("BRAVO!\n ", { size: LARGETXTSIZE, font:"joystix" }),
+			text(textList["FR"].bravo, { size: LARGETXTSIZE, font:"joystix" }),
 			scale(1),
 			anchor("center"),
 			pos(center().x+5,MAP_HEIGHT/2-16)
 		])
 		const bravoContent = add([
-			text("J'ai réussi à faire tourner l'atelier pendant une semaine sans m'épuiser ni faire faillite!\nJe suis sacrément badass! ", { size: MEDIUMTXTSIZE-4,width: TXTWIDTH+5, font:"prstart" }),
+			text(textList["FR"].bravocontent, { size: MEDIUMTXTSIZE-4,width: TXTWIDTH+5, font:"prstart" }),
 			scale(1),
 			anchor("center"),
 			pos(center().x+10,MAP_HEIGHT/2+50),
@@ -4438,7 +4148,7 @@ scene("interactionJour4", (jourIdx,totalCoins,totalStars,position) => {
 
 		// Recommencez le jeu
 		add([
-			text("(espace pour recommencer le jeu)", { size: TXTSIZE }),
+			text(textList["FR"].restart,{ size: TXTSIZE }),
 					scale(1),anchor("center"),pos(center().x,BOTTOM+23),])
 
 					onKeyPress("space",() => {
@@ -4467,7 +4177,7 @@ scene("Bankrupt", (jourIdx,totalCoins,totalStars) => {
 		pos(center().x,MAP_HEIGHT/2-16)
 	])
 	const bankruptContent = add([
-		text("C'est pas grave je ferais plus attention à qui je frappe la prochaine fois...", { size: MEDIUMTXTSIZE-4,width: TXTWIDTH+5, font:"prstart" }),
+		text(textList["FR"].bankruptcontent, { size: MEDIUMTXTSIZE-4,width: TXTWIDTH+5, font:"prstart" }),
 		scale(1),
 		anchor("center"),
 		pos(center().x+10,MAP_HEIGHT/2+50),
@@ -4477,7 +4187,7 @@ scene("Bankrupt", (jourIdx,totalCoins,totalStars) => {
 
 	// Recommencez le jeu
 	add([
-		text("(espace pour recommencer le jeu)", { size: TXTSIZE }),
+		text(textList["FR"].restart, { size: TXTSIZE }),
 				scale(1),anchor("center"),pos(center().x,BOTTOM+23),])
 
 				onKeyPress("space",() => {
@@ -4505,14 +4215,14 @@ scene("Burnout", (jourIdx,totalCoins,totalStars) => {
 		pos(center().x,MAP_HEIGHT/2-16)
 	])
 	const burnoutContent = add([
-		text("C'est l'enfer, c'est impossible de travailler dans des conditions pareils.", { size: MEDIUMTXTSIZE-4,width: TXTWIDTH+5, font:"prstart" }),
+		text(textList["FR"].burnoutcontent, { size: MEDIUMTXTSIZE-4,width: TXTWIDTH+5, font:"prstart" }),
 		scale(1),
 		anchor("center"),
 		pos(center().x+3,MAP_HEIGHT/2+50),
 	])
 	// Recommencez le jeu
 	add([
-				text("(espace pour recommencer le jeu)", { size: TXTSIZE }),
+				text(textList["FR"].restart, { size: TXTSIZE }),
 				scale(1),anchor("center"),pos(center().x,BOTTOM+23),])
 
 	onKeyPress("space",() => {
