@@ -1,10 +1,11 @@
+import * as loadAssets from './load-assets.js';
+
 kaboom({
 	background: [ 0,0,0 ],
 	scale: 3,
 	font: "prstart",
 })
 
-import * as loadAssets from './load-assets.js';
 
 
 // ------INITIALIZATION-------//
