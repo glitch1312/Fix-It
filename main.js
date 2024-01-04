@@ -3128,7 +3128,7 @@ scene("inventaire", (jourIdx,totalCoins,totalStars,saved_position,clientCounter)
 
 		// add INSTRUCTIONS sur le fond
 		const return_instruction = add([
-			text(texteList["FR"].retourInstruction, {font: "prstart", size:TXTSIZE, width:TXTWIDTH}),
+			text(textList["FR"].retourInstruction, {font: "prstart", size:TXTSIZE, width:TXTWIDTH}),
 			anchor("center"),
 			pos(center().x+36, BOTTOM+40),
 		])
