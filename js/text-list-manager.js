@@ -37,44 +37,38 @@ const textList = {
 
   },
   "EN":{
-    soustitre:"",
-    instructions:"",
-    jour:"",
-    dechett1:"",
-    getflyer:"",
-    hint1:"",
-    chat1:"",
-    dechett2:"",
-    retourInstruction:"",
-    initInventaire:"",
-    actionJuste:"",
-    choixfaux:"",
-    actionJuste2:"",
-    choixfaux2:"",
-    choiceR:"",
-    choiceF:"",
-    bilan:"",
-    repair:"",
-    claques:"",
-    totalClients:"",
-    reussi:"",
-    presquereussi:"",
-    warning:"",
-    warningBankrupt:"",
-    burnout:"",
-    bankrupt:"",
-    bravo:"\n ",
-    bravocontent:"",
-    restart:"",
-    bankruptcontent:"",
-    burnoutcontent:"",
-
-
-
-
-
-
-
+    soustitre:"New bicycle repair shop!\nWarning, sexist comments are not tolerated! \nWill you make it?",
+    instructions:"Use the arrow keys to move around and the enter key to interact",
+    jour:"DAY ",
+    dechett1:"Amazing! What a find I’ve made at the landfill!",
+    getflyer:"(spacebar to take the flyers)",
+    firstday:"I’m ready for this first day!",
+    hint1:"Oops, I feel like I’m forgetting something...",
+    chat1:"Here some cat food for you!",
+    dechett2:"Hey, hi again! If you need anything, you know where to find me. I’m always here!",
+    retourInstruction:"(esc to go back to the workshop)",
+    initInventaire:"Tire lever:\n You don’t have this object yet.",
+    actionJuste:"Well done!",
+    choixfaux:"I’m tired of it...",
+    actionJuste2:"You asked for it!",
+    choixfaux2:"Oops",
+    choiceR:"Fix!",
+    choiceF:"Hit!",
+    bilan:"RESULTS",
+    repair:"REPAIRS",
+    claques:"SLAPS",
+    totalClients:"6 CUSTOMERS",
+    reussi:"Wouahhh I kicked out all the sexists!",
+    presquereussi:"I’ve done a good job.",
+    warning:"I’m exausted... I’m tired of all these sexist comments...",
+    warningBankrupt:"How am I going to pay my rent...",
+    burnout:"I’m completely exausted by sexism...\nI can’t work anymore.",
+    bankrupt:"I can’t pay the rent...",
+    bravo:"Congrats!\n ",
+    bravocontent:"I made it to run the shop for a week without getting burnout or going bankrupt!\nI slay! ",
+    restart:"(spacebar to play again)",
+    bankruptcontent:"It’s okay I’ll be more careful of who I hit next time...",
+    burnoutcontent:"Fucking hell, it’s impossible to work in these conditions",
 
   }
 }
@@ -95,18 +89,18 @@ const dialogboxList ={
      text12:"Wouaf! Je suis chou nan?!",
   },
   "EN":{
-    text1:"",
-    text2:"",
-    text3:"",
-    text4:"",
-    text5:"",
-    text6:"",
-    text7:"",
-    text8:"",
-    text9:"",
-    text10:"",
-    text11:"",
-    text12:"",
+    text1:"It’s quite early, maybe I could go for a walk before customers arrive.",
+   text2:"I will take care of bike stands!",
+   text3:"It’s fixed!",
+   text4:"I’ll fix the cupboard, you won't see a thing, don’t worry!",
+   text5:"All good!",
+   text6:"I brought you a chain tool to thank you for last time!",
+   text7:"Thanks again for sharing you workshop with us!",
+   text8:"I heard you might need help, I can’t lift stuff so I brought some cake!",
+   text9:"Cake on the table",
+   text10:"I know you can fix anything, but I thought it would be nicer with drinks!",
+   text11:"Enjoy!",
+   text12:"Woof! I’m cute, right?!",
   }
 }
 
@@ -123,13 +117,13 @@ const collisionList ={
 
   },
   "EN":{
-    text1:"",
-    text2:"",
-    text3:"",
-    text4:"",
-    text5:"",
-    text6:"",
-    text7:"",
+         text1:"I don’t have the key for this door...",
+         text2:"Holly shit...The door is completely smashed. What a mess!",
+         text3:"Argh my stands... I need help to repair this.",
+         text4:"Now that I fixed them, these three nice racebikes are ready to go!",
+         text5:"Oops, my bike is in a real bad state and to think that I’m a bike mechanic...",
+         text6:"I could go for a walk, there isn’t any customers yet",
+         text7:"Mmm... I thought I’d hand them out, maybe I should do that before customers come in.",
   }
 }
 
@@ -226,65 +220,90 @@ const dialogsList={
   },
   "EN":{
     dialogChips:[
-			["p",""],
-			["m",""],
-			["p",""],
-			["m",""],
-			["p",""],
-			["m",""],
-			["p",""],
-			["m",""],
-			["p",""],
-			["m",""]
-		],
-    dechettDialog1:[
-      ["PNJ",""],
-      ["M",""],
-      ["PNJ",""],
-      ["M",""],
-      ["PNJ", ""],
-      ["M",""],
-      ["PNJ",""],
-      ["M", ""]
-    ],
-    dialogInteraction1 :[
-      ["pnj",""],
-      ["m",""],
-      ["pnj",""],
-      ["m",""],
-      ["pnj",""],
-      ["m",""],
-      ["pnj",""]
-    ],
-    dialogInteraction2 : [
-     ["PNJ",""],
-     ["M",""],
-     ["PNJ",""],
-     ["M",""],
-     ["PNJ",""],
+     ["p","Hey!"],
+     ["m","Hi! Can I sit with you?"],
+     ["p","Yes, but you have to share your potato chips with me... and the pigeons haha"],
+     ["m","Okay!"],
+     ["p","How is it to run this shop?"],
+     ["m","Cool! I really enjoy repairing bikes, you know."],
+     ["p","Oh yes! And what about customers?"],
+     ["m","Well, slap in the face for those who exaggerate"],
+     ["p","Haha you’re funny. I have a trick for you, I press spacebar to knock them out, directly."],
+     ["m","Whoa! I’ll try for sure."]
    ],
-   dialogInteraction3 : [
-       ["PNJ",""],
-       ["M",""],
-       ["PNJ",""],
-       ["M",""],
-       ["PNJ",""],
-       ["M",""],
-       ["PNJ",""],
-       ["M",""],
-       ["PNJ",""],
-       ["M",""],
-       ["PNJ",""],
-        ["M",""],
-       ["PNJ",""]
+   dechettDialog1:[
+
+   ["PNJ","Hey you! What are you doing here?"],
+     ["M","Hi! What is this place?"],
+     ["PNJ","It’s the landfill, you didn’t know? You’re not from here?"],
+     ["M","No, I’ve just started to work at the bike repair shop around the corner."],
+     ["PNJ", "Ha yeah and how is it going? I knew the previous mechanic, they were nice but I believe it wasn’t always easy with customers."],
+     ["M", "Yey I can see that...There are a bunch of dudes trying to explain my job to me, it’s a pain."],
+     ["PNJ","I understand, same here. Also today someone brought some bike stands, not too shabby, do you want to take them?"],
+     ["M", "Yaaas, thanks! Well, I'm off again... see you soon!"]
+   ],
+   dechettDialog2:[
+     ["PNJ","Hey, you again!"],
+     ["M","Hello! What’s up?"],
+     ["PNJ","I’m okay,it’s a chill day. And you?"],
+     ["M","A bit tired from work, but there was a group of cute and sweet people who came to the shop yesterday, it was cool!"],
+     ["PNJ", "With time you’ll probably have more friendly people and less douchebags"],
+     ["M", "Yeah, you’re right. Actually, I was coming here to give you some flyers. It’s for the protest against police brutality."],
+     ["PNJ","Oh thanks! I heard about it but I don’t have the deets."],
+     ["M", "Well, everything is written on it, here!"],
+     ["PNJ","Perfect, I’ll hand them out, it’s important."],
+   ],
+    dechettDialog3 : [
+       ["PNJ","Hey, you again!!!"],
+       ["M","Hello..."],
+       ["PNJ","Are you okay? You look weird..."],
+       ["M","Nah life sucks.. Some people broke in and destroyed some stuffs at the shop, I think they dislike the queer vibe we have."],
+       ["PNJ", "Oh shit...Come on! I’ll join, we will fix it!"],
+       ["M", "Yes, I actually wanted to ask you if you would be up to help."],
+       ["PNJ","Sure! We can fix anything anyway, don’t we? Hihi"],
+       ["M", "Fuck yeah! I’m happy to hear this. See you there!"],
+       ["PNJ","Yes, I’ll close here and come asap. Seeya."],
      ],
-     dialogInteraction4 :[
-         ["pnj",""],
-         ["m",""],
-         ["pnj",""],
-         ["m",""],
-         ["pnj",""],
-         ]
+     dialogInteraction1 :[
+       ["pnj","Hi hi!"],
+       ["m","Hey! Sorry we’re closed. You can come back tomorrow."],
+       ["pnj","Yes, but I didn’t want to repair my bike..."],
+       ["m","Uh okay, well why are you here then?"],
+       ["pnj","Uh... ha yes! Haha sorry. I’m here to give you my key, I used to work here before and I forgot to give it back. I’m a bit spacey sometimes."],
+       ["m","Ah! Thank you!"],
+       ["pnj","You welcome, see you next time...bye bye"]
+     ],
+     dialogInteraction2 : [
+      ["PNJ","Hello! I'm touring the neighborhood and was wondering if I could put up a poster here?"],
+      ["M","Yes ok, you can put it up on the wall on the back there."],
+      ["PNJ","Thanks! You working here, that’s lit ! Also can I borrow you a screwdriver?"],
+      ["M","Sure, here it is."],
+      ["PNJ","Thank you, see you soon!"],
+    ],
+    dialogInteraction3 :[
+        ["PNJ","Hey hey!"],
+        ["M","Hello, we’re closed..."],
+        ["PNJ","Yes actually, I wanted to ask you something, now that it’s closed. I’m part of a collective named Vélacyraptix, have you ever heard about us?"],
+        ["M","Ha yeay sounds familiar, you organize bike mechanic workshops, right?"],
+        ["PNJ","Yeah, one was planned for tonight, but something came up and we were wondering if we could do it here in the shop..."],
+        ["M","How? Don’t you wanna come during the day?"],
+        ["PNJ","Well we organize workshops without cisgender men..."],
+        ["M","Oh okay I see. Great idea ! It’s true that it is annoying to have tools taken from your hands and everything mansplained all the time. I know that too well. You can use the shop, make yourself at home!"],
+        ["PNJ","Thanks so nice from you!"],
+        ["M","Wait! If you see the person dressed as a dino, tell them you're doing this, they’ve just left and said they wanted to learn how to fix bikes!"],
+        ["PNJ","Great idea ! Can we leave some flyers here and you can hand them out to people you know?"],
+         ["M","Yep! Okay I’ll leave now, don’t forget to put back the keys in the mailbox please."],
+        ["PNJ","Sure, have a nice evening! Come on people we can do the workshop here!"]
+      ],
+      dialogInteraction4 :[
+          ["pnj","Hey, I heard that not everyone is welcomed here..."],
+          ["m","What do you mean? "],
+          ["pnj","Well it’s extreme to exclude men, and on top of that I heard that we get slapped if we say something you don’t like..."],
+          ["m","Uh..."],
+          ["pnj","Well, be careful..."],
+       ],
+
+
 
 
   }
@@ -300,6 +319,11 @@ const bonusList={
 
   },
   "EN":{
+
+    bonus1:"I won a tire lever!",
+    bonus2:"I won cat food!",
+    bonus3:"I won potato chips!",
+    bonus4:"I won a toolbox!",
 
   }
 }
@@ -319,8 +343,29 @@ const references ={
 
   },
   "EN":{
-    titleList:[],
-    authorList:[],
-    coverTextList:[],
-  },
+      titleList:[
+  "\"A Quick & Easy Guide to They/Them Pronouns\"",
+  "\"Men Explain Things to Me\"",
+  "\"Beyond the Gender Binary \"",
+  "\"Detransition, Desistance, and Disinformation: A Guide for Understanding Transgender Children Debates\"",
+  "\"The Will to Change: Men, Masculinity, and Love\"",
+  "\"Objectification of women still exists\"",
+  ],
+      authorList:[
+  "Archie Bongiovanni & Tristan Jimerson",
+  "Rebecca Solnit",
+  "Alok Vaid-Menon",
+  "Julia Serano",
+  "bell hooks",
+  " Rebekah Barquero",
+  ],
+      coverTextList:[
+  "\"Archie, a snarky genderqueer artist, and Tristan, a cisgender dude, team up in this short and fun comic guide that explains what pronouns are, why they matter, and how to use them. They also include what to do if you make a mistake, and some tips-and-tricks for those who identify outside of the binary to keep themselves safe in this binary-centric world.\"",
+  "\"Rebecca Solnit took on what often goes wrong in conversations between men and women. She wrote about men who wrongly assume they know things and wrongly assume women don’t, about why this arises, and how this aspect of the gender wars works, airing some of her own hilariously awful encounters.\"",
+  "\"In Beyond the Gender Binary, poet, artist, and LGBTQIA+ rights advocate Alok Vaid-Menon deconstructs, demystifies, and reimagines the gender binary.\"",
+  "\"This brochure is for anyone who finds the debate around trans issues and detransitions hard to follow, or who doesn't know what to think. And with good reason! Lately, this theme has been appearing more and more frequently in public debate, but not by just anyone and anywhere.\"",
+  "\"Everyone needs to love and be loved—even men. But to know love, men must be able to look at the ways that patriarchal culture keeps them from knowing themselves, from being in touch with their feelings, from loving.\"",
+  "\"Women continue to be the focus of sexual objectification in our society, and have been for hundreds of years, despite advances of equality between the sexes. And it’s not just men that are objectifying women, women do it as well.\"",
+  ],
+    },
 }

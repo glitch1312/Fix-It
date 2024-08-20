@@ -105,7 +105,7 @@ function init(){
   const aseprite_characters = [
     "exte_maki",
     "exte_sirius",
-    "intercation_alliee",
+    "interaction_alliee",
     "mecanix_velo",
     "perso_dechett_1",
     "perso_flinta_1",

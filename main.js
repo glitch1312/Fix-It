@@ -1,6 +1,7 @@
 import * as loadAssets from './js/load-assets.js';
 //import {INITIALCLIENTSLIST} from './js/clients-list-manager.js';
 import {textList,dialogboxList, collisionList, dialogsList, bonusList, references } from './js/text-list-manager.js';
+import {CLIENTSLISTECOMPLETEFR,CLIENTSLISTECOMPLETEEN} from './js/clients-list-manager.js';
 
 kaboom({
 	background: [ 0,0,0 ],
@@ -18,7 +19,7 @@ let musicFond = play("page_debut", {
     loop: true
 })
 musicFond.paused = true
-
+	let lang = "FR"
 	let interrupt = false
 	let totalCoins = 0
 	let totalStars = 0
@@ -47,7 +48,14 @@ musicFond.paused = true
 	let outdoorKey = false
 	let coinsAnimValueList = [0] //list for starting bilan journalier
 	let starsAnimValueList = [0]
-
+	let clientsList
+	if (lang =="FR") {
+	  let clientsList = CLIENTSLISTECOMPLETEFR;
+	  console.log(clientsList);
+	} else {
+	  let clientsList = CLIENTSLISTECOMPLETEEN;
+	  console.log(clientsList);
+	}
 const MAP_WIDTH = 256
 const MAP_HEIGHT = 256
 const BOTTOM = 3/4*256
@@ -66,322 +74,54 @@ const MYPURPLE = rgb(79,30,69)
 const MYDARKPINK = rgb(238, 106,124)
 const MYDARKBLUE = rgb(99,138,159)
 const MYLIGHTBLUE = rgb(138,162,173)
-let INITIALCLIENTSLIST = {
- "client1":{
-		 spriteName:"client_1_petit",
-		 bigSpriteName:"client_1_grand",
-		 dialogs:[
-			 [ "client_1_grand", "Bonjour!" ],
-			 [ "mecanix_en_pied", "Bonjour, comment je peux vous aider ?"],
-			 [ "client_1_grand", "Je dois changer les câbles des freins." ],
-			 [ "mecanix_en_pied", "D'accord, vous voulez me donner votre vélo?" ],
-			 [ "client_1_grand", "Je le donnerai quand le mécano aura le temps de s'en occuper direct, j'en ai besoin, vous me donnez le rendez-vous?" ],
-			 [ "mecanix_en_pied", "Mais c'est moi la mécano..." ],
-		 ],
-		 isSexist: true,
- },
- "client2":{
-		 spriteName:"client_2_petit",
-		 bigSpriteName:"client_2_grand",
-		 dialogs:[
-			 [ "client_2_grand", "Salut, y'a quelque chose qui va pas avec mon vélo." ],
-			 [ "mecanix_en_pied", "Okay! Je vois que ta roue est voilée."],
-			 [ "client_2_grand", "Non je pense plutôt que c'est un truc au niveau de la chaine." ],
-			 [ "mecanix_en_pied", "C'est sûr que ta roue est voilée. Elle touche le frein de façon irregulière." ],
-			 [ "client_2_grand", "Attends, je vais te montrer, quand on fait tourner les pédales, ça fais tourner la chaine tu vois?"],
-			 [ "mecanix_en_pied", "Oui, je comprends assez bien la mécanique..." ],
-		 ],
-		 isSexist: true,
 
- },
- "client3":{
-		 spriteName:"client_3_petit",
-		 bigSpriteName:"client_3_grand",
-		 dialogs:[
-			 [ "mecanix_en_pied", "Bonjour, dites-moi tout!" ],
-			 [ "client_3_grand", "Je veux changer les plaquettes des mes freins à disques."],
-			 [ "mecanix_en_pied", "Bonne idée, elles sont usées?" ],
-			 [ "client_3_grand", "Nan mais ça couine...alors j'aimerais bien les changer." ],
-			 [ "mecanix_en_pied", "D'accord, je te propose quand même d'essayer de les nettoyer d'abord."]
-		 ],
-		 isSexist: false,
+// INVENTORY
+// state can be : unavailable,available, owned
+let inventory = {
+	"Clé":	{
+		spriteName : "atelier_clee",
+		state: "available",
+		cost: "10",
+	},
+	"Stand pour vélo #1":	{
+		spriteName : "inventaire_velo_sur_pied_vide",
+		state: "available",
+		cost: "30",
+	},
+	"Stand pour vélo #2":	{
+		spriteName : "inventaire_velo_sur_pied_vide",
+		state: "available",
+		cost: "30",
 
- },
- "client4":{
-		 spriteName:"client_4_petit",
-		 bigSpriteName:"client_4_grand",
-		 dialogs:[
-			 [ "mecanix_en_pied", "Salut, qu'est-ce qu'il se passe?" ],
-			 [ "client_4_grand", "Je cherche le patron, j'ai un problème avec mon vélo."],
-			 [ "mecanix_en_pied", "Je peux vous répondre, dites-moi tout!" ],
-			 [ "client_4_grand", "Ah, vous êtes mécanicienne?" ],
-			 [ "mecanix_en_pied", "Oui."],
-			 [ "client_4_grand", "C'est surprenant! Bravo!" ],
-			 [ "mecanix_en_pied", "Merci..."],
-		 ],
-		 isSexist: true,
+	},
+	"Démonte-pneu":	{
+		spriteName : "Sprite_demontepneu",
+		state: "available",
+		cost: "10",
+	},
+	"Croquettes":	{
+		spriteName : "croquettes",
+		state: "available",
+		cost: "10",
 
- },
- "client5":{
-		 spriteName:"client_5_petit",
-		 bigSpriteName:"client_5_grand",
-		 dialogs:[
-			 [ "client_5_grand", "Bonjour, est-ce que c'est possible de changer mon pneu?"],
-			 [ "mecanix_en_pied", "Heu oui, mais je sais pas trop les réf parce que c'est pas comme les vélos." ],
-			 [ "client_5_grand", "Aucun soucis, j'ai pris du matos avec et j'ai une roue de rechange, je vais t'expliquer..." ],
-		 ],
-		 isSexist: false,
-
- },
- "client6":{
-		 spriteName:"client_6_petit",
-		 bigSpriteName:"client_6_grand",
-		 dialogs:[
-			 [ "client_6_grand", "Bonjour, comment ça va aujourd'hui? Je vous amène mon vélo pour un check général de printemps héhé..."],
-			 [ "mecanix_en_pied", "Bonjour, parfait je peux m'en occuper vous voulez me le donner?" ],
-			 [ "client_6_grand", "Attendez je vais vous le porter il est un peu lourd..." ],
-		 ],
-		 isSexist: true,
-
- },
- "client7":{
-		 spriteName:"client_7_petit",
-		 bigSpriteName:"client_7_grand",
-		 dialogs:[
-			 [ "mecanix_en_pied", "Bonjour." ],
-			 [ "client_7_grand", "J'aurais besoin d'une nouvelle chambre à air, j'ai crevé, vous pourriez faire ca?"],
-			 [ "mecanix_en_pied", "Oui, bien sûr." ],
-			 [ "client_7_grand", "Parfait!" ],
-		 ],
-		 isSexist: false,
-
- },
- "client8":{
-		 spriteName:"client_8_petit",
-		 bigSpriteName:"client_8_grand",
-		 dialogs:[
-			 [ "client_8_grand", "Salut, il est où le mecano?"],
-			 [ "mecanix_en_pied", "C'est moi." ],
-			 [ "client_8_grand", "Ah. Tu sais changer la guidoline?" ],
-			  [ "mecanix_en_pied", "Oui oui..." ],
-		 ],
-		 isSexist: true,
-
- },
- "client9":{
-		 spriteName:"client_9_petit",
-		 bigSpriteName:"client_9_grand",
-		 dialogs:[
-			 [ "client_9_grand", "Salut beauté, ça va?"],
-			 [ "mecanix_en_pied", "Mouais... il a quoi ton vélo? Je vois déjà que ton guidon est désaxé." ],
-			 [ "client_9_grand", "Ha ok. Ça fait longtemps que tu travailles ici?" ],
-			 [ "mecanix_en_pied", "C'est mon deuxième jour." ],
-			 [ "client_9_grand",  "Tu finis à quelle heure je t'offre un verre!" ],
-			 [ "mecanix_en_pied", "..." ],
-		 ],
-		 isSexist: true,
-
- },
- "client10":{
-		 spriteName:"client_10_petit",
-		 bigSpriteName:"client_10_grand",
-		 dialogs:[
-			 [ "mecanix_en_pied", "Bonjour!" ],
-			 [ "client_10_grand", "Bonjour! J'ai cassé mon dérailleur."],
-			 [ "mecanix_en_pied", "Dac, on peut le remplacer avec de l'occasion ou en commander un." ],
-			 [ "client_10_grand", "D'occas si possible...j'ai pas envie d'attendre." ],
-		 ],
-		 isSexist: false,
-
- },
- "client11":{
-		 spriteName:"client_11_petit",
-		 bigSpriteName:"client_11_grand",
-		 dialogs:[
-			 [ "mecanix_en_pied", "Salut, qu'est-ce qui se passe?" ],
-			 [ "client_11_grand", "Salut, mon vélo freine plus."],
-			 [ "mecanix_en_pied", "Oké je vais checker ça." ],
-			 [ "client_11_grand", "Est-ce que stan est là? Je préfère que ça soit lui qui le fasse." ],
-			 [ "mecanix_en_pied", "Il est pas là..."],
-		 ],
-		 isSexist: true,
-
- },
- "client12":{
-		 spriteName:"client_12_petit",
-		 bigSpriteName:"client_12_grand",
-				 dialogs:[
-			 [ "client_12_grand", "Hello."],
-			 [ "mecanix_en_pied", "Salut." ],
-			 [ "client_12_grand", "Ça fait plaisir de voir une femme ici!" ],
-			 [ "mecanix_en_pied", "Yessay... et donc ce vélo?" ],
-			 [ "client_12_grand", "Le voilà. Hé pis vous êtes quand même plus jolie avec le sourire!" ],
-		 ],
-		 isSexist: true,
- },
- "client13":{
-		 spriteName:"client_13_petit",
-		 bigSpriteName:"client_13_grand",
-		 dialogs:[
-			 [ "client_13_grand", "Hé on dirait que le lobby LGBTQIA+ est venu refaire votre déco là..."],
-			 [ "mecanix_en_pied", "Euh...je peux faire quelque chose pour vous? "],
-			 ["client_13_grand", "Vous vendez des selles? Celle-ci a un trou..."],
-			 [ "mecanix_en_pied", "Oui ok, j'en ai pas en stock mais je peux en commander une si vous voulez?" ],
-			 [ "client_13_grand", "Ouais bof... " ],
-		 ],
-		 isSexist: true,
- },
- "client14":{
-		 spriteName:"client_14_petit",
-		 bigSpriteName:"client_14_grand",
-		 dialogs:[
-			 [ "client_14_grand", "Bonjour! J'ai cassé un rayon sur ma roue avant..."],
-			 [ "mecanix_en_pied", "Okay, je vais le changer et dévoiler la roue s'il y'a besoin." ],
-			 [ "client_14_grand", "Okay mais j'espère que ce sera pas aussi cher que la dernière fois!" ],
-		 ],
-		 isSexist: false,
- },
- "client15":{
-		 spriteName:"client_15_petit",
-		 bigSpriteName:"client_15_grand",
-		 dialogs:[
-			 [ "mecanix_en_pied", "Bonjour bonjour!" ],
-			 [ "client_15_grand", "Hello, c'est possible de réparer mon vélo?"],
-			 [ "mecanix_en_pied", "Oui bien sûr, il a quoi?" ],
-			 [ "client_15_grand", "Je sais pas, il est tout foutu il faut le réparer." ],
-			 [ "mecanix_en_pied", "Okay je vais regarder." ],
-			 [ "client_15_grand", "Merci, mais il est vraiment vieux et en mauvais état..." ],
-			 [ "mecanix_en_pied", "Pas de soucis, tu me le passes?" ],
-			 [ "client_15_grand", "Oui." ],
-		 ],
-		 isSexist: false,
- },
- "client16":{
-		 spriteName:"client_16_petit",
-		 bigSpriteName:"client_16_grand",
-		 dialogs:[
-			 [ "mecanix_en_pied", "Salut." ],
-			 [ "client_16_grand", "Salut! Il y a un truc qui marche pas bien avec mon vélo"],
-			 [ "mecanix_en_pied", "Tu veux m'expliquer plus en détail?" ],
-			 [ "client_16_grand", "Oui, quand je roule surtout à la montée il se passe des trucs bizarres avec les vitesses..." ],
-			 [ "mecanix_en_pied", "C'est sûrement la chaine, je peux m'en charger." ],
-		 ],
-		 isSexist: false,
- },
- "client17":{
-		 spriteName:"client_17_petit",
-		 bigSpriteName:"client_17_grand",
-				 dialogs: [
-             [ "client_17_grand", "Bonjour, je suis déjà venue ici il y a longtemps."],
-             [ "mecanix_en_pied", "Ah super!" ],
-             [ "client_17_grand", "Par contre maintenant c'est très politique comme déco d'atelier quand même." ],
-             [ "mecanix_en_pied", "Oui, c'est fait exprès." ],
-             [ "client_17_grand", "Oh je sais pas ce que j'en pense de cette nouvelle mode..." ],
-              [ "client_17_grand", "Mais c'est possible de réparer mon pneu crevé?" ],
-							[ "mecanix_en_pied", "Oui!" ],
-         ],
-		 isSexist: true,
- },
- "client18":{
-	 spriteName:"client_18_petit",
-	 bigSpriteName:"client_18_grand",
-	 dialogs :[
-		 ["client_18_grand","Salut! Merci pour le tournevis ça m'a bien aidé."],
-		 ["mecanix_en_pied","Hey, pas de soucis! Merci de le ramener surtout! Ça a marché comme tu voulais?"],
-		 ["client_18_grand","J'ai réussi à faire certains trucs, mais y'a des choses qui sont trop compliquées je crois..."],
-		 ["client_18_grand","Ça me ferait plaisir d'apprendre à l'occas mais je suis pas toujours à l'aise avec les trucs manuels..."],
-		 ["mecanix_en_pied","Oui je comprends."],
-		 ["client_18_grand","Tu voudrais bien jeter un oeil ?"],
-	 ],
-		isSexist: false,
- },
- "client19":{
-		 spriteName:"client_19_petit",
-		 bigSpriteName:"client_19_grand",
-		 dialogs: [
-[ "client_19_grand", "Hello."],
-     [ "mecanix_en_pied", "Salut!" ],
-     [ "client_19_grand", "Ça fait plaisir de voir une femme travailler ici, moi je trouve ça super !" ],
-		  [ "client_19_grand", "Mais il paraît qu'il y'a des moments où c'est pas ouvert à tout le monde... c'est un peu limite quand même non?" ],
-     [ "mecanix_en_pied", "Je pense que c'est utile, et puis se réunir entre personnes qui vivent des trucs similaires c'est un truc qui se fait depuis longtemps." ],
-     [ "client_19_grand", "Mais c'est un peu une mode le féminisme, moi je suis plutôt humaniste... tout le monde est égal quoi..." ],
-          [ "client_19_grand", "Bref, je viens pour mon vélo en fait hein, hahaha! c'est possible de régler les vitesses?" ],
-    ],
-		 isSexist: true,
- },
- "client20":{
-		 spriteName:"client_20_petit",
-		 bigSpriteName:"client_20_grand",
-			 dialogs:[
-				 [ "mecanix_en_pied", "Salut" ],
-				 [ "client_20_grand", "Bonjour Madame!" ],
-				 [ "mecanix_en_pied", "Euh... je préfère que vous disiez pas Madame." ],
-				 [ "client_20_grand", "Rohlalala...on peut plus rien dire." ],
-				 [ "mecanix_en_pied", "C'est juste que vous ne me connaissez pas et en plus monsieur, madame c'est très binaire." ],
-				 [ "client_20_grand", "Oui bon vous êtes pas un Monsieur nan plus.." ],
-				 [ "mecanix_en_pied", "Peut-être que je suis ni l'un ni l'autre..." ],
-			 ],
-		 isSexist: true,
- },
- "client21":{
-		 spriteName:"client_21_petit",
-		 bigSpriteName:"client_21_grand",
-		 dialogs:[
-			 [ "mecanix_en_pied", "Hello!" ],
-			 [ "client_21_grand", "Coucou, dis j'ai un projet avec un cadre que j'ai récupéré, j'aimerais le repeindre."],
-			 [ "client_21_grand", "C'est possible de le faire ici?"],
-			 [ "mecanix_en_pied", "C'est pas l'idéal en vrai je fais pas trop de peinture" ],
-			 [ "client_21_grand", "Ha zut... bon et meuler des pièces, c'est possible?" ],
-			 [ "mecanix_en_pied", "Oui à fond!" ],
-			 [ "client_21_grand", "Trop bien!" ],
-		 ],
-		 isSexist: false,
- },
- "client22":{
-		 spriteName:"client_22_petit",
-		 bigSpriteName:"client_22_grand",
-		 	 dialogs:[
-		 		 [ "mecanix_en_pied", "Hello!" ],
-		 		 [ "client_22_grand", "Salut, je viens changer mes pédales."],
-		 		 [ "mecanix_en_pied", "Yes, ça marche." ],
-		 		 [ "client_22_grand", "Je voulais vous demander vous faites aussi des ateliers qu'entre gars?" ],
-		 		 [ "mecanix_en_pied", "..." ],
-		 		 [ "client_22_grand", "..." ],
-		 	 ],
-		 isSexist: true,
- },
- "client23":{
-		 spriteName:"client_23_petit",
-		 bigSpriteName:"client_23_grand",
-		 dialogs:[
-             [ "mecanix_en_pied", "Hello!" ],
-             [ "client_23_grand", "Coucou, est-ce que tu peux m'aider ?"],
-             [ "mecanix_en_pied", "Oui, dis-moi."],
-						 [ "client_23_grand", "On m'a conseillé de commander une nouvelle cassette à l'atelier avec les Vélacyraptix."],
-						 	[ "client_23_grand","Mais je sais pas trop comment la changer par contre..."],
-            [ "mecanix_en_pied", "On peut faire ça ensemble."],
-             [ "client_23_grand", "Trop cool!" ],
-         ]
-,
-		 isSexist: false,
- },
- "client24":{
-		 spriteName:"client_24_petit",
-		 bigSpriteName:"client_24_grand",
-		 dialogs:[
-            [ "mecanix_en_pied", "Hello!" ],
-             [ "client_24_grand", "J'ai mes freins qui freinent plus..."],
-             [ "mecanix_en_pied", "Oh je vois, c'est des freins à disques?" ],
-             [ "client_24_grand", "Oui, je pense qu'il faut faire une purge mais j'ai jamais fait ça." ],
-						 [ "client_24_grand", "J'avais bien envie d'essayer, et les drapeaux arc-en-ciel m'ont convaincu, hihi." ],
-             [ "mecanix_en_pied", "Oh super! Si tu veux je peux t'apprendre en le faisant avec toi." ],
-             [ "client_24_grand", "Oui d'accord." ],
-         ],
-		 isSexist: false,
- },
+	},
+	"Chips":	{
+		spriteName : "bonus_chips",
+		state: "available",
+		cost: "10",
+	},
+	"Boîte à outils":	{
+		spriteName : "bonus_boites",
+		state: "available",
+		cost: "10",
+	},
+	"Dérive-chaine":	{
+		spriteName : "sprite_demontechaine",
+		state: "available",
+		cost: "25",
+	},
 }
 
-let clientsList = INITIALCLIENTSLIST
 function initModules() {
     // This is necessary as those modules require kaboom to be initialized (global variables)
     loadAssets.init();
@@ -421,7 +161,6 @@ scene("start",() => {
 	 outdoorKey = false
 	 coinsAnimValueList = [0] //list for starting bilan journalier
 	 starsAnimValueList = [0]
-	 clientsList = INITIALCLIENTSLIST
 
 
 		add_bordure_map()
@@ -441,145 +180,155 @@ scene("start",() => {
 			pos(center().x+5,MAP_HEIGHT/2-0.6*(MAP_HEIGHT/2)),
 			color(MYLIGHTBLUE)
 		])
-		// But
-		const but = add([
-			text(textList["FR"].soustitre,
-			{ size: TXTSIZE+2, font:"prstart" , width:MAP_WIDTH-64}),
-			scale(1),
-			anchor("center"),
-			pos(center().x+5,MAP_HEIGHT/2-0.2*(MAP_HEIGHT/2)),
-		color(MYLIGHTBLUE)
-		])
-		// Instructions
-		const instructions = add([
-			text(textList["FR"].instructions, { size: TXTSIZE+2,align:"center", font:"prstart",width:TXTWIDTH+50}),
-			scale(1),
-			anchor("center"),
-			pos(center().x,MAP_HEIGHT/2+5.7*16),
-			color(MYDARKBLUE)
-		])
-		// lancer le jeu
-		onKeyPress("enter", () => {
 
-			console.log(clientsList);
-			go("atelier", jourIdx,totalCoins,totalStars,INITIALPOSITION,clientCounter)
+		// LANGUAGE SELECTION
+		let languageFlag = true // french by default
+		// Buttons language
+		const FrenchBtn = add([
+				text("Français",{font:"prstart",size:TXTSIZE+6}),
+				pos(vec2(center().x,MAP_HEIGHT/2-0.3*(MAP_HEIGHT/2))),
+				area({ cursor: "pointer", }),
+				scale(1),
+				anchor("center"),
+				color(MYLIGHTBLUE)
+
+			])
+		const EnglishBtn = add([
+					text("English",{font:"prstart",size:TXTSIZE+5}),
+					pos(vec2(center().x,MAP_HEIGHT/2-0.1*(MAP_HEIGHT/2))),
+					area({ cursor: "pointer", }),
+					scale(1),
+					anchor("center"),
+					color(MYLIGHTBLUE)
+				])
+		const tinyShift = 8
+		const arrow = add([
+					text(">",{size:TXTSIZE+6}),
+					pos(center().x-34,MAP_HEIGHT/2-0.3*(MAP_HEIGHT/2)-tinyShift),
+					color(MYLIGHTBLUE)
+				])
+		// 	coloring
+		arrow.onUpdate(() => coloring(arrow))
+		FrenchBtn.onUpdate(() => coloring(FrenchBtn))
+		onKeyPress("up", () => {
+					languageFlag = true // up is the franch language
+					//move arrow
+					arrow.pos.y = MAP_HEIGHT/2-0.3*(MAP_HEIGHT/2)-tinyShift
+					// putting the other button color back to default_position
+					EnglishBtn.onUpdate(() => {
+						EnglishBtn.color =MYLIGHTBLUE
+					})
+					//coloring
+					FrenchBtn.onUpdate(() => coloring(FrenchBtn))
+					//repairFlag
+					// repairFlag = true
+			})
+		onKeyPress("down", () => {
+					languageFlag = false // down is the english language
+					// arrow coloring
+					arrow.onUpdate(() => coloring(arrow))
+					// moving the arrow
+					arrow.pos.y = MAP_HEIGHT/2-0.1*(MAP_HEIGHT/2)-tinyShift
+					// puttint the other button color back to default_position
+					FrenchBtn.onUpdate(() => {FrenchBtn.color = MYLIGHTBLUE	})
+					//  Coloring button
+					EnglishBtn.onUpdate(() => coloring(EnglishBtn))
+					// //repairFlag for choice
+					// repairFlag = false
+				})
+		// lancer le jeu
+		let launchGame =
+			onKeyPress("enter", () => {
+				console.log(clientsList);
+				go("atelier", jourIdx,totalCoins,totalStars,INITIALPOSITION,clientCounter,inventory)
+			})
+		launchGame.paused = true
+		let selectLanguage = onKeyPress("enter",()=>{
+			destroy(FrenchBtn),
+			destroy(EnglishBtn),
+			destroy(arrow)
+			if (languageFlag==true) {
+				lang = "FR"
+				clientsList = CLIENTSLISTECOMPLETEFR;
+
+			}else {
+				lang = "EN"
+				clientsList = CLIENTSLISTECOMPLETEEN;
+
+			}
+			// But
+			const but = add([
+				text(textList[lang].soustitre,
+				{ size: TXTSIZE+2, font:"prstart" , width:MAP_WIDTH-64}),
+				scale(1),
+				anchor("center"),
+				pos(center().x+5,MAP_HEIGHT/2-0.2*(MAP_HEIGHT/2)),
+			color(MYLIGHTBLUE)
+			])
+			// Instructions
+			const instructions = add([
+				text(textList[lang].instructions, { size: TXTSIZE+2,align:"center", font:"prstart",width:TXTWIDTH+50}),
+				scale(1),
+				anchor("center"),
+				pos(center().x,MAP_HEIGHT/2+5.7*16),
+				color(MYDARKBLUE)
+			])
+			selectLanguage.paused = true
+			launchGame.paused = false
 		})
+
+		// END LANGUAGE SELECTION
+		// INVENTORY
+		// state can be : unavailable,available, owned
+		inventory = {
+			"Clé":	{
+				spriteName : "atelier_clee",
+				state: "available",
+				cost: "10",
+			},
+			"Stand pour vélo #1":	{
+				spriteName : "inventaire_velo_sur_pied_vide",
+				state: "available",
+				cost: "30",
+			},
+			"Stand pour vélo #2":	{
+				spriteName : "inventaire_velo_sur_pied_vide",
+				state: "available",
+				cost: "30",
+
+			},
+			"Démonte-pneu":	{
+				spriteName : "Sprite_demontepneu",
+				state: "available",
+				cost: "10",
+			},
+			"Croquettes":	{
+				spriteName : "croquettes",
+				state: "available",
+				cost: "10",
+
+			},
+			"Chips":	{
+				spriteName : "bonus_chips",
+				state: "available",
+				cost: "10",
+			},
+			"Boîte à outils":	{
+				spriteName : "bonus_boites",
+				state: "available",
+				cost: "10",
+			},
+			"Dérive-chaine":	{
+				spriteName : "sprite_demontechaine",
+				state: "available",
+				cost: "25",
+			},
+		}
+
+
 })
 
 
-	// INVENTORY
-	// state can be : unavailable,available, owned
-	let inventory = {
-		"Clé":	{
-			spriteName : "atelier_clee",
-			state: "available",
-			cost: "10",
-
-		},
-		"Stand pour vélo #1":	{
-			spriteName : "inventaire_velo_sur_pied_vide",
-			state: "available",
-			cost: "30",
-
-		},
-		"Stand pour vélo #2":	{
-			spriteName : "inventaire_velo_sur_pied_vide",
-			state: "available",
-			cost: "30",
-
-		},
-		"Démonte-pneu":	{
-			spriteName : "Sprite_demontepneu",
-			state: "available",
-			cost: "10",
-		},
-		"Croquettes":	{
-			spriteName : "croquettes",
-			state: "available",
-			cost: "10",
-
-		},
-		"Chips":	{
-			spriteName : "bonus_chips",
-			state: "available",
-			cost: "10",
-		},
-		"Boîte à outils":	{
-			spriteName : "bonus_boites",
-			state: "available",
-			cost: "10",
-		},
-		// "Tournevis":	{
-		// 	spriteName : "sprite_tournevis",
-		// 	state: "available",
-		// 	cost: "10",
-		//
-		// },
-
-		// "Clef ":	{
-		// 	spriteName : "sprite_clefmonte",
-		// 	state: "available",
-		// 	cost: "10",
-		//
-		// },
-
-		"Dérive-chaine":	{
-			spriteName : "sprite_demontechaine",
-			state: "available",
-			cost: "25",
-
-		},
-		// "Clé métrique de 5mm":	{
-		// 	spriteName : "Sprite_clef",
-		// 	state: "available",
-		// 	cost: "30",
-		//
-		// },
-		// "Double clé de 5mm":	{
-		// 	spriteName : "Sprite-tool-wrench",
-		// 	state: "available",
-		// 	cost: "30",
-		//
-		// // },
-		//
-		// "Clé à pédale":	{
-		// 	spriteName : "Sprite_clepedale",
-		// 	state: "available",
-		// 	cost: "30",
-		//
-		// },
-		//
-		// "Clé à cliquet":	{
-		// 	spriteName : "Sprite_cliket",
-		// 	state: "available",
-		// 	cost: "20",
-		//
-		// },
-		// "Pince":	{
-		// 	spriteName : "sprite_pince",
-		// 	state: "unavailable",
-		// 	cost: "10",
-		//
-		// },
-		// "Sprite_marteau":	{
-		// 	spriteName : "Sprite_marteau",
-		// 	state: "unavailable",
-		// 	cost: "25",
-		//
-		// },
-		// "Fouet à chaine":	{
-		// 	spriteName : "Sprite_fouet",
-		// 	state: "unavailable",
-		// 	cost: "60",
-		//
-		// },
-		// "Ensemble de clé":	{
-		// 	spriteName : "sprite_clee6pans",
-		// 	state: "unavailable",
-		// 	cost: "40",
-		//
-		// },
-	}
 
 	// list of initial speed for the repair game
 	//const speedMin_List = [35,40,60,75]
@@ -935,7 +684,7 @@ function addStatusBar(jourIdx,totalCoins,totalStars){
 		])
 
 		const jour = add([
-			text(textList["FR"].jour+jourIdx+"/5", {font: "prstart", size:TXTSIZE}),
+			text(textList[lang].jour+jourIdx+"/5", {font: "prstart", size:TXTSIZE}),
 			pos(center().x-(MAP_WIDTH/2)+sBoxmargins, 17),
 		])
 
@@ -1598,7 +1347,7 @@ function add_atelier_collisions(player,totalCoins,totalStars){
 			pos(center().x,BOTTOM),
 		])
 		let txt = add([
-			text(textList["FR"].dechett1, { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
+			text(textList[lang].dechett1, { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
 			anchor("center"),
 			pos(center().x,BOTTOM),
 			color(MYBLUE),
@@ -1633,7 +1382,7 @@ function add_atelier_collisions(player,totalCoins,totalStars){
 					pos(center().x,MAP_HEIGHT/2-10),
 					"afficheMessage2"])
 					let distributeInstruction = add([
-						text(textList["FR"].getflyer, {font: "prstart", size:TXTSIZE, width:TXTWIDTH}),
+						text(textList[lang].getflyer, {font: "prstart", size:TXTSIZE, width:TXTWIDTH}),
 						anchor("center"),
 						color(MYPURPLE),
 						pos(center().x+16, MAP_HEIGHT/2+4.5*16),
@@ -1659,13 +1408,13 @@ function add_atelier_collisions(player,totalCoins,totalStars){
 
 	// collision
 	if (jourIdx==5 && helpDechetFlag == false ){
-	affichageOnCollision(player,"armoireKc",collisionList["FR"].text2)
-	affichageOnCollision(player,"pied_velos_kc",collisionList["FR"].text3)
+	affichageOnCollision(player,"armoireKc",collisionList[lang].text2)
+	affichageOnCollision(player,"pied_velos_kc",collisionList[lang].text3)
 	}
 	//
 	if (jourIdx==1){
-	affichageOnCollision(player,"velorouge4",collisionList["FR"].text4)
-	affichageOnCollision(player,"velorouge1",collisionList["FR"].text5)
+	affichageOnCollision(player,"velorouge4",collisionList[lang].text4)
+	affichageOnCollision(player,"velorouge1",collisionList[lang].text5)
 
 
 	player.onCollide("cafe",()=>{
@@ -1675,7 +1424,7 @@ function add_atelier_collisions(player,totalCoins,totalStars){
 	pos(center().x,BOTTOM),
 ])
 let txt = add([
-	text(textList["FR"].firstday, { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
+	text(textList[lang].firstday, { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
 	anchor("center"),
 	pos(center().x,BOTTOM),
 	color(MYBLUE),
@@ -1703,9 +1452,9 @@ onKeyPress(()=>{
 
 //bibliothque content
 
-let titleList = references["FR"].titleList
-let authorList = references["FR"].authorList
-let coverTextList= references["FR"].coverTextList
+let titleList = references[lang].titleList
+let authorList = references[lang].authorList
+let coverTextList= references[lang].coverTextList
 	player.onCollide("bibliotheque", () => {
 		interrupt=true
 
@@ -1934,15 +1683,15 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 				// message to guide
 
 						if (showClients==false & jourIdx == 2 ){
-							addTextOnDialogBoxEnter(dialogboxList["FR"].text1)
+							addTextOnDialogBoxEnter(dialogboxList[lang].text1)
 						}
 
 
 				//if there isn't any client yet, its because the PJ has to do smth
 				if (showClients==false & jourIdx != 1 ){
-					affichageOnCollision(player,"clientEntrance",collisionList["FR"].text6)//player,colObjTag,colMsg
+					affichageOnCollision(player,"clientEntrance",collisionList[lang].text6)//player,colObjTag,colMsg
 					if (flyersTaken == true){
-						affichageOnCollision(player,"clientEntrance",collisionList["FR"].text7)//player,colObjTag,colMsg
+						affichageOnCollision(player,"clientEntrance",collisionList[lang].text7)//player,colObjTag,colMsg
 					}
 				}
 				let flagWarning = false
@@ -1965,7 +1714,7 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 							pos(center().x,BOTTOM),
 						])
 						let txt = add([
-							text(textList["FR"].hint1, { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
+							text(textList[lang].hint1, { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
 							anchor("center"),
 							pos(center().x,BOTTOM),
 							color(MYPURPLE),
@@ -1982,7 +1731,7 @@ scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=>
 				}
 				// explanation message for the closed door
 				if (outdoorKey == false){
-					affichageOnCollision(player,"outsideDoorDroite",collisionList["FR"].text1)
+					affichageOnCollision(player,"outsideDoorDroite",collisionList[lang].text1)
 				}
 
 
@@ -2166,7 +1915,7 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 		player.onCollide("louise", () => {
 			if(finalInt0==false){
 
-				addTextOnDialogBox(dialogboxList["FR"].text2),
+				addTextOnDialogBox(dialogboxList[lang].text2),
 				wait(1.4,()=>{
 					destroyAll("pied_velos_kc")
 					const velo_sur_pied_1 = add([
@@ -2193,21 +1942,21 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 
 				finalInt0=true
 			}else{
-				addTextOnDialogBox(dialogboxList["FR"].text3)
+				addTextOnDialogBox(dialogboxList[lang].text3)
 			}
 		})
 		player.onCollide("flinta1", () => {
  			if(finalInt1	==false){
-				addTextOnDialogBox(dialogboxList["FR"].text4)
+				addTextOnDialogBox(dialogboxList[lang].text4)
  				wait(1.4,()=>{destroyAll("armoireKc")}),
  				finalInt1=true
  			}else{
- 				addTextOnDialogBox(dialogboxList["FR"].text5)
+ 				addTextOnDialogBox(dialogboxList[lang].text5)
  			}
  		})
 		player.onCollide("flinta2", () => {
 			if(finalInt2==false){
-				addTextOnDialogBox(dialogboxList["FR"].text6)
+				addTextOnDialogBox(dialogboxList[lang].text6)
 				if (deriveChaineGained==false){
 				play("audio_reussite") //indicate that an object has been gained
 					wait(1,()=>{add([
@@ -2224,12 +1973,12 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 			}
 			finalInt2=true
 			}else{
-				addTextOnDialogBox(dialogboxList["FR"].text7)
+				addTextOnDialogBox(dialogboxList[lang].text7)
 			}
 		})
 		player.onCollide("flinta3", () => {
  			if(finalInt3==false){
-				addTextOnDialogBox(dialogboxList["FR"].text8)
+				addTextOnDialogBox(dialogboxList[lang].text8)
  				finalInt3=true
 				wait(1,()=>{
 					let gateau = add([
@@ -2243,7 +1992,7 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 
 					flinta3bis.setTarget(vec2(11*16,10.5*16))})
  			}else{
- 				addTextOnDialogBox(dialogboxList["FR"].text9)
+ 				addTextOnDialogBox(dialogboxList[lang].text9)
  			}
  		})
 		//player.onCollideEnd("flinta3",()=>{flinta3.setTarget(vec2(center().x-2.5*16,MAP_HEIGHT/2+2*16))})
@@ -2259,7 +2008,7 @@ scene("jourFinal",(jourIdx,totalCoins,totalStars, saved_position,clientCounter)=
 			])
 
 			player.onCollide("allie", () => {
-					addTextOnDialogBox(dialogboxList["FR"].text10)
+					addTextOnDialogBox(dialogboxList[lang].text10)
 					allieInt = true
 			})
 		})
@@ -2536,7 +2285,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 					"d": () => [
 						sprite("scene_out_tile_borddroite"),
 						area(),
-								body({isStatic:true}),
+						body({isStatic:true}),
 					],
 					"j": () => [
 						sprite("scene_out_tile_borddroite"),
@@ -2691,7 +2440,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 			scale(1.3),
 			"perso_exte"
 		])
-		// dialogsList["FR"].dialogChips
+		// dialogsList[lang].dialogChips
 		let dialogChips = [
 			["p","Hey!"],
 			["m","Salut! Je peux m'asseoir avec toi?"],
@@ -2801,7 +2550,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 				chipsGivenFlag = true
 				chipsFlag=false
 			}else {
-				addTextOnDialogBox(dialogboxList["FR"].text11)
+				addTextOnDialogBox(dialogboxList[lang].text11)
 			}
 		})
 		// collision avec le chat
@@ -2814,7 +2563,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 					pos(center().x,BOTTOM),
 				])
 				let txt = add([
-					text(textList["FR"].chat1, { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
+					text(textList[lang].chat1, { size:  TXTSIZE,width:TXTWIDTH }),//, width: width() - 230
 					anchor("center"),
 					pos(center().x,BOTTOM),
 					color(MYPURPLE),
@@ -2834,7 +2583,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 		})
 		// collision avec le chat
 		player.onCollide("chien",()=>{
-				addTextOnDialogBox(dialogboxList["FR"].text12)
+				addTextOnDialogBox(dialogboxList[lang].text12)
 		})
 		// animate the player
 		//player.play("roule")
@@ -2877,7 +2626,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 	// add status bar
 		addStatusBar(jourIdx,totalCoins,totalStars)
 		// DECHETERRIE DIALOG
-		let dechettDialog1 = dialogsList["FR"].dechettDialog1
+		let dechettDialog1 = dialogsList[lang].dechettDialog1
 		//  [
 		// 	["PNJ","Hé toi! Qu'est-ce que tu fais là?"],
 		// 	["M","Hé salut! C'est quoi cet endroit?"],
@@ -2888,7 +2637,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 		// 	["PNJ","Je comprends, ça m'arrive ici aussi des fois. Ha aujourd'hui quelqu'un a amené des stands pour vélo en bon état, tu veux les prendre?"],
 		// 	["M", "Grave! Merci. Bon j'y retourne... à bientôt!"]
 		// 	]
-		let dechettDialog2 = dialogsList["FR"].dechettDialog2
+		let dechettDialog2 = dialogsList[lang].dechettDialog2
 		// let dechettDialog2 = [
 		// 		["PNJ","Hé toi, te revoilà!"],
 		// 		["M","Hé salut! Comment tu vas ?"],
@@ -2901,7 +2650,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 		// 		["PNJ","Top, je vais les faire tourner c'est important."],
 		// 		]
 		// Atelier vandaliser
-		let dechettDialog3 = dialogsList["FR"].dechettDialog3
+		let dechettDialog3 = dialogsList[lang].dechettDialog3
 		// let dechettDialog3 = [
 		// 		["PNJ","Hé encore toi!"],
 		// 		["M","Coucou..."],
@@ -2947,7 +2696,7 @@ scene("outside", (jourIdx, totalCoins,totalStars,position)=>{
 					const txtWidth = 150; // Ideal Width
 					const txtMargins = 15;
 					let txt = add([
-					text(textList["FR"].dechett2, { size:  TXTSIZE,  width: txtWidth }),//, width: width() - 230
+					text(textList[lang].dechett2, { size:  TXTSIZE,  width: txtWidth }),//, width: width() - 230
 					anchor("center"),
 					pos(center().x+8,BOTTOM),
 					color(MYPINK),//color Louise
@@ -3128,7 +2877,7 @@ scene("inventaire", (jourIdx,totalCoins,totalStars,saved_position,clientCounter)
 
 		// add INSTRUCTIONS sur le fond
 		const return_instruction = add([
-			text(textList["FR"].retourInstruction, {font: "prstart", size:TXTSIZE, width:TXTWIDTH}),
+			text(textList[lang].retourInstruction, {font: "prstart", size:TXTSIZE, width:TXTWIDTH}),
 			anchor("center"),
 			pos(center().x+36, BOTTOM+40),
 		])
@@ -3211,7 +2960,7 @@ scene("inventaire", (jourIdx,totalCoins,totalStars,saved_position,clientCounter)
 		])
 		// create the achat texte
 		const achatTexte = add([
-			text(textList["FR"].initInventaire,{size:TXTSIZE}),
+			text(textList[lang].initInventaire,{size:TXTSIZE}),
 			pos(center().x-(MAP_WIDTH/8),BOTTOM-(MAP_WIDTH/15))
 		])
 		//move the selector and modify the achat texte
@@ -3326,7 +3075,7 @@ function jumpToSituation (repairFlag,clientKey,jourIdx,totalCoins,totalStars){
 				 "textBox"
 			 ])
 			 add([
-			text(textlist["FR"].actionJuste,{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
+			text(textlist[lang].actionJuste,{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
 			anchor("center"),
 			pos(center().x+15,BOTTOM),
 			color(MYBLUE)
@@ -3358,7 +3107,7 @@ function jumpToSituation (repairFlag,clientKey,jourIdx,totalCoins,totalStars){
 				 "textBox"
 			 ])
 		//commnet
-		add([text(textList["FR"].choixfaux,{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
+		add([text(textList[lang].choixfaux,{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
 			anchor("center"),
 			pos(center().x,BOTTOM),
 			color(MYPURPLE)
@@ -3402,7 +3151,7 @@ function jumpToSituation (repairFlag,clientKey,jourIdx,totalCoins,totalStars){
 			 "textBox"
 		 ])
 		 add([
-		text(textList["FR"].actionJuste2,{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
+		text(textList[lang].actionJuste2,{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
 		anchor("center"),
 		pos(center().x+15,BOTTOM),
 		color(MYBLUE)
@@ -3437,7 +3186,7 @@ function jumpToSituation (repairFlag,clientKey,jourIdx,totalCoins,totalStars){
 		 "textBox"
 	 ])
 	 add([
-		text(textList["FR"].choixfaux2,{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
+		text(textList[lang].choixfaux2,{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
 		anchor("center"),
 		pos(center().x+30,BOTTOM),
 		color(MYBLUE)
@@ -3566,14 +3315,14 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 		])
 		// buttons
 		const RepairBtn = add([
-				text(textList["FR"].choiceR,{font:"joystix",size:TXTSIZE+6}),
+				text(textList[lang].choiceR,{font:"joystix",size:TXTSIZE+6}),
 				pos(vec2(center().x,MAP_HEIGHT/2+0.3*(MAP_HEIGHT/2))),
 				area({ cursor: "pointer", }),
 				scale(1),
 				anchor("center"),
 			])
 		const FightBtn = add([
-					text(textList["FR"].choiceF,{font:"joystix",size:TXTSIZE+6}),
+					text(textList[lang].choiceF,{font:"joystix",size:TXTSIZE+6}),
 					pos(vec2(center().x,MAP_HEIGHT/2+0.5*(MAP_HEIGHT/2))),
 					area({ cursor: "pointer", }),
 					scale(1),
@@ -3654,7 +3403,7 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 						 "textBox"
 					 ])
 					 add([
-					text(textList["FR"].actionJuste,{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
+					text(textList[lang].actionJuste,{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
 					anchor("center"),
 					pos(center().x+15,BOTTOM),
 					color(MYBLUE)
@@ -3686,7 +3435,7 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 						 "textBox"
 					 ])
 				//commnet
-				add([text(textList["FR"].choixfaux,{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
+				add([text(textList[lang].choixfaux,{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
 					anchor("center"),
 					pos(center().x,BOTTOM),
 					color(MYBLUE)
@@ -3723,7 +3472,7 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 					 "textBox"
 				 ])
 				 add([
-				text(textList["FR"].actionJuste2,{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
+				text(textList[lang].actionJuste2,{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
 				anchor("center"),
 				pos(center().x+15,BOTTOM),
 				color(MYBLUE)
@@ -3758,7 +3507,7 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 				 "textBox"
 			 ])
 			 add([
-				text(textList["FR"].choixfaux2,{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
+				text(textList[lang].choixfaux2,{size:MEDIUMTXTSIZE,width:TXTWIDTH}),
 				anchor("center"),
 				pos(center().x+30,BOTTOM),
 				color(MYBLUE)
@@ -3810,27 +3559,27 @@ scene("bonus",(jourIdx,totalCoins,totalStars)=>{
 			// BONUS
 			case 1 :
 			// add text, sprite and update inventory
-			addBonus(bonusList["FR"].bonus1,"demontepneu","Démonte-pneu")
+			addBonus(bonusList[lang].bonus1,"demontepneu","Démonte-pneu")
 			onKeyPress("enter", () => {	goInteraction(jourIdx,totalCoins,totalStars) })
 			break;
 
 			case 2 :
 			// add text, sprite and update inventory
-			addBonus(bonusList["FR"].bonus2,"croquettes","Croquettes")
+			addBonus(bonusList[lang].bonus2,"croquettes","Croquettes")
 			croquettesFlag = true //flag to modify the collision with the cat
 			onKeyPress("enter", () => {	goInteraction(jourIdx,totalCoins,totalStars) })
 			break;
 
 			case 3:
 			// add text, sprite and update inventory
-			addBonus(bonusList["FR"].bonus3,"bonus_chips","Chips")
+			addBonus(bonusList[lang].bonus3,"bonus_chips","Chips")
 			chipsFlag = true //flag to modify the collision with the pers exte
 			onKeyPress("enter", () => {
 							goInteraction(jourIdx,totalCoins,totalStars)
 					 })
 			break;
 			case 4:
-			addBonus(bonusList["FR"].bonus4,"bonus_boites","Boîte à outils")
+			addBonus(bonusList[lang].bonus4,"bonus_boites","Boîte à outils")
 			boiteOutilsFlag = true
 			onKeyPress("enter", () => {
 							goInteraction(jourIdx,totalCoins,totalStars)
@@ -3852,7 +3601,7 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 		])
 		// JOUR
 		const bilanTxt = add([
-			text(textList["FR"].bilan+"\n--------------\n"+repairCounter+" "+textList["FR"].repair+"\n"+fightCounter+" "+textList["FR"].claques+"\n--------------\n"+textList["FR"].totalClients, {font: "prstart", size:TXTSIZEBILAN}),color(MYPURPLE),
+			text(textList[lang].bilan+"\n--------------\n"+repairCounter+" "+textList[lang].repair+"\n"+fightCounter+" "+textList[lang].claques+"\n--------------\n"+textList[lang].totalClients, {font: "prstart", size:TXTSIZEBILAN}),color(MYPURPLE),
 			pos(center().x-70, MAP_HEIGHT/4-20),
 			"bilan"
 		])
@@ -3917,7 +3666,7 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 			// BONUS
 			case 0 :
 
-				let bravo = add([text(textList["FR"].reussi,
+				let bravo = add([text(textList[lang].reussi,
 				{ size: MEDIUMTXTSIZE, width:TXTWIDTH,font:"prstart"}),color(MYBLUE),scale(1),anchor("center"),pos(center().x+3,BOTTOMTEXT)])
 				// object gained
 				onKeyPress("enter",()=>{go("bonus",jourIdx,totalCoins,totalStars)})
@@ -3925,7 +3674,7 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 			break;
 			// BASIC
 			case 1 :
-			add([text(textList["FR"].presquereussi,
+			add([text(textList[lang].presquereussi,
 				{ size: MEDIUMTXTSIZE,width:TXTWIDTH, font:"prstart"}),color(MYBLUE),scale(1),anchor("center"),pos(center().x+3,BOTTOMTEXT)])
 			// instruction
 
@@ -3938,7 +3687,7 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 				break;
 			case 2 :
 			// BASIC with Burnout WARNING:=
-			add([text(textList["FR"].warning,
+			add([text(textList[lang].warning,
 				{ size: MEDIUMTXTSIZE,width:TXTWIDTH, font:"prstart"}),color(MYBLUE),scale(1),anchor("center"),pos(center().x+3,BOTTOMTEXT)])
 				// instruction
 
@@ -3954,7 +3703,7 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 							break;
 			case 3 :
 			// BASIC with Bankrupt WARNING:
-				add([text(textList["FR"].warningBankrupt,
+				add([text(textList[lang].warningBankrupt,
 					{ size: MEDIUMTXTSIZE, width:TXTWIDTH,font:"prstart"}),color(MYBLUE),scale(1),anchor("center"),pos(center().x+3,BOTTOMTEXT)])
 					// instruction
 
@@ -3970,13 +3719,13 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 				break;
 			case 4 :
 			// GAMEOVER BURNOUT
-			add([text(textList["FR"].burnout,
+			add([text(textList[lang].burnout,
 				{ size: MEDIUMTXTSIZE,width:TXTWIDTH, font:"prstart"}),scale(1),color(MYBLUE),anchor("center"),pos(center().x+3,BOTTOMTEXT)])
 			wait(4.5,()=>go("Burnout"))
 break;
 			case 5 :
 			// GAMEOVER BANKRUPT
-			add([text(textList["FR"].bankrupt,
+			add([text(textList[lang].bankrupt,
 				{ size: MEDIUMTXTSIZE, font:"prstart", width:TXTWIDTH}),scale(1),anchor("center"),color(MYBLUE),pos(center().x+3,BOTTOMTEXT)])
 		  wait(4.5,()=>go("Bankrupt"))
 			break;
@@ -4031,7 +3780,7 @@ break;
 
 			//status
 			addStatusBar(jourIdx,totalCoins,totalStars)
-			let dialogInteraction1 = dialogsList["FR"].dialogInteraction1
+			let dialogInteraction1 = dialogsList[lang].dialogInteraction1
 
 			// try with function
 			interactionJour(1,levelAtelier,justifiedFightCounter,totalCoins,totalStars,
@@ -4043,7 +3792,7 @@ break;
 		let levelAtelier = add_atelier_map()
 		//status
 		addStatusBar(jourIdx,totalCoins,totalStars)
-		let dialogInteraction2 = dialogsList["FR"].dialogInteraction2
+		let dialogInteraction2 = dialogsList[lang].dialogInteraction2
 
 
 		// try with function
@@ -4054,7 +3803,7 @@ break;
 		let levelAtelier = add_atelier_map()
 			//status
 			addStatusBar(jourIdx,totalCoins,totalStars)
-			let dialogInteraction3 = dialogsList["FR"].dialogInteraction3
+			let dialogInteraction3 = dialogsList[lang].dialogInteraction3
 
 
 
@@ -4065,7 +3814,7 @@ scene("interactionJour4", (jourIdx,totalCoins,totalStars,position) => {
 	let levelAtelier = add_atelier_map()
 		//status
 		addStatusBar(jourIdx,totalCoins,totalStars)
-    let dialogInteraction4 = dialogsList["FR"].dialogInteraction4
+    let dialogInteraction4 = dialogsList[lang].dialogInteraction4
 
 		// try with function
 		interactionJour(4,levelAtelier,justifiedFightCounter,totalCoins,totalStars,
@@ -4134,13 +3883,13 @@ scene("interactionJour4", (jourIdx,totalCoins,totalStars,position) => {
 		])
 		// Titre
 		const title = add([
-			text(textList["FR"].bravo, { size: LARGETXTSIZE, font:"joystix" }),
+			text(textList[lang].bravo, { size: LARGETXTSIZE, font:"joystix" }),
 			scale(1),
 			anchor("center"),
 			pos(center().x+5,MAP_HEIGHT/2-16)
 		])
 		const bravoContent = add([
-			text(textList["FR"].bravocontent, { size: MEDIUMTXTSIZE-4,width: TXTWIDTH+5, font:"prstart" }),
+			text(textList[lang].bravocontent, { size: MEDIUMTXTSIZE-4,width: TXTWIDTH+5, font:"prstart" }),
 			scale(1),
 			anchor("center"),
 			pos(center().x+10,MAP_HEIGHT/2+50),
@@ -4148,7 +3897,7 @@ scene("interactionJour4", (jourIdx,totalCoins,totalStars,position) => {
 
 		// Recommencez le jeu
 		add([
-			text(textList["FR"].restart,{ size: TXTSIZE }),
+			text(textList[lang].restart,{ size: TXTSIZE }),
 					scale(1),anchor("center"),pos(center().x,BOTTOM+23),])
 
 					onKeyPress("space",() => {
@@ -4177,7 +3926,7 @@ scene("Bankrupt", (jourIdx,totalCoins,totalStars) => {
 		pos(center().x,MAP_HEIGHT/2-16)
 	])
 	const bankruptContent = add([
-		text(textList["FR"].bankruptcontent, { size: MEDIUMTXTSIZE-4,width: TXTWIDTH+5, font:"prstart" }),
+		text(textList[lang].bankruptcontent, { size: MEDIUMTXTSIZE-4,width: TXTWIDTH+5, font:"prstart" }),
 		scale(1),
 		anchor("center"),
 		pos(center().x+10,MAP_HEIGHT/2+50),
@@ -4187,7 +3936,7 @@ scene("Bankrupt", (jourIdx,totalCoins,totalStars) => {
 
 	// Recommencez le jeu
 	add([
-		text(textList["FR"].restart, { size: TXTSIZE }),
+		text(textList[lang].restart, { size: TXTSIZE }),
 				scale(1),anchor("center"),pos(center().x,BOTTOM+23),])
 
 				onKeyPress("space",() => {
@@ -4215,14 +3964,14 @@ scene("Burnout", (jourIdx,totalCoins,totalStars) => {
 		pos(center().x,MAP_HEIGHT/2-16)
 	])
 	const burnoutContent = add([
-		text(textList["FR"].burnoutcontent, { size: MEDIUMTXTSIZE-4,width: TXTWIDTH+5, font:"prstart" }),
+		text(textList[lang].burnoutcontent, { size: MEDIUMTXTSIZE-4,width: TXTWIDTH+5, font:"prstart" }),
 		scale(1),
 		anchor("center"),
 		pos(center().x+3,MAP_HEIGHT/2+50),
 	])
 	// Recommencez le jeu
 	add([
-				text(textList["FR"].restart, { size: TXTSIZE }),
+				text(textList[lang].restart, { size: TXTSIZE }),
 				scale(1),anchor("center"),pos(center().x,BOTTOM+23),])
 
 	onKeyPress("space",() => {
