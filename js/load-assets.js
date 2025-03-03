@@ -209,4 +209,8 @@ function init(){
   loadFont("prstart","assets/fonts/pixel.ttf")
   // downloaded at https://www.1001fonts.com/joystix-font.html under the https://www.1001fonts.com/joystix-font.html#license license
   loadFont("joystix","assets/fonts/joystix.otf")
+  // downloaded at https://www.dafont.com/fr/revminipixel.font?text=when+you+come
+  loadFont("revminipixel","assets/fonts/RevMiniPixel.ttf")
   }
+  
+  
