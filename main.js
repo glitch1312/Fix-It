@@ -198,7 +198,7 @@ scene("start",() => {
 
 			])
 		const EnglishBtn = add([
-				text("English",{font:"revminipixel",size:TXTSIZE+5}),
+				text("English",{font:"revminipixel",size:TXTSIZE+6}),
 				pos(vec2(center().x,MAP_HEIGHT/2-0.1*(MAP_HEIGHT/2))),
 				area({ cursor: "pointer", }),
 				scale(1),
