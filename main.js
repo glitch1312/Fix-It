@@ -6,7 +6,7 @@ import {CLIENTSLISTECOMPLETEFR,CLIENTSLISTECOMPLETEEN} from './js/clients-list-m
 kaboom({
 	background: [ 0,0,0 ],
 	scale: 3,
-	font: "prstart",
+	font: "revminipixel",
 })
 
 
@@ -18,7 +18,7 @@ let musicFond = play("page_debut", {
     volume: 0.8,
     loop: true
 })
-musicFond.paused = true
+	musicFond.paused = true
 	let lang = "FR"
 	let interrupt = false
 	let totalCoins = 0
@@ -139,7 +139,6 @@ scene("start",() => {
 	})
 	musicFond.paused = true
 
-
 	// in case of a restart
 	 totalCoins = 0
 	 totalStars = 0
@@ -190,7 +189,7 @@ scene("start",() => {
 		let languageFlag = true // french by default
 		// Buttons language
 		const FrenchBtn = add([
-				text("Français",{font:"prstart",size:TXTSIZE+6}),
+				text("Français",{font:"revminipixel",size:TXTSIZE+6}),
 				pos(vec2(center().x,MAP_HEIGHT/2-0.3*(MAP_HEIGHT/2))),
 				area({ cursor: "pointer", }),
 				scale(1),
@@ -199,17 +198,17 @@ scene("start",() => {
 
 			])
 		const EnglishBtn = add([
-					text("English",{font:"prstart",size:TXTSIZE+5}),
-					pos(vec2(center().x,MAP_HEIGHT/2-0.1*(MAP_HEIGHT/2))),
-					area({ cursor: "pointer", }),
-					scale(1),
-					anchor("center"),
-					color(MYLIGHTBLUE)
-				])
+				text("English",{font:"revminipixel",size:TXTSIZE+5}),
+				pos(vec2(center().x,MAP_HEIGHT/2-0.1*(MAP_HEIGHT/2))),
+				area({ cursor: "pointer", }),
+				scale(1),
+				anchor("center"),
+				color(MYLIGHTBLUE)
+			])
 		const tinyShift = 8
 		const arrow = add([
 					text(">",{size:TXTSIZE+6}),
-					pos(center().x-34,MAP_HEIGHT/2-0.3*(MAP_HEIGHT/2)-tinyShift),
+					pos(center().x-42,MAP_HEIGHT/2-0.3*(MAP_HEIGHT/2)-tinyShift),
 					color(MYLIGHTBLUE)
 				])
 		// 	coloring
@@ -253,10 +252,10 @@ scene("start",() => {
 			destroy(FrenchBtn),
 			destroy(EnglishBtn),
 			destroy(arrow)
+			//play("page_debut")
 			if (languageFlag==true) {
 				lang = "FR"
 				clientsList = CLIENTSLISTECOMPLETEFR;
-
 			}else {
 				lang = "EN"
 				clientsList = CLIENTSLISTECOMPLETEEN;
@@ -265,7 +264,7 @@ scene("start",() => {
 			// But
 			const but = add([
 				text(textList[lang].soustitre,
-				{ size: TXTSIZE+2, font:"prstart" , width:MAP_WIDTH-64}),
+				{ size: TXTSIZE+2, font:"revminipixel" , width:MAP_WIDTH-64}),
 				scale(1),
 				anchor("center"),
 				pos(center().x+5,MAP_HEIGHT/2-0.2*(MAP_HEIGHT/2)),
@@ -273,7 +272,7 @@ scene("start",() => {
 			])
 			// Instructions
 			const instructions = add([
-				text(textList[lang].instructions, { size: TXTSIZE+2,align:"center", font:"prstart",width:TXTWIDTH+50}),
+				text(textList[lang].instructions, { size: TXTSIZE+2,align:"center", font:"revminipixel",width:TXTWIDTH+50}),
 				scale(1),
 				anchor("center"),
 				pos(center().x,MAP_HEIGHT/2+5.7*16),
@@ -349,7 +348,7 @@ function DoSituationTest(repairFlag,clientKey){
 }
 function addBonus(textBonus,spriteName,inventoryKeyName){//change text
 			add([
-				text(textBonus,{ size: TXTSIZE, width:TXTWIDTH, font:"prstart"}),
+				text(textBonus,{ size: TXTSIZE, width:TXTWIDTH, font:"revminipixel"}),
 				color(MYBLUE),scale(1),anchor("center"),pos(center().x,BOTTOM-35)
 				])
 			add([
@@ -1388,7 +1387,7 @@ function add_atelier_collisions(player,totalCoins,totalStars){
 					pos(center().x,MAP_HEIGHT/2-10),
 					"afficheMessage2"])
 					let distributeInstruction = add([
-						text(textList[lang].getflyer, {font: "prstart", size:TXTSIZE, width:TXTWIDTH}),
+						text(textList[lang].getflyer, {font: "revminipixel", size:TXTSIZE, width:TXTWIDTH}),
 						anchor("center"),
 						color(MYPURPLE),
 						pos(center().x+16, MAP_HEIGHT/2+4.5*16),
@@ -1539,7 +1538,7 @@ let coverTextList= references[lang].coverTextList
 	// ------ Boucle de Gameplay ----  //
 	// ------ Scene d'ouverture ----------------------------------------------- //
 scene("atelier", (jourIdx,totalCoins,totalStars, saved_position,clientCounter)=> {
-	console.log("totalCoins is "+totalCoins);
+	console.log("client counter is "+clientCounter);
 		if(clientCounter == 1){musicFond.paused = false}
 		add_atelier_map()
 
@@ -2883,7 +2882,7 @@ scene("inventaire", (jourIdx,totalCoins,totalStars,saved_position,clientCounter)
 
 		// add INSTRUCTIONS sur le fond
 		const return_instruction = add([
-			text(textList[lang].retourInstruction, {font: "prstart", size:TXTSIZE, width:TXTWIDTH}),
+			text(textList[lang].retourInstruction, {font: "revminipixel", size:TXTSIZE, width:TXTWIDTH}),
 			anchor("center"),
 			pos(center().x+36, BOTTOM+40),
 		])
@@ -3341,10 +3340,10 @@ scene("choix", (clientKey,jourIdx,totalCoins,totalStars) => {
 		let repairFlag = true
 		//start with "hovering" Repair button
 		let onHover = true
-		const tinyShift = 14
+		const tinyShift = 7
 		const arrow = add([
-			text(">",{size:LARGETXTSIZE}),
-			pos(center().x-64,MAP_HEIGHT/2+0.3*(MAP_HEIGHT/2)-tinyShift)
+			text(">",{size:LARGETXTSIZE-10}),
+			pos(center().x-52,MAP_HEIGHT/2+0.3*(MAP_HEIGHT/2)-tinyShift)
 
 		])
 
@@ -3673,7 +3672,7 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 			case 0 :
 
 				let bravo = add([text(textList[lang].reussi,
-				{ size: MEDIUMTXTSIZE, width:TXTWIDTH,font:"prstart"}),color(MYBLUE),scale(1),anchor("center"),pos(center().x+3,BOTTOMTEXT)])
+				{ size: MEDIUMTXTSIZE, width:TXTWIDTH,font:"revminipixel"}),color(MYBLUE),scale(1),anchor("center"),pos(center().x+3,BOTTOMTEXT)])
 				// object gained
 				onKeyPress("enter",()=>{go("bonus",jourIdx,totalCoins,totalStars)})
 
@@ -3681,7 +3680,7 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 			// BASIC
 			case 1 :
 			add([text(textList[lang].presquereussi,
-				{ size: MEDIUMTXTSIZE,width:TXTWIDTH, font:"prstart"}),color(MYBLUE),scale(1),anchor("center"),pos(center().x+3,BOTTOMTEXT)])
+				{ size: MEDIUMTXTSIZE,width:TXTWIDTH, font:"revminipixel"}),color(MYBLUE),scale(1),anchor("center"),pos(center().x+3,BOTTOMTEXT)])
 			// instruction
 
 							onKeyPress("enter", () => {
@@ -3694,7 +3693,7 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 			case 2 :
 			// BASIC with Burnout WARNING:=
 			add([text(textList[lang].warning,
-				{ size: MEDIUMTXTSIZE,width:TXTWIDTH, font:"prstart"}),color(MYBLUE),scale(1),anchor("center"),pos(center().x+3,BOTTOMTEXT)])
+				{ size: MEDIUMTXTSIZE,width:TXTWIDTH, font:"revminipixel"}),color(MYBLUE),scale(1),anchor("center"),pos(center().x+3,BOTTOMTEXT)])
 				// instruction
 
 							// next
@@ -3710,7 +3709,7 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 			case 3 :
 			// BASIC with Bankrupt WARNING:
 				add([text(textList[lang].warningBankrupt,
-					{ size: MEDIUMTXTSIZE, width:TXTWIDTH,font:"prstart"}),color(MYBLUE),scale(1),anchor("center"),pos(center().x+3,BOTTOMTEXT)])
+					{ size: MEDIUMTXTSIZE, width:TXTWIDTH,font:"revminipixel"}),color(MYBLUE),scale(1),anchor("center"),pos(center().x+3,BOTTOMTEXT)])
 					// instruction
 
 				// next
@@ -3726,13 +3725,13 @@ scene("Carton_Journalier", (clientKey,jourIdx,totalCoins,totalStars, forcePercen
 			case 4 :
 			// GAMEOVER BURNOUT
 			add([text(textList[lang].burnout,
-				{ size: MEDIUMTXTSIZE,width:TXTWIDTH, font:"prstart"}),scale(1),color(MYBLUE),anchor("center"),pos(center().x+3,BOTTOMTEXT)])
+				{ size: MEDIUMTXTSIZE,width:TXTWIDTH, font:"revminipixel"}),scale(1),color(MYBLUE),anchor("center"),pos(center().x+3,BOTTOMTEXT)])
 			wait(4.5,()=>go("Burnout"))
 break;
 			case 5 :
 			// GAMEOVER BANKRUPT
 			add([text(textList[lang].bankrupt,
-				{ size: MEDIUMTXTSIZE, font:"prstart", width:TXTWIDTH}),scale(1),anchor("center"),color(MYBLUE),pos(center().x+3,BOTTOMTEXT)])
+				{ size: MEDIUMTXTSIZE, font:"revminipixel", width:TXTWIDTH}),scale(1),anchor("center"),color(MYBLUE),pos(center().x+3,BOTTOMTEXT)])
 		  wait(4.5,()=>go("Bankrupt"))
 			break;
 		}
@@ -3895,7 +3894,7 @@ scene("interactionJour4", (jourIdx,totalCoins,totalStars,position) => {
 			pos(center().x+5,MAP_HEIGHT/2-16)
 		])
 		const bravoContent = add([
-			text(textList[lang].bravocontent, { size: MEDIUMTXTSIZE-4,width: TXTWIDTH+5, font:"prstart" }),
+			text(textList[lang].bravocontent, { size: MEDIUMTXTSIZE-4,width: TXTWIDTH+5, font:"revminipixel" }),
 			scale(1),
 			anchor("center"),
 			pos(center().x+10,MAP_HEIGHT/2+50),
@@ -3932,7 +3931,7 @@ scene("Bankrupt", (jourIdx,totalCoins,totalStars) => {
 		pos(center().x,MAP_HEIGHT/2-16)
 	])
 	const bankruptContent = add([
-		text(textList[lang].bankruptcontent, { size: MEDIUMTXTSIZE-4,width: TXTWIDTH+5, font:"prstart" }),
+		text(textList[lang].bankruptcontent, { size: MEDIUMTXTSIZE-4,width: TXTWIDTH+5, font:"revminipixel" }),
 		scale(1),
 		anchor("center"),
 		pos(center().x+10,MAP_HEIGHT/2+50),
@@ -3970,7 +3969,7 @@ scene("Burnout", (jourIdx,totalCoins,totalStars) => {
 		pos(center().x,MAP_HEIGHT/2-16)
 	])
 	const burnoutContent = add([
-		text(textList[lang].burnoutcontent, { size: MEDIUMTXTSIZE-4,width: TXTWIDTH+5, font:"prstart" }),
+		text(textList[lang].burnoutcontent, { size: MEDIUMTXTSIZE-4,width: TXTWIDTH+5, font:"revminipixel" }),
 		scale(1),
 		anchor("center"),
 		pos(center().x+3,MAP_HEIGHT/2+50),
