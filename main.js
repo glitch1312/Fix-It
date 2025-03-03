@@ -132,7 +132,12 @@ initModules();
 // ------ Boucle de Gameplay ------- //
 // ------ Start --------------------------------------------------- //
 scene("start",() => {
-
+	//audio
+	let musicFond = play("page_debut", {
+		volume: 0.8,
+		loop: true
+	})
+	musicFond.paused = true
 
 
 	// in case of a restart
@@ -240,6 +245,7 @@ scene("start",() => {
 		let launchGame =
 			onKeyPress("enter", () => {
 				console.log(clientsList);
+				musicFond.paused=false
 				go("atelier", jourIdx,totalCoins,totalStars,INITIALPOSITION,clientCounter,inventory)
 			})
 		launchGame.paused = true
